@@ -24,6 +24,19 @@ const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "Navigati
 
 func _initialize() -> void:
 	var level: Node3D = (load(LEVEL) as PackedScene).instantiate()
+	var forced := {}
+	for arg in OS.get_cmdline_user_args():
+		forced[arg.get_slice("=", 0)] = arg.get_slice("=", 1)
+	var data := build(level, forced)
+	var file := FileAccess.open(OUT, FileAccess.WRITE)
+	file.store_string(JSON.stringify(data, "\t"))
+	print("export_terreno_overworld: %d × %d celdas, %d puntos fijos, %d de decoración, %d regiones" % [data.rows[0].length(), data.rows.size(), data.fixed.size(), data.decor.size(), data.regions.size()])
+	level.free()
+	quit()
+
+
+## Lo que va al JSON, sacado del nivel ya instanciado; `forced` cambia el estilo de una región por su nombre.
+static func build(level: Node3D, forced: Dictionary = {}) -> Dictionary:
 	var grid: GridMap = level.get_node("GridMap")
 	var lib := grid.mesh_library
 	var cells := grid.get_used_cells()
@@ -65,9 +78,6 @@ func _initialize() -> void:
 				if row[c] in ".:" and rect.has_point(Vector2((lo.x + c) * 2.0, (lo.y + r) * 2.0)):
 					row = row.substr(0, c) + "w" + row.substr(c + 1)
 			rows[r] = row
-	var forced := {}
-	for arg in OS.get_cmdline_user_args():
-		forced[arg.get_slice("=", 0)] = arg.get_slice("=", 1)
 	for area in level.get_node("TerrainStyles").get_children():
 		var style := String(forced.get(String(area.name), area.style))
 		if style.is_empty():
@@ -99,18 +109,14 @@ func _initialize() -> void:
 		if eye.scene_file_path == "res://src/world/eye_switch.tscn":
 			var t := _xform(eye, level)
 			eyes.append({"x": t.origin.x, "z": t.origin.z, "dx": -t.basis.z.x, "dz": -t.basis.z.z})
-	var file := FileAccess.open(OUT, FileAccess.WRITE)
-	file.store_string(JSON.stringify({"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "mouths": mouths, "posts": posts, "eyes": eyes, "regions": regions}, "\t"))
-	print("export_terreno_overworld: %d × %d celdas, %d puntos fijos, %d de decoración, %d regiones" % [hi.x - lo.x + 1, hi.y - lo.y + 1, fixed.size(), decor.size(), regions.size()])
-	level.free()
-	quit()
+	return {"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "mouths": mouths, "posts": posts, "eyes": eyes, "regions": regions}
 
 
-func _placed(node: Node3D, level: Node3D) -> Vector3:
+static func _placed(node: Node3D, level: Node3D) -> Vector3:
 	return _xform(node, level).origin
 
 
-func _xform(node: Node3D, level: Node3D) -> Transform3D:
+static func _xform(node: Node3D, level: Node3D) -> Transform3D:
 	var at := node.transform
 	var parent := node.get_parent() as Node3D
 	while parent != level:
@@ -120,7 +126,7 @@ func _xform(node: Node3D, level: Node3D) -> Transform3D:
 
 
 ## Piso de una pieza que queda en el GridMap: el que más tiene alrededor.
-func _under(grid: GridMap, cell: Vector3i) -> String:
+static func _under(grid: GridMap, cell: Vector3i) -> String:
 	var dirt := 0
 	for side: Vector3i in [Vector3i(1, 0, 0), Vector3i(-1, 0, 0), Vector3i(0, 0, 1), Vector3i(0, 0, -1)]:
 		var id := grid.get_cell_item(cell + side)
@@ -130,14 +136,14 @@ func _under(grid: GridMap, cell: Vector3i) -> String:
 
 
 ## Nivel de la columna: el y de su celda más alta (el GridMap lleva un nivel de terraza por celda en y).
-func _top(grid: GridMap, x: int, z: int) -> int:
+static func _top(grid: GridMap, x: int, z: int) -> int:
 	for y in range(MOUNTAIN, -1, -1):
 		if grid.get_cell_item(Vector3i(x, y, z)) != GridMap.INVALID_CELL_ITEM:
 			return y
 	return MOUNTAIN
 
 
-func _letter(item: String) -> String:
+static func _letter(item: String) -> String:
 	if SPECIAL.has(item):
 		return SPECIAL[item]
 	for group: Array in [[HIGH, "H"], [ABYSS, "~"], [DIRT, ":"], [GRASS, "."]]:

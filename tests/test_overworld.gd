@@ -657,3 +657,25 @@ func test_every_zone_has_a_region_labeled_once() -> void:
 			regions[zone.region.id] = labels.get(zone.region.id, 0)
 	assert_eq(regions.size(), 13, "13 regiones")
 	assert_eq(regions.keys().filter(func(id: StringName) -> bool: return regions[id] != 1), [], "regiones sin etiqueta o con más de una")
+
+
+## 16.47: tools/terreno_overworld.json es el export del nivel actual; si no, el terreno se armó con otro nivel (volver a
+## exportar y a armarlo con build_terreno_organico.py).
+func test_the_terrain_json_matches_the_level() -> void:
+	var export := preload("res://tools/export_terreno_overworld.gd")
+	var level: Node3D = (load(LEVEL) as PackedScene).instantiate()
+	var built: Dictionary = JSON.parse_string(JSON.stringify(export.build(level)))
+	level.free()
+	var saved: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(export.OUT))
+	var stale: Array[String] = []
+	for key: String in built.keys() + saved.keys().filter(func(key: String) -> bool: return not built.has(key)):
+		var now: Variant = built.get(key)
+		var then: Variant = saved.get(key)
+		if now is Array and then is Array:
+			for i in maxi(now.size(), then.size()):
+				if i >= now.size() or i >= then.size() or now[i] != then[i]:
+					stale.append("%s[%d]: %s → %s" % [key, i, then[i] if i < then.size() else null, now[i] if i < now.size() else null])
+					break
+		elif now != then:
+			stale.append("%s: %s → %s" % [key, then, now])
+	assert_eq(stale, [], "el JSON del terreno quedó viejo")
