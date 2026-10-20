@@ -46,6 +46,7 @@ unique_name_in_owner = true
 fov = 40.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 
 [node name="Overlay" type="CanvasLayer" parent="."]
@@ -152,6 +153,7 @@ mouse_filter = 2
 script = ExtResource("3_ring")
 
 [node name="Outro" type="AnimationPlayer" parent="."]
+deterministic = false
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("CutsceneOutroLib")

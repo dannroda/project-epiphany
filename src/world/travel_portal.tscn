@@ -161,6 +161,7 @@ id = &""
 script = ExtResource("4_flag")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries = {
 &"": SubResource("Library")
 }

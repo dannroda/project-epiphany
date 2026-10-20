@@ -114,5 +114,6 @@ visible_characters = 0
 visible_ratio = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=612073739]
+deterministic = false
 libraries/ = SubResource("Library")
 autoplay = &"blink"

@@ -215,6 +215,7 @@ mesh = ExtResource("5_maza")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.25)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries/CombatMelee = ExtResource("1_melee")
 libraries/General = ExtResource("2_general")
 libraries/MovementBasic = ExtResource("3_move")

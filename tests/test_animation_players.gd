@@ -1,0 +1,35 @@
+extends "res://tests/test_case.gd"
+## 16.40: los AnimationPlayer no son deterministas, así al cambiar de clip lo que el clip nuevo no anima queda como
+## estaba en vez de volver al valor inicial. Los que alimentan un AnimationTree los mezcla el árbol.
+
+const FOLDERS := ["res://src", "res://levels", "res://player"]
+## 16.32 los pasa después de 11.214.
+const PENDING := ["res://src/entities/boss/boss.tscn"]
+
+
+func test_animation_players_are_not_deterministic() -> void:
+	var checked := 0
+	for path in _scenes():
+		if path in PENDING:
+			continue
+		var text := FileAccess.get_file_as_string(path)
+		if text.contains('type="AnimationTree"'):
+			continue
+		for block in text.split("\n["):
+			if block.begins_with("node ") and block.contains('type="AnimationPlayer"'):
+				checked += 1
+				assert_true(block.contains("deterministic = false"), "%s: %s" % [path, block.get_slice("\n", 0)])
+	assert_true(checked > 20, "revisó los AnimationPlayer (%d)" % checked)
+
+
+func _scenes() -> PackedStringArray:
+	var found := PackedStringArray()
+	var pending := FOLDERS.duplicate()
+	while not pending.is_empty():
+		var dir: String = pending.pop_back()
+		for sub in DirAccess.get_directories_at(dir):
+			pending.append(dir.path_join(sub))
+		for file in DirAccess.get_files_at(dir):
+			if file.ends_with(".tscn"):
+				found.append(dir.path_join(file))
+	return found

@@ -133,6 +133,7 @@ light_energy = 2.0
 omni_range = 6.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+deterministic = false
 libraries = {
 &"": SubResource("Library")
 }
