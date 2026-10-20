@@ -111,8 +111,8 @@ func test_reveal_pauses_and_shows_only_the_first_time() -> void:
 	await tree.create_timer(0.2).timeout
 	block.global_position = block_switch.global_position
 	player.global_position = player_switch.global_position
-	var until := Engine.get_physics_frames() + int(2 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and not camera.revealing:
+	var until := Time.get_ticks_msec() + 2000
+	while Time.get_ticks_msec() < until and not camera.revealing:
 		await tree.physics_frame
 	assert_true(camera.revealing, "la cámara muestra la puerta")
 	assert_true(tree.paused, "con el juego en pausa")

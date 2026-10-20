@@ -15,9 +15,9 @@ func _walk(action: StringName, pressed: bool) -> void:
 ## Camina hasta que `done` se cumpla. Devuelve si llegó y si en algún momento cayó por debajo del piso.
 func _walk_until(tree: SceneTree, player: PlayerCharacter, action: StringName, done: Callable) -> Array:
 	_walk(action, true)
-	var until := Engine.get_physics_frames() + int(12 * Engine.physics_ticks_per_second)
+	var until := Time.get_ticks_msec() + 12000
 	var fell := false
-	while Engine.get_physics_frames() < until and not done.call():
+	while Time.get_ticks_msec() < until and not done.call():
 		await tree.physics_frame
 		fell = fell or player.global_position.y < -0.5
 	_walk(action, false)
@@ -115,8 +115,8 @@ func test_an_arrow_at_the_eye_raises_the_bridge_to_the_necropolis() -> void:
 	TopDownCamera.unlock_reveals = true
 	assert_true(absf(eye.eye.global_position.z - from.z) < 0.4, "el ojo queda en la línea del puente")
 	arrow.launch(from, Vector3.RIGHT * 20.0, info)
-	var until := Engine.get_physics_frames() + int(3 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and not camera.revealing:
+	var until := Time.get_ticks_msec() + 3000
+	while Time.get_ticks_msec() < until and not camera.revealing:
 		await tree.process_frame
 	assert_true(camera.revealing and tree.paused, "la cámara muestra el puente subiendo")
 	while camera.revealing:
@@ -163,11 +163,11 @@ func test_the_condor_frames_the_cumbre_door_and_lets_the_player_in() -> void:
 	for i in 20:
 		await tree.physics_frame
 	_walk(&"move_forward", true)
-	var until := Engine.get_physics_frames() + int(8 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and tree.current_scene and tree.current_scene.scene_file_path == LEVEL:
+	var until := Time.get_ticks_msec() + 8000
+	while Time.get_ticks_msec() < until and tree.current_scene and tree.current_scene.scene_file_path == LEVEL:
 		await tree.physics_frame
 	_walk(&"move_forward", false)
-	while Engine.get_physics_frames() < until and not (tree.current_scene and tree.current_scene.scene_file_path != LEVEL):
+	while Time.get_ticks_msec() < until and not (tree.current_scene and tree.current_scene.scene_file_path != LEVEL):
 		await tree.physics_frame
 	assert_eq(tree.current_scene.scene_file_path if tree.current_scene else "", "res://levels/cumbre.tscn", "entre las alas se entra a la Cumbre")
 	state.reset()

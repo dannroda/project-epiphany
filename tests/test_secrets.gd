@@ -52,8 +52,8 @@ func _bomb_wall(tree: SceneTree, wall: CrackedWall, player: PlayerCharacter) -> 
 	await _press(tree, &"item_1")
 	await tree.create_timer(1.0).timeout
 	player.global_position = wall.global_position + out * 6.0
-	var until := Engine.get_physics_frames() + int(6 * Engine.physics_ticks_per_second)
-	while not wall.is_broken and Engine.get_physics_frames() < until:
+	var until := Time.get_ticks_msec() + 6000
+	while not wall.is_broken and Time.get_ticks_msec() < until:
 		await tree.physics_frame
 	await tree.create_timer(0.6).timeout
 
@@ -344,7 +344,7 @@ func test_after_the_final_boss_the_dawn_comes_and_the_temple_top_opens() -> void
 
 
 func _until_off_the_ladder(tree: SceneTree, player: PlayerCharacter) -> void:
-	var until := Engine.get_physics_frames() + int(6 * Engine.physics_ticks_per_second)
-	while player.is_climbing() and Engine.get_physics_frames() < until:
+	var until := Time.get_ticks_msec() + 6000
+	while player.is_climbing() and Time.get_ticks_msec() < until:
 		await tree.physics_frame
 	await tree.create_timer(0.2).timeout

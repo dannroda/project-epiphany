@@ -22,8 +22,8 @@ func _walk(action: StringName, pressed: bool) -> void:
 
 func _walk_until(action: StringName, done: Callable) -> bool:
 	_walk(action, true)
-	var until := Engine.get_physics_frames() + int(12 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and not done.call():
+	var until := Time.get_ticks_msec() + 12000
+	while Time.get_ticks_msec() < until and not done.call():
 		await tree.physics_frame
 	_walk(action, false)
 	await tree.physics_frame
@@ -33,11 +33,11 @@ func _walk_until(action: StringName, done: Callable) -> bool:
 func _walk_into(action: StringName, scene_path: String) -> bool:
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	_walk(action, true)
-	var until := Engine.get_physics_frames() + int(8 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and not tree.root.get_node(^"SceneFlow").traveling:
+	var until := Time.get_ticks_msec() + 8000
+	while Time.get_ticks_msec() < until and not tree.root.get_node(^"SceneFlow").traveling:
 		await tree.physics_frame
 	_walk(action, false)
-	while Engine.get_physics_frames() < until and tree.root.get_node(^"SceneFlow").traveling:
+	while Time.get_ticks_msec() < until and tree.root.get_node(^"SceneFlow").traveling:
 		await tree.process_frame
 	_clear_enemies()
 	player = tree.get_first_node_in_group(&"player") as PlayerCharacter

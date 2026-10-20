@@ -26,8 +26,8 @@ func _push_until(tree: SceneTree, action: StringName, done: Callable) -> void:
 	event.pressed = true
 	event.strength = 1.0
 	Input.parse_input_event(event)
-	var until := Engine.get_physics_frames() + int(5 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and not done.call():
+	var until := Time.get_ticks_msec() + 5000
+	while Time.get_ticks_msec() < until and not done.call():
 		await tree.physics_frame
 	event = event.duplicate()
 	event.pressed = false

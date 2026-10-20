@@ -91,8 +91,8 @@ func test_slam_squashes_and_leaves_a_crack() -> void:
 	var before: int = decals.call()
 	hand.perform(load("res://data/boss/attack_slam.tres"), target, boss.arena)
 	var squashed := false
-	var until := Engine.get_physics_frames() + int(4 * Engine.physics_ticks_per_second)
-	while hand.state != BossHand.State.STUNNED and Engine.get_physics_frames() < until:
+	var until := Time.get_ticks_msec() + 4000
+	while hand.state != BossHand.State.STUNNED and Time.get_ticks_msec() < until:
 		await tree.process_frame
 		squashed = squashed or hand.mesh.scale.y < 0.9
 	await tree.process_frame

@@ -23,8 +23,8 @@ func test_a_slow_trip_shows_the_eye_loading_in_the_corner() -> void:
 	var after: float = flow.show_loading_after
 	flow.show_loading_after = 0.0
 	door.travel()
-	var until := Engine.get_physics_frames() + int(5 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and not flow.loading_screen.visible:
+	var until := Time.get_ticks_msec() + 5000
+	while Time.get_ticks_msec() < until and not flow.loading_screen.visible:
 		await tree.process_frame
 	assert_true(flow.loading_screen.visible, "aparece la pantalla de carga")
 	var busy := flow.get_node(^"Loading/Busy") as Control

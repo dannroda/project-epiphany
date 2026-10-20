@@ -44,8 +44,8 @@ func _waves(host: Node3D) -> GroundWaves:
 
 
 func _until(condition: Callable, timeout := 3.0) -> bool:
-	var until := Engine.get_physics_frames() + int(timeout * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until:
+	var until := Time.get_ticks_msec() + int(timeout * 1000)
+	while Time.get_ticks_msec() < until:
 		if condition.call():
 			return true
 		await tree.physics_frame
@@ -80,9 +80,9 @@ func test_every_step_and_the_slam_send_a_wave() -> void:
 	await tree.process_frame
 	animation.play(&"MovementBasic/Walking_A")
 	var steps := 0
-	var until := Engine.get_physics_frames() + int(2.5 * Engine.physics_ticks_per_second)
+	var until := Time.get_ticks_msec() + 2500
 	var last := 0
-	while Engine.get_physics_frames() < until:
+	while Time.get_ticks_msec() < until:
 		await tree.physics_frame
 		if not animation.is_playing():
 			animation.play(&"MovementBasic/Walking_A")

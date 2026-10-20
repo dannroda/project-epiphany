@@ -140,11 +140,11 @@ func test_meadow_skeletons_reach_the_player() -> void:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.health.make_invulnerable(999.0)
 	player.global_position = Vector3(-42, 0.1, -2)
-	var until := Engine.get_physics_frames() + int(6 * Engine.physics_ticks_per_second)
+	var until := Time.get_ticks_msec() + 6000
 	var enemies := [^"Skeleton1", ^"Skeleton2", ^"Skeleton3"].map(func(path: NodePath) -> Node: return tree.current_scene.get_node(path))
 	var near := func() -> bool:
 		return enemies.all(func(enemy: Enemy) -> bool: return enemy.global_position.distance_to(player.global_position) <= enemy.config.attack_range + 0.5)
-	while Engine.get_physics_frames() < until and not near.call():
+	while Time.get_ticks_msec() < until and not near.call():
 		await tree.physics_frame
 	for enemy: Enemy in enemies:
 		assert_true(enemy.global_position.distance_to(player.global_position) <= enemy.config.attack_range + 0.5, "%s llega al player (quedó en %s)" % [enemy.name, enemy.global_position])
@@ -199,9 +199,9 @@ func test_an_enemy_goes_around_a_column() -> void:
 		await tree.physics_frame
 	assert_eq(blackboard.get_var(&"target", null, false), player, "lo ve al costado de la columna")
 	player.global_position = spot + Vector3(-0.4, 0.1, 3.0)
-	var until := Engine.get_physics_frames() + int(8 * Engine.physics_ticks_per_second)
+	var until := Time.get_ticks_msec() + 8000
 	var reach := enemy.config.attack_range + 0.5
-	while Engine.get_physics_frames() < until and enemy.global_position.distance_to(player.global_position) > reach:
+	while Time.get_ticks_msec() < until and enemy.global_position.distance_to(player.global_position) > reach:
 		await tree.physics_frame
 	assert_true(enemy.global_position.distance_to(player.global_position) <= reach, "llega al player rodeando la columna (quedó en %s, player en %s)" % [enemy.global_position - spot, player.global_position - spot])
 	tree.root.get_node(^"GameState").reset()
@@ -268,8 +268,8 @@ func test_in_the_overworld_the_chase_lasts_while_the_player_stays_in_its_chase_r
 	var enemy := tree.current_scene.get_node(^"Skeleton1") as Enemy
 	var chasing := func() -> bool: return enemy.bt_player.blackboard.get_var(&"target", null) == player
 	player.global_position = Vector3(-42, 0.1, -2)
-	var until := Engine.get_physics_frames() + int(4 * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until and not chasing.call():
+	var until := Time.get_ticks_msec() + 4000
+	while Time.get_ticks_msec() < until and not chasing.call():
 		await tree.physics_frame
 	assert_true(chasing.call(), "ve al player y lo persigue (target %s)" % enemy.bt_player.blackboard.get_var(&"target", null))
 	player.global_position = Vector3(-17, 0.1, -20)

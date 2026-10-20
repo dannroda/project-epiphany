@@ -41,17 +41,17 @@ func _node(node_name: String) -> Node:
 func _drop(at: Vector3) -> void:
 	player.global_position = at
 	player.velocity = Vector3.ZERO
-	var until := Engine.get_physics_frames() + int(4 * Engine.physics_ticks_per_second)
+	var until := Time.get_ticks_msec() + 4000
 	var airborne := false
-	while Engine.get_physics_frames() < until and not (airborne and player.is_on_floor() and camera.room and camera.room.contains(player.global_position)):
+	while Time.get_ticks_msec() < until and not (airborne and player.is_on_floor() and camera.room and camera.room.contains(player.global_position)):
 		await tree.physics_frame
 		airborne = airborne or not player.is_on_floor()
 	await tree.create_timer(0.2).timeout
 
 
 func _until(condition: Callable, seconds := 5.0) -> bool:
-	var until := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until:
+	var until := Time.get_ticks_msec() + int(seconds * 1000)
+	while Time.get_ticks_msec() < until:
 		if condition.call():
 			return true
 		await tree.physics_frame

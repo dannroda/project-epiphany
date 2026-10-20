@@ -31,8 +31,8 @@ func _start() -> void:
 
 ## Espera algo, con el player siempre sano: los lanzazos le pegan.
 func _until(done: Callable, seconds: float) -> bool:
-	var until := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until:
+	var until := Time.get_ticks_msec() + int(seconds * 1000)
+	while Time.get_ticks_msec() < until:
 		if done.call():
 			return true
 		player.health.current = player.health.max_health

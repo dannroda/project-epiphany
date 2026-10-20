@@ -33,8 +33,8 @@ func _frames(count: int) -> void:
 
 
 func _until(condition: Callable, seconds := 5.0) -> bool:
-	var until := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
-	while Engine.get_physics_frames() < until:
+	var until := Time.get_ticks_msec() + int(seconds * 1000)
+	while Time.get_ticks_msec() < until:
 		if condition.call():
 			return true
 		await tree.physics_frame
