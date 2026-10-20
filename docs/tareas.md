@@ -5587,7 +5587,7 @@ Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantal
 
 **Notas:** Hecho (b6fd8a52, -72): 1) enter_saved_scene devuelve bool: si la escena no existe o no carga, va al inicio del overworld; si tampoco, al título; enter_save devuelve ERR_CANT_OPEN y _load_path lo devuelve (y deja loading en false). new_game no sigue con la intro si no entró. 2) read_from: equipo con ítem inexistente o de otra categoría vuelve al del equipo inicial (y lo agrega al inventario); botella fuera de bottle_1..4 se descarta; contenido inexistente o sin líquido queda bottle_empty; max_health al menos HP_PER_HEART. 3) Settings: SaveCodec.typed al leer; guarda a .tmp, borra y renombra, devuelve el Error y lo loguea; si quedó solo el .tmp lo lee. 4) SceneFlow.is_busy() (cargando una partida, volviendo al título, o en un viaje salvo la acción de with_fade, que es la carga misma): _load_path, enter_save y quit_to_title devuelven ERR_BUSY. Tests: test_save_manager (escena que no carga, segunda carga en medio de otra), test_slots (equipo/botellas/corazones reparados), test_options (opciones tipadas y escritura atómica).
 
-### 11.217 Co-op: P2 en una cinemática y time_scale con dos dueños · Pendiente
+### 11.217 Co-op: P2 en una cinemática y time_scale con dos dueños · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `co-op`
 
@@ -5676,6 +5676,8 @@ Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_s
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `camara`
 
 Revisión de Totora con paredes dobles (12.41, 2026-10-19). Desde Gancho, el canal de agua del cruce del gancho hacia Balsas, que atraviesa la pared doble sur, se ve como un hueco negro. Desde Balsas se ve bien. No es el nivel: en top_down_camera._mask_around, detrás del labio sur de la sala, la tira 5 tapa hasta piso − 0.3 (cc571214, 11.151 d5e0d9a5, para que no asome el piso de abajo) y el agua está a −0.35, así que queda bajo la máscara. Pasa en toda puerta sur de toda mazmorra; con agua se lee como agujero. Arreglo posible: excepción de cámara (no bajar la tira 5 en celdas con agua, o que la sala vea su canal). Toca la cámara de todos los niveles: coordinar con 16.54. Capturas: debug/tmp/design/tot_Gancho.png y tot_Balsas.png en wt/design.
+
+**Bloqueada por:** 16.54 TopDownCamera hace demasiado
 
 ### 11.220 Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio · Revisión
 
@@ -6869,17 +6871,21 @@ Revisión con patrones (2026-10-19): 15 llamadas con nombre de método fallan en
 
 **Notas:** Hecho (-72): TopDownCamera.current(tree) (estático, tipado) reemplaza los call_group a la cámara en stairs, pit y scene_flow._place_at_spawn, y los get_first_node_in_group (music, cutscene, room, doom_ambience, map_data, scene_flow.location, 4 tests). En la cámara solo cambió el punto de acceso; 16.54 no tiene nada que limpiar. HUD: Hud.events (clase interna Events, static var) con tres señales tipadas: area_announced(text), boss_shown(bar: BossBar), boss_hidden. Cada Hud las conecta en _ready; al liberarse, Godot lo desconecta. Emisores: room, area_zone, arena_fight, boss_arena. No queda call_group en src. Test: test_hud › test_events_reach_the_hud.
 
-### 16.35 Nodos creados por código: pasto, overlay y buses de audio · Pendiente
+### 16.35 Nodos creados por código: pasto, overlay y buses de audio · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): GrassPatch instancia el pasto en _ready; DebugOverlay crea su Label; Feel y Settings crean buses de audio (falta default_bus_layout.tres).
 
-### 16.36 Sonidos de Feel: pool, límite y síntesis al arrancar · Pendiente
+**Notas:** Hecho (-e0): default_bus_layout.tres con Music, SFX, UI y Ambience; Settings y Feel ya no agregan buses por código (Settings.BUSES se fue). DebugOverlay es debug_overlay.tscn con su Label, autoload de la escena (y el plugin lo registra así). Ojo: un autoload .tscn no tiene tipo estático, por eso aim.gd tipa var debug: bool. GrassPatch sigue plantando en _ready a propósito: es un componente de ubicación con semilla (3 parches) y hornearlo reescribiría overworld.tscn.
+
+### 16.36 Sonidos de Feel: pool, límite y síntesis al arrancar · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `audio`
 
 Revisión con patrones (2026-10-19): Cada sfx crea un player nuevo sin límite: N sonidos iguales en el mismo cuadro saturan. Feel sintetiza ~10 s al arrancar que después reemplaza con .ogg. Los sonidos de UI salen del input crudo.
+
+**Notas:** Hecho (-e0): Feel.sfx corta en MAX_SAME_PER_FRAME = 3 copias del mismo sonido por cuadro y MAX_VOICES = 24 sonidos del mundo a la vez (corta el más viejo). Los reproductores siguen en la escena (no un pool bajo Feel): así se pausan y se van con el nivel como hoy, y test_boss mide el temblor de la intro en el nivel. Las recetas de síntesis solo corren para los sonidos sin .ogg (antes ~10 s al arrancar que se tiraban). El sonido de aceptar sale del pressed del botón con foco, no del ui_accept crudo; el de volver sigue en ui_cancel con foco. test_audio › test_sounds_in_one_frame_are_capped.
 
 ### 16.37 Componentes que asumen su padre y la guardia copiada · Revisión
 
@@ -6977,7 +6983,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): export_terreno_overwo
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): terreno_organico.tscn pone walk_guard con un override en Parte5/baranda; si un rebuild la mueve a otra tira se pierde sin aviso. Arreglo: propiedad custom desde Blender aplicada por epi_scene_import.
 
-### 16.50 TerrainStyleArea.style como enum; el build falla con estilo desconocido · Pendiente
+### 16.50 TerrainStyleArea.style como enum; el build falla con estilo desconocido · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `arte`
 
@@ -7008,6 +7014,8 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 813 líneas y 8 @export_group (lock-on, look, apuntado, reveals, cinemática, salas, oclusión, co-op); diseño y arte editan los reveals en el mismo archivo (pasó con AmbienteZoom). Arreglo: Reveal y Occlusion como nodos hijos en la escena de la cámara. Coordinar con arte.
+
+**Bloquea a:** 11.219 Cámara: el canal de agua tras el labio sur se ve negro
 
 ### 16.55 Enemy carga la defensa de dos variantes · Revisión
 

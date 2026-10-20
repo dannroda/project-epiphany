@@ -5,17 +5,17 @@
   "created_at": "2026-10-19T22:41:08.625Z",
   "description": "Revisión con patrones (2026-10-19): Cada sfx crea un player nuevo sin límite: N sonidos iguales en el mismo cuadro saturan. Feel sintetiza ~10 s al arrancar que después reemplaza con .ogg. Los sonidos de UI salen del input crudo.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-e0): Feel.sfx corta en MAX_SAME_PER_FRAME = 3 copias del mismo sonido por cuadro y MAX_VOICES = 24 sonidos del mundo a la vez (corta el más viejo). Los reproductores siguen en la escena (no un pool bajo Feel): así se pausan y se van con el nivel como hoy, y test_boss mide el temblor de la intro en el nivel. Las recetas de síntesis solo corren para los sonidos sin .ogg (antes ~10 s al arrancar que se tiraban). El sonido de aceptar sale del pressed del botón con foco, no del ui_accept crudo; el de volver sigue en ui_cancel con foco. test_audio › test_sounds_in_one_frame_are_capped.",
   "order": 95,
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "audio"
   ],
   "test": "",
   "title": "Sonidos de Feel: pool, límite y síntesis al arrancar",
-  "updated_at": "2026-10-19T22:56:37.432Z"
+  "updated_at": "2026-10-20T00:58:28.442Z"
 }

@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:08.286Z",
   "description": "Revisión con patrones (2026-10-19): GrassPatch instancia el pasto en _ready; DebugOverlay crea su Label; Feel y Settings crean buses de audio (falta default_bus_layout.tres).",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-e0): default_bus_layout.tres con Music, SFX, UI y Ambience; Settings y Feel ya no agregan buses por código (Settings.BUSES se fue). DebugOverlay es debug_overlay.tscn con su Label, autoload de la escena (y el plugin lo registra así). Ojo: un autoload .tscn no tiene tipo estático, por eso aim.gd tipa var debug: bool. GrassPatch sigue plantando en _ready a propósito: es un componente de ubicación con semilla (3 parches) y hornearlo reescribiría overworld.tscn.",
   "order": 94,
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "Nodos creados por código: pasto, overlay y buses de audio",
-  "updated_at": "2026-10-19T22:56:37.124Z"
+  "updated_at": "2026-10-20T00:58:29.656Z"
 }

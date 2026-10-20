@@ -10,12 +10,12 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "co-op"
   ],
   "test": "",
   "title": "Co-op: P2 en una cinemática y time_scale con dos dueños",
-  "updated_at": "2026-10-20T00:52:39.048Z"
+  "updated_at": "2026-10-20T00:58:30.138Z"
 }

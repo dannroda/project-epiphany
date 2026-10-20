@@ -10,12 +10,12 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "arte"
   ],
   "test": "",
   "title": "TerrainStyleArea.style como enum; el build falla con estilo desconocido",
-  "updated_at": "2026-10-20T00:52:39.565Z"
+  "updated_at": "2026-10-20T00:58:31.246Z"
 }
