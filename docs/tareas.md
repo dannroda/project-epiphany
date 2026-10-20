@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (213/216, 54 en revisión)
+## M11 — Pulido: contenido y feel  (214/216, 55 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5753,11 +5753,13 @@ Visto por -5c (2026-10-19) en 11.9: boss_hand.gd esperaba get_tree().physics_fra
 
 De 11.105 (propuesta aprobada por Daniel): cerca de donde se consiguen las sandalias (Necrópolis), un hueco de 3 celdas que solo se cruza con el salto largo (pluma en carrera con sandalias), con 10 flechas del otro lado. Pide GridMap y terreno, así que va por el overworld (-3e): rearmar el terreno y rehornear la navmesh (-5c) si cambian las celdas.
 
-### 11.223 Opciones en dos pestañas: Juego y Video · En curso
+### 11.223 Opciones en dos pestañas: Juego y Video · Revisión
 
 **Responsable:** project-epiphany-72
 
 Daniel (2026-10-20) eligió la propuesta A del canvas (fila 'Opciones · Video con lugar para crecer'): pestañas Juego (Controles+Idioma | Audio) y Video (Pantalla | Gráficos) con LB/RB, lugar para ~4 filas más por columna. Video ya no entraba a 720p (8 filas).
+
+**Notas:** Done (-72, fce7ace1): TabBar Juego | Video with LB/RB (device prompts), Video = Pantalla | Gráficos; nodes named after the Settings keys; test_options covers switching tabs and focus.
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
