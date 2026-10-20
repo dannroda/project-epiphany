@@ -34,9 +34,11 @@ func _start(fight: NodePath, at: Vector3, shield := false) -> void:
 	await _until(func() -> bool: return kuntur.state != Kuntur.State.IDLE, 8.0)
 
 
+## Espera hasta que pasen `seconds` de reloj y también de juego: cargado, los cuadros vienen más lentos que el reloj.
 func _until(done: Callable, seconds: float) -> bool:
 	var until := Time.get_ticks_msec() + int(seconds * 1000)
-	while Time.get_ticks_msec() < until:
+	var frames := Engine.get_physics_frames() + int(seconds * Engine.physics_ticks_per_second)
+	while Time.get_ticks_msec() < until or Engine.get_physics_frames() < frames:
 		if done.call():
 			return true
 		player.health.current = player.health.max_health
