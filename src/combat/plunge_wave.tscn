@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/combat/plunge_wave.gd" id="1_wave"]
+[ext_resource type="Resource" path="res://data/attacks/sword_plunge.tres" id="2_attack"]
+
+[sub_resource type="CylinderShape3D" id="Wave"]
+height = 1.2
+radius = 1.2
+
+[node name="PlungeWave" type="Area3D"]
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("1_wave")
+attack = ExtResource("2_attack")
+slam = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("Wave")

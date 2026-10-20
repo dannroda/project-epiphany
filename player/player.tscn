@@ -51,6 +51,8 @@
 [ext_resource type="Script" path="res://player/components/counter.gd" id="c_counter"]
 [ext_resource type="Script" path="res://player/states/countering.gd" id="st_countering"]
 [ext_resource type="Resource" path="res://data/attacks/sword_counter.tres" id="atk_counter"]
+[ext_resource type="Script" path="res://player/states/plunging.gd" id="st_plunging"]
+[ext_resource type="PackedScene" path="res://src/combat/plunge_wave.tscn" id="plunge_wave"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_peicu"]
 fadeout_time = 0.3
@@ -1215,6 +1217,10 @@ script = ExtResource("st_spinning")
 [node name="Countering" type="LimboState" parent="MovementState"]
 script = ExtResource("st_countering")
 attack = ExtResource("atk_counter")
+
+[node name="Plunging" type="LimboState" parent="MovementState"]
+script = ExtResource("st_plunging")
+wave = ExtResource("plunge_wave")
 
 [node name="Spirit" type="Node3D" parent="."]
 visible = false

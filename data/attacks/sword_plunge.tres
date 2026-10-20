@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AttackData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/attack_data.gd" id="1_attack"]
+
+[resource]
+script = ExtResource("1_attack")
+damage_multiplier = 2.0
+knockback_multiplier = 1.5

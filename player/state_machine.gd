@@ -32,6 +32,8 @@ func _setup() -> void:
 	add_transition($Moving, $Countering, "counter")
 	add_transition($Attacking, $Countering, "counter", $Attacking.can_cancel)
 	add_transition($Countering, $Idle, "finished")
+	add_transition($Jumping, $Plunging, "plunge", $Jumping.can_plunge)
+	add_transition($Plunging, $Idle, "finished")
 	add_transition($Dodging, $Idle, "finished")
 	add_transition($Idle, $UsingItem, "use_item")
 	add_transition($Moving, $UsingItem, "use_item")
@@ -85,6 +87,8 @@ func _update(delta: float) -> void:
 	if buffer.has(&"dodge") and dispatch("dodge"):
 		buffer.consume(&"dodge")
 	elif buffer.has(&"attack") and player.counter.is_open() and dispatch("counter"):
+		buffer.consume(&"attack")
+	elif buffer.has(&"attack") and get_active_state() == $Jumping and dispatch("plunge"):
 		buffer.consume(&"attack")
 	elif buffer.has(&"attack") and dispatch("attack"):
 		buffer.consume(&"attack")

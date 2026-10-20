@@ -4,7 +4,8 @@ extends Area3D
 ## Interruptor de piso.
 ## HOLD: activo mientras haya algo encima (player, bloque u objeto). ONCE: lo que sea lo deja activado (y, con flag, entre partidas).
 ## BLOCK: solo un bloque empujable; queda resuelto. WEIGHT: un objeto apoyado o arrojado (o un bloque); queda resuelto.
-## STRIKE: un golpe fuerte (DamageInfo.strong, el martillazo) sobre la placa; queda resuelto. Pisarla no hace nada.
+## STRIKE: un golpe fuerte (DamageInfo.strong, el martillazo) o contra el piso (slam, el golpe en picada) sobre la placa;
+## queda resuelto. Pisarla no hace nada.
 ## El player no aprieta ni BLOCK ni WEIGHT.
 
 signal activated
@@ -99,7 +100,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _on_hit(info: DamageInfo) -> void:
-	if not info.strong or _solved:
+	if not (info.strong or info.slam) or _solved:
 		return
 	_solved = true
 	if _persistent:

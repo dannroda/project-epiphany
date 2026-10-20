@@ -10,6 +10,8 @@ signal landed(hurtbox: Hurtbox)
 @export var hits_on_landing := false
 ## Todo lo que pega es golpe fuerte (DamageInfo.strong), como el martillazo; un ataque lo pide con AttackData.strong.
 @export var strong := false
+## Todo lo que pega es golpe contra el piso (DamageInfo.slam).
+@export var slam := false
 
 var team: EntityConfig.Team = EntityConfig.Team.NEUTRAL
 ## () -> DamageInfo. Player: ItemData del arma equipada. Enemigo: su EntityConfig.
@@ -69,6 +71,7 @@ func build_damage() -> DamageInfo:
 	var info: DamageInfo = damage_factory.call()
 	info.team = team
 	info.strong = info.strong or strong or (active_attack != null and active_attack.strong)
+	info.slam = info.slam or slam
 	if active_attack:
 		info.amount = roundi(info.amount * active_attack.damage_multiplier)
 		info.knockback *= active_attack.knockback_multiplier
