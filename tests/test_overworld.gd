@@ -681,6 +681,48 @@ func test_the_terrain_json_matches_the_level() -> void:
 	assert_eq(stale, [], "el JSON del terreno quedó viejo")
 
 
+## 11.227: Decor/Plantas tiene las plantas de tools/plantas_overworld.json del terreno armado, a su altura, salvo sobre los
+## portales y en las arenas; si no, correr tools/decorate_levels.gd.
+func test_the_decor_plants_match_the_terrain_plants() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file(LEVEL)
+	await tree.scene_changed
+	var level := tree.current_scene
+	var placed := {}
+	for plant: Node3D in level.get_node(^"Decor/Plantas").get_children():
+		placed["%.2f %.2f" % [plant.position.x, plant.position.z]] = plant.position.y
+	var portals := tree.get_nodes_in_group(TravelPortal.GROUP).map(func(node: Node3D) -> Vector3: return node.global_position)
+	var arenas := level.find_children("*", "", true, false).filter(func(node: Node) -> bool: return node is ArenaArea)
+	var missing: Array[String] = []
+	var spots := {}
+	for spot: Dictionary in JSON.parse_string(FileAccess.get_file_as_string("res://tools/plantas_overworld.json")):
+		var at := Vector3(spot.at[0], spot.at[1], spot.at[2])
+		var key := "%.2f %.2f" % [at.x, at.z]
+		spots[key] = true
+		if portals.any(func(p: Vector3) -> bool: return Vector2(p.x - at.x, p.z - at.z).length() < 2.0):
+			continue
+		if arenas.any(func(arena: Node) -> bool: return _inside_box(arena, at)):
+			continue
+		if not placed.has(key) or absf(placed[key] - at.y) >= 0.05:
+			missing.append("%s %s" % [spot.kind, at])
+	var stale := placed.keys().filter(func(key: String) -> bool:
+		var xz := key.split(" ")
+		return not spots.has(key) and not (fmod(float(xz[0]), 2.0) == 0.0 and fmod(float(xz[1]), 2.0) == 0.0))
+	assert_eq(missing.slice(0, 5), [], "plantas del terreno que el decor no tiene (%d)" % missing.size())
+	assert_eq(stale.slice(0, 5), [], "plantas del decor que el terreno ya no tiene (%d)" % stale.size())
+	tree.root.get_node(^"GameState").reset()
+
+
+func _inside_box(area: Node, at: Vector3) -> bool:
+	var shape := area.get_node_or_null(^"CollisionShape3D") as CollisionShape3D
+	if shape == null or not shape.shape is BoxShape3D:
+		return false
+	var size := (shape.shape as BoxShape3D).size
+	var center := shape.global_position
+	return absf(at.x - center.x) <= size.x / 2.0 and absf(at.z - center.z) <= size.z / 2.0
+
+
 ## 16.48: cada pared agrietada del overworld nombra su roca del terreno con `terrain_id`, no con el nombre del nodo.
 func test_every_cracked_wall_has_its_terrain_rock() -> void:
 	var level: Node3D = (load(LEVEL) as PackedScene).instantiate()

@@ -2,8 +2,10 @@ extends SceneTree
 ## Arma la decoración de cada nivel (11.4 overworld) en levels/decor/<nivel>_decor.tscn, que el nivel
 ## instancia como "Decor". Lee el GridMap, las salas o zonas y lo jugable (los otros hijos del nivel) y reparte, según la
 ## receta de cada sala o zona, piezas contra las paredes, en las esquinas y en el piso, lejos del paso, de las puertas, de
-## los pozos y de lo jugable. Determinístico (semilla por sala): se puede correr de nuevo después de tocar un nivel.
-## godot --headless --path . --script res://tools/decorate_levels.gd
+## los pozos y de lo jugable. Determinístico (semilla por celda): se puede correr de nuevo después de tocar un nivel.
+## Parte del decor que ya estaba (11.227): las piezas de cada zona que siguen valiendo no se mueven, y lo que vuelve a salir
+## igual conserva nombre, orden y unique_id, así una corrida solo cambia lo que tocó el nivel o el terreno.
+## godot --headless --path . --script res://tools/decorate_levels.gd [-- --fresh]   (--fresh: de cero)
 
 const TERRACE_HEIGHT := 2.6
 const MESH := "res://assets/epiphany/meshes/%s.res"
@@ -39,6 +41,8 @@ const CLEARANCE := 1.8
 const DOOR_CLEARANCE := 2.6
 ## Más alto que esto, la pieza lleva colisión.
 const SOLID_HEIGHT := 0.45
+## Lo que el terreno nuevo mueve menos que esto (m) en altura queda donde estaba, para no ensuciar el diff.
+const SETTLE := 0.05
 const DIRS: Array[Vector2i] = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1)]
 const NORTH := Vector2i(0, -1)
 ## Hijos del nivel que no son jugables (no reservan lugar).
@@ -67,7 +71,11 @@ var _placed: Array[Vector3] = []
 var _portals: Array[Vector3] = []
 var _arenas: Array[Rect2] = []
 var _root: Node3D
-var _rng := RandomNumberGenerator.new()
+## Del decor anterior: por grupo, sus piezas [{kind, at, yaw, name}]; y el unique_id de cada nodo por su camino.
+var _before := {}
+var _ids := {}
+var _groups: Array[String] = []
+var _header := RegEx.create_from_string('\\[node name="([^"]+)"(?: type="[^"]+")?(?: parent="([^"]+)")? unique_id=(\\d+)')
 
 
 func _initialize() -> void:
@@ -81,6 +89,7 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 	_grid = level.get_node("GridMap")
 	_lib = _grid.mesh_library
 	_shapes = load("res://data/kits/overworld_kit.tres") if _lib.resource_path.ends_with("overworld_organico_kit.tres") else _lib
+	_remember(level, OUT % level_name)
 	_keep_out.clear()
 	_doors.clear()
 	_placed.clear()
@@ -119,14 +128,15 @@ func _decorate(level_name: String, area_script: String, recipe: Callable) -> voi
 		var group := Node3D.new()
 		group.name = area.name
 		_add(_root, group)
-		_rng.seed = hash(level_name + area.name)
 		recipe.call(area, _cells_in(area), group)
 		count += group.get_child_count()
 	if level_name == "overworld":
 		_plants()
+	_keep_names()
 	var packed := PackedScene.new()
 	packed.pack(_root)
 	ResourceSaver.save(packed, OUT % level_name)
+	_keep_ids(OUT % level_name)
 	print("decorate_levels: %s, %d piezas" % [level_name, count])
 	_root.free()
 	level.free()
@@ -185,17 +195,29 @@ func _overworld_zone(zone: Area3D, cells: Array[Vector3i], group: Node3D) -> voi
 	by_center.sort_custom(func(a: Vector3i, b: Vector3i) -> bool: return _center(a).distance_to(center) < _center(b).distance_to(center))
 	var anchor := Vector3.INF
 	for mesh_name: String in recipe.get("landmarks", []):
+		if _kept(group, mesh_name, CLEARANCE + 0.6, 2.2, 1) == 1:
+			if anchor == Vector3.INF:
+				anchor = _placed.back()
+			continue
 		for cell: Vector3i in by_center:
-			var at := _center(cell) + _jitter(0.3)
+			var rng := _cell_rng(zone, mesh_name, cell)
+			var at := _center(cell) + _jitter(rng, 0.3)
 			if _free(at, CLEARANCE + 0.6, 2.2) and (anchor == Vector3.INF or at.distance_to(anchor) < 3.2):
-				_mesh(group, mesh_name, at, _rng.randf() * TAU)
+				_mesh(group, mesh_name, at, rng.randf() * TAU)
 				if anchor == Vector3.INF:
 					anchor = at
 				break
 	var edge := ground.filter(func(c: Vector3i) -> bool: return _toward_walls(c) != Vector3.ZERO)
+	var missing := {}
 	for entry: Array in recipe.get("edge", []):
-		var spots := edge.map(func(c: Vector3i) -> Array: return [_center(c) + _toward_walls(c) * _rng.randf_range(0.3, 0.6) + _jitter(0.25), _rng.randf() * TAU])
-		for spot in _pick(spots, entry[1], 2.2, CLEARANCE):
+		missing[entry[0]] = entry[1] - _kept(group, entry[0], CLEARANCE, 2.2, entry[1])
+	for entry: Array in recipe.get("edge", []):
+		var spots := []
+		for cell: Vector3i in edge:
+			var rng := _cell_rng(zone, entry[0], cell)
+			spots.append([_center(cell) + _toward_walls(cell) * rng.randf_range(0.3, 0.6) + _jitter(rng, 0.25), rng.randf() * TAU, rng.randf()])
+		spots.sort_custom(func(a: Array, b: Array) -> bool: return a[2] < b[2])
+		for spot in _pick(spots, missing[entry[0]], 2.2, CLEARANCE):
 			_mesh(group, entry[0], spot[0], spot[1])
 
 
@@ -242,16 +264,156 @@ func _wall_faces(floors: Array, dirs: Array) -> Array:
 	return out
 
 
-## Elige hasta count lugares al azar que no estén cerca de lo jugable, de las puertas ni de otra pieza.
+## Los primeros count lugares (en el orden de `spots`) que no estén cerca de lo jugable, de las puertas ni de otra pieza.
 func _pick(spots: Array, count: int, spacing: float, clearance: float) -> Array:
 	var out := []
-	var pool := spots.duplicate()
-	while out.size() < count and not pool.is_empty():
-		var spot: Array = pool.pop_at(_rng.randi() % pool.size())
+	for spot: Array in spots:
+		if out.size() >= count:
+			break
 		if _free(spot[0], clearance, spacing):
 			out.append(spot)
 			_placed.append(spot[0])
 	return out
+
+
+## Cada celda sortea lo suyo, así lo que cambia en una no corre lo de las otras.
+func _cell_rng(zone: Node, mesh_name: String, cell: Vector3i) -> RandomNumberGenerator:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash("%s %s %s" % [zone.name, mesh_name, cell])
+	return rng
+
+
+## Las piezas de esa malla que ya estaban en el grupo, todavía sobre piso y lejos de lo jugable, se quedan aunque ya no les
+## toque por sorteo (aunque la zona se haya corrido); devuelve cuántas.
+func _kept(group: Node3D, mesh_name: String, clearance: float, spacing: float, count: int) -> int:
+	var kind := _kind_of(mesh_name)
+	var kept := 0
+	for piece: Dictionary in _before.get(String(group.name), []):
+		if kept >= count:
+			break
+		if piece.kind == kind and _on_ground(piece.at) and _free(piece.at, clearance, spacing):
+			_mesh(group, mesh_name, piece.at, piece.yaw)
+			kept += 1
+	return kept
+
+
+func _on_ground(at: Vector3) -> bool:
+	for cell in _grid.get_used_cells():
+		var center := _center(cell)
+		if absf(center.x - at.x) <= CELL / 2.0 + 0.01 and absf(center.z - at.z) <= CELL / 2.0 + 0.01 and absf(center.y - at.y) < 0.5 and _is_ground(cell):
+			return true
+	return false
+
+
+func _remember(level: Node3D, path: String) -> void:
+	_before.clear()
+	_ids.clear()
+	_groups.clear()
+	var decor := level.get_node_or_null(^"Decor")
+	if decor == null or "--fresh" in OS.get_cmdline_user_args():
+		return
+	for group in decor.get_children():
+		var pieces: Array[Dictionary] = []
+		for piece in group.get_children():
+			var xform := (piece as Node3D).transform
+			pieces.append({"kind": _kind(piece), "at": xform.origin, "yaw": (piece as Node3D).rotation.y, "basis": xform.basis, "name": String(piece.name)})
+		_before[String(group.name)] = pieces
+		_groups.append(String(group.name))
+	for found in _header.search_all(FileAccess.get_file_as_string(path)):
+		_ids[_path_of(found)] = found.get_string(3)
+
+
+func _kind(node: Node) -> String:
+	if not node.scene_file_path.is_empty():
+		return node.scene_file_path
+	var model := node.get_node_or_null(^"Model") if node is StaticBody3D else node
+	if model is MeshInstance3D and (model as MeshInstance3D).mesh:
+		return (model as MeshInstance3D).mesh.resource_path
+	return String(node.name).rstrip("0123456789")
+
+
+func _kind_of(mesh_name: String) -> String:
+	if mesh_name.begins_with("naturaleza/") and PLANTS.has(mesh_name.get_file()):
+		return PLANTS[mesh_name.get_file()]
+	return MESH % mesh_name
+
+
+func _key(kind: String, at: Vector3) -> String:
+	return "%s %.2f %.2f" % [kind, at.x, at.z]
+
+
+## Lo que vuelve a salir igual (lo mismo en el mismo lugar) toma el nombre y el lugar que tenía; lo nuevo va al final.
+func _keep_names() -> void:
+	var groups := _root.get_children()
+	groups.sort_custom(func(a: Node, b: Node) -> bool:
+		var i := _groups.find(String(a.name))
+		var j := _groups.find(String(b.name))
+		return i < j if i >= 0 and j >= 0 else i >= 0 and j < 0 or (i < 0 and j < 0 and a.get_index() < b.get_index()))
+	for group in groups:
+		_root.move_child(group, -1)
+	for group in _root.get_children():
+		var before: Array = _before.get(String(group.name), [])
+		var slot := {}
+		for i in before.size():
+			slot[_key(before[i].kind, before[i].at)] = i
+		var children := group.get_children()
+		var bases := children.map(func(child: Node) -> String: return String(child.name).rstrip("0123456789"))
+		var kinds := children.map(_kind)
+		for child in children:
+			child.name = "_%d" % child.get_index()
+		var matched := []
+		var fresh := []
+		for i in children.size():
+			var at: int = slot.get(_key(kinds[i], children[i].position), -1)
+			if at >= 0:
+				slot.erase(_key(before[at].kind, before[at].at))
+				matched.append([at, children[i]])
+			else:
+				fresh.append(i)
+		matched.sort_custom(func(a: Array, b: Array) -> bool: return a[0] < b[0])
+		var used := {}
+		for pair: Array in matched:
+			var old: Dictionary = before[pair[0]]
+			var node := pair[1] as Node3D
+			node.name = old.name
+			if absf(node.position.y - old.at.y) < SETTLE:
+				node.position.y = old.at.y
+			if node.basis.is_equal_approx(old.basis):
+				node.basis = old.basis
+		for piece: Dictionary in before:
+			used[piece.name] = true
+		for pair: Array in matched:
+			group.move_child(pair[1], -1)
+		for i: int in fresh:
+			var n := 1
+			while used.has(bases[i] if n == 1 else "%s%d" % [bases[i], n]):
+				n += 1
+			var name: String = bases[i] if n == 1 else "%s%d" % [bases[i], n]
+			used[name] = true
+			children[i].name = name
+			group.move_child(children[i], -1)
+
+
+## Los nodos que siguen en el mismo camino recuperan su unique_id (pack les da uno nuevo).
+func _keep_ids(path: String) -> void:
+	if _ids.is_empty():
+		return
+	var text := FileAccess.get_file_as_string(path)
+	var out := ""
+	var last := 0
+	for found in _header.search_all(text):
+		var id: String = _ids.get(_path_of(found), "")
+		if not id.is_empty():
+			out += text.substr(last, found.get_start(3) - last) + id
+			last = found.get_end(3)
+	FileAccess.open(path, FileAccess.WRITE).store_string(out + text.substr(last))
+
+
+func _path_of(found: RegExMatch) -> String:
+	var parent := found.get_string(2)
+	if parent.is_empty():
+		return ""
+	return found.get_string(1) if parent == "." else parent + "/" + found.get_string(1)
 
 
 func _free(at: Vector3, clearance: float, spacing: float) -> bool:
@@ -373,5 +535,5 @@ func _is_hole(cell: Vector3i) -> bool:
 	return item_name.begins_with("Hueco") or item_name.begins_with("Abismo")
 
 
-func _jitter(amount: float) -> Vector3:
-	return Vector3(_rng.randf_range(-amount, amount), 0.0, _rng.randf_range(-amount, amount))
+func _jitter(rng: RandomNumberGenerator, amount: float) -> Vector3:
+	return Vector3(rng.randf_range(-amount, amount), 0.0, rng.randf_range(-amount, amount))
