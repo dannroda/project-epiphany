@@ -932,8 +932,10 @@ shape = SubResource("CapsuleShape3D_32ebh")
 script = ExtResource("c_runner")
 hitbox_root = NodePath("../ModelController/Hitboxes")
 
-[node name="Equipment" type="Node" parent="." unique_id=508811436 node_paths=PackedStringArray("weapon_socket", "shield_hand_socket", "held_socket")]
+[node name="Equipment" type="Node" parent="." unique_id=508811436 node_paths=PackedStringArray("player", "visuals", "weapon_socket", "shield_hand_socket", "held_socket")]
 script = ExtResource("c_equipment")
+player = NodePath("..")
+visuals = NodePath("../ModelController/Visuals")
 weapon_socket = NodePath("../ModelController/Skeleton3D/Hand_R/WeaponSocket")
 shield_hand_socket = NodePath("../ModelController/Skeleton3D/Hand_L/ShieldSocket")
 held_socket = NodePath("../ModelController/Skeleton3D/Hand_L/BowSocket")
@@ -945,8 +947,9 @@ player = NodePath("..")
 target_indicator = NodePath("../TargetIndicator")
 detector_shape = NodePath("../TargetDetector/DetectorShape")
 
-[node name="InputBuffer" type="Node" parent="." unique_id=146017449]
+[node name="InputBuffer" type="Node" parent="." unique_id=146017449 node_paths=PackedStringArray("player")]
 script = ExtResource("c_input_buffer")
+player = NodePath("..")
 
 [node name="Aim" type="Node" parent="." unique_id=616678504 node_paths=PackedStringArray("player")]
 script = ExtResource("c_aim")
@@ -964,8 +967,9 @@ script = ExtResource("c_shield")
 player = NodePath("..")
 block_cone = NodePath("../ModelController/BlockCone")
 
-[node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying", "flash")]
+[node name="Carrier" type="Node" parent="." unique_id=1157206663 node_paths=PackedStringArray("socket", "anim_tree", "hide_while_carrying", "flash", "thrower")]
 script = ExtResource("c_carrier")
+thrower = NodePath("..")
 socket = NodePath("../ModelController/CarrySocket")
 flash = NodePath("../ModelController/Visuals/HitFlash")
 anim_tree = NodePath("../ModelController/AnimationTree")

@@ -17,9 +17,6 @@ var _landing := Vector3.INF
 
 func _enter() -> void:
 	player.attack_runner.stop()
-	if player.is_blocking():
-		blackboard.set_var(BB_IS_BLOCKING, false)
-		player.shield.set_guard(false)
 	_pull_time = 0.0
 	_landing = Vector3.INF
 	var item := player.usable_item(blackboard.get_var(BB_ITEM_BUTTON, 0))

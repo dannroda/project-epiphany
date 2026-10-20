@@ -16,6 +16,8 @@ extends Node
 @export var hide_while_carrying: Array[Node3D] = []
 ## Lo cargado destella y se ve tras las paredes como el cuerpo.
 @export var flash: HitFlash
+## Lo que tira: lo tirado no choca con él por thrower_grace segundos.
+@export var thrower: PhysicsBody3D
 
 var carried: RigidBody3D
 var _layer := 0
@@ -89,7 +91,6 @@ func throw(to: Vector3, flight_time: float) -> void:
 		return
 	var gravity := Vector3.DOWN * float(ProjectSettings.get_setting("physics/3d/default_gravity")) * body.gravity_scale
 	body.linear_velocity = (to - body.global_position) / flight_time - gravity * flight_time * 0.5
-	var thrower := get_parent() as PhysicsBody3D
 	if thrower:
 		body.add_collision_exception_with(thrower)
 		get_tree().create_timer(thrower_grace, false, true).timeout.connect(func() -> void:

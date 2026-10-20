@@ -11,9 +11,6 @@ var _presses := 0
 
 func _enter() -> void:
 	player.attack_runner.stop()
-	if player.is_blocking():
-		blackboard.set_var(BB_IS_BLOCKING, false)
-		player.shield.set_guard(false)
 	player.velocity = Vector3.ZERO
 	_presses = 0
 	player.anim_tree.set(&"parameters/Hurt/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

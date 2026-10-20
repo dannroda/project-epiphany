@@ -4,6 +4,8 @@ extends Node
 
 signal weapon_changed(item: ItemData)
 
+@export var player: PlayerCharacter
+@export var visuals: Node3D
 @export var weapon_socket: Node3D
 @export var shield_hand_socket: Node3D
 ## Donde va lo que se sostiene al usarlo (el arco), en la mano del escudo.
@@ -65,13 +67,11 @@ func show_shield_in_hand(in_hand: bool) -> void:
 
 
 func _dress(armor: ItemData) -> void:
-	var visuals := owner.get_node_or_null(^"ModelController/Visuals")
 	if visuals == null:
 		return
 	var dressed := armor != null and armor.body_material != null
 	var material: Material = armor.body_material if dressed else null
 	var guests := armor.guest_body_materials if dressed else guest_body_materials
-	var player := owner as PlayerCharacter
 	var slot := player.controls.slot if player else 0
 	if slot > 0 and slot <= guests.size():
 		material = guests[slot - 1]

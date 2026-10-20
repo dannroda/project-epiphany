@@ -13,9 +13,6 @@ var _iframes_given := false
 
 func _enter() -> void:
 	player.attack_runner.stop()
-	if player.is_blocking():
-		blackboard.set_var(BB_IS_BLOCKING, false)
-		player.shield.set_guard(false)
 	_elapsed = 0.0
 	_iframes_given = false
 	var input: Vector2 = blackboard.get_var(BB_INPUT_DIR, Vector2.ZERO)

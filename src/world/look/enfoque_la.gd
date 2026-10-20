@@ -1,5 +1,5 @@
 extends Node
-## Desenfoque de maqueta que sigue a la cámara (padre): nítido en el piso aunque se acerque al mostrar algo.
+## Desenfoque de maqueta que sigue a la cámara del viewport: nítido en el piso aunque se acerque al mostrar algo.
 ## Lo que está en el grupo TALL (los jefes altos) queda nítido hasta su metadata focus_height.
 
 const TALL := &"enfoque_alto"
@@ -9,7 +9,9 @@ const TALL := &"enfoque_alto"
 
 
 func _process(_delta: float) -> void:
-	var cam := get_parent() as Camera3D
+	var cam := get_viewport().get_camera_3d()
+	if cam == null:
+		return
 	var target := cam.get("target_node") as Node3D
 	var attributes := cam.attributes as CameraAttributesPractical
 	if target == null or attributes == null:

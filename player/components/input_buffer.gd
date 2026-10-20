@@ -2,6 +2,7 @@ class_name InputBuffer
 extends Node
 ## Recuerda una acción apretada por un rato, para que salga aunque se apriete un poco antes de tiempo.
 
+@export var player: PlayerCharacter
 @export var window := 0.15
 @export var actions: Array[StringName] = [&"attack", &"dodge", &"item_1", &"item_2"]
 
@@ -9,7 +10,6 @@ var _pressed_at: Dictionary[StringName, float] = {}
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	var player := get_parent() as PlayerCharacter
 	var controls := player.controls if player else null
 	for action in actions:
 		if controls.event_pressed(event, action) if controls else event.is_action_pressed(action):

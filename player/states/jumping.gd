@@ -25,9 +25,6 @@ var _long := false
 
 func _enter() -> void:
 	player.attack_runner.stop()
-	if player.is_blocking():
-		blackboard.set_var(BB_IS_BLOCKING, false)
-		player.shield.set_guard(false)
 	_elapsed = 0.0
 	_left_floor = false
 	_start_y = player.global_position.y

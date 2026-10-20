@@ -8,6 +8,7 @@ func _setup() -> void:
 	player = agent
 	blackboard.set_var(PlayerState.BB_TARGET, null)
 	blackboard.set_var(PlayerState.BB_IS_BLOCKING, false)
+	active_state_changed.connect(func(_current: LimboState, _previous: LimboState) -> void: _sync_guard())
 
 	add_transition($Idle, $Moving, "move")
 	add_transition($Idle, $Attacking, "attack")

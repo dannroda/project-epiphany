@@ -179,3 +179,18 @@ func test_the_guard_fades_in_on_the_shield_arm_only() -> void:
 	await tree.create_timer(0.4).timeout
 	assert_true(not player.anim_tree.get(&"parameters/Guard/active"), "al soltar, la guardia baja")
 	setup[1].reset()
+
+
+## Entrar a un estado sin can_guard baja la guardia en el mismo cambio, sin esperar al próximo cuadro (16.37).
+func test_dodging_lowers_the_guard_at_once() -> void:
+	var setup: Array = await _setup(&"shield_wood")
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[2]
+	Input.action_press(&"z-lock")
+	await tree.process_frame
+	await tree.physics_frame
+	assert_eq(player.is_blocking(), true, "cubriéndose")
+	assert_true(player.movement_state.dispatch("dodge"), "esquiva")
+	assert_eq(player.is_blocking(), false, "al esquivar baja la guardia enseguida")
+	Input.action_release(&"z-lock")
+	setup[1].reset()
