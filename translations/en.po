@@ -1102,12 +1102,12 @@ msgid "Nosotros fuimos los últimos. Los que vengan después ya no van a saber e
 msgstr "We were the last. Those who come after will no longer know the way."
 
 msgctxt "ow_cliff_heart_1"
-msgid "Cuando el Ojo bajó, un corazón se partió en cuatro y sus pedazos rodaron lejos."
-msgstr "When the Eye came down, a heart broke in four and its pieces rolled far away."
+msgid "Cuando el Ojo bajó, un corazón se partió en dieciséis y sus pedazos rodaron lejos."
+msgstr "When the Eye came down, a heart broke in sixteen and its pieces rolled far away."
 
 msgctxt "ow_cliff_heart_2"
-msgid "Uno se escondió entre el pasto alto. Dos esperan detrás de la piedra herida. El último espera junto al carcaj del cazador, tras la reja que abre el ojo."
-msgstr "One hid among the tall grass. Two wait behind the wounded stone. The last waits beside the hunter's quiver, past the gate the eye opens."
+msgid "Tres duermen tras la piedra herida, cinco esperan en las salas de los antiguos, y el resto donde solo llega quien ya tiene cada herramienta."
+msgstr "Three sleep behind the wounded stone, five wait in the halls of the ancients, and the rest lie where only one who already bears every tool can reach."
 
 msgctxt "ow_start_combat_1"
 msgid "Con {btn:attack} se golpea, y golpeando seguido se encadena. Mantené {btn:block} para cubrirte."
