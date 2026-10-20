@@ -3403,20 +3403,20 @@ VFX de combate en el estilo del juego: estela de la espada y partículas low pol
 
 **Relacionadas:** 11.33 Combate: sacar lo tosco; 10.28 Playtest de revisión (lo que está en Revisión); 12.9 Efectos con malla; 12.13 Reajuste de estilo toon de todos los assets
 
-### 11.50 Audio del jefe · Pendiente
+### 11.50 Audio del jefe · En curso
 
 **Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `jefe`, `audio`
 
 Audio propio para el jefe: voz mecánica, chirridos, carga del orbe y golpes con grave, y un tema de música con capas por fase en lugar del placeholder.
 
-- [ ] Voz propia
+- [x] Voz propia
   Zumbido mecánico de fondo, chirrido de párpados, carga del orbe, rugido de fase, golpes con más grave.
 - [ ] Tema de música
   Reemplazar el placeholder (Music.boss_fight) por un tema propio, con capas por fase.
 
 **Prueba:** La pelea tiene sonido propio y la música cambia con las fases.
 
-**Notas:** Skills: `disciplines:audio-design`, `godot:godot-audio`.
+**Notas:** -5c (2026-10-19), paso 1 en d2cadaf2: tools/audio/render_boss_sfx.py (numpy + ffmpeg libvorbis) renderiza assets/audio/sfx/boss/*.ogg: zumbido en loop (Body/Hum, se apaga en el clip de muerte), chirridos de párpados (method keys en los clips de Lids), carga del orbe y del rayo (pistas de audio en OrbMuzzle/ChargeSound, una aturdida las corta), rugido (Roar.sound = boss_roar; los demás jefes siguen con roar), golpes de las manos (boss_slam, también la Mano) y golpes al ojo (boss_eye_hit). test_boss_juice › test_the_boss_has_its_own_voice. Falta que Daniel los escuche: cambios = re-render de los .ogg. Paso 2 (tema) en curso.
 
 **Referencias:** `gdd.md#jefe`
 

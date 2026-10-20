@@ -3,7 +3,7 @@
   "checklist": [
     {
       "detail": "Zumbido mecánico de fondo, chirrido de párpados, carga del orbe, rugido de fase, golpes con más grave.",
-      "done": false,
+      "done": true,
       "text": "Voz propia"
     },
     {
@@ -22,7 +22,7 @@
     }
   ],
   "milestone": "m11",
-  "notes": "Skills: `disciplines:audio-design`, `godot:godot-audio`.",
+  "notes": "-5c (2026-10-19), paso 1 en d2cadaf2: tools/audio/render_boss_sfx.py (numpy + ffmpeg libvorbis) renderiza assets/audio/sfx/boss/*.ogg: zumbido en loop (Body/Hum, se apaga en el clip de muerte), chirridos de párpados (method keys en los clips de Lids), carga del orbe y del rayo (pistas de audio en OrbMuzzle/ChargeSound, una aturdida las corta), rugido (Roar.sound = boss_roar; los demás jefes siguen con roar), golpes de las manos (boss_slam, también la Mano) y golpes al ojo (boss_eye_hit). test_boss_juice › test_the_boss_has_its_own_voice. Falta que Daniel los escuche: cambios = re-render de los .ogg. Paso 2 (tema) en curso.",
   "order": 50,
   "priority": "low",
   "refs": [
@@ -31,12 +31,12 @@
       "section": "jefe"
     }
   ],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "jefe",
     "audio"
   ],
   "test": "La pelea tiene sonido propio y la música cambia con las fases.",
   "title": "Audio del jefe",
-  "updated_at": "2026-10-20T01:30:01.119Z"
+  "updated_at": "2026-10-20T01:39:12.252Z"
 }
