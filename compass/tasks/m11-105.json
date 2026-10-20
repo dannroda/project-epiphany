@@ -2,15 +2,15 @@
   "assignee": "project-epiphany-72",
   "checklist": [
     {
-      "done": false,
+      "done": true,
       "text": "Propuesta"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Listar las mecánicas nuevas y dónde aparecen por primera vez: cada ítem (pluma, arco, sandalias, gancho, escudo espejo, bombas, martillo) y sus usos no obvios (flecha al ojo, salto largo, reflejar el haz, martillazo a la placa STRIKE), además de levantar, empujar, placas, etc."
     },
     {
-      "done": false,
+      "done": true,
       "text": "Mini tutorial al agarrar un ítem: después del item get, un aviso corto con el botón del dispositivo actual y la mecánica que abre (p. ej. arco: 'dispará a los ojos de piedra')"
     },
     {
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Repensar el tutorial",
-  "updated_at": "2026-10-20T06:41:19.803Z"
+  "updated_at": "2026-10-20T06:41:29.972Z"
 }
