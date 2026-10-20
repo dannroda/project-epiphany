@@ -2,9 +2,11 @@ class_name TopDownCamera
 extends Camera3D
 
 const GROUP := &"room_camera"
-const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 
 @export var target_node: PlayerCharacter
+## El acercamiento a lo activado y el giro cuando una pared tapa a un player, nodos hijos con sus ajustes.
+@export var revealer: CameraReveal
+@export var occlusion: CameraOcclusion
 ## FOV 40 y unos 60° de inclinación; una pantalla abarca ≈ 26 × 14.5 m, una sala entera del templo con sus puertas.
 @export var offset: Vector3 = Vector3(0, 17.4, 10.0)
 ## El `fov` de la cámara (lo pisa al arrancar: así se puede poner desde la escena). Lejos y angosta casi no hay perspectiva.
@@ -36,18 +38,6 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 @export var aim_look_ahead := 3.0
 @export var look_ahead_speed := 4.0
 
-@export_group("Mostrar lo activado")
-@export var reveal_pan_time := 0.6
-## Viñeta y luz de todos los acercamientos (la cámara del preset no se usa): pisan a las de la sala mientras dura. Un
-## AmbienteZoom hijo de lo mostrado (la pelea, la puerta) o de la cámara lo reemplaza.
-@export var reveal_look: AmbientePreset = preload("res://data/ambientes/zoom.tres")
-## Lo que tarda el ambiente del acercamiento en entrar y en volver al de la sala.
-@export var reveal_tone_time := 0.6
-## Cuánto se queda mirando después de abrir.
-@export var reveal_hold := 0.9
-## Se acerca a lo activado: fracción del `offset` normal.
-@export_range(0.3, 1.0) var reveal_zoom := 0.6
-
 @export_group("Cinemática")
 ## Viñeta y luz mientras otra cámara filma (cutscenes, tomas del teaser): sin el marco de la sala, que solo calza con
 ## esta cámara. Al salir vuelve lo de la sala.
@@ -72,12 +62,6 @@ const SKIP_ACTIONS: Array[StringName] = [&"ui_accept", &"attack", &"interact"]
 ## Metros de piso más allá del borde sur que entran en el encuadre de una sala fija (la cresta de la pared sur).
 @export var south_margin := 0.0
 
-@export_group("Oclusión")
-## Si una pared tapa a un player, la cámara gira hasta quedar encima de él en este tiempo (s) y vuelve al salir.
-@export var overhead_time := 1.5
-## Segundos que sigue encima después de que la pared deja de taparlo: bordeando un risco no sube y baja a cada paso.
-@export var overhead_hold := 0.8
-
 @export_group("Co-op")
 ## Metros que quedan entre el borde de la pantalla y el player más alejado cuando el grupo no se puede abrir más.
 @export var leash_margin := 1.5
@@ -93,25 +77,13 @@ const CUTAWAY_MATERIALS: Array[ShaderMaterial] = [
 const SOUTH_WALL_DEPTH := 2.0
 ## El corte arranca un poco dentro de la sala: los ladrillos de la pared sobresalen de la celda.
 const SOUTH_WALL_RELIEF := 0.3
-## Alturas (sobre los pies) hacia donde se tiran rayos desde la cámara para saber si una pared tapa al player.
-const HOLE_PROBES: Array[float] = [0.8, 1.5]
 ## Un salto de más que esto en un cuadro es un teletransporte (reaparecer, pozo): el borde invisible no lo deshace.
 const TELEPORT_DISTANCE := 1.0
 
 var trauma := 0.0
-## Lo último que se le pasó a las paredes (pies del player; w, el agujero, queda en 0: la cámara se pone encima).
-var player_hole := Vector4.ZERO
-## Alguna pared tapa a un player desde el ángulo normal: la cámara está cenital o yendo hacia ahí.
-var occluded := false
-var _overhead := 0.0
-var _overhead_speed := 0.0
-var _clear_time := 0.0
-var _walls: Dictionary[int, bool] = {}
 ## Sala actual; null = overworld (seguimiento libre).
 var room: Room
 var transitioning := false
-var revealing := false
-var _skippable := false
 ## Dónde mira la cámara (sin la sacudida); lo usan los tests y el overlay.
 var focus := Vector3.ZERO
 var _shake_time := 0.0
@@ -119,11 +91,7 @@ var _kick := Vector2.ZERO
 var _look := Vector3.ZERO
 var _look_ahead := Vector3.ZERO
 var _mask: Node3D
-var _skip := false
 var _last_positions: Dictionary[PlayerCharacter, Vector3] = {}
-var _player_rids: Array[RID] = []
-var _ray := PhysicsRayQueryParameters3D.new()
-var _hit := PhysicsIntersectRayResult3D.new()
 var _level_offset := Vector3.ZERO
 var _level_fov := 0.0
 var cinematic := false
@@ -131,6 +99,13 @@ var cinematic := false
 var _look_base := {}
 var _room_look := {}
 var _look_tween: Tween
+
+var revealing: bool:
+	get: return revealer.revealing
+var occluded: bool:
+	get: return occlusion.occluded
+var player_hole: Vector4:
+	get: return occlusion.player_hole
 
 
 func _ready() -> void:
@@ -145,16 +120,10 @@ func _ready() -> void:
 		target_node = get_parent()
 	look_at_from_position(global_position, global_position - offset, Vector3.UP)
 	add_to_group(GROUP)
-	Players.joined.connect(_forget_player_rids)
-	Players.left.connect(_forget_player_rids)
 	process_physics_priority = 100
 	_mask = ROOM_MASK.instantiate()
 	add_child(_mask)
 	_cut_south_wall(null)
-
-
-func _forget_player_rids(_player: PlayerCharacter) -> void:
-	_player_rids.clear()
 
 
 static func find(tree: SceneTree) -> TopDownCamera:
@@ -363,7 +332,7 @@ func enter_room(new_room: Room, crosser: PlayerCharacter = null) -> void:
 
 func _slide_offset(value: Vector3) -> void:
 	offset = value
-	global_basis = Basis.looking_at(-_eye(), Vector3.FORWARD)
+	global_basis = Basis.looking_at(-eye(), Vector3.FORWARD)
 
 
 ## Offset y campo de visión de la sala (su AmbientePreset o camera_offset/camera_fov), y la viñeta y la luz del preset
@@ -379,8 +348,8 @@ func _apply_room_view(target: Room, look_time: float) -> void:
 			fov = preset.fov
 		else:
 			fov = target.camera_fov if target.camera_fov > 0.0 else _level_fov
-	_room_look = target.ambiente.targets(_world()) if target.ambiente else {}
-	_fade_look(look_time)
+	_room_look = target.ambiente.targets(world()) if target.ambiente else {}
+	fade_look(look_time)
 
 
 ## Modo cinemática: pone `cinematic_look` encima de lo de la sala (o lo saca), con fundido salvo `instant`.
@@ -388,7 +357,7 @@ func set_cinematic(on: bool, instant := false) -> void:
 	if on == cinematic:
 		return
 	cinematic = on
-	_fade_look(0.0 if instant else cinematic_tone_time)
+	fade_look(0.0 if instant else cinematic_tone_time)
 
 
 ## La viñeta y la luz que tocan ahora: las del nivel, encima las del preset de la sala y, en cinemática, las de
@@ -396,7 +365,7 @@ func set_cinematic(on: bool, instant := false) -> void:
 func target_look() -> Dictionary:
 	var layers: Array[Dictionary] = [_room_look]
 	if cinematic and cinematic_look:
-		layers.append(cinematic_look.targets(_world()))
+		layers.append(cinematic_look.targets(world()))
 	for layer in layers:
 		_remember_base(layer)
 	var look := {}
@@ -417,8 +386,16 @@ func _remember_base(values: Dictionary) -> void:
 				base[property] = holder.get(property)
 
 
+## Pone `values` encima de lo de ahora en `time` segundos (el acercamiento); `fade_look` vuelve.
+func tween_look_to(values: Dictionary, time: float) -> void:
+	if _look_tween:
+		_look_tween.kill()
+	_remember_base(values)
+	_look_tween = _tween_mood(values, time)
+
+
 ## Va a `target_look()` en `time` segundos (0: de golpe).
-func _fade_look(time: float) -> void:
+func fade_look(time: float) -> void:
 	if _look_tween:
 		_look_tween.kill()
 	var look := target_look()
@@ -430,7 +407,7 @@ func _fade_look(time: float) -> void:
 			holder.set(property, look[holder][property])
 
 
-func _world() -> WorldEnvironment:
+func world() -> WorldEnvironment:
 	var scene := get_tree().current_scene
 	if scene == null:
 		return null
@@ -475,88 +452,9 @@ func _cut_south_wall(cut_room: Room) -> void:
 		material.set_shader_parameter(&"cut_lip", lip)
 
 
-## Si alguna pared tapa a un player desde el ángulo normal, en vez de recortarle un agujero (11.134) la cámara gira
-## hasta quedar encima en overhead_time, y vuelve al salir. Las paredes siguen leyendo player_hole, con w en 0.
-## Dentro de una sala no: está hecha para verse entera desde su cámara, y sus bordes y muros bajos no cuentan.
-func _update_player_hole(delta: float) -> void:
-	var hidden := false
-	if target_node and room == null:
-		for player in framed():
-			if _player_hidden(player):
-				hidden = true
-				break
-	_clear_time = 0.0 if hidden else _clear_time + delta
-	occluded = hidden or (occluded and _clear_time < overhead_hold)
-	_damp_overhead(1.0 if occluded else 0.0, delta)
-	var feet := target_node.global_position if target_node else Vector3.ZERO
-	player_hole = Vector4(feet.x, feet.y, feet.z, 0.0)
-	RenderingServer.global_shader_parameter_set(&"player_hole", player_hole)
-
-
-## Resorte críticamente amortiguado: arranca y frena sin tirones aunque cambie de idea a mitad de camino.
-func _damp_overhead(target: float, delta: float) -> void:
-	var omega := 2.5 * 2.0 / maxf(overhead_time, 0.01)
-	var x := omega * delta
-	var decay := 1.0 / (1.0 + x + 0.48 * x * x + 0.235 * x * x * x)
-	var change := _overhead - target
-	var step := (_overhead_speed + omega * change) * delta
-	_overhead_speed = (_overhead_speed - omega * step) * decay
-	_overhead = clampf(target + (change + step) * decay, 0.0, 1.0)
-
-
 ## El offset de la cámara: el normal, o girado hasta quedar encima del foco mientras algo tapa a un player.
-func _eye() -> Vector3:
-	return offset.slerp(Vector3.UP * offset.length(), _overhead)
-
-
-## Solo tapan las paredes: lo que antes se recortaba con el agujero (GridMap y mallas con el shader de pared). Árboles,
-## cardones y objetos no: detrás de esos queda la silueta. Se mira desde donde estaría la cámara normal.
-func _player_hidden(player: PlayerCharacter) -> bool:
-	var space := get_world_3d().direct_space_state
-	for height in HOLE_PROBES:
-		var point := player.global_position + Vector3.UP * height
-		var eye := point + offset if orthographic else focus + offset
-		_ray.from = eye
-		_ray.to = point
-		_ray.collision_mask = 1
-		if _player_rids.is_empty():
-			_player_rids.assign(Players.all.map(func(each: PlayerCharacter) -> RID: return each.get_rid()))
-		_ray.exclude = _player_rids
-		for attempt in 4:
-			if not space.intersect_ray_into(_ray, _hit):
-				break
-			if _is_wall(_hit.collider):
-				return true
-			_ray.exclude += [_hit.collider_rid]
-	return false
-
-
-func _is_wall(collider: Object) -> bool:
-	if collider is GridMap:
-		return true
-	if not collider is StaticBody3D:
-		return false
-	var id := collider.get_instance_id()
-	if not _walls.has(id):
-		var body := collider as StaticBody3D
-		var meshes := body.find_children("*", "GeometryInstance3D", true, false)
-		if body.get_parent() is GeometryInstance3D:
-			meshes.append(body.get_parent())
-		_walls[id] = meshes.any(_reads_player_hole)
-	return _walls[id]
-
-
-static func _reads_player_hole(geometry: GeometryInstance3D) -> bool:
-	var materials: Array[Material] = [geometry.material_override]
-	if geometry is MeshInstance3D:
-		var mesh_instance := geometry as MeshInstance3D
-		for surface in mesh_instance.get_surface_override_material_count():
-			materials.append(mesh_instance.get_active_material(surface))
-	for material in materials:
-		var shader_material := material as ShaderMaterial
-		if shader_material and shader_material.shader and shader_material.shader.code.contains("player_hole"):
-			return true
-	return false
+func eye() -> Vector3:
+	return offset.slerp(Vector3.UP * offset.length(), occlusion.overhead)
 
 
 ## Donde se reaparece al morir. La sala del jefe no cuenta: se vuelve a la antesala.
@@ -623,7 +521,7 @@ func _physics_process(delta: float) -> void:
 	focus = player_position + desired_offset + _look_ahead + _look
 	if room:
 		focus = _clamp(focus)
-	var eye := _eye()
+	var eye := eye()
 	global_position = global_position.lerp(focus + eye, 1.0 - exp(-smooth_speed * delta))
 	global_basis = Basis.looking_at(-eye, Vector3.FORWARD)
 	if OS.is_debug_build():
@@ -655,8 +553,6 @@ func _hold_together(players: Array[PlayerCharacter]) -> void:
 
 ## Los tests la apagan (el runner, antes de cada test) salvo los que prueban el acercamiento.
 static var unlock_reveals := true
-## Cuadros que se queda mirando después de que termina de abrirse.
-const REVEAL_TAIL_FRAMES := 4
 
 ## Lo que se destraba por una acción (switches, puzzle, horda) se muestra con `reveal`.
 static func reveal_unlock(target: Node3D, action: Callable) -> void:
@@ -666,19 +562,19 @@ static func reveal_unlock(target: Node3D, action: Callable) -> void:
 		action.call()
 
 
-## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera (`hold`, o `reveal_hold` si es
-## negativo) y vuelve al player. Si no hay cámara, el juego ya está en pausa o `target` está en una sala sin player
+## Pausa, lleva la cámara a `target`, corre `action` (abrir la puerta…), espera (`hold`, o lo que tarda en abrirse si
+## es negativo) y vuelve al player. Si no hay cámara, el juego ya está en pausa o `target` está en una sala sin player
 ## (oculta), solo corre `action`. `skippable`: se
 ## corta con SKIP_ACTIONS (la presentación de un jefe que ya viste).
 static func reveal(target: Node3D, action: Callable, hold := -1.0, skippable := false) -> void:
-	var camera := target.get_tree().get_first_node_in_group(GROUP) as TopDownCamera
+	var camera := find(target.get_tree())
 	if camera == null or camera.revealing or camera.transitioning or target.get_tree().paused or SaveManager.loading \
 			or not _in_a_player_room(target):
 		action.call()
 		return
-	camera._skippable = skippable
-	await camera._reveal(target, action, hold)
-	camera._skippable = false
+	camera.revealer.skippable = skippable
+	await camera.revealer.run(target, action, hold)
+	camera.revealer.skippable = false
 
 
 ## Las salas que no tienen player están ocultas: lo que se abre en otra sala no se muestra. Una puerta en el hueco
@@ -696,83 +592,11 @@ static func _in_a_player_room(target: Node3D) -> bool:
 
 ## Corta lo que queda del acercamiento en curso (la intro del jefe se puede saltar).
 func skip_reveal() -> void:
-	if revealing:
-		_skip = true
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not revealing or not _skippable:
-		return
-	for action in SKIP_ACTIONS:
-		if event.is_action_pressed(action):
-			skip_reveal()
-			get_viewport().set_input_as_handled()
-			return
-
-
-func _exit_tree() -> void:
-	RenderingServer.global_shader_parameter_set(&"player_hole", Vector4.ZERO)
-	if revealing:
-		revealing = false
-		Pause.release(&"reveal")
-
-
-## Foco del acercamiento: el objetivo (o su `reveal_point()`, si lo tiene), a la altura del player.
-func reveal_focus(target: Node3D) -> Vector3:
-	var point: Vector3 = target.call(&"reveal_point") if target.has_method(&"reveal_point") else target.global_position
-	point.y = target_node.global_position.y
-	return point
-
-
-func _reveal(target: Node3D, action: Callable, hold: float) -> void:
-	var tree := get_tree()
-	var target_mode := target.process_mode
-	revealing = true
-	_skip = false
-	process_mode = PROCESS_MODE_ALWAYS
-	target.process_mode = PROCESS_MODE_ALWAYS
-	Pause.hold(&"reveal")
-	var back := global_position
-	var zoom: float = target.call(&"reveal_zoom", reveal_zoom) if target.has_method(&"reveal_zoom") else reveal_zoom
-	var look := _reveal_preset(target)
-	var mood := look.targets(_world()) if look else {}
-	if _look_tween:
-		_look_tween.kill()
-	_remember_base(mood)
-	_tween_mood(mood)
-	await _pan(reveal_focus(target) + _eye() * zoom)
-	if not is_inside_tree():
-		return
-	var left := 0.0
-	if is_instance_valid(target):
-		action.call()
-		left = _reveal_time(target, hold)
-	while left > 0.0 and not _skip and is_inside_tree():
-		await tree.process_frame
-		left -= get_process_delta_time()
-	for i in REVEAL_TAIL_FRAMES:
-		if _skip:
-			break
-		await tree.process_frame
-	_fade_look(reveal_tone_time)
-	await _pan(back)
-	if is_instance_valid(target):
-		target.process_mode = target_mode
-	process_mode = PROCESS_MODE_INHERIT
-	Pause.release(&"reveal")
-	revealing = false
-
-
-func _reveal_preset(target: Node) -> AmbientePreset:
-	for node: Node in [target, self]:
-		for child in node.get_children():
-			if child is AmbienteZoom and child.preset:
-				return child.preset
-	return reveal_look
+	revealer.skip()
 
 
 ## Lleva cada objeto (TonoLA, Environment) a sus valores {propiedad: valor}.
-func _tween_mood(values: Dictionary, time := reveal_tone_time) -> Tween:
+func _tween_mood(values: Dictionary, time: float) -> Tween:
 	if values.is_empty():
 		return null
 	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -780,26 +604,6 @@ func _tween_mood(values: Dictionary, time := reveal_tone_time) -> Tween:
 		for property: String in values[holder]:
 			tween.tween_property(holder, NodePath(property), values[holder][property], time)
 	return tween
-
-
-## Lo que tarda en abrirse lo mostrado (puerta, reja, puente); sin animación conocida, `reveal_hold`.
-func _reveal_time(target: Node3D, hold: float) -> float:
-	if hold >= 0.0:
-		return hold
-	for property: StringName in [&"open_time", &"duration"]:
-		if property in target:
-			return target.get(property)
-	return reveal_hold
-
-
-func _pan(to: Vector3) -> void:
-	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, "global_position", to, reveal_pan_time)
-	while tween.is_running() and not _skip and is_inside_tree():
-		await get_tree().process_frame
-	tween.kill()
-	if is_inside_tree():
-		global_position = to
 
 
 ## Sacudida por trauma: suma, decae sola y mueve solo el encuadre (h/v offset), no la cámara.
@@ -812,7 +616,6 @@ func add_trauma(amount: float, direction := Vector3.ZERO) -> void:
 
 
 func _process(delta: float) -> void:
-	_update_player_hole(delta)
 	_kick = _kick.lerp(Vector2.ZERO, 1.0 - exp(-8.0 * delta))
 	if trauma <= 0.0:
 		h_offset = _kick.x

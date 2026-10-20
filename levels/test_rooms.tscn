@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="p_player"]
 [ext_resource type="Texture2D" uid="uid://r23yquaky7lu" path="res://assets/Prototype Textures/PNG/Dark/texture_07.png" id="tex_grid"]
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="tex_sky"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="t_camera"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="ui_hud"]
 [ext_resource type="PackedScene" path="res://src/world/push_block.tscn" id="w_block"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="w_chest"]
@@ -237,9 +237,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 2)
 script = ExtResource("w_spawn")
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1077481871 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=1077481871 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 12, 9)
-script = ExtResource("t_camera")
 target_node = NodePath("../Player")
 
 [node name="HUD" parent="." unique_id=715451905 instance=ExtResource("ui_hud")]

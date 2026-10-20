@@ -32,7 +32,7 @@
 [ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="c2_room"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="c3_player"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="c4_spawn"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="c5_camera"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="c7_portal"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/bomb_cave_navmesh.tres" id="nav_cave"]
@@ -258,11 +258,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
 script = ExtResource("26_u8ndl")
 config = ExtResource("27_euck1")
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1855642916 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=1855642916 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 13.4, 7.7)
 attributes = SubResource("CameraAttributesPractical_3jciw")
 fov = 40.0
-script = ExtResource("c5_camera")
 target_node = NodePath("../Player")
 offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0

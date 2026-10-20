@@ -78,7 +78,7 @@
 [ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="65_ilu4u"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="66_2bu1c"]
 [ext_resource type="ArrayMesh" uid="uid://c133y6v4an5xu" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_cumbre_la.res" id="66_62nxm"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="67_fxe5v"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="68_diwyx"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="68_j1npm"]
 [ext_resource type="Script" uid="uid://cpj0lhdoljshc" path="res://src/world/look/caida_la.gd" id="69_ckdpb"]
@@ -2636,11 +2636,10 @@ target_spawn = &"cumbre"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=2047061363]
 shape = SubResource("BoxShape3D_xbu6j")
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1412292101 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=1412292101 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 13.4, 29.7)
 attributes = SubResource("CameraAttributesPractical_ojknh")
 fov = 40.0
-script = ExtResource("67_fxe5v")
 target_node = NodePath("../Player")
 offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0

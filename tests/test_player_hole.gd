@@ -67,11 +67,11 @@ func test_only_walls_turn_the_camera_overhead() -> void:
 	var level := tree.current_scene
 	var camera := level.get_node(^"TopDownCamera") as TopDownCamera
 	var risco := level.get_node(^"Terreno/Parte0/riscos_0").find_children("*", "StaticBody3D", true, false)
-	assert_true(not risco.is_empty() and camera.call(&"_is_wall", risco[0]), "la roca del terreno es pared")
+	assert_true(not risco.is_empty() and camera.occlusion.call(&"_is_wall", risco[0]), "la roca del terreno es pared")
 	var props := 0
 	for body in level.find_children("Body", "StaticBody3D", true, false):
 		if String(body.get_parent().name).rstrip("0123456789_") in ["Arbol", "Cardon", "QuenoaChica"]:
-			assert_true(not camera.call(&"_is_wall", body), "%s no es pared" % body.get_parent().name)
+			assert_true(not camera.occlusion.call(&"_is_wall", body), "%s no es pared" % body.get_parent().name)
 			props += 1
 	assert_true(props > 100, "revisó los árboles y cardones (%d)" % props)
 	var player := tree.get_first_node_in_group(&"player") as Node3D
@@ -124,7 +124,7 @@ func test_rooms_never_turn_the_camera_overhead() -> void:
 	for x in range(int(bounds.position.x), int(bounds.end.x)):
 		for z in range(int(bounds.position.y), int(bounds.end.y)):
 			player.global_position = Vector3(x + 0.5, camera.room.floor_y() + 0.1, z + 0.5)
-			if camera.call(&"_player_hidden", player):
+			if camera.occlusion.call(&"_player_hidden", player):
 				spot = player.global_position
 				break
 		if spot != Vector3.INF:

@@ -45,7 +45,7 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="55_h1m6d"]
 [ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="56_0sq8t"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="58_gtsey"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="59_uscax"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="60_km5gt"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="69_oqocf"]
 [ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="76_056xl"]
@@ -1815,11 +1815,10 @@ target_spawn = &"totora"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=476630338]
 shape = SubResource("BoxShape3D_x275d")
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=192864954 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=192864954 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 13.4, 27.7)
 attributes = SubResource("CameraAttributesPractical_hvvlw")
 fov = 40.0
-script = ExtResource("59_uscax")
 target_node = NodePath("../Player")
 offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0

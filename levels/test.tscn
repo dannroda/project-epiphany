@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="2_pnvjf"]
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="3_qhvcx"]
 [ext_resource type="Script" uid="uid://4wgrqa57jyfo" path="res://levels/test_object.gd" id="4_r4e4k"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="5_u45fp"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="Script" uid="uid://boos1wd2wsju2" path="res://src/debug/camera_enabler.gd" id="6_u45fp"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="8_2grjb"]
 [ext_resource type="Resource" uid="uid://bbgcgd3i6bnyn" path="res://data/dialogue/test_tablets.dialogue" id="d_tablets"]
@@ -135,9 +135,8 @@ mesh = SubResource("BoxMesh_sg7w7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Caja2" unique_id=802466592]
 shape = SubResource("BoxShape3D_sg7w7")
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=391367608 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=391367608 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 8, 4)
-script = ExtResource("5_u45fp")
 target_node = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1701654757]

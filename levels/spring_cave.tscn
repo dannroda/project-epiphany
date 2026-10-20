@@ -6,7 +6,7 @@
 [ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_fq7yj"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="3_player"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="4_spawn"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="5_camera"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="6_hud"]
 [ext_resource type="Script" uid="uid://vc4qe4pb8mub" path="res://src/world/water/water_pool.gd" id="7_fxjfy"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="7_portal"]
@@ -342,11 +342,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
 script = ExtResource("4_spawn")
 id = &"entrada"
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=856030793 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=856030793 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.4, 15.7)
 attributes = SubResource("CameraAttributesPractical_b4e3s")
 fov = 40.0
-script = ExtResource("5_camera")
 target_node = NodePath("../Player")
 offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0

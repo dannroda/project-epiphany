@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://c0xawh4avsi1d" path="res://src/entities/enemy.tscn" id="2_enemy"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="3_camera"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 
 [node name="TestTargeting" type="Node3D" unique_id=1161424260]
 
@@ -21,10 +21,9 @@ transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, 0, 10, 0)
 
 [node name="Player" parent="." unique_id=1716161528 instance=ExtResource("1_player")]
 
-[node name="Camera" type="Camera3D" parent="." unique_id=629224864 node_paths=PackedStringArray("target_node")]
+[node name="Camera" parent="." unique_id=629224864 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, 0, 12, 7)
 current = true
-script = ExtResource("3_camera")
 target_node = NodePath("../Player")
 
 [node name="Left" parent="." unique_id=321893998 instance=ExtResource("2_enemy")]

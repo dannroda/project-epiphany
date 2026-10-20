@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="40_66c0e"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="43_rqrax"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="44_d82md"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="45_d6a2c"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="ArrayMesh" uid="uid://ca13kgi1ye6ai" path="res://assets/epiphany/meshes/objetos/brasero_quenoa.res" id="45_lvm7h"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="46_kifxg"]
 [ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="47_eyeboss"]
@@ -1793,11 +1793,10 @@ target_spawn = &"quenoa"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=615693408]
 shape = SubResource("BoxShape3D_w3lyb")
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1044510348 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=1044510348 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 17.4, 38)
 attributes = SubResource("CameraAttributesPractical_40bi1")
 fov = 40.0
-script = ExtResource("45_d6a2c")
 target_node = NodePath("../Player")
 offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0

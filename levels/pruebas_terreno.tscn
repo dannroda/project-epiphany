@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://levels/pruebas_terreno.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="2_sky"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="3_player"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="4_camera"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="5_dust"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="6_hud"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_cuadrado.glb" id="v0"]
@@ -71,10 +71,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 480, 0, 0)
 [node name="Player" parent="." instance=ExtResource("3_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.5, 1)
 
-[node name="TopDownCamera" type="Camera3D" parent="." node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 17.4, 11)
 fov = 40.0
-script = ExtResource("4_camera")
 target_node = NodePath("../Player")
 
 [node name="DustMotes" parent="TopDownCamera" instance=ExtResource("5_dust")]

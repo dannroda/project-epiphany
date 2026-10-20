@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="13_gd0nv"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="14_5vrew"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="16_372gu"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="17_lc5as"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="18_gsck2"]
 [ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
@@ -1504,10 +1504,9 @@ scenery = [NodePath("../Decor"), NodePath("../Terreno"), NodePath("../LagunaWate
 [node name="Player" parent="." unique_id=1694148988 instance=ExtResource("13_gd0nv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62, 0, 22)
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1181792797 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=1181792797 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62, 13.4, 29.7)
 fov = 40.0
-script = ExtResource("16_372gu")
 target_node = NodePath("../Player")
 
 [node name="DustMotes" parent="TopDownCamera" unique_id=563955236 instance=ExtResource("93_dust")]

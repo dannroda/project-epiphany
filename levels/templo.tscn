@@ -49,7 +49,7 @@
 [ext_resource type="Script" uid="uid://biq7c248kwtba" path="res://src/entities/boss/boss_arena.gd" id="53_2dht2"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="54_jhn6u"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="57_5184v"]
-[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/tools/top_down_camera.gd" id="58_10kg3"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="59_07stk"]
 [ext_resource type="ArrayMesh" uid="uid://cra4bsvg2ghan" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_templo_la.res" id="61_ypy2f"]
 [ext_resource type="ArrayMesh" uid="uid://cjinn7xmelh2r" path="res://assets/epiphany/meshes/templo/brasero.res" id="63_s4egn"]
@@ -2208,11 +2208,10 @@ target_spawn = &"templo"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=1415539207]
 shape = SubResource("BoxShape3D_xctfo")
 
-[node name="TopDownCamera" type="Camera3D" parent="." unique_id=1048237834 node_paths=PackedStringArray("target_node")]
+[node name="TopDownCamera" parent="." unique_id=1048237834 node_paths=PackedStringArray("target_node") instance=ExtResource("cam_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 13.4, 51.7)
 attributes = SubResource("CameraAttributesPractical_mckgn")
 fov = 40.0
-script = ExtResource("58_10kg3")
 target_node = NodePath("../Player")
 offset = Vector3(0, 34.439697, 16.059494)
 field_of_view = 28.0

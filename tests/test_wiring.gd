@@ -117,7 +117,7 @@ func test_reveal_pauses_and_shows_only_the_first_time() -> void:
 	assert_true(camera.revealing, "la cámara muestra la puerta")
 	assert_true(tree.paused, "con el juego en pausa")
 	var elapsed := 0.0
-	while camera.revealing and elapsed < camera.reveal_pan_time + 0.05:
+	while camera.revealing and elapsed < camera.revealer.pan_time + 0.05:
 		await tree.process_frame
 		elapsed += tree.root.get_process_delta_time()
 	var ahead := -camera.global_basis.z
@@ -126,7 +126,7 @@ func test_reveal_pauses_and_shows_only_the_first_time() -> void:
 	while camera.revealing:
 		await tree.process_frame
 		elapsed += tree.root.get_process_delta_time()
-	var expected := camera.reveal_pan_time * 2.0 + door.open_time
+	var expected := camera.revealer.pan_time * 2.0 + door.open_time
 	assert_true(elapsed > expected and elapsed < expected + 0.25, "vuelve al terminar de abrirse (%.2f s; abrir e ir y volver, %.2f s)" % [elapsed, expected])
 	assert_eq(door.is_open, true, "la abrió")
 	assert_eq(tree.paused, false, "y sigue el juego")
