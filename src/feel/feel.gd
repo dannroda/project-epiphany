@@ -8,6 +8,10 @@ const UI_BUS := &"UI"
 const MIX_RATE := 22050
 const SAMPLE_DIR := "res://assets/audio/sfx/"
 const VOLUME_VARIATION_DB := 1.5
+## Sonidos del mundo a la vez: con más, el más viejo se corta.
+const MAX_VOICES := 24
+## Copias del mismo sonido en un cuadro (N enemigos golpeados a la vez suenan como uno fuerte, no saturan).
+const MAX_SAME_PER_FRAME := 3
 const SFX_PLAYER := preload("res://src/feel/sfx_player.tscn")
 const UI_SOUND := preload("res://src/feel/ui_sound.tscn")
 const SHOCKWAVE := preload("res://src/feel/shockwave.tscn")
@@ -50,6 +54,9 @@ const SAMPLES := {
 var settings: FeelSettings = preload("res://data/feel.tres")
 var _sounds: Dictionary[StringName, Array] = {}
 var _menu_depth := 0
+var _voices: Array[AudioStreamPlayer3D] = []
+var _frame := -1
+var _same_frame: Dictionary[StringName, int] = {}
 
 
 func _ready() -> void:
@@ -57,46 +64,52 @@ func _ready() -> void:
 	if AudioServer.get_bus_index(SFX_BUS) == -1:
 		AudioServer.add_bus()
 		AudioServer.set_bus_name(AudioServer.bus_count - 1, SFX_BUS)
-	_sounds = {
-		&"hit": [_synth(0.09, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.6 * exp(-t * 40.0) + sin(TAU * 110.0 * t) * exp(-t * 25.0))],
-		&"hurt": [_synth(0.16, func(t: float) -> float: return signf(sin(TAU * lerpf(240.0, 110.0, t / 0.16) * t)) * 0.35 * exp(-t * 14.0))],
-		&"block": [_synth(0.2, func(t: float) -> float: return (sin(TAU * 1400.0 * t) + 0.6 * sin(TAU * 2150.0 * t)) * 0.4 * exp(-t * 22.0))],
-		&"click": [_synth(0.04, func(t: float) -> float: return sin(TAU * 1800.0 * t) * 0.3 * exp(-t * 90.0))],
-		&"roll": [_synth(0.25, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.25 * sin(PI * t / 0.25))],
-		&"pickup": [_synth(0.14, func(t: float) -> float: return sin(TAU * (880.0 if t < 0.06 else 1320.0) * t) * 0.25 * exp(-fmod(t, 0.06) * 30.0))],
-		&"break": [_synth(0.22, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.5 * exp(-t * 18.0) + sin(TAU * 620.0 * t) * 0.2 * exp(-t * 30.0))],
-		&"cut": [_synth(0.12, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.3 * sin(PI * t / 0.12))],
-		&"reflect": [_synth(0.3, func(t: float) -> float: return (sin(TAU * 1760.0 * t) + 0.5 * sin(TAU * 2640.0 * t)) * 0.3 * exp(-t * 9.0))],
-		&"boom": [_synth(0.6, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.7 + sin(TAU * lerpf(90.0, 40.0, t / 0.6) * t) * 0.5) * exp(-t * 6.0))],
-		&"secret": [_synth(0.9, func(t: float) -> float: return sin(TAU * [392.0, 440.0, 523.0, 659.0, 784.0, 1047.0][mini(int(t / 0.15), 5)] * t) * 0.25 * exp(-fmod(t, 0.15) * 6.0))],
-		&"door": [_synth(0.55, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.35 + sin(TAU * 55.0 * t) * 0.3) * sin(PI * t / 0.55))],
-		&"deny": [_synth(0.18, func(t: float) -> float: return signf(sin(TAU * (140.0 if t < 0.08 else 105.0) * t)) * 0.25 * (1.0 if fmod(t, 0.09) < 0.07 else 0.0))],
-		&"rumble": [_synth(1.2, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.3 + sin(TAU * 38.0 * t) * 0.45) * sin(PI * t / 1.2))],
-		&"item_get": [_synth(1.3, func(t: float) -> float: return 0.22 * (sin(TAU * [392.0, 523.0, 659.0, 784.0][mini(int(t / 0.09), 3)] * t) * exp(-fmod(t, 0.09) * 10.0) if t < 0.36 else (sin(TAU * 1047.0 * t) + 0.7 * sin(TAU * 1319.0 * t) + 0.5 * sin(TAU * 1568.0 * t)) * 0.5 * exp(-(t - 0.36) * 2.5) * minf(1.0, (t - 0.36) * 60.0)))],
-		&"drip": [_synth(0.12, func(t: float) -> float: return sin(TAU * lerpf(700.0, 1700.0, minf(t / 0.04, 1.0)) * t) * 0.3 * exp(-t * 35.0))],
-		&"splash": [_synth(0.45, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.45 * exp(-t * 9.0) + sin(TAU * lerpf(160.0, 70.0, t / 0.45) * t) * 0.35 * exp(-t * 14.0)) * minf(1.0, t * 200.0))],
-		&"wade": [_synth(0.16, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.18 * sin(PI * t / 0.16) * exp(-t * 8.0))],
-		&"roar": [_synth(1.4, func(t: float) -> float: return (fmod(lerpf(70.0, 125.0, sin(PI * t / 1.4)) * t, 1.0) * 0.7 - 0.35 + (randf() * 2.0 - 1.0) * 0.28) * (0.7 + 0.3 * sin(TAU * 27.0 * t)) * minf(1.0, t * 12.0) * minf(1.0, (1.4 - t) * 2.5))],
-		&"warp_out": [_synth(0.55, func(t: float) -> float: return signf(sin(TAU * lerpf(220.0, 1500.0, pow(t / 0.55, 1.5)) * t)) * 0.16 * (0.6 + 0.4 * sin(TAU * 30.0 * t)) * minf(1.0, (0.55 - t) * 8.0))],
-		&"warp_in": [_synth(0.5, func(t: float) -> float: return signf(sin(TAU * lerpf(1500.0, 260.0, minf(t / 0.2, 1.0)) * t)) * 0.16 * minf(1.0, t * 80.0) * exp(-maxf(t - 0.2, 0.0) * 9.0) + sin(TAU * 70.0 * t) * 0.35 * exp(-maxf(t - 0.18, 0.0) * 14.0) * (1.0 if t > 0.18 else 0.0))],
-		&"heal": [_synth(0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0))],
+	var synths := {
+		&"hit": [0.09, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.6 * exp(-t * 40.0) + sin(TAU * 110.0 * t) * exp(-t * 25.0)],
+		&"hurt": [0.16, func(t: float) -> float: return signf(sin(TAU * lerpf(240.0, 110.0, t / 0.16) * t)) * 0.35 * exp(-t * 14.0)],
+		&"block": [0.2, func(t: float) -> float: return (sin(TAU * 1400.0 * t) + 0.6 * sin(TAU * 2150.0 * t)) * 0.4 * exp(-t * 22.0)],
+		&"click": [0.04, func(t: float) -> float: return sin(TAU * 1800.0 * t) * 0.3 * exp(-t * 90.0)],
+		&"roll": [0.25, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.25 * sin(PI * t / 0.25)],
+		&"pickup": [0.14, func(t: float) -> float: return sin(TAU * (880.0 if t < 0.06 else 1320.0) * t) * 0.25 * exp(-fmod(t, 0.06) * 30.0)],
+		&"break": [0.22, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.5 * exp(-t * 18.0) + sin(TAU * 620.0 * t) * 0.2 * exp(-t * 30.0)],
+		&"cut": [0.12, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.3 * sin(PI * t / 0.12)],
+		&"reflect": [0.3, func(t: float) -> float: return (sin(TAU * 1760.0 * t) + 0.5 * sin(TAU * 2640.0 * t)) * 0.3 * exp(-t * 9.0)],
+		&"boom": [0.6, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.7 + sin(TAU * lerpf(90.0, 40.0, t / 0.6) * t) * 0.5) * exp(-t * 6.0)],
+		&"secret": [0.9, func(t: float) -> float: return sin(TAU * [392.0, 440.0, 523.0, 659.0, 784.0, 1047.0][mini(int(t / 0.15), 5)] * t) * 0.25 * exp(-fmod(t, 0.15) * 6.0)],
+		&"door": [0.55, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.35 + sin(TAU * 55.0 * t) * 0.3) * sin(PI * t / 0.55)],
+		&"deny": [0.18, func(t: float) -> float: return signf(sin(TAU * (140.0 if t < 0.08 else 105.0) * t)) * 0.25 * (1.0 if fmod(t, 0.09) < 0.07 else 0.0)],
+		&"rumble": [1.2, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.3 + sin(TAU * 38.0 * t) * 0.45) * sin(PI * t / 1.2)],
+		&"item_get": [1.3, func(t: float) -> float: return 0.22 * (sin(TAU * [392.0, 523.0, 659.0, 784.0][mini(int(t / 0.09), 3)] * t) * exp(-fmod(t, 0.09) * 10.0) if t < 0.36 else (sin(TAU * 1047.0 * t) + 0.7 * sin(TAU * 1319.0 * t) + 0.5 * sin(TAU * 1568.0 * t)) * 0.5 * exp(-(t - 0.36) * 2.5) * minf(1.0, (t - 0.36) * 60.0))],
+		&"drip": [0.12, func(t: float) -> float: return sin(TAU * lerpf(700.0, 1700.0, minf(t / 0.04, 1.0)) * t) * 0.3 * exp(-t * 35.0)],
+		&"splash": [0.45, func(t: float) -> float: return ((randf() * 2.0 - 1.0) * 0.45 * exp(-t * 9.0) + sin(TAU * lerpf(160.0, 70.0, t / 0.45) * t) * 0.35 * exp(-t * 14.0)) * minf(1.0, t * 200.0)],
+		&"wade": [0.16, func(t: float) -> float: return (randf() * 2.0 - 1.0) * 0.18 * sin(PI * t / 0.16) * exp(-t * 8.0)],
+		&"roar": [1.4, func(t: float) -> float: return (fmod(lerpf(70.0, 125.0, sin(PI * t / 1.4)) * t, 1.0) * 0.7 - 0.35 + (randf() * 2.0 - 1.0) * 0.28) * (0.7 + 0.3 * sin(TAU * 27.0 * t)) * minf(1.0, t * 12.0) * minf(1.0, (1.4 - t) * 2.5)],
+		&"warp_out": [0.55, func(t: float) -> float: return signf(sin(TAU * lerpf(220.0, 1500.0, pow(t / 0.55, 1.5)) * t)) * 0.16 * (0.6 + 0.4 * sin(TAU * 30.0 * t)) * minf(1.0, (0.55 - t) * 8.0)],
+		&"warp_in": [0.5, func(t: float) -> float: return signf(sin(TAU * lerpf(1500.0, 260.0, minf(t / 0.2, 1.0)) * t)) * 0.16 * minf(1.0, t * 80.0) * exp(-maxf(t - 0.2, 0.0) * 9.0) + sin(TAU * 70.0 * t) * 0.35 * exp(-maxf(t - 0.18, 0.0) * 14.0) * (1.0 if t > 0.18 else 0.0)],
+		&"heal": [0.45, func(t: float) -> float: return sin(TAU * [523.0, 659.0, 784.0][mini(int(t / 0.15), 2)] * t) * 0.3 * exp(-fmod(t, 0.15) * 12.0)],
 	}
 	for sound in SAMPLES:
 		var streams := _load_samples(SAMPLES[sound])
 		if not streams.is_empty():
 			_sounds[sound] = streams
+	for sound: StringName in synths:
+		if not _sounds.has(sound):
+			_sounds[sound] = [_synth(synths[sound][0], synths[sound][1])]
 	get_viewport().gui_focus_changed.connect(func(control: Control) -> void:
 		if control is BaseButton or control is Range:
-			ui(&"ui_move"))
+			ui(&"ui_move")
+		if control is BaseButton and not (control as BaseButton).pressed.is_connected(_on_button_pressed):
+			(control as BaseButton).pressed.connect(_on_button_pressed))
 	MenuStack.changed.connect(_on_menus_changed)
 
 
 func _input(event: InputEvent) -> void:
-	var focused := get_viewport().gui_get_focus_owner()
-	if event.is_action_pressed(&"ui_accept") and focused is BaseButton:
-		ui(&"ui_accept")
-	elif event.is_action_pressed(&"ui_cancel") and focused != null:
+	if event.is_action_pressed(&"ui_cancel") and get_viewport().gui_get_focus_owner() != null:
 		ui(&"ui_back")
+
+
+func _on_button_pressed() -> void:
+	ui(&"ui_accept")
 
 
 func _on_menus_changed() -> void:
@@ -180,7 +193,19 @@ func sfx(sound: StringName, at: Vector3, always := false) -> void:
 	var scene := get_tree().current_scene
 	if streams.is_empty() or scene == null:
 		return
+	if Engine.get_process_frames() != _frame:
+		_frame = Engine.get_process_frames()
+		_same_frame.clear()
+	if _same_frame.get(sound, 0) >= MAX_SAME_PER_FRAME:
+		return
+	_same_frame[sound] = _same_frame.get(sound, 0) + 1
+	for i in range(_voices.size() - 1, -1, -1):
+		if not is_instance_valid(_voices[i]) or _voices[i].is_queued_for_deletion():
+			_voices.remove_at(i)
+	if _voices.size() >= MAX_VOICES:
+		_voices.pop_front().queue_free()
 	var player := SFX_PLAYER.instantiate() as AudioStreamPlayer3D
+	_voices.append(player)
 	player.stream = streams.pick_random()
 	player.volume_db = settings.sfx_volume_db + randf_range(-VOLUME_VARIATION_DB, VOLUME_VARIATION_DB)
 	player.pitch_scale = 1.0 + randf_range(-settings.pitch_variation, settings.pitch_variation)

@@ -15,6 +15,8 @@ func test_buses_and_varied_samples() -> void:
 	var pitches := {}
 	for i in 12:
 		feel.sfx(&"hit", Vector3.ZERO)
+		if i % 3 == 2:
+			await tree.process_frame
 	for child in tree.current_scene.get_children():
 		if child is AudioStreamPlayer3D:
 			streams[child.stream] = true
@@ -111,3 +113,27 @@ func test_boss_bar_shown_again_right_after_hiding_stays() -> void:
 	assert_eq(bar.phase(), 0, "sin fases, fase 0")
 	hud.free()
 	fight.free()
+
+
+## Muchos golpes en el mismo cuadro no apilan reproductores sin límite (16.36): hasta MAX_SAME_PER_FRAME del mismo
+## sonido por cuadro y MAX_VOICES a la vez, cortando el más viejo.
+func test_sounds_in_one_frame_are_capped() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var feel: Node = tree.root.get_node(^"Feel")
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/test.tscn")
+	await tree.scene_changed
+	await tree.process_frame
+	var voices := func() -> int:
+		return tree.current_scene.get_children().filter(func(n: Node) -> bool: return n is AudioStreamPlayer3D and not n.is_queued_for_deletion()).size()
+	var start: int = voices.call()
+	for i in 10:
+		feel.sfx(&"hit", Vector3.ZERO)
+	assert_eq(voices.call() - start, feel.MAX_SAME_PER_FRAME, "el mismo sonido, pocas copias por cuadro")
+	for i in 20:
+		await tree.process_frame
+		for sound in [&"hit", &"block", &"break"]:
+			feel.sfx(sound, Vector3.ZERO)
+	assert_true(voices.call() <= feel.MAX_VOICES, "nunca más de MAX_VOICES a la vez (%d)" % voices.call())
+	assert_true(feel._sounds[&"boom"].size() == 1 and feel._sounds[&"boom"][0] is AudioStreamWAV, "lo que no tiene .ogg se sintetiza")
+	assert_true(not feel._sounds[&"hit"][0] is AudioStreamWAV, "lo que tiene .ogg no se sintetiza de más")
