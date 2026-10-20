@@ -10,11 +10,11 @@
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld"
   ],
   "test": "",
   "title": "Regiones del overworld como recurso ZoneRegion",
-  "updated_at": "2026-10-19T22:56:15.548Z"
+  "updated_at": "2026-10-20T00:10:25.840Z"
 }

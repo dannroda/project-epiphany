@@ -10,12 +10,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "tests"
   ],
   "test": "",
   "title": "Test: las zonas del overworld cubren el mapa sin pisarse",
-  "updated_at": "2026-10-19T22:56:15.894Z"
+  "updated_at": "2026-10-20T00:03:54.845Z"
 }

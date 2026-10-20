@@ -5,17 +5,17 @@
   "created_at": "2026-10-19T22:41:07.249Z",
   "description": "Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantalla vacía (verificado). Equipo con ítem renombrado deja sin espada; max_health 0; settings.cfg sin chequeo de tipos ni escritura atómica; sin guardia de reentrada al cargar durante un viaje.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (b6fd8a52, -72): 1) enter_saved_scene devuelve bool: si la escena no existe o no carga, va al inicio del overworld; si tampoco, al título; enter_save devuelve ERR_CANT_OPEN y _load_path lo devuelve (y deja loading en false). new_game no sigue con la intro si no entró. 2) read_from: equipo con ítem inexistente o de otra categoría vuelve al del equipo inicial (y lo agrega al inventario); botella fuera de bottle_1..4 se descarta; contenido inexistente o sin líquido queda bottle_empty; max_health al menos HP_PER_HEART. 3) Settings: SaveCodec.typed al leer; guarda a .tmp, borra y renombra, devuelve el Error y lo loguea; si quedó solo el .tmp lo lee. 4) SceneFlow.is_busy() (cargando una partida, volviendo al título, o en un viaje salvo la acción de with_fade, que es la carga misma): _load_path, enter_save y quit_to_title devuelven ERR_BUSY. Tests: test_save_manager (escena que no carga, segunda carga en medio de otra), test_slots (equipo/botellas/corazones reparados), test_options (opciones tipadas y escritura atómica).",
   "order": 206,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug",
     "guardado"
   ],
-  "test": "",
+  "test": "tests/test_save_manager.gd, tests/test_slots.gd, tests/test_options.gd",
   "title": "Guardado: datos inválidos y escena que no carga",
-  "updated_at": "2026-10-19T23:56:19.194Z"
+  "updated_at": "2026-10-20T00:14:10.610Z"
 }

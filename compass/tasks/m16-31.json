@@ -5,17 +5,17 @@
   "created_at": "2026-10-17T05:58:31.812Z",
   "description": "Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. carrier, shield y aiming_item tweenean blend_amount del AnimationTree: pasar a Transition con xfade_time.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho en wt/art (4e7ad654). Carry pasó a Transition (Off/On, xfade 0,12; su estado inicial guardado en el árbol, si no la cadena de abajo no corre). Guardia y arco no pueden ser Transition: Transition ignora los filtros (FILTER_IGNORE en el código de Godot) y los dos mezclan solo el torso; pasaron a OneShot con fadein/fadeout, disparados y apagados como UseItem. Melee_Blocking y Ranged_Bow_Draw sostienen su último cuadro con un timeline propio largo, así el OneShot no termina solo. test_shield: la guardia mueve el brazo del escudo y no las piernas.",
   "order": 92,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "animacion"
   ],
   "test": "",
   "title": "Mezclas del player en el AnimationTree, no con tweens",
-  "updated_at": "2026-10-19T23:56:18.470Z"
+  "updated_at": "2026-10-20T00:11:38.605Z"
 }

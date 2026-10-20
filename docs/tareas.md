@@ -5579,11 +5579,15 @@ En solitario, igual que hoy. Tests: muere P1 → el próximo ataque va a P2; P2 
 
 Revisión con patrones (2026-10-19): El tween de velocidad de using_item.gd sigue después del estado. Sin verificar.
 
-### 11.216 Guardado: datos inválidos y escena que no carga · Pendiente
+### 11.216 Guardado: datos inválidos y escena que no carga · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `guardado`
 
 Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantalla vacía (verificado). Equipo con ítem renombrado deja sin espada; max_health 0; settings.cfg sin chequeo de tipos ni escritura atómica; sin guardia de reentrada al cargar durante un viaje.
+
+**Prueba:** tests/test_save_manager.gd, tests/test_slots.gd, tests/test_options.gd
+
+**Notas:** Hecho (b6fd8a52, -72): 1) enter_saved_scene devuelve bool: si la escena no existe o no carga, va al inicio del overworld; si tampoco, al título; enter_save devuelve ERR_CANT_OPEN y _load_path lo devuelve (y deja loading en false). new_game no sigue con la intro si no entró. 2) read_from: equipo con ítem inexistente o de otra categoría vuelve al del equipo inicial (y lo agrega al inventario); botella fuera de bottle_1..4 se descarta; contenido inexistente o sin líquido queda bottle_empty; max_health al menos HP_PER_HEART. 3) Settings: SaveCodec.typed al leer; guarda a .tmp, borra y renombra, devuelve el Error y lo loguea; si quedó solo el .tmp lo lee. 4) SceneFlow.is_busy() (cargando una partida, volviendo al título, o en un viaje salvo la acción de with_fade, que es la carga misma): _load_path, enter_save y quit_to_title devuelven ERR_BUSY. Tests: test_save_manager (escena que no carga, segunda carga en medio de otra), test_slots (equipo/botellas/corazones reparados), test_options (opciones tipadas y escritura atómica).
 
 ### 11.217 Co-op: P2 en una cinemática y time_scale con dos dueños · Pendiente
 
@@ -6329,7 +6333,7 @@ Pedido de -43 (11.129 paso 8) y de Daniel: Kuntur joven y Apu Kuntur con modelo 
 
 ### 12.39 Enemigos comunes estilizados según el theme de cada mazmorra · En curso
 
-**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-dd · **Etiquetas:** `arte`, `enemigos`, `mazmorra`
+**Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5c · **Etiquetas:** `arte`, `enemigos`, `mazmorra`
 
 Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan con el theme de cada una. Hoy esqueleto, escudo, arquero y acorazado comparten un único modelo (models/chullpa.tscn) con armas genéricas (sword_1h, bow, shield_round) en todas las mazmorras, cuevas y el overworld. Una variante por mazmorra (Chullpa, Queñoa, Totora, Cumbre, Templo) con el mismo rig y animaciones, como .tscn heredados (no overrides en las instancias: el refresh LA los pierde). Primero propuestas para que Daniel elija; después se cambian las instancias de cada nivel.
 
@@ -6840,11 +6844,13 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Ojo: blink, roar, awaken, carga del láser y del orbe, relax, flare, sacudida, muerte; marcas y blasts en sus plantillas; flotar y aturdido en AnimationTree. Manos: un AnimationPlayer por mano para aturdida, desaparecer, colapsar, onda, aviso del agarre, flex. El resorte de _animate queda en código. Tocar boss.tscn solo cuando Daniel no tenga cambios sin commitear ahí.
 
-### 16.33 Mezclas del player en el AnimationTree, no con tweens · Pendiente
+### 16.33 Mezclas del player en el AnimationTree, no con tweens · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. carrier, shield y aiming_item tweenean blend_amount del AnimationTree: pasar a Transition con xfade_time.
+
+**Notas:** Hecho en wt/art (4e7ad654). Carry pasó a Transition (Off/On, xfade 0,12; su estado inicial guardado en el árbol, si no la cadena de abajo no corre). Guardia y arco no pueden ser Transition: Transition ignora los filtros (FILTER_IGNORE en el código de Godot) y los dos mezclan solo el torso; pasaron a OneShot con fadein/fadeout, disparados y apagados como UseItem. Melee_Blocking y Ranged_Bow_Draw sostienen su último cuadro con un timeline propio largo, así el OneShot no termina solo. test_shield: la guardia mueve el brazo del escudo y no las piernas.
 
 ### 16.34 call_group al HUD y a la cámara: acceso tipado y señales · Pendiente
 
@@ -6888,17 +6894,21 @@ Revisión con patrones (2026-10-19): carrier, bomb, dodge_ghosts, liftable usan 
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Sin deterministic = false (cambiar de clip resetea lo que el nuevo no anima): cutscene.tscn, scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model; boss.tscn va con 16.32.
 
-### 16.41 Clips que arrancan de claves fijas en vez del valor actual · Pendiente
+### 16.41 Clips que arrancan de claves fijas en vez del valor actual · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5c · **Etiquetas:** `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Nombre de zona re-mostrado salta el alfa a 0 (hud.gd:157); ocultar la barra del jefe durante su entrada salta a 1; el volteo del ojo vigía arranca los párpados en 1; el temblor de la momia arranca en -0.2; el salto de la momia sube en 0.33 s con aim_time 0.9 (chullpa, templo). El pop del corazón perdió el rebote y el anillo del rugido pasó a ease-in. heart_piece.gd:27 tapa Pickup.shown.
 
-### 16.42 Animaciones que siguen en código · Pendiente
+**Notas:** Hecho en wt/art (05b03a42). HUD: _restart arranca el clip donde su alfa ya vale lo que tiene el nodo (re-mostrar el nombre de zona o esconder la barra del jefe a mitad no salta); test_hud lo cubre. Ojo vigía: knock captura los párpados (update capture). Momia: stuck arranca de 0; leap sube en 0,4 s y la sombra crece en aim_time en su propio AnimationPlayer (%Aim). Pop del corazón con rebote (0,97 a los 0,11 s). Anillo del rugido: fundido lineal como el tween. heart_piece: la variable local ya no tapa Pickup.shown.
+
+### 16.42 Animaciones que siguen en código · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Parpadeo de la bendición (blessing.gd:29), titileo de stencil_light (:42), rebotes y alturas fijas del Kuntur (kuntur.gd:197-374), fundido de barras de la cinemática (cutscene.gd:107), radio del velo de zona (zone_veil.gd:76), cámara del título (title_flyover.gd, PathFollow3D). demo_tajo queda aparcada.
+
+**Notas:** Hecho en wt/art (46929781). Kuntur: alturas fijas y rebotes en %Height (clips de una clave con captura; play_with_capture con la curva espejada, porque la captura la aplica al revés); hover_height y posiciones siguen en tween (destinos del momento). Cinemática: barras y texto en el clip settle de %Outro; la cámara sigue en tween hacia la de juego. ZoneVeil: clip reveal 0..1 escalado a la esquina más lejana, con hide al final. Bendición: clip blink en loop. StencilLight: clip flicker en loop (los dos senos, período exacto 20π/7 s) con arranque al azar; torch_flicker queda en código como se decidió en 27aa401a. Título: un clip flight en loop horneado desde las tomas viejas (Shots se borró; las tomas se editan en el clip).
 
 ### 16.43 Mapa explorado del overworld se borra si cambia world_rect · Revisión
 
@@ -6916,13 +6926,13 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): GameState.ensure_map_
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): Ningún nivel instancia zone_veil.tscn y overworld_map._reveal() hace get_nodes_in_group(ZoneVeil.GROUP) + filter cada cuadro (title_flyover también). Arreglo: borrar ZoneVeil y sus ramas o cachear. Si se borra, sale el velo de 16.42 y el _reveal de 16.38.
 
-### 16.45 Regiones del overworld como recurso ZoneRegion · Pendiente
+### 16.45 Regiones del overworld como recurso ZoneRegion · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): Una región hoy es 'zonas con el mismo display_name', una clave de traducción usada como identidad (map_page.gd 420, 438, 552, 595; el chequeo del HUD de AreaZone; el respaldo de persecución). region_label y chase_region sueltos en 34 zonas. Arreglo: un .tres ZoneRegion por región (id, display_name, grupo de persecución, etiqueta del mapa).
 
-### 16.46 Test: las zonas del overworld cubren el mapa sin pisarse · Pendiente
+### 16.46 Test: las zonas del overworld cubren el mapa sin pisarse · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `tests`
 
@@ -6984,7 +6994,7 @@ Auditoría con patrones de diseño (-72, 2026-10-19): enemy.gd:231-325 (guardia 
 
 ### 16.56 Pantallas tipadas por convención · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): menu_stack.gd:50/74/120 y pause_menu.gd:37/49 usan has_method(&"screen_covered"/"screen_uncovered"/"focus_default"/"cancel"): un typo en una pantalla se ignora en silencio. Arreglo: clase base MenuScreen (extends Control) con virtuales vacías.
 

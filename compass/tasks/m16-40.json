@@ -5,17 +5,17 @@
   "created_at": "2026-10-19T22:55:44.301Z",
   "description": "Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Parpadeo de la bendición (blessing.gd:29), titileo de stencil_light (:42), rebotes y alturas fijas del Kuntur (kuntur.gd:197-374), fundido de barras de la cinemática (cutscene.gd:107), radio del velo de zona (zone_veil.gd:76), cámara del título (title_flyover.gd, PathFollow3D). demo_tajo queda aparcada.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho en wt/art (46929781). Kuntur: alturas fijas y rebotes en %Height (clips de una clave con captura; play_with_capture con la curva espejada, porque la captura la aplica al revés); hover_height y posiciones siguen en tween (destinos del momento). Cinemática: barras y texto en el clip settle de %Outro; la cámara sigue en tween hacia la de juego. ZoneVeil: clip reveal 0..1 escalado a la esquina más lejana, con hide al final. Bendición: clip blink en loop. StencilLight: clip flicker en loop (los dos senos, período exacto 20π/7 s) con arranque al azar; torch_flicker queda en código como se decidió en 27aa401a. Título: un clip flight en loop horneado desde las tomas viejas (Shots se borró; las tomas se editan en el clip).",
   "order": 101,
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "animacion"
   ],
   "test": "",
   "title": "Animaciones que siguen en código",
-  "updated_at": "2026-10-19T22:56:39.263Z"
+  "updated_at": "2026-10-19T23:50:09.527Z"
 }
