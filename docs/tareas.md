@@ -3152,6 +3152,8 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
 
 Daniel (2026-10-20) approved -72's proposal for steps 3–6 as written: counterattack (attack in a 0.35 s window while locked on, Roll+Slash / Jump+Slash, ×2 damage, 0.8 s stun, skips the shield guard), plunge attack in the air (×2, 1.2 m shockwave, presses STRIKE plates), sword beam at full health (6 m, 1 damage, never triggers puzzles). Learned at technique stones with a dummy: counterattack in the Pradera, plunge in the Arboleda (feather), beam in the Cumbre (hookshot posts); flags ow_tech_counter/plunge/beam. Técnicas panel in Equipo with a mockup first. No new buttons; first window at half speed via TimeScale &"counter_hint". GDD §4.3.
 
+Daniel (2026-10-20, via -72, with the mockups Pause_Equipo_Tecnicas, Technique_Learned, HUD_Counter, Tutorial_Card and HUD_Practice_Chip on the canvas): a practice dummy at every technique stone; half speed in the counter window ALWAYS, with an option in Opciones to turn it off (not just the first time).
+
 **Referencias:** `gdd.md#combate`, `gdd.md#input`
 
 **Relacionadas:** 11.22 Tablillas de historia; 11.35 Saltar: ítem tipo Pluma de Roc
@@ -6935,11 +6937,13 @@ Revisión con patrones (2026-10-19): input_buffer, equipment, carrier, zone_veil
 
 **Notas:** Hecho (-e0): InputBuffer y Equipment exportan player (y Equipment visuals), Carrier exporta thrower, conectados en player.tscn. EnfoqueLA lee la cámara del viewport en vez de su padre (sin rehornear niveles). ZoneVeil queda para 16.44 (-3e, quizás se borra). La guardia se sincroniza en active_state_changed de la máquina del player: los 5 estados que la bajaban a mano ya no lo hacen. doom_ambience.is_legible queda con la cadena de clases a propósito: un grupo obligaría a etiquetar cada pickup/rompible puesto en niveles guardados por el editor y los drops creados por código, y is ya cubre las subclases. test_shield › test_dodging_lowers_the_guard_at_once.
 
-### 16.38 Rendimiento: trabajo por cuadro sin cambios · Pendiente
+### 16.38 Rendimiento: trabajo por cuadro sin cambios · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `rendimiento`
 
 Revisión con patrones (2026-10-19): Minimapa (redibuja y escanea grupos cada cuadro), Room.has_player por tick, Targeting._sync_posts, Music.targets, overworld_map._reveal. Después de los assets.
+
+**Notas:** Done (7dbbba82): the minimap redraws only when something changes (plus every 0.25 s) and counts floors once; Room.has_player looks up the camera once per physics frame; _sync_posts exits without the hookshot; OverworldMap reads the veils once. Music.targets left alone: it's cheap.
 
 ### 16.39 Spawns.root salteado, Dungeon como hijo directo y checksum sin uso · Revisión
 
