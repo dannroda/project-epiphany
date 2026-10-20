@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (212/214, 53 en revisión)
+## M11 — Pulido: contenido y feel  (212/215, 53 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5742,6 +5742,12 @@ Visto 2026-10-19 (-e0): en main, --jobs=1 --only=test_arena_fighter.gd,test_cent
 Visto por -5c (2026-10-19) en 11.9: boss_hand.gd esperaba get_tree().physics_frame en un bucle; si la escena cambia a mitad de un golpe, get_tree() es null y tira error.
 
 **Notas:** Hecho (-e0): las esperas por cuadro de las manos pasan por _physics_frame(), que devuelve false si la mano ya no está en el árbol; un cambio de escena a mitad de golpe, agarre, barrido o reset termina la corrutina en vez de esperar sobre un árbol null. test_boss › test_leaving_the_tree_mid_slam_ends_quietly (falla sin el arreglo en boss_hand.gd:350).
+
+### 11.222 Salto largo de prueba con las sandalias · Pendiente
+
+**Responsable:** project-epiphany-3e
+
+De 11.105 (propuesta aprobada por Daniel): cerca de donde se consiguen las sandalias (Necrópolis), un hueco de 3 celdas que solo se cruza con el salto largo (pluma en carrera con sandalias), con 10 flechas del otro lado. Pide GridMap y terreno, así que va por el overworld (-3e): rearmar el terreno y rehornear la navmesh (-5c) si cambian las celdas.
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 

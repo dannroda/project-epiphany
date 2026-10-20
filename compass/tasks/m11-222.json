@@ -1,0 +1,15 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "11.222",
+  "created_at": "2026-10-20T06:45:27.431Z",
+  "description": "De 11.105 (propuesta aprobada por Daniel): cerca de donde se consiguen las sandalias (Necrópolis), un hueco de 3 celdas que solo se cruza con el salto largo (pluma en carrera con sandalias), con 10 flechas del otro lado. Pide GridMap y terreno, así que va por el overworld (-3e): rearmar el terreno y rehornear la navmesh (-5c) si cambian las celdas.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 218,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Salto largo de prueba con las sandalias",
+  "updated_at": "2026-10-20T06:45:27.997Z"
+}
