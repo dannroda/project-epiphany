@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:06.900Z",
   "description": "Revisión con patrones (2026-10-19): El tween de velocidad de using_item.gd sigue después del estado. Sin verificar.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (-72): using_item.gd guarda el tween de frenado (_brake) y lo mata en _exit; antes seguía 0.15 s escribiendo velocity = 0 sobre el empujón de Hurt. Transition no tiene ese patrón y no hay otros tweens de velocity en player/ ni src/. test_item_use › test_a_hit_right_after_pressing_an_item_still_pushes_back: aprieta X con la poción, recibe un golpe enseguida, pasa a Hurt y se aleja > 0,5 m; sin el arreglo se movía 0,00 m.",
   "order": 205,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Usar un ítem se come el empujón del golpe",
-  "updated_at": "2026-10-20T00:20:05.683Z"
+  "updated_at": "2026-10-20T00:27:40.461Z"
 }

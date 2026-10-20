@@ -5559,25 +5559,21 @@ Pedido de Daniel (2026-10-16): el escudo va siempre en la mano y solo bloquea mi
 
 Revisión con patrones (2026-10-19): HandGuard.reset llama hand.regenerate, que no saca a la mano de BUSY: si caés por un pozo a mitad del golpe termina el combo. Sin verificar.
 
-### 11.214 Jefe final: elige a un player al empezar y no cambia · Pendiente
+### 11.214 Jefe final: elige a un player al empezar y no cambia · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `co-op`
 
 Revisión con patrones (2026-10-19): boss.gd fija target en start_fight; si ese player muere o se va, el jefe ataca el cuerpo o deja de atacar. Las manos leen target después de awaits sin validar. Sin verificar.
 
-**Notas:** Regla propuesta por diseño (-72, 2026-10-19), falta que Daniel la apruebe:
-1) El objetivo se elige en cada decisión de ataque (choose_attack); la mirada lo sigue hasta la próxima.
-2) Se mantiene salvo que muera, se vaya o salga de la arena, u otro player vivo esté más de 3 m más cerca del ojo: entonces Players.nearest (el margen evita que alterne entre dos players pegados).
-3) Aggro: quien le pega al ojo aturdido es el objetivo de la próxima decisión aunque esté más lejos.
-4) Ataques con las dos manos: la segunda va al otro player vivo si lo hay.
-5) Sin nadie vivo en la arena no ataca (espera en IDLE).
-En solitario, igual que hoy. Tests: muere P1 → el próximo ataque va a P2; P2 pega al ojo aturdido → lo apunta aunque P1 esté más cerca.
+**Notas:** Regla aprobada por Daniel (2026-10-19) y hecha (-e0): pick_target() en cada choose_attack mantiene el objetivo salvo que muera, salga de la arena u otro esté RETARGET_MARGIN = 3 m más cerca del ojo; quien pega al ojo aturdido es el próximo (_aggro, la flecha cuenta por su tirador); la segunda mano del combo va al otro player vivo; sin nadie vivo en la arena no ataca. Las manos dejan de seguir un target liberado. test_boss_coop (5 pruebas, dos players reales): margen 2 m vs 3,5 m, aggro, segunda mano, arena vacía, muere el objetivo → va al otro. Playtest en co-op: el jefe no debe alternar entre dos pegados.
 
-### 11.215 Usar un ítem se come el empujón del golpe · Pendiente
+### 11.215 Usar un ítem se come el empujón del golpe · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): El tween de velocidad de using_item.gd sigue después del estado. Sin verificar.
+
+**Notas:** Hecho (-72): using_item.gd guarda el tween de frenado (_brake) y lo mata en _exit; antes seguía 0.15 s escribiendo velocity = 0 sobre el empujón de Hurt. Transition no tiene ese patrón y no hay otros tweens de velocity en player/ ni src/. test_item_use › test_a_hit_right_after_pressing_an_item_still_pushes_back: aprieta X con la poción, recibe un golpe enseguida, pasa a Hurt y se aleja > 0,5 m; sin el arreglo se movía 0,00 m.
 
 ### 11.216 Guardado: datos inválidos y escena que no carga · Revisión
 
@@ -6841,7 +6837,7 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 ### 16.32 Animaciones a AnimationPlayer: jefe final (ojo y manos) · Pendiente
 
-**Prioridad:** baja · **Tamaño:** L · **Etiquetas:** `refactor`, `animacion`
+**Prioridad:** baja · **Tamaño:** L · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Ojo: blink, roar, awaken, carga del láser y del orbe, relax, flare, sacudida, muerte; marcas y blasts en sus plantillas; flotar y aturdido en AnimationTree. Manos: un AnimationPlayer por mano para aturdida, desaparecer, colapsar, onda, aviso del agarre, flex. El resorte de _animate queda en código. Tocar boss.tscn solo cuando Daniel no tenga cambios sin commitear ahí.
 
@@ -6855,7 +6851,7 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 ### 16.34 call_group al HUD y a la cámara: acceso tipado y señales · Pendiente
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): 15 llamadas con nombre de método fallan en silencio si se renombra. Cámara: TopDownCamera.current(tree) tipado. HUD: tres señales tipadas (anuncio de zona, mostrar/ocultar barra del jefe). Sin EventBus completo.
 
