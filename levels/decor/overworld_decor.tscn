@@ -2778,9 +2778,6 @@ transform = Transform3D(0.10679234, 0, 0.99428135, 0, 1, 0, -0.99428135, 0, 0.10
 [node name="Flores145" parent="Plantas" unique_id=223042872 instance=ExtResource("4_o1qjm")]
 transform = Transform3D(-0.43864396, 0, -0.89866096, 0, 1, 0, 0.89866096, 0, -0.43864396, 8.098, 2.6, 1.577)
 
-[node name="CardonChico12" parent="Plantas" unique_id=2116800115 instance=ExtResource("14_x1py8")]
-transform = Transform3D(0.9884876, 0, -0.15130202, 0, 1, 0, 0.15130202, 0, 0.9884876, 33.692, 2.6, 1.511)
-
 [node name="Tola42" parent="Plantas" unique_id=1381833939 instance=ExtResource("23_o1qjm")]
 transform = Transform3D(0.993669, 0, -0.11234768, 0, 1, 0, 0.11234768, 0, 0.993669, -95.617, 2.6, 3.79)
 
@@ -2837,9 +2834,6 @@ transform = Transform3D(0.99050885, 0, -0.13744889, 0, 1, 0, 0.13744889, 0, 0.99
 
 [node name="Grass326" parent="Plantas" unique_id=1183099567 instance=ExtResource("22_o8xrr")]
 transform = Transform3D(0.8373465, 0, -0.54667246, 0, 1, 0, 0.54667246, 0, 0.8373465, -4.059, 0.021, 3.757)
-
-[node name="CardonChico13" parent="Plantas" unique_id=1114508709 instance=ExtResource("14_x1py8")]
-transform = Transform3D(0.8868101, 0, 0.46213394, 0, 1, 0, -0.46213394, 0, 0.8868101, 34.478, 2.6, 4.552)
 
 [node name="Grass327" parent="Plantas" unique_id=1206766017 instance=ExtResource("22_o8xrr")]
 transform = Transform3D(-0.99094266, 0, 0.13428569, 0, 1, 0, -0.13428569, 0, -0.99094266, -93.521, 2.6, 6.037)
@@ -2975,9 +2969,6 @@ transform = Transform3D(0.7166565, 0, 0.6974263, 0, 1, 0, -0.6974263, 0, 0.71665
 
 [node name="Flores160" parent="Plantas" unique_id=793175743 instance=ExtResource("4_o1qjm")]
 transform = Transform3D(-0.9832097, 0, -0.1824791, 0, 1, 0, 0.1824791, 0, -0.9832097, 12.25, 2.6, 8.506)
-
-[node name="CardonChico16" parent="Plantas" unique_id=1909075831 instance=ExtResource("14_x1py8")]
-transform = Transform3D(-0.68258125, 0, -0.7308097, 0, 1, 0, 0.7308097, 0, -0.68258125, 36.275, 2.6, 8.234)
 
 [node name="CardonChico17" parent="Plantas" unique_id=1613485313 instance=ExtResource("14_x1py8")]
 transform = Transform3D(0.9181937, 0, 0.39613163, 0, 1, 0, -0.39613163, 0, 0.9181937, 54.487, 2.6, 8.423)

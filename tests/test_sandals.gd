@@ -261,3 +261,39 @@ func test_the_temple_heart_piece_islet_takes_a_long_jump_there_and_back() -> voi
 	result = await _overworld_long_jump(setup[0], setup[1], Vector3(37.2, 0, 37), &"move_right", Vector3.RIGHT, 41.0)
 	assert_true(result[1] > -0.6 and result[0].x > 45.0, "del islote al este (%s, y mín %.2f)" % [result[0], result[1]])
 	state.reset()
+
+
+func test_the_necropolis_pillar_takes_a_long_jump_there_and_back() -> void:
+	var setup: Array = await _overworld()
+	var tree: SceneTree = setup[0]
+	var chest := tree.current_scene.get_node(^"LongJumpChest") as Chest
+	assert_eq([chest.item.id, chest.amount], [&"arrow", 10], "10 flechas del otro lado")
+	var result: Array = await _overworld_long_jump(tree, setup[1], Vector3(34.2, 2.6, -4), &"move_backward", Vector3.BACK, 1.3)
+	assert_true(result[1] > 2.0 and result[0].z > 7.5 and result[0].y > 2.3, "de la meseta al pilar (%s, y mín %.2f)" % [result[0], result[1]])
+	result = await _overworld_long_jump(tree, setup[1], Vector3(34.2, 2.6, 12.6), &"move_forward", Vector3.FORWARD, -7.2)
+	assert_true(result[1] > 2.0 and result[0].z < 1.0 and result[0].y > 2.3, "y de vuelta (%s, y mín %.2f)" % [result[0], result[1]])
+	(setup[2] as Node).reset()
+
+
+func test_a_running_feather_jump_falls_short_of_the_necropolis_pillar() -> void:
+	var setup: Array = await _overworld()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	await _place(tree, player, Vector3(34.2, 2.6, -6))
+	_press(&"move_backward")
+	for i in 300:
+		await tree.physics_frame
+		if player.global_position.z >= 1.15:
+			break
+	_press(&"item_1")
+	await tree.physics_frame
+	_press(&"item_1", false)
+	await tree.physics_frame
+	assert_eq(_state(player), &"Jumping", "salta desde el borde")
+	for i in 180:
+		await tree.physics_frame
+		if i > 30 and player.is_on_floor():
+			break
+	_press(&"move_backward", false)
+	assert_true(player.global_position.y < 1.0, "sin sandalias cae en la bahía (%s)" % player.global_position)
+	(setup[2] as Node).reset()
