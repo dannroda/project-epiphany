@@ -4,14 +4,9 @@ extends "res://tests/test_case.gd"
 const SCENE := preload("res://src/entities/boss/boss.tscn")
 
 
-## Sin el nivel de una prueba anterior: su player le cambiaría el objetivo de prueba.
 func _spawn() -> Boss:
 	var tree := Engine.get_main_loop() as SceneTree
-	if tree.current_scene and tree.current_scene.scene_file_path != "":
-		tree.unload_current_scene()
-		var empty := Node3D.new()
-		tree.root.add_child(empty)
-		tree.current_scene = empty
+	use_empty_scene()
 	var boss := SCENE.instantiate() as Boss
 	tree.root.add_child(boss)
 	_single_slams(boss)

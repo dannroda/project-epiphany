@@ -13,6 +13,7 @@ const FIGHTERS := [
 
 func test_a_wait_dies_with_its_fighter() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	use_empty_scene()
 	var fighter := (load(FIGHTERS[0]) as PackedScene).instantiate() as ArenaFighter
 	tree.root.add_child(fighter)
 	var resumed := [false]
@@ -27,6 +28,7 @@ func test_a_wait_dies_with_its_fighter() -> void:
 
 func test_every_fighter_is_an_arena_fighter() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	use_empty_scene()
 	for path: String in FIGHTERS:
 		var fighter := (load(path) as PackedScene).instantiate()
 		tree.root.add_child(fighter)
@@ -56,6 +58,7 @@ func _clips_called(script: Script) -> Array[StringName]:
 
 func test_tweens_wait_stops_with_the_pause_not_with_the_node() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	use_empty_scene()
 	var node := Node.new()
 	node.process_mode = Node.PROCESS_MODE_ALWAYS
 	tree.root.add_child(node)
@@ -81,6 +84,7 @@ func test_tweens_wait_stops_with_the_pause_not_with_the_node() -> void:
 ## Saltear la presentación arranca la pelea a mitad del rugido: el peleador queda en la pose del final, no en la del corte.
 func test_starting_mid_roar_leaves_the_rest_pose() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	use_empty_scene()
 	var mummy := (load("res://src/entities/mummy_guard/mummy_guard.tscn") as PackedScene).instantiate() as ArenaFighter
 	tree.root.add_child(mummy)
 	mummy.roar()
@@ -94,6 +98,7 @@ func test_starting_mid_roar_leaves_the_rest_pose() -> void:
 ## Un ataque cortado no sigue: _interrupt mata las esperas pendientes (la cola de la Yacumama, el charco del Amaru).
 func test_an_interrupt_drops_the_pending_waits() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	use_empty_scene()
 	var fighter := (load(FIGHTERS[3]) as PackedScene).instantiate() as ArenaFighter
 	tree.root.add_child(fighter)
 	var resumed := [false]
@@ -113,6 +118,7 @@ func test_an_interrupt_drops_the_pending_waits() -> void:
 ## El hit-stop congela la entidad aunque el hurtbox esté anidado en su cuerpo.
 func test_a_nested_hurtbox_belongs_to_its_fighter() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	use_empty_scene()
 	for path: String in FIGHTERS:
 		var fighter := (load(path) as PackedScene).instantiate() as ArenaFighter
 		tree.root.add_child(fighter)
@@ -124,6 +130,7 @@ func test_a_nested_hurtbox_belongs_to_its_fighter() -> void:
 ## Reiniciar la pelea (el player cayó por un hueco) corta el golpe de la Mano a mitad: no termina el combo.
 func test_resetting_the_hand_guard_cuts_its_attack() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
+	use_empty_scene()
 	var guard := (load(FIGHTERS[5]) as PackedScene).instantiate() as HandGuard
 	tree.root.add_child(guard)
 	var target := Node3D.new()

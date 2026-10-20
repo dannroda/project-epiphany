@@ -46,3 +46,14 @@ func hold_block(player: Node, on: bool) -> void:
 		Input.action_release(action)
 	player.movement_state.blackboard.set_var("is_blocking", on)
 	player.shield.set_guard(on)
+
+
+## Saca el nivel que dejó una prueba anterior: su player y sus enemigos siguen corriendo, y sus cuadros largos hacen
+## que un timer venza antes que un tween de la misma duración.
+func use_empty_scene() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	if tree.current_scene and tree.current_scene.scene_file_path != "":
+		tree.unload_current_scene()
+		var empty := Node3D.new()
+		tree.root.add_child(empty)
+		tree.current_scene = empty
