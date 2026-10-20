@@ -150,6 +150,65 @@ func test_meadow_skeletons_reach_the_player() -> void:
 		assert_true(enemy.global_position.distance_to(player.global_position) <= enemy.config.attack_range + 0.5, "%s llega al player (quedó en %s)" % [enemy.name, enemy.global_position])
 
 
+## 11.9: con la navmesh pegada al piso, rodea una columna que lo separa del player sin trabarse en las esquinas. La
+## columna se agrega en el lugar abierto del templo más cerca de la entrada y la navmesh se vuelve a hornear con la misma configuración.
+## Con path_desired_distance 0.25: enemy.tscn sigue en 1.0 hasta rehornear el overworld (16.49).
+func test_an_enemy_goes_around_a_column() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/templo.tscn")
+	await tree.scene_changed
+	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.health.make_invulnerable(999.0)
+	var grid := tree.current_scene.get_node(^"Planta/GridMap") as GridMap
+	var library := grid.mesh_library
+	var open := func(cell: Vector3i) -> bool:
+		for dx in range(-2, 3):
+			for dz in range(-3, 4):
+				var item := grid.get_cell_item(cell + Vector3i(dx, 0, dz))
+				if item < 0 or not library.get_item_name(item).begins_with("Piso"):
+					return false
+		return true
+	var spot := Vector3.INF
+	for cell in grid.get_used_cells():
+		var at := grid.to_global(grid.map_to_local(cell))
+		if at.distance_to(player.global_position) < spot.distance_to(player.global_position) and open.call(cell):
+			spot = at
+	assert_true(spot != Vector3.INF, "hay un lugar abierto en el templo")
+	var column := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	shape.shape = BoxShape3D.new()
+	(shape.shape as BoxShape3D).size = Vector3(2, 2.6, 2)
+	shape.position.y = 1.3
+	column.add_child(shape)
+	column.add_to_group(&"navmesh_source")
+	tree.current_scene.add_child(column)
+	column.global_position = spot
+	await tree.physics_frame
+	WallTops.register()
+	var region := tree.current_scene.get_node(^"NavigationRegion3D") as NavigationRegion3D
+	region.navigation_mesh = region.navigation_mesh.duplicate()
+	region.bake_navigation_mesh(false)
+	var enemy := (load("res://src/entities/guerreros/skeleton_templo.tscn") as PackedScene).instantiate() as Enemy
+	enemy.get_node(^"NavigationAgent3D").path_desired_distance = 0.25
+	tree.current_scene.add_child(enemy)
+	enemy.global_position = spot + Vector3(0.4, 0, -3.0)
+	player.global_position = spot + Vector3(3.0, 0.1, -3.0)
+	var blackboard := enemy.bt_player.blackboard
+	for i in 120:
+		if blackboard.get_var(&"target", null, false) == player:
+			break
+		await tree.physics_frame
+	assert_eq(blackboard.get_var(&"target", null, false), player, "lo ve al costado de la columna")
+	player.global_position = spot + Vector3(-0.4, 0.1, 3.0)
+	var until := Time.get_ticks_msec() + 8000
+	var reach := enemy.config.attack_range + 0.5
+	while Time.get_ticks_msec() < until and enemy.global_position.distance_to(player.global_position) > reach:
+		await tree.physics_frame
+	assert_true(enemy.global_position.distance_to(player.global_position) <= reach, "llega al player rodeando la columna (quedó en %s, player en %s)" % [enemy.global_position - spot, player.global_position - spot])
+	tree.root.get_node(^"GameState").reset()
+
+
 func test_an_enemy_that_sees_nobody_wanders_near_its_spot() -> void:
 	var setup: Array = await _load_level()
 	var tree: SceneTree = setup[0]

@@ -902,6 +902,10 @@ locale/fallback="es"
 3d_physics/layer_5="Hurtbox"
 3d_physics/layer_6="Interactable"
 
+[navigation]
+
+3d/default_cell_height=0.05
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

@@ -35,6 +35,7 @@ size = Vector3(14, 2.4, 10)
 [sub_resource type="NavigationMesh" id="NavigationMesh_i7p8w"]
 vertices = PackedVector3Array(-34.5, 0.05, -4.5, -34.5, 0.05, 4.5, -9.5, 0.05, 4.5, -9.5, 0.05, -4.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+cell_height = 0.05
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r12bo"]
 size = Vector3(2, 2.4, 1.4)

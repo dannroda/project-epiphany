@@ -47,8 +47,9 @@ uv1_triplanar = true
 [sub_resource type="DrawableTexture2D" id="DrawableTexture2D_4uxyr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_level"]
-vertices = PackedVector3Array(-14.194824, 0.5009707, -17.231567, -14.194824, 0.5009707, 17.268433, 14.305176, 0.5009707, 17.268433, 14.305176, 0.5009707, -17.231567)
+vertices = PackedVector3Array(-14.194824, 0.3009707, -17.231567, -14.194824, 0.3009707, 17.268433, 14.305176, 0.3009707, 17.268433, 14.305176, 0.3009707, -17.231567)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+cell_height = 0.05
 geometry_parsed_geometry_type = 1
 geometry_source_geometry_mode = 1
 geometry_source_group_name = &"navmesh_source"

@@ -46,6 +46,7 @@ size = Vector3(14, 2.4, 10)
 [sub_resource type="NavigationMesh" id="NavMesh"]
 vertices = PackedVector3Array(-22, 0.3, -41, -22, 0.3, -5, 22, 0.3, -5, 22, 0.3, -41)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+cell_height = 0.05
 
 [node name="TestRooms" type="Node3D" unique_id=426171470]
 script = ExtResource("1_level")
