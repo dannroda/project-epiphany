@@ -2720,7 +2720,7 @@ Cuando una pared tapa al player se pierde de vista. Mostrar su silueta por encim
 
 **Notas:** Overlay por stencil: hit_flash escribe el stencil donde el player se ve y occluded_silhouette (sin depth test) pinta en dorado solo donde no. Revisado detrás del jefe y bajo la máscara de la puerta norte del Hub. Test test_silhouette_only_on_the_player.
 
-### 11.9 Navmesh sobre el piso · En curso
+### 11.9 Navmesh sobre el piso · Revisión
 
 **Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `ia`
 
@@ -2730,11 +2730,11 @@ La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas a
   El piso del kit gris tiene el techo de la colisión en y = 0, pero los vértices quedan en 0.5 (overworld y templo). Revisar cell_size/cell_height del NavigationMesh contra los del mapa de navegación (Project Settings › navigation), agent_max_climb y la posición del NavigationRegion3D.
 - [x] Sacar las islas arriba de paredes y acantilados
   Hay polígonos a y = 3 sobre Pared y Acantilado. Un enemigo nunca llega ahí, pero ensucian el mapa y algún punto aleatorio o el más cercano puede caer arriba. Opciones: filter_baking_aabb, agent_max_climb o colisión de pared sin techo transitable.
-- [ ] Rehornear overworld, mazmorras y niveles de prueba
+- [x] Rehornear overworld, mazmorras y niveles de prueba
   Botón Bake de cada NavigationRegion3D (levels/overworld.tscn, templo.tscn, chullpa.tscn, quenoa.tscn, totora.tscn, cumbre.tscn, test.tscn, dungeon_test.tscn, test_rooms.tscn).
-- [ ] Volver `path_desired_distance` a 0.5 si ya no se traban
+- [x] Volver `path_desired_distance` a 0.5 si ya no se traban
   src/entities/enemy.tscn › NavigationAgent3D. Probar persecución alrededor de columnas y esquinas de puerta.
-- [ ] Actualizar el GDD
+- [x] Actualizar el GDD
   [[gdd#overworld-layout]] › Blockout (7.2) cuenta la compensación; dejar lo nuevo.
 
 **Prueba:** Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.
@@ -2742,6 +2742,8 @@ La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas a
 **Notas:** -5c (2026-10-19), pasos 1-2 en e0682a06. Los 0.5 m: Recast deja cada superficie dos cell_height arriba del techo de la colisión (piso en 0 → 0.5, paredes en 2.6 → 3.0 con 0.25; con 0.1 → 0.2 y 2.8); no es la posición de la región ni agent_max_climb. Con cell_height 0.05 el piso queda en 0.1 (hay que poner navigation/3d/default_cell_height = 0.05 junto con el rehorneado). Islas: WallTops (src/world/nav/wall_tops.gd), un parser de geometría registrado por epiphany_tools (Bake del editor) y bake_overworld_nav.gd, pone una obstrucción proyectada en el techo de cada celda del GridMap cuya caja sube una altura de agente (paredes, columnas, acantilados, árboles). Prueba en copia (debug/tmp/nav/templo_scratch.tscn): 171 vértices todos en 0.1, camino de punta a punta en 0.1, ningún punto más cercano sobre 200 paredes cae arriba. Chullpa: quedan solo los tres pisos. Overworld: las islas a 2.7 son del Terreno/Terrazas, no del GridMap; ver después de 16.49.
 
 -5c (2026-10-19), paso 3 sin el overworld en 278e9416: cell_height 0.05 en levels/nav/*_navmesh.tres y en las navmesh de los niveles de prueba, navigation/3d/default_cell_height 0.05; mazmorras, cuevas y levels/test.tscn rehorneados con la herramienta, pisos en 0.1. El .tres del overworld solo tiene cell_height 0.05 (para coincidir con el mapa); falta rehornearlo después de 16.49. Paso 4: con la navmesh nueva hace falta path_desired_distance 0.25 (con 0.5 y 1.0 el esqueleto da por alcanzada la esquina de la columna y se traba contra ella); pero 0.5 o menos deja trabados a los esqueletos de la pradera mientras el overworld siga a 0.5 m del piso. enemy.tscn y atoq.tscn siguen en 1.0; test_an_enemy_goes_around_a_column le pone 0.25 a su agente. Cuando se rehornee el overworld: 0.25 en enemy.tscn y atoq.tscn y sacar eso de la prueba.
+
+-5c (2026-10-20), pasos 3-5: overworld rehorneado después de 16.49 con la herramienta (4931 vértices, 4858 a 0.1 m del piso de colisión y el resto entre 0 y 0.3 en pendientes, ninguno arriba de paredes o acantilados); path_desired_distance 0.25 en enemy.tscn y atoq.tscn, la prueba ya no se lo pone; GDD › Blockout al día. Suite 708/0.
 
 **Referencias:** `gdd.md#overworld-layout`
 
@@ -6827,6 +6829,8 @@ Se mezclan español e inglés en identificadores y archivos: AmbientePreset/Ambi
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
+**Notas:** Point 3 done (9d94ec88): run_tests.gd kills a worker that goes 300 s without finishing a test and counts it as a failure, naming the last test. GUT (points 1–2) still waits for 'another day', per Daniel.
+
 ### 16.26 Orden de carpetas y lo que entra en la build release · Pendiente
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `build`
@@ -7769,7 +7773,7 @@ Los terreno_organico pesan 15-72 MB cada uno. Comprimir atributos de vértice ac
 
 **Relacionadas:** 11.126 Push bloqueado: terreno del overworld pasa 100 MB
 
-### 15.6 Arranque hasta el menú · Pendiente
+### 15.6 Arranque hasta el menú · En curso
 
 **Responsable:** project-epiphany-e0
 
@@ -7777,7 +7781,9 @@ Medir qué se carga antes del primer cuadro: autoloads, preloads grandes, recurs
 
 - [ ] Medir el tiempo hasta el primer cuadro y hasta el menú
   Linux y Windows, caché vacía y caliente.
-- [ ] Mover a carga diferida lo que no haga falta
+- [x] Mover a carga diferida lo que no haga falta
+
+**Notas:** Linux measured (8a6d7311, warm cache): windowed Vulkan ~2.25 s to the first title frame, ~1.3 s of which is renderer start-up; autoloads ~200 ms (DialogueManager 78 ms, from the addon, can't be deferred); title 19 ms. Deferred: intro and pipeline warm-up (-39 ms); Feel no longer synthesizes (15.12). Still pending: Windows and a cold cache (Windows session, with measure_shaders.ps1 or by timing the build).
 
 **Relacionadas:** 15.12 Feel sintetiza sonidos al arrancar y tira la mitad
 
