@@ -115,6 +115,11 @@
 [ext_resource type="Resource" uid="uid://duv1mo30xrp5q" path="res://data/regions/risco.tres" id="region_risco"]
 [ext_resource type="Resource" uid="uid://d274mfm7ywr42" path="res://data/regions/templo.tres" id="region_templo"]
 [ext_resource type="Resource" uid="uid://cp7ifbahttsk8" path="res://data/regions/vertiente.tres" id="region_vertiente"]
+[ext_resource type="PackedScene" path="res://src/world/technique_stone.tscn" id="tech_stone"]
+[ext_resource type="PackedScene" path="res://src/world/practice_dummy.tscn" id="tech_dummy"]
+[ext_resource type="Resource" path="res://data/techniques/counter.tres" id="tech_counter"]
+[ext_resource type="Resource" path="res://data/techniques/plunge.tres" id="tech_plunge"]
+[ext_resource type="Resource" path="res://data/techniques/beam.tres" id="tech_beam"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -2159,6 +2164,29 @@ depth = 2.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 2.6, 2)
 flag = &"ow_heart_piece_mirador"
 hidden_until_revealed = false
+
+[node name="TechniqueStones" type="Node" parent="."]
+
+[node name="MeadowStone" parent="TechniqueStones" instance=ExtResource("tech_stone")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -12)
+technique = ExtResource("tech_counter")
+
+[node name="MeadowDummy" parent="TechniqueStones" instance=ExtResource("tech_dummy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -8.5)
+
+[node name="GroveStone" parent="TechniqueStones" instance=ExtResource("tech_stone")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.6, 24.5)
+technique = ExtResource("tech_plunge")
+
+[node name="GroveDummy" parent="TechniqueStones" instance=ExtResource("tech_dummy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 2.6, 24.5)
+
+[node name="SummitStone" parent="TechniqueStones" instance=ExtResource("tech_stone")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 5.2, -40.5)
+technique = ExtResource("tech_beam")
+
+[node name="SummitDummy" parent="TechniqueStones" instance=ExtResource("tech_dummy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 5.2, -41)
 
 [editable path="SecretHillsWall"]
 [editable path="SecretCactusWall"]
