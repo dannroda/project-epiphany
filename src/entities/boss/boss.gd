@@ -19,11 +19,10 @@ const CORRUPT_GLOW := Color(1.0, 0.3, 0.18)
 ## Cuadros de física en que la explosión de la marca lastima.
 const BLAST_FRAMES := 3
 ## Alto del cuerpo en la fase 2 (más cerca para mirarte) y aturdido (apoyado en el piso: lo más bajo del cuerpo queda
-## 2,35 m debajo de su origen).
+## 2,35 m debajo de su origen); los clips de Float flotan en esas alturas.
 const BODY_HEIGHT_OPEN := 2.6
 const BODY_HEIGHT_STUNNED := 2.4
 const BOB_HEIGHT := 0.12
-const BOB_SPEED := 1.3
 ## En co-op cambia de objetivo solo si otro player está esta distancia (m) más cerca del ojo: no alterna entre dos pegados.
 const RETARGET_MARGIN := 3.0
 const LEAN_ANGLE := 9.0
@@ -43,9 +42,8 @@ const GAZE_CALM := 0.5
 const GAZE_FIRING := 0.2
 ## Cuánto se queda la cámara en el jefe al presentar la fase 2.
 const PHASE_HOLD := 2.2
-## Aturdido: el cuerpo se va para atrás y el ojo, sin fuerza, baja la mirada (a medias entre la cámara y el frente:
-## la pupila se sigue viendo, caída) y se mece.
-const STUN_SLUMP := -0.25
+## Aturdido: el cuerpo se va para atrás (clip stunned de Float) y el ojo, sin fuerza, baja la mirada (a medias entre la
+## cámara y el frente: la pupila se sigue viendo, caída) y se mece.
 const DAZED_DROOP := 0.5
 const DAZED_SWAY := Vector2(0.35, 0.08)
 ## Cada golpe que recibe: el ojo se tiñe y la malla del globo da tirones al azar (los párpados y el cuerpo quietos).
@@ -105,12 +103,32 @@ var _aggro: PlayerCharacter
 var _laser_tween: Tween
 var _laser_from := Vector3.ZERO
 var _laser_to := Vector3.ZERO
-var _body_tween: Tween
-var _charge_tween: Tween
-var _body_height := 0.0
+## Brillo del neón del ojo y de la boca relativo al de la paleta (1 = normal); los animan los clips.
+var eye_shine := EYE_GLOW:
+	set(value):
+		eye_shine = value
+		if _eye_material:
+			_eye_material.emission_energy_multiplier = _eye_base_glow * value
+var body_shine := 1.0:
+	set(value):
+		body_shine = value
+		if _body_material:
+			_body_material.emission_energy_multiplier = _body_base_glow * value
+## Carga del orbe o del rayo (0..1): el iris late cada vez más rápido.
+var charging := 0.0:
+	set(value):
+		charging = value
+		var beat := 0.5 + 0.5 * sin(value * value * 14.0 * PI)
+		eye_shine = lerpf(EYE_GLOW, EYE_GLOW_CHARGED, value * (0.6 + 0.4 * beat))
+## Al morir, cuánto se hundió el cuerpo desde `_sink_from` (0..1).
+var sink := 0.0:
+	set(value):
+		sink = value
+		if body:
+			body.position.y = lerpf(_sink_from, 0.2, value)
+var _sink_from := 0.0
 var _time := 0.0
 ## 1 flota, 0 quieto (aturdido, apoyado en el piso).
-var _bob := 1.0
 var _blink := 0.0
 var _squint := 0.0
 ## -1 rendija, 0 normal, 1 dilatada.
@@ -145,6 +163,13 @@ var _presenting := false
 @onready var _upper_lid: Node3D = %UpperLid
 @onready var _lower_lid: Node3D = %LowerLid
 @onready var _transform: AnimationPlayer = %Transform
+@onready var _lids: AnimationPlayer = %Lids
+@onready var _blink_anim: AnimationPlayer = %Blink
+@onready var _charging: AnimationPlayer = %Charging
+@onready var _glow: AnimationPlayer = %Glow
+@onready var _flare: AnimationPlayer = %Flare
+@onready var _pupil_anim: AnimationPlayer = %Pupil
+@onready var _float_tree: AnimationTree = %Float
 @onready var _laser_path: MeshInstance3D = %LaserPath
 @onready var _laser_beam: MeshInstance3D = %LaserBeam
 @onready var _laser_spot: Hitbox = %LaserSpot
@@ -154,7 +179,6 @@ func _ready() -> void:
 	_apply_lids()
 	if Engine.is_editor_hint():
 		return
-	_body_height = body.position.y
 	_eye_material = _own_material(_eye_mesh)
 	_body_material = _own_material($Body/Mesh)
 	_eye_base_glow = _eye_material.emission_energy_multiplier
@@ -222,20 +246,15 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint() or not _alive:
 		return
 	_time += delta
-	_bob = move_toward(_bob, 0.0 if is_eye_stunned() else 1.0, delta * 4.0)
-	body.position.y = _body_height + sin(_time * BOB_SPEED * TAU) * BOB_HEIGHT * _bob
 	var lean := 0.0
 	if attacker is BossHand and attacker.striking:
 		lean = -signf(attacker.global_position.x - global_position.x) * deg_to_rad(LEAN_ANGLE)
 	body.rotation.z = lerpf(body.rotation.z, lean, 1.0 - exp(-4.0 * delta))
-	body.rotation.x = lerpf(body.rotation.x, STUN_SLUMP if is_eye_stunned() else 0.0, 1.0 - exp(-6.0 * delta))
 	if eye_open >= 1.0 and not is_eye_stunned() and not _charge.visible:
 		_next_blink -= delta
 		if _next_blink <= 0.0:
 			_next_blink = rng.randf_range(BLINK_EVERY.x, BLINK_EVERY.y)
-			var blink := create_tween()
-			blink.tween_property(self, ^"_blink", 1.0, 0.07)
-			blink.tween_property(self, ^"_blink", 0.0, 0.12)
+			Tweens.replay(_blink_anim, &"blink")
 	_apply_lids()
 	var goal := _pupil_goal
 	if is_eye_stunned():
@@ -250,7 +269,7 @@ func _physics_process(delta: float) -> void:
 	if _eye_stun_left > 0.0:
 		_eye_stun_left -= delta
 		if _eye_stun_left <= 0.0:
-			_move_body(BODY_HEIGHT_OPEN, 0.6)
+			_float(&"open")
 	if _laser_beam.visible:
 		_place_laser()
 	if is_eye_stunned():
@@ -353,10 +372,9 @@ func _mark_floor() -> void:
 		add_child(mark)
 		mark.global_position = point + Vector3.UP * 0.5
 		mark.scale = Vector3(mark_radius * 2.0, 1.0, mark_radius * 2.0)
-		mark.modulate.a = 0.3
 		mark.visible = true
 		marks.append(mark)
-		create_tween().tween_property(mark, ^"modulate:a", 1.0, mark_telegraph).set_ease(Tween.EASE_IN)
+		Tweens.replay(mark.get_node(^"Anim"), &"charge", 1.4 / mark_telegraph)
 	Feel.sfx(&"deny", eye.global_position)
 	_flare_body()
 	_snap_pupil()
@@ -464,9 +482,7 @@ func _blast(point: Vector3) -> void:
 	blast.global_position = point + Vector3.UP * 1.2
 	blast.scale = Vector3(mark_radius, 1.0, mark_radius)
 	blast.visible = true
-	var fade := blast.create_tween()
-	fade.tween_property(blast, ^"transparency", 1.0, 0.4)
-	fade.tween_callback(blast.queue_free)
+	Tweens.replay(blast.get_node(^"Anim"), &"fade")
 	Feel.sfx(&"boom", point)
 	Feel.burst(&"dust", point, Vector3.UP)
 	Feel.shake(0.3)
@@ -503,10 +519,8 @@ func _sweep_laser() -> void:
 	_laser_path.scale = Vector3(1, 1, _laser_from.distance_to(_laser_to))
 	_laser_path.visible = true
 	Feel.sfx(&"click", eye.global_position)
-	_laser_tween = create_tween()
-	_laser_tween.tween_property(self, ^"_squint", 1.0, 0.2)
-	_laser_tween.parallel().tween_method(_pulse_eye, 0.0, 1.0, laser_charge_time)
-	if not await Tweens.ended(_laser_tween) or not _eye_attacking:
+	Tweens.replay(_charging, &"laser_charge", 1.0 / laser_charge_time)
+	if not await Tweens.played(_charging, &"laser_charge") or not _eye_attacking:
 		return
 	var floor_y := target.global_position.y if is_instance_valid(target) else 0.0
 	_laser_spot.global_position = Vector3(_laser_from.x, floor_y, _laser_from.z)
@@ -522,9 +536,7 @@ func _sweep_laser() -> void:
 	if not await Tweens.ended(_laser_tween):
 		return
 	_end_laser()
-	var relax := create_tween().set_parallel()
-	relax.tween_property(self, ^"_squint", 0.0, 0.3)
-	relax.tween_method(_set_eye_glow, EYE_GLOW_CHARGED, EYE_GLOW, 0.3)
+	Tweens.replay(_charging, &"relax")
 
 
 func _end_laser() -> void:
@@ -551,21 +563,14 @@ func _fire_orb() -> void:
 	_eye_attacking = true
 	_charge.visible = true
 	_charge.scale = Vector3.ONE * 0.1
-	_charge_tween = create_tween()
-	var grow := _charge_tween
-	grow.tween_property(_charge, ^"scale", Vector3.ONE, orb_charge_time).set_ease(Tween.EASE_IN)
-	grow.parallel().tween_property(self, ^"_squint", 1.0, 0.2)
-	grow.parallel().tween_method(_pulse_eye, 0.0, 1.0, orb_charge_time)
-	grow.parallel().tween_property(self, ^"_pupil_goal", 1.0, orb_charge_time).set_ease(Tween.EASE_IN)
-	if not await Tweens.ended(grow):
+	Tweens.replay(_charging, &"orb_charge", 0.8 / orb_charge_time)
+	if not await Tweens.played(_charging, &"orb_charge"):
 		return
 	_charge.visible = false
 	_eye_attacking = false
 	_flare_body()
 	_snap_pupil()
-	var relax := create_tween().set_parallel()
-	relax.tween_property(self, ^"_squint", 0.0, 0.3)
-	relax.tween_method(_set_eye_glow, EYE_GLOW_CHARGED, EYE_GLOW, 0.3)
+	Tweens.replay(_charging, &"relax")
 	if is_eye_stunned() or not is_instance_valid(target) or health.current <= 0:
 		return
 	var info := DamageInfo.make(orb_damage, 6.0, self)
@@ -589,10 +594,7 @@ static func compensated(values: Array) -> float:
 
 ## Presentación: el ojo se abre de par en par y grita.
 func roar() -> void:
-	var open := eye.create_tween()
-	open.tween_property(self, ^"eye_open", 1.0, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	open.tween_interval(roar_fx.duration)
-	open.tween_property(self, ^"eye_open", 0.0, 0.4)
+	_lid(&"roar")
 	roar_fx.play()
 
 
@@ -672,8 +674,8 @@ func _stun_eye() -> void:
 	_cut_charge()
 	_squint = 0.0
 	_pupil_goal = 0.0
-	_set_eye_glow(EYE_GLOW)
-	_move_body(BODY_HEIGHT_STUNNED, 0.5, Tween.TRANS_BOUNCE, Tween.EASE_OUT)
+	eye_shine = EYE_GLOW
+	_float(&"stunned")
 
 
 func _jolt_eye() -> void:
@@ -686,11 +688,15 @@ func _jolt_eye() -> void:
 	jolt.tween_property(_eye_mesh, ^"rotation", Vector3.ZERO, 0.1)
 
 
-func _move_body(height: float, seconds: float, trans := Tween.TRANS_SINE, ease_type := Tween.EASE_IN_OUT) -> void:
-	if _body_tween:
-		_body_tween.kill()
-	_body_tween = create_tween().set_trans(trans).set_ease(ease_type)
-	_body_tween.tween_property(self, ^"_body_height", height, seconds)
+## Muerto, los párpados ya no hacen otra cosa que el clip death.
+func _lid(clip: StringName) -> void:
+	if _alive:
+		Tweens.replay(_lids, clip)
+
+
+## Float: closed (fase 1), open o stunned.
+func _float(state: StringName) -> void:
+	(_float_tree.get(&"parameters/playback") as AnimationNodeStateMachinePlayback).travel(state)
 
 
 func _on_hand_downed() -> void:
@@ -726,12 +732,8 @@ func _on_phase2_entered() -> void:
 func _open_eye() -> void:
 	Feel.sfx(&"rumble", eye.global_position, true)
 	Feel.shake(0.6)
-	_move_body(BODY_HEIGHT_OPEN, 0.8)
-	var lids := create_tween()
-	lids.tween_property(self, ^"eye_open", 0.15, 0.5).set_delay(0.3)
-	lids.tween_property(self, ^"eye_open", 1.0, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	lids.tween_callback(_awaken_flash)
-	lids.tween_callback(roar_fx.play)
+	_float(&"open")
+	_lid(&"awaken")
 
 
 ## Furia: el ojo grita, la máscara de oro se raja y estalla y queda el ojo corrupto, manos incluidas (Transform, que
@@ -742,7 +744,7 @@ func _on_phase3_entered() -> void:
 	for hand in [hand_left, hand_right]:
 		hand.held = true
 		hand.reset()
-	_move_body(BODY_HEIGHT_OPEN, 0.4)
+	_float(&"open")
 	phase_changed.emit(3)
 	await _present(_transform.play.bind(&"transform"), _transform.get_animation(&"transform").length + 0.3)
 	if _transform.is_playing():
@@ -758,11 +760,9 @@ func _scream() -> void:
 	roar_fx.play()
 	_pupil_goal = 1.0
 	_squint = 0.0
-	var lids := create_tween()
-	lids.tween_property(self, ^"eye_open", 0.3, 0.1)
-	lids.tween_property(self, ^"eye_open", 1.0, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_lid(&"scream")
 	_flash.warn(1.4)
-	create_tween().tween_method(_set_eye_glow, EYE_GLOW, EYE_GLOW_CHARGED * 1.5, 1.5)
+	Tweens.replay(_glow, &"scream")
 
 
 func _crack() -> void:
@@ -792,14 +792,12 @@ func _burst() -> void:
 
 func _calm() -> void:
 	_pupil_goal = 0.0
-	_set_eye_glow(EYE_GLOW)
-
+	eye_shine = EYE_GLOW
 
 
 ## Corta la carga del orbe a mitad (aturdido o vencido): no dispara y el BT ya puede seguir.
 func _cut_charge() -> void:
-	if _charge_tween:
-		_charge_tween.kill()
+	_charging.stop(true)
 	_charge.visible = false
 	_eye_attacking = false
 	_end_laser()
@@ -822,38 +820,30 @@ func _on_defeated() -> void:
 
 ## En etapas: el neón se apaga titilando, saltan placas y explotan las juntas, y recién ahí se hunde.
 func _play_death() -> void:
-	if _body_tween:
-		_body_tween.kill()
+	_float_tree.active = false
+	for player in [_blink_anim, _glow, _flare, _pupil_anim]:
+		player.stop(true)
 	_alive = false
 	_squint = 0.0
 	pupil = 1.0
 	_apply_pupil()
-	var death := create_tween()
-	death.tween_property(self, ^"eye_open", 0.0, 0.6)
-	death.parallel().tween_method(_set_eye_glow, EYE_GLOW_CHARGED, 0.0, 1.4).set_trans(Tween.TRANS_BOUNCE)
-	death.parallel().tween_method(_set_body_glow, 1.0, 0.0, 1.4).set_trans(Tween.TRANS_BOUNCE)
-	var base := body.position
-	for i in 10:
-		death.tween_property(body, ^"position", base + Vector3(0.15 * (1 if i % 2 else -1), 0, 0), 0.08)
-		if i % 2 == 0:
-			death.tween_callback(_joint_blast)
-	death.tween_property(body, ^"position", Vector3(base.x, 0.2, base.z), 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	death.parallel().tween_property(body, ^"scale", Vector3.ONE * 0.6, 1.2)
-	death.tween_callback(func() -> void:
-		Feel.burst(&"dust", Vector3(body.global_position.x, 0.1, body.global_position.z), Vector3.UP)
-		Feel.shake(0.5)
-		visible = false
-		%Solid.process_mode = Node.PROCESS_MODE_DISABLED
-		death_finished.emit())
+	_sink_from = body.position.y
+	Tweens.replay(_lids, &"death")
+
+
+func _died_out() -> void:
+	Feel.burst(&"dust", Vector3(body.global_position.x, 0.1, body.global_position.z), Vector3.UP)
+	Feel.shake(0.5)
+	visible = false
+	%Solid.process_mode = Node.PROCESS_MODE_DISABLED
+	death_finished.emit()
 
 
 ## Al soltar un ataque la pupila se cierra de golpe en rendija y vuelve sola.
 func _snap_pupil() -> void:
 	pupil = -1.0
 	_pupil_goal = -1.0
-	var back := create_tween()
-	back.tween_interval(0.35)
-	back.tween_property(self, ^"_pupil_goal", 0.0, 0.5)
+	Tweens.replay(_pupil_anim, &"snap")
 
 
 func _apply_pupil() -> void:
@@ -880,33 +870,17 @@ func _own_material(mesh: MeshInstance3D) -> StandardMaterial3D:
 	return material
 
 
-func _set_eye_glow(value: float) -> void:
-	_eye_material.emission_energy_multiplier = _eye_base_glow * value
-
-
-func _set_body_glow(value: float) -> void:
-	_body_material.emission_energy_multiplier = _body_base_glow * value
-
-
-## El iris late cada vez más rápido mientras crece el orbe.
-func _pulse_eye(progress: float) -> void:
-	var beat := 0.5 + 0.5 * sin(progress * progress * 14.0 * PI)
-	_set_eye_glow(lerpf(EYE_GLOW, EYE_GLOW_CHARGED, progress * (0.6 + 0.4 * beat)))
-
-
 ## La boca de horno se enciende en cada ataque.
 func _flare_body() -> void:
 	if not _alive:
 		return
-	var flare := create_tween()
-	flare.tween_method(_set_body_glow, 3.0, 1.0, 0.5).set_ease(Tween.EASE_OUT)
+	Tweens.replay(_flare, &"flare")
 
 
 ## Se abren los párpados de golpe: destello del ojo y polvo que cae del techo.
 func _awaken_flash() -> void:
 	_flash.warn(0.05)
-	var glow := create_tween()
-	glow.tween_method(_set_eye_glow, EYE_GLOW_CHARGED * 1.5, EYE_GLOW, 0.6)
+	Tweens.replay(_glow, &"awaken_flash")
 	Feel.shake(0.4)
 	for i in 6:
 		var spot := Vector3(rng.randf_range(arena.position.x, arena.end.x), 6.0, rng.randf_range(arena.position.y, arena.end.y))

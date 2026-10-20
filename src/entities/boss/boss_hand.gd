@@ -19,7 +19,6 @@ const FLOOR_HEIGHT := 0.6
 const DOWN_HEIGHT := 0.77
 const SQUASH := Vector3(1.25, 0.7, 1.25)
 const TREMBLE := 0.06
-const STUN_WOBBLE := 0.18
 ## grip de cada pose: 0 abierta, 0,5 garra, 1 puño; menos de 0 estira los dedos.
 const POSE_GRIP := {Pose.OPEN: 0.0, Pose.FIST: 1.0, Pose.CLAW: 0.5}
 ## Las shape keys de jefe_mano_* (build_jefe.py, GRIP) y su grip; la malla sin shape keys es la abierta.
@@ -94,8 +93,37 @@ var held := false
 		glow_color = value
 		if _pulse_material:
 			_pulse_material.set_shader_parameter(&"color", value)
+## Los clips de Anim: brillo del lomo (1 normal), cuánto bajó desde `_sink_from` hasta `_sink_to`, cuánto se ladeó
+## hacia `_tip_to` y el temblor de lado (-1..1) alrededor de `_anchor_x`.
+var shine := 1.0:
+	set(value):
+		shine = value
+		if _material:
+			_material.emission_energy_multiplier = _base_glow * value
+var sink := 0.0:
+	set(value):
+		sink = value
+		if is_inside_tree():
+			global_position.y = lerpf(_sink_from, _sink_to, value)
+var tip := 0.0:
+	set(value):
+		tip = value
+		rotation.z = _tip_to * value
+var quake := 0.0:
+	set(value):
+		quake = value
+		position.x = _anchor_x + 0.12 * value
+## La onda del golpe (0..1, Wave): el aro crece hasta `shockwave_radius`.
+var wave := 0.0:
+	set(value):
+		wave = value
+		if ring:
+			ring.scale = Vector3.ONE * lerpf(0.4, shockwave_radius, value)
+var _sink_from := 0.0
+var _sink_to := 0.0
+var _tip_to := 0.0
+var _anchor_x := 0.0
 var _stun_left := 0.0
-var _fall: Tween
 var _motion: Tween
 ## El tween del aviso del ataque en curso (sostener, sacudir, cargar): se corta al dejar de atacar.
 var _attack_tween: Tween
@@ -107,7 +135,6 @@ var _flash: HitFlash
 var _material: StandardMaterial3D
 var _pulse_material: ShaderMaterial
 var _spark_left := 0.0
-var _stun_time := 0.0
 var _base_glow := 1.0
 var _grip_goal := 0.0
 var _grip_speed := 0.0
@@ -133,6 +160,8 @@ static var _crack: Texture2D
 @onready var grip_point: Marker3D = $Grip
 @onready var mesh: MeshInstance3D = $Mesh
 @onready var pulse: GPUParticles3D = $Mesh/Pulso
+@onready var anim: AnimationPlayer = $Anim
+@onready var wave_anim: AnimationPlayer = $Wave
 
 
 func _ready() -> void:
@@ -170,9 +199,6 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint() or state != State.STUNNED:
 		return
 	_stun_left -= delta
-	_stun_time += delta
-	rotation.x = sin(_stun_time * 7.0) * STUN_WOBBLE * 0.5
-	rotation.z = sin(_stun_time * 4.3) * STUN_WOBBLE
 	_material.emission_energy_multiplier = _base_glow * (0.15 if randf() < 0.35 else 1.0)
 	_spark_left -= delta
 	if _spark_left <= 0.0:
@@ -201,6 +227,8 @@ func set_state(value: State) -> void:
 	if state != State.BUSY:
 		if _attack_tween:
 			_attack_tween.kill()
+		if anim.current_animation == &"grab_warn":
+			anim.stop(true)
 		attack_runner.stop()
 		_set_hitbox(strike, null)
 	state_changed.emit(state)
@@ -210,15 +238,14 @@ func stun(seconds: float) -> void:
 	if state == State.DOWN:
 		return
 	_stun_left = seconds
-	_stun_time = 0.0
 	striking = false
 	set_state(State.STUNNED)
+	Tweens.replay(anim, &"stunned")
 
 
 ## Fase 2: vuelve con la vida llena.
 func regenerate() -> void:
-	if _fall:
-		_fall.kill()
+	anim.stop(true)
 	health.reset(health.max_health)
 	rotation = Vector3.ZERO
 	set_state(State.BUSY)
@@ -238,36 +265,36 @@ func reset() -> void:
 func vanish() -> void:
 	_drop_everything()
 	hurtbox.set_deferred(&"monitorable", false)
-	_fall = create_tween()
-	_fall.tween_method(_set_glow, 1.0, 0.0, 1.4).set_trans(Tween.TRANS_BOUNCE)
-	var base := position
-	for i in 10:
-		_fall.tween_property(self, ^"position", base + Vector3(0.12 * (1 if i % 2 else -1), 0, 0), 0.08)
-		if i % 2 == 0:
-			_fall.tween_callback(_joint_blast)
-	_fall.tween_property(self, ^"global_position:y", FLOOR_HEIGHT * 0.3, 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	_fall.parallel().tween_property(self, ^"scale", Vector3.ONE * 0.6, 1.2)
-	_fall.tween_callback(func() -> void:
-		Feel.burst(&"dust", Vector3(global_position.x, 0.1, global_position.z), Vector3.UP)
-		visible = false)
+	_settle(FLOOR_HEIGHT * 0.3, 0.0)
+	Tweens.replay(anim, &"vanish")
+
+
+func _vanished() -> void:
+	Feel.burst(&"dust", Vector3(global_position.x, 0.1, global_position.z), Vector3.UP)
+	visible = false
+
+
+## Desde dónde bajan, se ladean y tiemblan los clips de caer y desaparecer.
+func _settle(floor_y: float, tilt: float) -> void:
+	_sink_from = global_position.y
+	_sink_to = floor_y
+	_tip_to = tilt
+	_anchor_x = position.x
 
 
 ## Corta ataque, aturdida o caída en curso y suelta al player; queda DOWN.
 func _drop_everything() -> void:
 	_run += 1
-	for tween in [_motion, _attack_tween, _bounce, _fall]:
+	for tween in [_motion, _attack_tween, _bounce]:
 		if tween:
 			tween.kill()
+	anim.stop(true)
 	striking = false
 	_hide_shadow()
 	_set_hitbox(shockwave, null)
 	if is_instance_valid(_grabbed) and _grabbed.is_grabbed():
 		_grabbed.release()
 	set_state(State.DOWN)
-
-
-func _set_glow(value: float) -> void:
-	_material.emission_energy_multiplier = _base_glow * value
 
 
 func _joint_blast() -> void:
@@ -360,13 +387,7 @@ func _impact() -> void:
 	shockwave.global_position = floor_point
 	_set_hitbox(shockwave, shockwave_attack)
 	ring.global_position = floor_point
-	ring.scale = Vector3.ONE * 0.4
-	ring.transparency = 0.0
-	ring.visible = true
-	var wave := create_tween().set_parallel()
-	wave.tween_property(ring, ^"scale", Vector3.ONE * shockwave_radius, 0.3).set_ease(Tween.EASE_OUT)
-	wave.tween_property(ring, ^"transparency", 1.0, 0.35)
-	wave.chain().tween_callback(ring.hide)
+	Tweens.replay(wave_anim, &"wave")
 	Feel.sfx(&"boom", floor_point)
 	Feel.burst(&"dust", floor_point, Vector3.UP)
 	Feel.burst(&"shards", floor_point + Vector3.UP * 0.2, Vector3.UP)
@@ -386,12 +407,9 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	_flash.warn(grab_windup_time)
 	_grip_goal = -0.3
 	_tilt_goal = Vector3(-0.3, 0.0, 0.0)
-	var shake := _new_attack_tween()
-	for i in 6:
-		shake.tween_property(self, ^"rotation:z", 0.12 * (1 if i % 2 else -1), grab_windup_time / 6.0)
-	shake.tween_property(self, ^"rotation:z", 0.0, 0.05)
+	Tweens.replay(anim, &"grab_warn", 0.7 / grab_windup_time)
 	_show_shadow(global_position, 1.6, 0.4)
-	if not await Tweens.ended(shake):
+	if not await Tweens.played(anim, &"grab_warn"):
 		return
 	if state != State.BUSY:
 		return
@@ -604,9 +622,8 @@ func collapse() -> void:
 	set_state(State.DOWN)
 	_aim = null
 	_tilt_goal = Vector3.ZERO
-	_fall = create_tween().set_parallel()
-	_fall.tween_property(self, ^"global_position:y", DOWN_HEIGHT, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	_fall.tween_property(self, ^"rotation:z", 0.5 * signf(position.x), 0.4)
+	_settle(DOWN_HEIGHT, 0.5 * signf(position.x))
+	Tweens.replay(anim, &"collapse")
 	Feel.sfx(&"boom", global_position)
 
 
@@ -648,6 +665,8 @@ func _leave_crack(at: Vector3) -> void:
 
 
 func _steady() -> void:
+	if anim.current_animation == &"stunned":
+		anim.stop(true)
 	rotation.x = 0.0
 	rotation.z = 0.0
 	_material.emission_energy_multiplier = _base_glow
@@ -717,8 +736,4 @@ func _apply_grip() -> void:
 
 ## Al volver en la fase 2: cierra y abre el puño, como desperezándose.
 func _flex() -> void:
-	var flex := create_tween()
-	flex.tween_property(self, ^"_grip_goal", 1.0, 0.25)
-	flex.tween_interval(0.15)
-	flex.tween_property(self, ^"_grip_goal", -0.3, 0.2)
-	flex.tween_property(self, ^"_grip_goal", 0.0, 0.3)
+	Tweens.replay(anim, &"flex")

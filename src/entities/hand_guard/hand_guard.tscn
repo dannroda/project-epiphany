@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://src/feel/roar.gd" id="20_roar"]
 [ext_resource type="Script" path="res://src/entities/hand_guard/hand_guard.gd" id="1_guard"]
 [ext_resource type="Script" path="res://src/entities/boss/boss_hand.gd" id="2_hand"]
+[ext_resource type="AnimationLibrary" path="res://src/entities/boss/boss_hand_anim.tres" id="hand_anim"]
+[ext_resource type="AnimationLibrary" path="res://src/entities/boss/boss_hand_wave.tres" id="hand_wave"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/jefe/jefe_guardia_mano.res" id="7_hand_l"]
 [ext_resource type="Script" path="res://src/components/health.gd" id="13_health"]
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="14_hurtbox"]
@@ -160,3 +162,15 @@ hitbox_root = NodePath("../Hitboxes")
 script = ExtResource("hf_hit_flash")
 health = NodePath("../Health")
 visuals = NodePath("..")
+
+[node name="Anim" type="AnimationPlayer" parent="Hand"]
+libraries = {
+&"": ExtResource("hand_anim")
+}
+deterministic = false
+
+[node name="Wave" type="AnimationPlayer" parent="Hand"]
+libraries = {
+&"": ExtResource("hand_wave")
+}
+deterministic = false
