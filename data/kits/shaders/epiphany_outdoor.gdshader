@@ -34,7 +34,7 @@ float value_noise(vec2 p) {
 	return mix(mix(hash1(i), hash1(i + vec2(1.0, 0.0)), f.x), mix(hash1(i + vec2(0.0, 1.0)), hash1(i + vec2(1.0, 1.0)), f.x), f.y);
 }
 
-vec3 stones(vec2 p, float jitter) {
+vec3 stones(vec2 p, float jitter, out vec2 edge_dir) {
 	vec2 n = floor(p);
 	vec2 f = fract(p);
 	vec2 best_cell = vec2(0.0);
@@ -53,22 +53,23 @@ vec3 stones(vec2 p, float jitter) {
 		}
 	}
 	float edge = 8.0;
+	edge_dir = vec2(0.0);
 	for (int j = -2; j <= 2; j++) {
 		for (int i = -2; i <= 2; i++) {
 			vec2 g = vec2(float(i), float(j));
 			vec2 r = g + 0.5 + (hash2(n + g) - 0.5) * 2.0 * jitter - f;
 			vec2 diff = r - best_r;
 			if (dot(diff, diff) > 0.0001) {
-				edge = min(edge, dot(0.5 * (best_r + r), normalize(diff)));
+				vec2 n = normalize(diff);
+				float d = dot(0.5 * (best_r + r), n);
+				if (d < edge) {
+					edge = d;
+					edge_dir = n;
+				}
 			}
 		}
 	}
 	return vec3(edge, best_cell);
-}
-
-float tile_height(vec2 p, float size, float jitter, float grout) {
-	vec3 s = stones(p / size, jitter);
-	return smoothstep(0.0, 0.09, s.x * size - grout);
 }
 
 void vertex() {
@@ -88,7 +89,8 @@ void fragment() {
 		float spots = value_noise(p * 0.35) * 0.55 + value_noise(p * 1.9) * 0.3 + value_noise(p * 7.0) * 0.15;
 		if (swatch == 5.0 || swatch == 6.0 || swatch == 15.0) {
 			float size = 1.1;
-			vec3 s = stones(p / size, 0.38);
+			vec2 edge_dir;
+			vec3 s = stones(p / size, 0.38, edge_dir);
 			bool dirt = hash1(s.yz + 11.0) < floor_earth;
 			float edge = s.x * size;
 			float tone = dirt ? 0.64 : 1.0 + (hash1(s.yz) - 0.5) * 0.3;
@@ -96,15 +98,15 @@ void fragment() {
 			color = base * tone * (0.88 + 0.24 * spots);
 			color = mix(color, base * 0.45, grout);
 			if (!dirt) {
-				float e = 0.02;
-				float h = tile_height(p, size, 0.38, 0.05);
-				vec2 slope = vec2(tile_height(p + vec2(e, 0.0), size, 0.38, 0.05) - h, tile_height(p + vec2(0.0, e), size, 0.38, 0.05) - h) / e;
+				float t = clamp((edge - 0.05) / 0.09, 0.0, 1.0);
+				vec2 slope = -edge_dir * 6.0 * t * (1.0 - t) / 0.09;
 				vec3 n = normalize(vec3(-slope.x * 0.6 * 0.09, 1.0, -slope.y * 0.6 * 0.09));
 				NORMAL = normalize((VIEW_MATRIX * vec4(n, 0.0)).xyz);
 			}
 			rough = dirt ? 1.0 : mix(rough, 1.0, grout);
 		} else if (swatch == 2.0 || swatch == 3.0) {
-			vec3 s = stones(p / 0.35, 0.45);
+			vec2 edge_dir;
+			vec3 s = stones(p / 0.35, 0.45, edge_dir);
 			bool has = hash1(s.yz + 3.0) < 0.12;
 			float d = 0.5 - s.x;
 			float pebble = has ? 1.0 - smoothstep(0.3, 0.38, d) : 0.0;
