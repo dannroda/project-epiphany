@@ -1,8 +1,9 @@
 extends "res://tests/test_case.gd"
 ## La pieza 16 (11.124): en el nicho del Mirador, detrás de una reja que baja la placa de golpe de la cornisa. Solo el
-## martillazo la aprieta; el gancho no trae la pieza a través de la reja.
+## martillazo la aprieta (ni la espada ni el golpe en picada); el gancho no trae la pieza a través de la reja.
 
 const LEVEL := "res://levels/overworld.tscn"
+const PLUNGE_WAVE := preload("res://src/combat/plunge_wave.tscn")
 const LEVELS := ["overworld", "grotto_cave", "shrine_cave", "bush_cave", "bomb_cave", "spring_cave", "huaca", "reflejos",
 	"chullpa", "quenoa", "totora", "cumbre", "templo"]
 
@@ -75,6 +76,14 @@ func test_the_hammer_plate_lowers_the_gate_on_the_mirador_piece() -> void:
 	await _place(plate.global_position + Vector3(0, 0, 1.2), Vector3.FORWARD)
 	await _press(&"attack")
 	assert_true(not plate.active and not gate.is_open, "la espada no aprieta la placa")
+	var wave := PLUNGE_WAVE.instantiate() as Hitbox
+	wave.team = player.hurtbox.team
+	wave.damage_factory = player._make_damage
+	tree.current_scene.add_child(wave)
+	wave.global_position = plate.global_position
+	for i in 6:
+		await tree.physics_frame
+	assert_true(not plate.active and not gate.is_open, "ni la onda del golpe en picada")
 	await _press(&"item_1")
 	assert_true(plate.active, "el martillazo sí")
 	assert_true(await _until(func() -> bool: return gate.is_open, 6.0), "y baja la reja del nicho")

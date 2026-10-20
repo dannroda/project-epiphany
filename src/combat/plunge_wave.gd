@@ -1,6 +1,6 @@
 extends Hitbox
-## La onda del golpe en picada (11.34): unos cuadros al caer, con polvo y temblor; pega con `attack` y hunde las placas
-## STRIKE (slam).
+## La onda del golpe en picada (11.34): unos cuadros al caer, con polvo y temblor; pega con `attack`. No es golpe
+## fuerte: las placas STRIKE son solo del martillo.
 
 @export var attack: AttackData
 @export var active_frames := 3

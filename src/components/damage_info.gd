@@ -21,8 +21,6 @@ var stun_time: float = 0.0
 var unavoidable := false
 ## Golpe fuerte (martillo, 11.191): lo leen la placa STRIKE, lo que solo se rompe a martillazos y las guardias.
 var strong := false
-## Golpe contra el piso (golpe en picada, 11.34): hunde las placas STRIKE como el martillo, sin ser golpe fuerte.
-var slam := false
 
 
 static func make(amount_: int, knockback_: float, source_: Node3D, element_ := &"") -> DamageInfo:

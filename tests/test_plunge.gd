@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 ## 11.34 paso 4: golpe en picada. Atacar en el aire del salto de la pluma cae clavando la espada; la onda pega ×2 en
-## 1,2 m y hunde las placas STRIKE sin ser golpe fuerte (no rompe lo que pide el martillo).
+## 1,2 m sin ser golpe fuerte: las placas STRIKE y lo que pide el martillo no la toman.
 
 const LEVEL := "res://levels/test.tscn"
 const FLOOR_SWITCH := preload("res://src/world/floor_switch.tscn")
@@ -77,7 +77,7 @@ func test_attacking_in_the_air_plunges_and_the_wave_hits_twice_as_hard() -> void
 	await _done(tree)
 
 
-func test_the_wave_presses_a_strike_plate() -> void:
+func test_the_wave_does_not_press_a_strike_plate() -> void:
 	var setup: Array = await _level()
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
@@ -89,11 +89,13 @@ func test_the_wave_presses_a_strike_plate() -> void:
 	plate.global_position = player.global_position + Vector3(0.8, 0, 0)
 	await tree.physics_frame
 	await _jump_and_attack(tree, player)
-	assert_true(await _until(tree, func() -> bool: return plate.active, 90), "la placa STRIKE se hunde")
+	assert_true(await _until(tree, func() -> bool: return _state(player) == &"Plunging", 10), "clava el golpe en picada")
+	await _until(tree, func() -> bool: return _state(player) == &"Idle", 90)
+	assert_true(not plate.active, "las placas STRIKE son solo del martillo")
 	await _done(tree)
 
 
-func test_the_wave_is_a_slam_not_a_strong_blow() -> void:
+func test_the_wave_is_not_a_strong_blow() -> void:
 	var setup: Array = await _level()
 	var tree: SceneTree = setup[0]
 	var player: PlayerCharacter = setup[1]
@@ -102,7 +104,7 @@ func test_the_wave_is_a_slam_not_a_strong_blow() -> void:
 	tree.current_scene.add_child(wave)
 	wave.global_position = Vector3(300, 0, 0)
 	var info := wave.build_damage()
-	assert_true(info.slam and not info.strong, "hunde placas pero no rompe lo del martillo ni guardias")
+	assert_true(not info.strong, "no rompe lo del martillo ni baja guardias")
 	var shape := (wave.get_child(0) as CollisionShape3D).shape as CylinderShape3D
 	assert_true(is_equal_approx(shape.radius, 1.2), "1,2 m alrededor")
 	await _done(tree)

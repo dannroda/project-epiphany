@@ -1,8 +1,7 @@
 class_name Plunging
 extends PlayerState
 ## Golpe en picada (11.34 paso 4, se aprende en la piedra de la Arboleda): atacar en el aire del salto de la pluma frena
-## un instante arriba y clava la espada hacia abajo; al tocar el piso suelta `wave` (×2 en 1,2 m, hunde las placas
-## STRIKE).
+## un instante arriba y clava la espada hacia abajo; al tocar el piso suelta `wave` (×2 en 1,2 m).
 
 const LEARNED := &"ow_tech_plunge"
 const ANIMATION := &"CombatMelee/Melee_2H_Attack_Chop"

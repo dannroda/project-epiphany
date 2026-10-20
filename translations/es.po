@@ -1361,7 +1361,7 @@ msgid "TECH_PLUNGE"
 msgstr "Golpe en picada"
 
 msgid "TECH_PLUNGE_DESC"
-msgstr "Atacá en el aire del salto de la pluma: caés clavando la espada y la onda golpea alrededor. También hunde las placas de golpe."
+msgstr "Atacá en el aire del salto de la pluma: caés clavando la espada y la onda golpea alrededor."
 
 msgid "TECH_PLUNGE_HOW"
 msgstr "Atacar en el aire"
