@@ -20,7 +20,7 @@ func _restore(settings: Node) -> void:
 func test_every_option_persists_and_applies() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var settings := _settings()
-	var changes := {&"lock_toggle": true, &"mouse_aim": false, &"stick_sensitivity": 80, &"flick": false, &"vibration": false, &"music": 30, &"sfx": 40, &"ambience": 0, &"shake": false, &"ui_scale": 125, &"max_fps": 120, &"shadows": 1, &"render_scale": 70, &"language": "en"}
+	var changes := {&"lock_toggle": true, &"mouse_aim": false, &"stick_sensitivity": 80, &"flick": false, &"vibration": false, &"music": 30, &"sfx": 40, &"ambience": 0, &"shake": false, &"ui_scale": 125, &"max_fps": 120, &"shadows": 1, &"ssao": false, &"render_scale": 70, &"language": "en"}
 	for key in changes:
 		settings.set_value(key, changes[key])
 	settings.values = settings.DEFAULTS.duplicate()
@@ -48,6 +48,33 @@ func test_every_option_persists_and_applies() -> void:
 	assert_true(settings.stick_factor() > 1.2, "sensibilidad alta")
 	_restore(settings)
 	assert_eq(settings.get_value(&"lock_toggle"), false)
+
+
+## 15.4: la opción apaga el SSAO y la sombra del sol que trae el nivel, también al volver a cargarlo, y los devuelve.
+func test_ssao_and_sun_shadow_follow_the_option() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var settings := _settings()
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/chullpa.tscn")
+	await tree.scene_changed
+	var env := (tree.current_scene.find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment).environment
+	var sun := tree.current_scene.find_children("*", "DirectionalLight3D", true, false)[0] as DirectionalLight3D
+	assert_true(env.ssao_enabled and sun.shadow_enabled, "la mazmorra trae SSAO y sombra del sol")
+	settings.set_value(&"ssao", false)
+	settings.set_value(&"shadows", 0)
+	assert_true(not env.ssao_enabled and not sun.shadow_enabled, "apagados con la opción")
+	tree.change_scene_to_file("res://levels/chullpa.tscn")
+	await tree.scene_changed
+	env = (tree.current_scene.find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment).environment
+	sun = tree.current_scene.find_children("*", "DirectionalLight3D", true, false)[0] as DirectionalLight3D
+	assert_true(not env.ssao_enabled and not sun.shadow_enabled, "siguen apagados al volver a entrar")
+	settings.set_value(&"ssao", true)
+	settings.set_value(&"shadows", 1)
+	assert_true(env.ssao_enabled and sun.shadow_enabled, "vuelven al prenderlos")
+	tree.change_scene_to_file("res://levels/test.tscn")
+	await tree.scene_changed
+	assert_true(not (tree.current_scene.find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment).environment.ssao_enabled, "un nivel sin SSAO no lo prende")
+	_restore(settings)
 
 
 func test_options_from_title_and_pause() -> void:

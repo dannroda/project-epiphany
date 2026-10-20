@@ -1171,6 +1171,12 @@ msgstr "Resolución 3D"
 msgid "OPTIONS_SHADOWS_LOW"
 msgstr "Bajas"
 
+msgid "OPTIONS_SHADOWS_OFF"
+msgstr "Apagadas"
+
+msgid "OPTIONS_SSAO"
+msgstr "Sombra en las esquinas"
+
 msgid "CUTSCENE_HOLD_SKIP"
 msgstr "Mantener: saltar"
 

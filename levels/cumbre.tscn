@@ -92,6 +92,7 @@
 [ext_resource type="NavigationMesh" path="res://levels/nav/cumbre_navmesh.tres" id="nav_cumbre"]
 
 [sub_resource type="Environment" id="Environment_23rcs"]
+ssao_enabled = true
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.66, 0.72, 0.84, 1)
@@ -607,6 +608,7 @@ environment = SubResource("Environment_23rcs")
 compositor = SubResource("Compositor_ef7sn")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1907530480]
+shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.7660443, 0.6427875, 0, -0.6427875, 0.7660443, 0, 0, 0)
 light_color = Color(0.86, 0.92, 1, 1)
 light_energy = 0.8

@@ -1375,6 +1375,12 @@ msgstr "3D resolution"
 msgid "OPTIONS_SHADOWS_LOW"
 msgstr "Low"
 
+msgid "OPTIONS_SHADOWS_OFF"
+msgstr "Off"
+
+msgid "OPTIONS_SSAO"
+msgstr "Ambient occlusion"
+
 msgctxt "character"
 msgid "Fin de la demo"
 msgstr "End of the demo"

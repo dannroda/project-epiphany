@@ -23,8 +23,10 @@ const DEFAULTS := {
 	## Tope de cuadros por segundo (0 = sin límite): con un monitor de 200 Hz el juego dibujaba 200 sin necesidad.
 	&"max_fps": 60,
 	## Calidad de la sombra del sol (15.3): 2 = alta (atlas 4096, filtro del proyecto); 1 = baja (2048, filtro bajo), ~0.5 ms
-	## menos de GPU en el overworld a 1080p.
+	## menos de GPU en el overworld a 1080p; 0 = sin sombra del sol (15.4, ~0.5 ms menos en una mazmorra).
 	&"shadows": 2,
+	## SSAO de los niveles que lo traen (15.4): ~0.5 ms de GPU en una sala de mazmorra a 1080p.
+	&"ssao": true,
 	## Escala de la resolución 3D en % (15.7): por debajo de 100 escala con FSR; la UI sigue a resolución completa.
 	&"render_scale": 100,
 	&"language": "",
@@ -41,6 +43,7 @@ var path := PATH
 
 func _ready() -> void:
 	load_settings()
+	get_tree().node_added.connect(_scene_look)
 
 
 func get_value(key: StringName) -> Variant:
@@ -118,6 +121,9 @@ func _apply(key := &"") -> void:
 		var scale: int = get_value(&"render_scale")
 		get_tree().root.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR if scale < 100 else Viewport.SCALING_3D_MODE_BILINEAR
 		get_tree().root.scaling_3d_scale = scale / 100.0
+	if all or key == &"ssao" or key == &"shadows":
+		for node in get_tree().root.find_children("*", "WorldEnvironment", true, false) + get_tree().root.find_children("*", "DirectionalLight3D", true, false):
+			_scene_look(node)
 	if DisplayServer.get_name() == "headless":
 		return
 	if all or key == &"max_fps":
@@ -131,6 +137,20 @@ func _apply(key := &"") -> void:
 		var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if get_value(&"fullscreen") else DisplayServer.WINDOW_MODE_WINDOWED
 		if DisplayServer.window_get_mode() != mode:
 			DisplayServer.window_set_mode(mode)
+
+
+## Lo que el nivel trae prendido (SSAO del entorno, sombra del sol) queda prendido solo si la opción lo deja. Lo del nivel se
+## anota en el Environment, que comparten las instancias de la escena, y en la luz.
+func _scene_look(node: Node) -> void:
+	if node is WorldEnvironment and (node as WorldEnvironment).environment:
+		var env := (node as WorldEnvironment).environment
+		if not env.has_meta(&"level_ssao"):
+			env.set_meta(&"level_ssao", env.ssao_enabled)
+		env.ssao_enabled = env.get_meta(&"level_ssao") and get_value(&"ssao")
+	elif node is DirectionalLight3D:
+		if not node.has_meta(&"level_shadow"):
+			node.set_meta(&"level_shadow", (node as DirectionalLight3D).shadow_enabled)
+		(node as DirectionalLight3D).shadow_enabled = node.get_meta(&"level_shadow") and get_value(&"shadows") > 0
 
 
 func _volume(bus: StringName, percent: int) -> void:

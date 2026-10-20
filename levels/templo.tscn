@@ -72,6 +72,7 @@
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="te_heart_piece_scene"]
 
 [sub_resource type="Environment" id="Environment_tiw1f"]
+ssao_enabled = true
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.72, 0.67, 0.6, 1)
@@ -526,6 +527,7 @@ environment = SubResource("Environment_tiw1f")
 compositor = SubResource("Compositor_nw8wq")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1076534433]
+shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
 light_color = Color(0.98, 0.93, 0.82, 1)
 light_energy = 0.6

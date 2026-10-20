@@ -59,6 +59,7 @@
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="weight_switch"]
 
 [sub_resource type="Environment" id="Environment_5ecsj"]
+ssao_enabled = true
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.76, 0.7, 0.66, 1)
@@ -524,6 +525,7 @@ environment = SubResource("Environment_5ecsj")
 compositor = SubResource("Compositor_la")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=647760322]
+shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
 light_color = Color(0.85, 0.8, 0.74, 1)
 light_energy = 0.65

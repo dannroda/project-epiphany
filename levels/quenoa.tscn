@@ -56,6 +56,7 @@
 [ext_resource type="Resource" path="res://data/ambientes/grito_d2.tres" id="grito_d2"]
 
 [sub_resource type="Environment" id="Environment_w3lyb"]
+ssao_enabled = true
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.56, 0.7, 0.8, 1)
@@ -523,6 +524,7 @@ environment = SubResource("Environment_w3lyb")
 compositor = SubResource("Compositor_la")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1704964901]
+shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
 light_color = Color(0.6, 0.8, 0.98, 1)
 light_energy = 0.75
