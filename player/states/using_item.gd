@@ -12,6 +12,7 @@ var _elapsed := 0.0
 var _used := false
 ## Con ítems que se pueden mantener (bombas): esperando a ver si suelta (usar) o mantiene (AimingThrow).
 var _waiting := false
+var _brake: Tween
 
 
 func _enter() -> void:
@@ -20,8 +21,8 @@ func _enter() -> void:
 	_item = GameState.item_for(_source)
 	_elapsed = 0.0
 	_used = false
-	var tween := create_tween()
-	tween.tween_property(player, "velocity", Vector3.ZERO, 0.15)
+	_brake = create_tween()
+	_brake.tween_property(player, "velocity", Vector3.ZERO, 0.15)
 	_waiting = _item.behavior.hold_time > 0.0 and player.controls.pressed(PlayerCharacter.ITEM_ACTIONS[_button])
 	if not _waiting:
 		_start()
@@ -58,6 +59,8 @@ func _update(delta: float) -> void:
 
 
 func _exit() -> void:
+	if _brake:
+		_brake.kill()
 	if _item.equip_scene:
 		player.equipment.release_held()
 	if not _waiting and _elapsed < _duration:

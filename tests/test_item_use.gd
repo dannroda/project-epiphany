@@ -99,3 +99,25 @@ func test_hit_while_drinking_wastes_the_moment_not_the_potion() -> void:
 	assert_true(player.health.current < 6, "recibió el daño y no curó")
 	assert_eq((state.bottles[&"bottle_1"] == &"potion"), true, "la poción no se gasta")
 	state.reset()
+
+
+func test_a_hit_right_after_pressing_an_item_still_pushes_back() -> void:
+	var setup: Array = await _setup()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var player: PlayerCharacter = setup[2]
+	player.health.invulnerability_time = 0.0
+	player.health.damage(6)
+	var enemy := tree.get_first_node_in_group(&"enemies") as Enemy
+	enemy.process_mode = Node.PROCESS_MODE_DISABLED
+	enemy.global_position = player.global_position + Vector3(0, 0, -1.5)
+	await _press(tree, &"item_1")
+	assert_eq(player.movement_state.get_active_state().name, &"UsingItem", "empieza a usar el ítem")
+	var start := player.global_position
+	player.hurtbox.receive(enemy.config.make_damage(enemy))
+	await tree.physics_frame
+	assert_eq(player.movement_state.get_active_state().name, &"Hurt", "el golpe lo corta")
+	await tree.create_timer(0.3).timeout
+	var pushed := player.global_position.z - start.z
+	assert_true(pushed > 0.5, "el golpe lo empuja hacia atrás (se movió %.2f m)" % pushed)
+	state.reset()
