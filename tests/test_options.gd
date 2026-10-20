@@ -165,3 +165,36 @@ func test_settings_are_read_typed_and_written_whole() -> void:
 	assert_eq(settings.get_value(&"sfx"), 30, "si se cortó antes de renombrar, lee el temporal")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(settings_path + ".tmp"))
 	_restore(settings)
+
+
+## 11.223: Juego | Video en pestañas; LB/RB las cambian y el foco cae en el primer control de cada una.
+func test_lb_rb_switch_tabs_and_focus_the_first_control() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var settings := _settings()
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	var screen := OptionsScreen.open()
+	await tree.process_frame
+	await tree.process_frame
+	var panel := screen.panel
+	var press := func(action: StringName) -> void:
+		var event := InputEventAction.new()
+		event.action = action
+		event.pressed = true
+		tree.root.push_input(event)
+	assert_eq(tree.root.gui_get_focus_owner(), panel.get_node(^"%lock_mantener"), "abre en Juego, en Fijar objetivo")
+	assert_true(panel.get_node(^"%music").is_visible_in_tree() and not panel.get_node(^"%fullscreen").is_visible_in_tree(), "Juego tiene el audio y no el video")
+	press.call(&"ui_tab_right")
+	await tree.process_frame
+	assert_eq(panel.tabs.current_tab, 1, "RB pasa a Video")
+	assert_true(panel.get_node(^"%ssao").is_visible_in_tree() and not panel.get_node(^"%music").is_visible_in_tree(), "con Pantalla y Gráficos")
+	assert_eq(tree.root.gui_get_focus_owner(), panel.get_node(^"%fullscreen"), "foco en Pantalla completa")
+	press.call(&"ui_tab_right")
+	await tree.process_frame
+	assert_eq(panel.tabs.current_tab, 0, "y da la vuelta")
+	press.call(&"ui_tab_left")
+	await tree.process_frame
+	assert_eq(panel.tabs.current_tab, 1, "LB vuelve a Video")
+	assert_eq(tree.root.gui_get_focus_owner(), panel.get_node(^"%fullscreen"), "otra vez en el primero")
+	while stack.is_open():
+		stack.pop()
+	_restore(settings)

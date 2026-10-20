@@ -37,11 +37,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 26
 
-[node name="Heading" type="Label" parent="Column" unique_id=1573190492]
-layout_mode = 2
-theme_type_variation = &"Heading"
-text = "Opciones"
-
 [node name="OptionsPanel" parent="Column" unique_id=1615626820 instance=ExtResource("3_panel")]
 unique_name_in_owner = true
 layout_mode = 2

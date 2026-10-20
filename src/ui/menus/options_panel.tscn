@@ -2,280 +2,320 @@
 
 [ext_resource type="Script" uid="uid://cjku230tmriil" path="res://src/ui/menus/options_panel.gd" id="1_panel"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pages"]
+
 [sub_resource type="ButtonGroup" id="LockGroup"]
 
 [sub_resource type="ButtonGroup" id="LanguageGroup"]
 
-[node name="OptionsPanel" type="HBoxContainer" unique_id=1272413863]
-theme_override_constants/separation = 56
+[node name="OptionsPanel" type="VBoxContainer" unique_id=1272413863]
+theme_override_constants/separation = 18
 script = ExtResource("1_panel")
 
-[node name="Controls" type="VBoxContainer" parent="." unique_id=2008412821]
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 26
+
+[node name="Heading" type="Label" parent="Header"]
+layout_mode = 2
+theme_type_variation = &"Heading"
+text = "Opciones"
+
+[node name="Gap" type="Control" parent="Header"]
+custom_minimum_size = Vector2(14, 0)
+layout_mode = 2
+
+[node name="PrevKey" type="TextureRect" parent="Header"]
+unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Tabs" type="TabBar" parent="Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+theme_type_variation = &"PauseTabBar"
+current_tab = 0
+clip_tabs = false
+tab_count = 2
+tab_0/title = "OPTIONS_TAB_GAME"
+tab_1/title = "OPTIONS_VIDEO"
+
+[node name="NextKey" type="TextureRect" parent="Header"]
+unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Pages" type="TabContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pages")
+current_tab = 0
+tabs_visible = false
+
+[node name="Juego" type="HBoxContainer" parent="Pages"]
+layout_mode = 2
+theme_override_constants/separation = 56
+metadata/_tab_index = 0
+
+[node name="Controls" type="VBoxContainer" parent="Pages/Juego" unique_id=2008412821]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="Heading" type="Label" parent="Controls" unique_id=1794175689]
+[node name="Heading" type="Label" parent="Pages/Juego/Controls" unique_id=1794175689]
 layout_mode = 2
 theme_type_variation = &"SectionTitle"
 text = "OPTIONS_CONTROLS"
 vertical_alignment = 2
 
-[node name="Lock" type="HBoxContainer" parent="Controls" unique_id=466070803]
+[node name="Lock" type="HBoxContainer" parent="Pages/Juego/Controls" unique_id=466070803]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Controls/Lock" unique_id=334276706]
+[node name="Label" type="Label" parent="Pages/Juego/Controls/Lock" unique_id=334276706]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_LOCK"
 
-[node name="lock_mantener" type="CheckBox" parent="Controls/Lock" unique_id=1848541558]
+[node name="lock_mantener" type="CheckBox" parent="Pages/Juego/Controls/Lock" unique_id=1848541558]
 unique_name_in_owner = true
 layout_mode = 2
 button_group = SubResource("LockGroup")
 text = "OPTIONS_LOCK_HOLD"
 
-[node name="lock_alternar" type="CheckBox" parent="Controls/Lock" unique_id=594731822]
+[node name="lock_alternar" type="CheckBox" parent="Pages/Juego/Controls/Lock" unique_id=594731822]
 unique_name_in_owner = true
 layout_mode = 2
 button_group = SubResource("LockGroup")
 text = "OPTIONS_LOCK_TOGGLE"
 
-[node name="MouseAim" type="HBoxContainer" parent="Controls" unique_id=1044327897]
+[node name="MouseAim" type="HBoxContainer" parent="Pages/Juego/Controls" unique_id=1044327897]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Controls/MouseAim" unique_id=446756555]
+[node name="Label" type="Label" parent="Pages/Juego/Controls/MouseAim" unique_id=446756555]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_MOUSE_AIM"
 
-[node name="mouse_aim" type="CheckBox" parent="Controls/MouseAim" unique_id=296210363]
+[node name="mouse_aim" type="CheckBox" parent="Pages/Juego/Controls/MouseAim" unique_id=296210363]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Sensitivity" type="HBoxContainer" parent="Controls" unique_id=489995621]
+[node name="Sensitivity" type="HBoxContainer" parent="Pages/Juego/Controls" unique_id=489995621]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Controls/Sensitivity" unique_id=1855646760]
+[node name="Label" type="Label" parent="Pages/Juego/Controls/Sensitivity" unique_id=1855646760]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_STICK_SENSITIVITY"
 
-[node name="stick_sensitivity" type="HSlider" parent="Controls/Sensitivity" unique_id=1598657460]
+[node name="stick_sensitivity" type="HSlider" parent="Pages/Juego/Controls/Sensitivity" unique_id=1598657460]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 24)
 layout_mode = 2
 size_flags_vertical = 4
 step = 5.0
 
-[node name="Flick" type="HBoxContainer" parent="Controls" unique_id=1614139801]
+[node name="Flick" type="HBoxContainer" parent="Pages/Juego/Controls" unique_id=1614139801]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Controls/Flick" unique_id=816772287]
+[node name="Label" type="Label" parent="Pages/Juego/Controls/Flick" unique_id=816772287]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_FLICK"
 
-[node name="flick" type="CheckBox" parent="Controls/Flick" unique_id=387412670]
+[node name="flick" type="CheckBox" parent="Pages/Juego/Controls/Flick" unique_id=387412670]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Vibration" type="HBoxContainer" parent="Controls" unique_id=513756599]
+[node name="Vibration" type="HBoxContainer" parent="Pages/Juego/Controls" unique_id=513756599]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Controls/Vibration" unique_id=1821903117]
+[node name="Label" type="Label" parent="Pages/Juego/Controls/Vibration" unique_id=1821903117]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_VIBRATION"
 
-[node name="vibration" type="CheckBox" parent="Controls/Vibration" unique_id=230248994]
+[node name="vibration" type="CheckBox" parent="Pages/Juego/Controls/Vibration" unique_id=230248994]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CounterSlow" type="HBoxContainer" parent="Controls"]
+[node name="CounterSlow" type="HBoxContainer" parent="Pages/Juego/Controls"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Controls/CounterSlow"]
+[node name="Label" type="Label" parent="Pages/Juego/Controls/CounterSlow"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_COUNTER_SLOW"
 
-[node name="counter_slow" type="CheckBox" parent="Controls/CounterSlow"]
+[node name="counter_slow" type="CheckBox" parent="Pages/Juego/Controls/CounterSlow"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ShowControls" type="Button" parent="Controls"]
+[node name="ShowControls" type="Button" parent="Pages/Juego/Controls"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "OPTIONS_SHOW_CONTROLS"
 
-[node name="LanguageHeading" type="Label" parent="Controls"]
+[node name="LanguageHeading" type="Label" parent="Pages/Juego/Controls"]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_type_variation = &"SectionTitle"
 text = "OPTIONS_LANGUAGE_SECTION"
 vertical_alignment = 2
 
-[node name="Language" type="HBoxContainer" parent="Controls"]
+[node name="Language" type="HBoxContainer" parent="Pages/Juego/Controls"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Controls/Language"]
+[node name="Label" type="Label" parent="Pages/Juego/Controls/Language"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_LANGUAGE"
 
-[node name="language_es" type="CheckBox" parent="Controls/Language"]
+[node name="language_es" type="CheckBox" parent="Pages/Juego/Controls/Language"]
 unique_name_in_owner = true
 auto_translate_mode = 2
 layout_mode = 2
 button_group = SubResource("LanguageGroup")
 text = "Español"
 
-[node name="language_en" type="CheckBox" parent="Controls/Language"]
+[node name="language_en" type="CheckBox" parent="Pages/Juego/Controls/Language"]
 unique_name_in_owner = true
 auto_translate_mode = 2
 layout_mode = 2
 button_group = SubResource("LanguageGroup")
 text = "English"
 
-[node name="Right" type="VBoxContainer" parent="." unique_id=1391476897]
+[node name="Audio" type="VBoxContainer" parent="Pages/Juego"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="Audio" type="Label" parent="Right" unique_id=503812035]
+[node name="Heading" type="Label" parent="Pages/Juego/Audio" unique_id=503812035]
 layout_mode = 2
 theme_type_variation = &"SectionTitle"
 text = "OPTIONS_AUDIO"
 vertical_alignment = 2
 
-[node name="Music" type="HBoxContainer" parent="Right" unique_id=1743887767]
+[node name="Music" type="HBoxContainer" parent="Pages/Juego/Audio" unique_id=1743887767]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Right/Music" unique_id=522975570]
+[node name="Label" type="Label" parent="Pages/Juego/Audio/Music" unique_id=522975570]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_MUSIC"
 
-[node name="music" type="HSlider" parent="Right/Music" unique_id=868117741]
+[node name="music" type="HSlider" parent="Pages/Juego/Audio/Music" unique_id=868117741]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 24)
 layout_mode = 2
 size_flags_vertical = 4
 step = 5.0
 
-[node name="Sfx" type="HBoxContainer" parent="Right" unique_id=533633358]
+[node name="Sfx" type="HBoxContainer" parent="Pages/Juego/Audio" unique_id=533633358]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Right/Sfx" unique_id=1067119582]
+[node name="Label" type="Label" parent="Pages/Juego/Audio/Sfx" unique_id=1067119582]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_SFX"
 
-[node name="sfx" type="HSlider" parent="Right/Sfx" unique_id=1296144079]
+[node name="sfx" type="HSlider" parent="Pages/Juego/Audio/Sfx" unique_id=1296144079]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 24)
 layout_mode = 2
 size_flags_vertical = 4
 step = 5.0
 
-[node name="Ambience" type="HBoxContainer" parent="Right" unique_id=36574184]
+[node name="Ambience" type="HBoxContainer" parent="Pages/Juego/Audio" unique_id=36574184]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Right/Ambience" unique_id=164117346]
+[node name="Label" type="Label" parent="Pages/Juego/Audio/Ambience" unique_id=164117346]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_AMBIENCE"
 
-[node name="ambience" type="HSlider" parent="Right/Ambience" unique_id=1931790562]
+[node name="ambience" type="HSlider" parent="Pages/Juego/Audio/Ambience" unique_id=1931790562]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(240, 24)
 layout_mode = 2
 size_flags_vertical = 4
 step = 5.0
 
-[node name="Video" type="Label" parent="Right" unique_id=1144925976]
-custom_minimum_size = Vector2(0, 52)
+[node name="Video" type="HBoxContainer" parent="Pages"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 56
+metadata/_tab_index = 1
+
+[node name="Screen" type="VBoxContainer" parent="Pages/Video"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Heading" type="Label" parent="Pages/Video/Screen"]
 layout_mode = 2
 theme_type_variation = &"SectionTitle"
-text = "OPTIONS_VIDEO"
+text = "OPTIONS_SCREEN"
 vertical_alignment = 2
 
-[node name="Fullscreen" type="HBoxContainer" parent="Right" unique_id=12492484]
+[node name="Fullscreen" type="HBoxContainer" parent="Pages/Video/Screen" unique_id=12492484]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Right/Fullscreen" unique_id=853069692]
+[node name="Label" type="Label" parent="Pages/Video/Screen/Fullscreen" unique_id=853069692]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_FULLSCREEN"
 
-[node name="fullscreen" type="CheckBox" parent="Right/Fullscreen" unique_id=1078683004]
+[node name="fullscreen" type="CheckBox" parent="Pages/Video/Screen/Fullscreen" unique_id=1078683004]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Shake" type="HBoxContainer" parent="Right" unique_id=917704450]
+[node name="Scale" type="HBoxContainer" parent="Pages/Video/Screen" unique_id=2007561950]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Right/Shake" unique_id=567706680]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"OptionLabel"
-text = "OPTIONS_SHAKE"
-
-[node name="shake" type="CheckBox" parent="Right/Shake" unique_id=278283170]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Minimap" type="HBoxContainer" parent="Right"]
-custom_minimum_size = Vector2(0, 44)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Right/Minimap"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"OptionLabel"
-text = "OPTIONS_MINIMAP"
-
-[node name="minimap" type="CheckBox" parent="Right/Minimap"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Scale" type="HBoxContainer" parent="Right" unique_id=2007561950]
-custom_minimum_size = Vector2(0, 44)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Right/Scale" unique_id=2032722156]
+[node name="Label" type="Label" parent="Pages/Video/Screen/Scale" unique_id=2032722156]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_UI_SCALE"
 
-[node name="ui_scale" type="OptionButton" parent="Right/Scale" unique_id=2078707149]
+[node name="ui_scale" type="OptionButton" parent="Pages/Video/Screen/Scale" unique_id=2078707149]
 unique_name_in_owner = true
 layout_mode = 2
 selected = 1
@@ -287,17 +327,56 @@ popup/item_1/id = 100
 popup/item_2/text = "125%"
 popup/item_2/id = 125
 
-[node name="MaxFps" type="HBoxContainer" parent="Right"]
+[node name="Minimap" type="HBoxContainer" parent="Pages/Video/Screen"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Right/MaxFps"]
+[node name="Label" type="Label" parent="Pages/Video/Screen/Minimap"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_MINIMAP"
+
+[node name="minimap" type="CheckBox" parent="Pages/Video/Screen/Minimap"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Shake" type="HBoxContainer" parent="Pages/Video/Screen" unique_id=917704450]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Video/Screen/Shake" unique_id=567706680]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_SHAKE"
+
+[node name="shake" type="CheckBox" parent="Pages/Video/Screen/Shake" unique_id=278283170]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Graphics" type="VBoxContainer" parent="Pages/Video"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Heading" type="Label" parent="Pages/Video/Graphics"]
+layout_mode = 2
+theme_type_variation = &"SectionTitle"
+text = "OPTIONS_GRAPHICS"
+vertical_alignment = 2
+
+[node name="MaxFps" type="HBoxContainer" parent="Pages/Video/Graphics"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Video/Graphics/MaxFps"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_MAX_FPS"
 
-[node name="max_fps" type="OptionButton" parent="Right/MaxFps"]
+[node name="max_fps" type="OptionButton" parent="Pages/Video/Graphics/MaxFps"]
 unique_name_in_owner = true
 layout_mode = 2
 selected = 1
@@ -311,53 +390,17 @@ popup/item_2/id = 120
 popup/item_3/text = "OPTIONS_MAX_FPS_UNLIMITED"
 popup/item_3/id = 0
 
-[node name="Shadows" type="HBoxContainer" parent="Right"]
+[node name="RenderScale" type="HBoxContainer" parent="Pages/Video/Graphics"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Right/Shadows"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"OptionLabel"
-text = "OPTIONS_SHADOWS"
-
-[node name="shadows" type="OptionButton" parent="Right/Shadows"]
-unique_name_in_owner = true
-layout_mode = 2
-selected = 0
-item_count = 3
-popup/item_0/text = "OPTIONS_SHADOWS_HIGH"
-popup/item_0/id = 2
-popup/item_1/text = "OPTIONS_SHADOWS_LOW"
-popup/item_1/id = 1
-popup/item_2/text = "OPTIONS_SHADOWS_OFF"
-popup/item_2/id = 0
-
-[node name="Ssao" type="HBoxContainer" parent="Right"]
-custom_minimum_size = Vector2(0, 44)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Right/Ssao"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"OptionLabel"
-text = "OPTIONS_SSAO"
-
-[node name="ssao" type="CheckBox" parent="Right/Ssao"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="RenderScale" type="HBoxContainer" parent="Right"]
-custom_minimum_size = Vector2(0, 44)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Right/RenderScale"]
+[node name="Label" type="Label" parent="Pages/Video/Graphics/RenderScale"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"OptionLabel"
 text = "OPTIONS_RENDER_SCALE"
 
-[node name="render_scale" type="OptionButton" parent="Right/RenderScale"]
+[node name="render_scale" type="OptionButton" parent="Pages/Video/Graphics/RenderScale"]
 unique_name_in_owner = true
 layout_mode = 2
 selected = 0
@@ -370,3 +413,39 @@ popup/item_2/text = "70%"
 popup/item_2/id = 70
 popup/item_3/text = "50%"
 popup/item_3/id = 50
+
+[node name="Shadows" type="HBoxContainer" parent="Pages/Video/Graphics"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Video/Graphics/Shadows"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_SHADOWS"
+
+[node name="shadows" type="OptionButton" parent="Pages/Video/Graphics/Shadows"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "OPTIONS_SHADOWS_HIGH"
+popup/item_0/id = 2
+popup/item_1/text = "OPTIONS_SHADOWS_LOW"
+popup/item_1/id = 1
+popup/item_2/text = "OPTIONS_SHADOWS_OFF"
+popup/item_2/id = 0
+
+[node name="Ssao" type="HBoxContainer" parent="Pages/Video/Graphics"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Video/Graphics/Ssao"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_SSAO"
+
+[node name="ssao" type="CheckBox" parent="Pages/Video/Graphics/Ssao"]
+unique_name_in_owner = true
+layout_mode = 2

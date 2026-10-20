@@ -53,6 +53,15 @@ msgstr "Ambience"
 msgid "OPTIONS_VIDEO"
 msgstr "Video"
 
+msgid "OPTIONS_TAB_GAME"
+msgstr "Game"
+
+msgid "OPTIONS_SCREEN"
+msgstr "Display"
+
+msgid "OPTIONS_GRAPHICS"
+msgstr "Graphics"
+
 msgid "OPTIONS_FULLSCREEN"
 msgstr "Fullscreen"
 

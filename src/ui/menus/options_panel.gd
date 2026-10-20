@@ -1,12 +1,17 @@
 class_name OptionsPanel
-extends HBoxContainer
-## Las opciones del mockup Options en dos columnas (Controles e Idioma | Audio y Video). Cada control se llama como su
-## clave en Settings y guarda al cambiar (un slider, al soltarlo o al dejarlo: mientras se mueve solo aplica).
+extends VBoxContainer
+## Las opciones del mockup Options_Tabs: pestañas Juego (Controles e Idioma | Audio) y Video (Pantalla | Gráficos),
+## que se cambian con LB/RB. Cada control se llama como su clave en Settings y guarda al cambiar (un slider, al soltarlo
+## o al dejarlo: mientras se mueve solo aplica).
 
 const TOGGLES: Array[StringName] = [&"mouse_aim", &"flick", &"vibration", &"fullscreen", &"shake", &"minimap", &"counter_slow", &"ssao"]
 const SLIDERS: Array[StringName] = [&"stick_sensitivity", &"music", &"sfx", &"ambience"]
 
-@onready var first: Control = %lock_mantener
+@onready var pages: TabContainer = %Pages
+@onready var tabs: TabBar = %Tabs
+@onready var firsts: Array[Control] = [%lock_mantener, %fullscreen]
+
+var current := 0
 
 
 func _ready() -> void:
@@ -38,10 +43,36 @@ func _ready() -> void:
 		picker.select(picker.get_item_index(Settings.get_value(key)))
 		picker.item_selected.connect(func(index: int) -> void: Settings.set_value(key, picker.get_item_id(index)))
 	%ShowControls.pressed.connect(ControlsScreen.open)
+	tabs.tab_changed.connect(func(tab: int) -> void:
+		if tab != current:
+			show_page(tab))
+	InputDevice.input_device_changed.connect(func(_d: int) -> void: _update_keys())
+	_update_keys()
+
+
+func show_page(index: int) -> void:
+	current = wrapi(index, 0, pages.get_tab_count())
+	pages.current_tab = current
+	tabs.current_tab = current
+	focus_default()
 
 
 func focus_default() -> void:
-	first.grab_focus()
+	firsts[current].grab_focus()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(&"ui_tab_left"):
+		show_page(current - 1)
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"ui_tab_right"):
+		show_page(current + 1)
+		get_viewport().set_input_as_handled()
+
+
+func _update_keys() -> void:
+	%PrevKey.texture = InputPrompts.icon_for_current(&"ui_tab_left")
+	%NextKey.texture = InputPrompts.icon_for_current(&"ui_tab_right")
 
 
 func _exit_tree() -> void:
