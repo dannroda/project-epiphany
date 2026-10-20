@@ -14,11 +14,11 @@
       "text": "Mini tutorial al agarrar un ítem: después del item get, un aviso corto con el botón del dispositivo actual y la mecánica que abre (p. ej. arco: 'dispará a los ojos de piedra')"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Una situación para probarlo enseguida, cerca de donde se consigue (el primer ojo justo después del sub-jefe, etc.), en la línea de 11.90"
     },
     {
-      "done": false,
+      "done": true,
       "text": "Revisar las tablitas del claro: cuáles quedan y cuáles reemplaza el mini tutorial"
     }
   ],
@@ -26,17 +26,17 @@
   "created_at": "2026-10-12T08:17:06.289Z",
   "description": "Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la mejor forma de enseñar los controles. Buscar otra. 2026-10-13 (Daniel): un mini tutorial cada vez que aparece una mecánica nueva, empezando por agarrar un ítem: qué hace, con qué botón y una situación para probarlo enseguida. Ejemplo: con el arco Daniel se olvidó de que dispararle al ojo era una mecánica; el juego tiene que mostrarlo.",
   "milestone": "m11",
-  "notes": "Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.\n\nDaniel (2026-10-20) approved -72's proposal as written: tutorial card after the item get (QUÉ HACE / BOTÓN / PROBALO; scene on the MenuStack with a mockup first), HUD chip with the task until it's done once (flags tut_<mecánica>_done), 30 s idle hint marking the target with the item icon. start_controls, start_combat and start_lift tablets go away (in-context prompts); start_temple stays; the bomb cave tablet keeps only the story line. New: item-get texts for feather, sandals, hookshot and hammer; hammer and sandals get a nearby test.\n\nCore merged (-72, 43217633): 'Cómo se usa' card after the item get (tut_<id>_shown), HUD chip until the task is done (tut_<id>_done), 30 s hint over the nearest unsolved target; feather, bow, bombs, hookshot, hammer, sandals and mirror shield; item get texts for feather/sandals/hookshot/hammer. Fixed in passing: TextBox's tokens didn't accept hyphens ({btn:z-lock}). Missing: removing start_controls/combat/lift with in-context prompts, and hammer/sandals tests on the overworld.",
+  "notes": "Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.\n\nDaniel (2026-10-20) approved -72's proposal as written: tutorial card after the item get (QUÉ HACE / BOTÓN / PROBALO; scene on the MenuStack with a mockup first), HUD chip with the task until it's done once (flags tut_<mecánica>_done), 30 s idle hint marking the target with the item icon. start_controls, start_combat and start_lift tablets go away (in-context prompts); start_temple stays; the bomb cave tablet keeps only the story line. New: item-get texts for feather, sandals, hookshot and hammer; hammer and sandals get a nearby test.\n\nCore merged (-72, 43217633): 'Cómo se usa' card after the item get (tut_<id>_shown), HUD chip until the task is done (tut_<id>_done), 30 s hint over the nearest unsolved target; feather, bow, bombs, hookshot, hammer, sandals and mirror shield; item get texts for feather/sandals/hookshot/hammer. Fixed in passing: TextBox's tokens didn't accept hyphens ({btn:z-lock}). Missing: removing start_controls/combat/lift with in-context prompts, and hammer/sandals tests on the overworld.\n\nDone (-72): in-context prompts for walk/attack/lock on/guard/roll (95918e7b); start_controls/combat/lift tablets removed and the sandals practice tree in the Necrópolis (c815357b, a305a31a); the hammer is tried on the Mirador plate. The long jump went to 11.222.",
   "order": 102,
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "diseno",
     "ui"
   ],
   "test": "",
   "title": "Repensar el tutorial",
-  "updated_at": "2026-10-20T06:41:29.972Z"
+  "updated_at": "2026-10-20T07:02:09.829Z"
 }

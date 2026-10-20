@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (212/215, 53 en revisión)
+## M11 — Pulido: contenido y feel  (213/215, 54 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4329,7 +4329,7 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 **Notas:** Sesión: overworld (-74). Mockup primero.
 
-### 11.105 Repensar el tutorial · En curso
+### 11.105 Repensar el tutorial · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `diseno`, `ui`
 
@@ -4338,14 +4338,16 @@ Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la me
 - [x] Propuesta
 - [x] Listar las mecánicas nuevas y dónde aparecen por primera vez: cada ítem (pluma, arco, sandalias, gancho, escudo espejo, bombas, martillo) y sus usos no obvios (flecha al ojo, salto largo, reflejar el haz, martillazo a la placa STRIKE), además de levantar, empujar, placas, etc.
 - [x] Mini tutorial al agarrar un ítem: después del item get, un aviso corto con el botón del dispositivo actual y la mecánica que abre (p. ej. arco: 'dispará a los ojos de piedra')
-- [ ] Una situación para probarlo enseguida, cerca de donde se consigue (el primer ojo justo después del sub-jefe, etc.), en la línea de 11.90
-- [ ] Revisar las tablitas del claro: cuáles quedan y cuáles reemplaza el mini tutorial
+- [x] Una situación para probarlo enseguida, cerca de donde se consigue (el primer ojo justo después del sub-jefe, etc.), en la línea de 11.90
+- [x] Revisar las tablitas del claro: cuáles quedan y cuáles reemplaza el mini tutorial
 
 **Notas:** Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.
 
 Daniel (2026-10-20) approved -72's proposal as written: tutorial card after the item get (QUÉ HACE / BOTÓN / PROBALO; scene on the MenuStack with a mockup first), HUD chip with the task until it's done once (flags tut_<mecánica>_done), 30 s idle hint marking the target with the item icon. start_controls, start_combat and start_lift tablets go away (in-context prompts); start_temple stays; the bomb cave tablet keeps only the story line. New: item-get texts for feather, sandals, hookshot and hammer; hammer and sandals get a nearby test.
 
 Core merged (-72, 43217633): 'Cómo se usa' card after the item get (tut_<id>_shown), HUD chip until the task is done (tut_<id>_done), 30 s hint over the nearest unsolved target; feather, bow, bombs, hookshot, hammer, sandals and mirror shield; item get texts for feather/sandals/hookshot/hammer. Fixed in passing: TextBox's tokens didn't accept hyphens ({btn:z-lock}). Missing: removing start_controls/combat/lift with in-context prompts, and hammer/sandals tests on the overworld.
+
+Done (-72): in-context prompts for walk/attack/lock on/guard/roll (95918e7b); start_controls/combat/lift tablets removed and the sandals practice tree in the Necrópolis (c815357b, a305a31a); the hammer is tried on the Mirador plate. The long jump went to 11.222.
 
 ### 11.106 Intro al día con el overworld nuevo · Hecho
 
