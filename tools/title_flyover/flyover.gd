@@ -21,7 +21,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for node in get_tree().root.find_children("*", "CanvasLayer", true, false):
 		node.hide()
-	for node in get_tree().get_nodes_in_group(&"zone_veil"):
+	for node in get_tree().get_nodes_in_group(ZoneVeil.GROUP):
 		node.hide()
 	for node in get_tree().get_nodes_in_group(&"player"):
 		node.hide()
