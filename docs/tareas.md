@@ -3133,7 +3133,7 @@ Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-anima
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 11.49 VFX de combate
 
-### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · En curso
+### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Revisión
 
 **Prioridad:** media · **Responsable:** project-epiphany-72 · **Etiquetas:** `combate`
 
@@ -3147,7 +3147,7 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
   Cuando un enemigo telegrafía, aparece un prompt corto: al apretarlo, el player salta por encima o rodea y pega por la espalda. Sirve también con las manos del jefe.
 - [x] Técnicas extra a elegir
   Estocada en carrera (dash attack), salto con golpe (jump strike), rayo de espada con la vida llena (Minish Cap). Elegir 1–2 para la demo.
-- [ ] Cómo se aprenden
+- [x] Cómo se aprenden
   Como los pergaminos de Minish Cap: algunas técnicas se enseñan en tablillas/santuarios del overworld (cruza con 11.22 y 11.24); el combo y el giro desde el inicio. Mostrarlas en la pantalla de equipo.
 - [x] Input y tutorial
   Que no choquen con lock-on, bloqueo y rodar; prompt la primera vez que se aprende cada una; anotar en el mapa de input del GDD §4.3.

@@ -23,7 +23,7 @@
     },
     {
       "detail": "Como los pergaminos de Minish Cap: algunas técnicas se enseñan en tablillas/santuarios del overworld (cruza con 11.22 y 11.24); el combo y el giro desde el inicio. Mostrarlas en la pantalla de equipo.",
-      "done": false,
+      "done": true,
       "text": "Cómo se aprenden"
     },
     {
@@ -55,11 +55,11 @@
       "section": "input"
     }
   ],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "combate"
   ],
   "test": "Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.",
   "title": "Combos y técnicas especiales (Minish Cap / Wind Waker)",
-  "updated_at": "2026-10-20T05:40:24.586Z"
+  "updated_at": "2026-10-20T06:02:09.850Z"
 }
