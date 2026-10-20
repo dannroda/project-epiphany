@@ -1,5 +1,6 @@
 extends SceneTree
-## Hornea la navmesh del overworld (las colisiones del grupo navmesh_source: GridMap y Terreno) en levels/nav/overworld_navmesh.tres.
+## Hornea la navmesh del overworld (las colisiones del grupo navmesh_source: GridMap y Terreno) en levels/nav/overworld_navmesh.tres,
+## sin islas arriba de las paredes (WallTops, como el Bake del editor).
 ## godot --headless --path . --script res://tools/bake_overworld_nav.gd
 ## Otro nivel: … --script res://tools/bake_overworld_nav.gd -- chullpa (levels/chullpa.tscn → levels/nav/chullpa_navmesh.tres)
 
@@ -17,6 +18,7 @@ static func _level_name() -> String:
 
 func _process(_delta: float) -> bool:
 	if _level == null:
+		load("res://src/world/nav/wall_tops.gd").register()
 		_level = (load(_level_path) as PackedScene).instantiate()
 		root.add_child(_level)
 		return false

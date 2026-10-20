@@ -5,6 +5,7 @@ const LogScript := preload("debug/runtime/log.gd")
 const LogDebuggerPlugin := preload("debug/editor/log_debugger_plugin.gd")
 const SaveInspector := preload("save_inspector/save_inspector.gd")
 const SceneImport := preload("import/epi_scene_import.gd")
+const WallTopsScript := preload("res://src/world/nav/wall_tops.gd")
 
 const AutoLoads = {
 	"Log": "debug/runtime/log.gd",
@@ -42,11 +43,13 @@ func _enter_tree() -> void:
 	add_dock(_save_dock)
 	_scene_import = SceneImport.new()
 	add_scene_post_import_plugin(_scene_import)
+	WallTopsScript.register()
 	if Engine.has_meta(&"editor_bridge"):
 		_log_debugger.entry_received.connect(Engine.get_meta(&"editor_bridge").record_game_entry)
 
 
 func _exit_tree() -> void:
+	WallTopsScript.unregister()
 	remove_scene_post_import_plugin(_scene_import)
 	_scene_import = null
 	remove_dock(_save_dock)
