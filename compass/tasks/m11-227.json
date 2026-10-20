@@ -5,13 +5,13 @@
   "created_at": "2026-10-20T19:19:22.765Z",
   "description": "-3e en 11.222: tools/decorate_levels.gd no se corre en cada rearmado del terreno, porque una pasada completa reescribe ≈3300 líneas de decor y rompe test_walk_every_zone en la Pradera. Por eso la decoración no siguió al recorte de BanadoWater1 (11.115), y los cardones del salto largo se sacaron a mano. Hacer que la pasada sea determinista y estable (misma semilla y orden, que solo cambie lo que toca el terreno nuevo), que respete los caminos de test_walk_every_zone y marcadores como LongJumpGap, y correrla una vez para el Bañado. Encargado a -3e.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "-3e (wt/overworld 6c3d7f25, main 03b3b430): decorate_levels.gd arranca de la decoración anterior: una pieza que sigue sobre piso y lejos de los nodos jugables se queda donde estaba aunque su zona se haya movido; solo se vuelve a ubicar lo que desapareció, con un RNG sembrado por celda (jitter, giro, prioridad) para que un cambio local no reordene la zona. Lo que vuelve a salir (misma malla en el mismo x,z) conserva nombre, posición en el archivo y unique_id, y su transform exacto si el terreno nuevo lo mueve menos de 5 cm. Idempotente; `-- --fresh` rearma de cero. La corrida completa vieja rompía test_walk_every_zone porque Zone_start se había corrido al este y una pasada de cero ponía piezas nuevas en la ruta del claro. Corrida de puesta al día (143 líneas en vez de ≈3300): 9 plantas en la orilla recortada del Bañado, 2 menos en el campamento del Cardonal, la bahía del salto largo limpia, 4 yaretas menos en la Cumbre, grupos de zona vacíos al día. La decoración no entra en la navmesh: no hace falta rehornear.",
   "order": 223,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "test_overworld › test_the_decor_plants_match_the_terrain_plants (Decor/Plantas igual a tools/plantas_overworld.json a su altura, salvo portales y arenas; con la decoración vieja daba 13 faltantes y 8 de más), test_walk_every_zone. Dos corridas seguidas de decorate_levels.gd dejan el mismo archivo.",
   "title": "Decoración del overworld que se pueda volver a correr",
-  "updated_at": "2026-10-20T19:19:22.765Z"
+  "updated_at": "2026-10-20T19:32:25.653Z"
 }

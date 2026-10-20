@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (219/220, 60 en revisión)
+## M11 — Pulido: contenido y feel  (220/220, 61 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5801,11 +5801,15 @@ Encontrado por -88 en 11.224 y medido (120 updates en 60 cuadros): MovementState
 **Notas:** -25 (wt/art-hsm feb42d0a, main fea8c637): MovementState en MANUAL con un solo update. Valores en unidades reales: velocidades ×2 (caminar 10, rodar 16, salto 8 / largo 17,2, dash 19, gancho 28…), duraciones ×0,5, tasas exp y pasos move_toward ×2, embestidas de la espada ×2 en data/attacks, gravedad ×4 por PlayerCharacter.gravity_scale / fall_gravity(). Esperas atadas al largo de una animación usan PlayerState.ANIM_PART = 0,5, como antes. La gravedad y el despacho de input pasaron a PlayerStateMachine.read_input() antes de update(): LimboHSM difiere un dispatch hecho dentro de su update y con un solo update el estado nuevo actuaba un cuadro tarde. El salto le resta un cuarto de cuadro de gravedad para conservar el arco (cima 0,71 m, salto largo 6,59 m en el aire).
 Para Daniel: escapar del agarre son 4 apretadas reales (eran 8 en el código, cada una contaba doble) y ahora se ve el meneo del agarre. Cosas que el doble update escondía y se conservaron: el knockback del player es 2× el de un enemigo (Hurt.knockback_scale 2), los iframes del rodar duran más que el rodar (iframes_to 1,4), Dead aplica gravedad dos veces (los 8g de antes). test_jump: los pinches pasaron de 1,5 a 1,7 m.
 
-### 11.227 Decoración del overworld que se pueda volver a correr · En curso
+### 11.227 Decoración del overworld que se pueda volver a correr · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-3e
 
 -3e en 11.222: tools/decorate_levels.gd no se corre en cada rearmado del terreno, porque una pasada completa reescribe ≈3300 líneas de decor y rompe test_walk_every_zone en la Pradera. Por eso la decoración no siguió al recorte de BanadoWater1 (11.115), y los cardones del salto largo se sacaron a mano. Hacer que la pasada sea determinista y estable (misma semilla y orden, que solo cambie lo que toca el terreno nuevo), que respete los caminos de test_walk_every_zone y marcadores como LongJumpGap, y correrla una vez para el Bañado. Encargado a -3e.
+
+**Prueba:** test_overworld › test_the_decor_plants_match_the_terrain_plants (Decor/Plantas igual a tools/plantas_overworld.json a su altura, salvo portales y arenas; con la decoración vieja daba 13 faltantes y 8 de más), test_walk_every_zone. Dos corridas seguidas de decorate_levels.gd dejan el mismo archivo.
+
+**Notas:** -3e (wt/overworld 6c3d7f25, main 03b3b430): decorate_levels.gd arranca de la decoración anterior: una pieza que sigue sobre piso y lejos de los nodos jugables se queda donde estaba aunque su zona se haya movido; solo se vuelve a ubicar lo que desapareció, con un RNG sembrado por celda (jitter, giro, prioridad) para que un cambio local no reordene la zona. Lo que vuelve a salir (misma malla en el mismo x,z) conserva nombre, posición en el archivo y unique_id, y su transform exacto si el terreno nuevo lo mueve menos de 5 cm. Idempotente; `-- --fresh` rearma de cero. La corrida completa vieja rompía test_walk_every_zone porque Zone_start se había corrido al este y una pasada de cero ponía piezas nuevas en la ruta del claro. Corrida de puesta al día (143 líneas en vez de ≈3300): 9 plantas en la orilla recortada del Bañado, 2 menos en el campamento del Cardonal, la bahía del salto largo limpia, 4 yaretas menos en la Cumbre, grupos de zona vacíos al día. La decoración no entra en la navmesh: no hace falta rehornear.
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
