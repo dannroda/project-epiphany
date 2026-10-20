@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TechniqueData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/technique_data.gd" id="1_tech"]
+[ext_resource type="Texture2D" path="res://assets/ui/techniques/beam.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_tech")
+id = &"beam"
+display_name = "TECH_BEAM"
+description = "TECH_BEAM_DESC"
+how = "TECH_BEAM_HOW"
+damage = "TECH_BEAM_DAMAGE"
+icon = ExtResource("2_icon")
+flag = &"ow_tech_beam"
+learned_at = "TECH_AT_SUMMIT"

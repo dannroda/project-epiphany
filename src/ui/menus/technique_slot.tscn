@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[node name="TechniqueSlot" type="Button"]
+custom_minimum_size = Vector2(84, 84)
+theme_type_variation = &"TechniqueSlot"
+icon_alignment = 1
+expand_icon = true

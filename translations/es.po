@@ -1296,3 +1296,87 @@ msgstr "Kuntur joven"
 
 msgid "BOSS_CU_APU_KUNTUR"
 msgstr "Apu Kuntur"
+
+msgid "TECH_KIND"
+msgstr "Técnica · {where}"
+
+msgid "TECH_FROM_START"
+msgstr "desde el inicio"
+
+msgid "TECH_AT_MEADOW"
+msgstr "aprendida en la Pradera"
+
+msgid "TECH_AT_GROVE"
+msgstr "aprendida en la Arboleda"
+
+msgid "TECH_AT_SUMMIT"
+msgstr "aprendida en la Cumbre"
+
+msgid "TECH_STAT_HOW"
+msgstr "Cómo"
+
+msgid "TECH_UNKNOWN_DESC"
+msgstr "Las que faltan se aprenden en piedras de técnica del mundo."
+
+msgid "EQUIP_TITLE_TECHNIQUES"
+msgstr "Técnicas"
+
+msgid "TECH_COMBO"
+msgstr "Combo"
+
+msgid "TECH_COMBO_DESC"
+msgstr "Tajo, revés y estocada encadenados. La estocada pega y empuja más."
+
+msgid "TECH_COMBO_HOW"
+msgstr "Atacar de nuevo enseguida"
+
+msgid "TECH_COMBO_DAMAGE"
+msgstr "×1,5 la estocada"
+
+msgid "TECH_SPIN"
+msgstr "Giro"
+
+msgid "TECH_SPIN_DESC"
+msgstr "Mantené el ataque hasta que la espada brille y soltá: un tajo en redondo. Manteniendo más, el giro grande."
+
+msgid "TECH_SPIN_HOW"
+msgstr "Mantener ataque y soltar"
+
+msgid "TECH_SPIN_DAMAGE"
+msgstr "×2 · el grande ×3"
+
+msgid "TECH_COUNTER"
+msgstr "Contraataque"
+
+msgid "TECH_COUNTER_DESC"
+msgstr "Cuando el enemigo fijado prepara un golpe y tu espada destella, atacá: lo esquivás por el costado (o por encima si es grande) y le pegás por la espalda."
+
+msgid "TECH_COUNTER_HOW"
+msgstr "Fijar y atacar en el destello"
+
+msgid "TECH_COUNTER_DAMAGE"
+msgstr "×2 · aturde y saltea el escudo"
+
+msgid "TECH_PLUNGE"
+msgstr "Golpe en picada"
+
+msgid "TECH_PLUNGE_DESC"
+msgstr "Atacá en el aire del salto de la pluma: caés clavando la espada y la onda golpea alrededor. También hunde las placas de golpe."
+
+msgid "TECH_PLUNGE_HOW"
+msgstr "Atacar en el aire"
+
+msgid "TECH_PLUNGE_DAMAGE"
+msgstr "×2 alrededor"
+
+msgid "TECH_BEAM"
+msgstr "Rayo de espada"
+
+msgid "TECH_BEAM_DESC"
+msgstr "Con la vida llena, cada golpe tira un rayo que le pega a los enemigos lejanos. No mueve mecanismos."
+
+msgid "TECH_BEAM_HOW"
+msgstr "Atacar con la vida llena"
+
+msgid "TECH_BEAM_DAMAGE"
+msgstr "¼ de corazón, hasta 6 m"

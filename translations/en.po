@@ -1528,3 +1528,87 @@ msgstr "Young Kuntur"
 
 msgid "BOSS_CU_APU_KUNTUR"
 msgstr "Apu Kuntur"
+
+msgid "TECH_KIND"
+msgstr "Technique · {where}"
+
+msgid "TECH_FROM_START"
+msgstr "from the start"
+
+msgid "TECH_AT_MEADOW"
+msgstr "learned in the Meadow"
+
+msgid "TECH_AT_GROVE"
+msgstr "learned in the Grove"
+
+msgid "TECH_AT_SUMMIT"
+msgstr "learned on the Summit"
+
+msgid "TECH_STAT_HOW"
+msgstr "How"
+
+msgid "TECH_UNKNOWN_DESC"
+msgstr "The rest are learned at technique stones around the world."
+
+msgid "EQUIP_TITLE_TECHNIQUES"
+msgstr "Techniques"
+
+msgid "TECH_COMBO"
+msgstr "Combo"
+
+msgid "TECH_COMBO_DESC"
+msgstr "Slash, backhand and thrust in a chain. The thrust hits and pushes harder."
+
+msgid "TECH_COMBO_HOW"
+msgstr "Attack again right away"
+
+msgid "TECH_COMBO_DAMAGE"
+msgstr "×1.5 the thrust"
+
+msgid "TECH_SPIN"
+msgstr "Spin"
+
+msgid "TECH_SPIN_DESC"
+msgstr "Hold attack until the sword glows and let go: a slash all around. Hold longer for the great spin."
+
+msgid "TECH_SPIN_HOW"
+msgstr "Hold attack and release"
+
+msgid "TECH_SPIN_DAMAGE"
+msgstr "×2 · great ×3"
+
+msgid "TECH_COUNTER"
+msgstr "Counter"
+
+msgid "TECH_COUNTER_DESC"
+msgstr "When the enemy you target winds up and your sword flashes, attack: you dodge round its side (or over it if it is big) and strike its back."
+
+msgid "TECH_COUNTER_HOW"
+msgstr "Target and attack on the flash"
+
+msgid "TECH_COUNTER_DAMAGE"
+msgstr "×2 · stuns, gets past shields"
+
+msgid "TECH_PLUNGE"
+msgstr "Plunge"
+
+msgid "TECH_PLUNGE_DESC"
+msgstr "Attack in the air of a feather jump: you drop sword first and the shockwave hits all around. It also presses strike plates."
+
+msgid "TECH_PLUNGE_HOW"
+msgstr "Attack in the air"
+
+msgid "TECH_PLUNGE_DAMAGE"
+msgstr "×2 all around"
+
+msgid "TECH_BEAM"
+msgstr "Sword beam"
+
+msgid "TECH_BEAM_DESC"
+msgstr "At full health every swing throws a beam that hits faraway enemies. It does not move mechanisms."
+
+msgid "TECH_BEAM_HOW"
+msgstr "Attack at full health"
+
+msgid "TECH_BEAM_DAMAGE"
+msgstr "¼ heart, up to 6 m"

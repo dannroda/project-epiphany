@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TechniqueData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/technique_data.gd" id="1_tech"]
+[ext_resource type="Texture2D" path="res://assets/ui/techniques/combo.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_tech")
+id = &"combo"
+display_name = "TECH_COMBO"
+description = "TECH_COMBO_DESC"
+how = "TECH_COMBO_HOW"
+damage = "TECH_COMBO_DAMAGE"
+icon = ExtResource("2_icon")
+flag = &""
+learned_at = ""

@@ -83,3 +83,27 @@ func test_max_hearts_keep_the_layout() -> void:
 	assert_true(page.hearts.size.y < 60.0, "20 corazones en 2 filas")
 	setup[2].pop()
 	setup[1].reset()
+
+
+func test_techniques_row_shows_what_is_learned() -> void:
+	var setup: Array = await _open()
+	var tree: SceneTree = setup[0]
+	var state: Node = setup[1]
+	var page: Control = setup[3]
+	var slots: Array = page.technique_line.get_children()
+	assert_eq(slots.size(), 5, "combo, giro, contraataque, picada y rayo")
+	assert_eq(slots.map(func(slot: Button) -> bool: return slot.icon != page.UNKNOWN), [true, true, false, false, false], "de entrada, el combo y el giro")
+	state.set_flag(&"ow_tech_counter", true)
+	page._refresh()
+	assert_true(slots[2].icon == page.TECHNIQUES[2].icon, "la piedra de la Pradera enseña el contraataque")
+	slots[2].grab_focus()
+	await tree.process_frame
+	assert_eq(page.detail.title.text, "TECH_COUNTER", "detalle de la técnica")
+	assert_eq(page.detail.stats.get_child_count(), 2, "cómo y daño")
+	slots[4].grab_focus()
+	await tree.process_frame
+	assert_eq(page.detail.text.text, "TECH_UNKNOWN_DESC", "las que faltan dicen dónde se aprenden")
+	var bottom := (slots[4] as Control).get_global_rect().end.y
+	assert_true(bottom <= page.get_global_rect().end.y + 1.0, "la fila entra en la pestaña (%.0f)" % bottom)
+	setup[2].pop()
+	state.reset()

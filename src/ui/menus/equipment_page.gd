@@ -1,9 +1,15 @@
 extends PausePage
-## Pestaña Equipo: ranuras por categoría, detalle del ítem enfocado, stats y preview del modelo.
+## Pestaña Equipo: ranuras por categoría, técnicas de espada (11.34), detalle de lo enfocado, stats y preview del modelo.
 
 const SECTIONS := { ^"Sword": ItemData.Category.SWORD, ^"Shield": ItemData.Category.SHIELD, ^"Armor": ItemData.Category.ARMOR }
 const CATEGORY_NAMES := { ItemData.Category.SWORD: "EQUIP_CATEGORY_SWORD", ItemData.Category.SHIELD: "EQUIP_CATEGORY_SHIELD", ItemData.Category.ARMOR: "EQUIP_CATEGORY_ARMOR" }
 const LOCK := preload("res://assets/ui/lock.svg")
+const UNKNOWN := preload("res://assets/ui/techniques/unknown.svg")
+const TECHNIQUES: Array[TechniqueData] = [
+	preload("res://data/techniques/combo.tres"), preload("res://data/techniques/spin.tres"),
+	preload("res://data/techniques/counter.tres"), preload("res://data/techniques/plunge.tres"),
+	preload("res://data/techniques/beam.tres"),
+]
 
 ## Lo lee el menú de pausa para la ayuda del botón de aceptar.
 var accept_label := "EQUIP_ACCEPT"
@@ -16,8 +22,10 @@ var accept_label := "EQUIP_ACCEPT"
 @onready var pieces_icon: HeartPieceIcon = %PiecesIcon
 @onready var pieces_value: Label = %PiecesValue
 @onready var detail: PanelContainer = %Detail
+@onready var technique_line: HBoxContainer = %TechniqueLine
 
 var _slots: Dictionary[Button, ItemData] = {}
+var _techniques: Dictionary[Button, TechniqueData] = {}
 var _preview_model: Node3D
 
 
@@ -59,6 +67,11 @@ func _bind_slots() -> void:
 				slot.icon = LOCK
 			slot.focus_entered.connect(_show_detail.bind(slot))
 			slot.mouse_entered.connect(slot.grab_focus)
+	for i in technique_line.get_child_count():
+		var slot := technique_line.get_child(i) as Button
+		_techniques[slot] = TECHNIQUES[i]
+		slot.focus_entered.connect(_show_detail.bind(slot))
+		slot.mouse_entered.connect(slot.grab_focus)
 
 
 func _refresh() -> void:
@@ -68,10 +81,12 @@ func _refresh() -> void:
 		slot.disabled = not owned
 		slot.icon = item.icon if owned else LOCK
 		_set_badge(slot, _is_equipped(item))
+	for slot in _techniques:
+		slot.icon = _techniques[slot].icon if _techniques[slot].is_learned() else UNKNOWN
 	_refresh_stats()
 	_refresh_preview()
 	var focused := get_viewport().gui_get_focus_owner() as Button
-	if focused and (_slots.has(focused) or focused.get_parent().get_parent() in rows.get_children()):
+	if focused and (_slots.has(focused) or _techniques.has(focused) or focused.get_parent().get_parent() in rows.get_children()):
 		_show_detail(focused)
 
 
@@ -89,6 +104,9 @@ func _set_badge(slot: Button, equipped: bool) -> void:
 
 
 func _show_detail(slot: Button) -> void:
+	if _techniques.has(slot):
+		_show_technique(_techniques[slot])
+		return
 	var item: ItemData = _slots.get(slot)
 	if item == null or not GameState.inventory.has(item.id):
 		detail.show_item(LOCK, "EQUIP_UNDISCOVERED", "", "EQUIP_UNDISCOVERED_DESC")
@@ -105,6 +123,16 @@ func _show_detail(slot: Button) -> void:
 			detail.add_stat("EQUIP_STAT_REFLECTS", "EQUIP_REFLECTS_PROJECTILES" if item.reflects else "COMMON_NO")
 		ItemData.Category.ARMOR:
 			detail.add_stat("EQUIP_STAT_REDUCTION", "%d %%" % roundi(item.damage_reduction * 100))
+
+
+func _show_technique(technique: TechniqueData) -> void:
+	if not technique.is_learned():
+		detail.show_item(UNKNOWN, "EQUIP_UNDISCOVERED", "", "TECH_UNKNOWN_DESC")
+		return
+	var where := tr(technique.learned_at if technique.learned_at != "" else "TECH_FROM_START")
+	detail.show_item(technique.icon, technique.display_name, tr("TECH_KIND").format({where = where}), technique.description)
+	detail.add_stat("TECH_STAT_HOW", technique.how)
+	detail.add_stat("EQUIP_STAT_DAMAGE", technique.damage)
 
 
 func _refresh_stats() -> void:

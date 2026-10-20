@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TechniqueData" format=3]
+
+[ext_resource type="Script" path="res://src/combat/technique_data.gd" id="1_tech"]
+[ext_resource type="Texture2D" path="res://assets/ui/techniques/spin.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_tech")
+id = &"spin"
+display_name = "TECH_SPIN"
+description = "TECH_SPIN_DESC"
+how = "TECH_SPIN_HOW"
+damage = "TECH_SPIN_DAMAGE"
+icon = ExtResource("2_icon")
+flag = &""
+learned_at = ""
