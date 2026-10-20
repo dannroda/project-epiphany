@@ -11,9 +11,9 @@ extends SceneTree
 
 const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn", "totora": "res://levels/totora.tscn", "cumbre": "res://levels/cumbre.tscn",
 	"bomb_cave": "res://levels/bomb_cave.tscn", "bush_cave": "res://levels/bush_cave.tscn", "grotto_cave": "res://levels/grotto_cave.tscn",
-	"shrine_cave": "res://levels/shrine_cave.tscn", "spring_cave": "res://levels/spring_cave.tscn", "reflejos": "res://levels/reflejos.tscn"}
+	"shrine_cave": "res://levels/shrine_cave.tscn", "spring_cave": "res://levels/spring_cave.tscn", "reflejos": "res://levels/reflejos.tscn", "huaca": "res://levels/huaca.tscn"}
 ## Niveles que comparten el look de otro (LOOKS).
-const LOOK_OF := {"bomb_cave": "cueva", "bush_cave": "cueva", "grotto_cave": "cueva", "shrine_cave": "cueva", "spring_cave": "cueva", "reflejos": "cumbre"}
+const LOOK_OF := {"bomb_cave": "cueva", "bush_cave": "cueva", "grotto_cave": "cueva", "shrine_cave": "cueva", "spring_cave": "cueva", "reflejos": "cumbre", "huaca": "chullpa"}
 ## Piezas de otros kits que se pasan a las del kit chullpa (las cuevas vienen del overworld_kit).
 const ADOPT := {"Cueva pared": "Pared", "Cueva piso": "Piso"}
 const KIT := "res://data/kits/chullpa_kit.tres"

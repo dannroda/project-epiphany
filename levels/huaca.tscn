@@ -1,0 +1,285 @@
+[gd_scene format=3 uid="uid://b2huaca7wv1x"]
+
+[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="1_bvirt"]
+[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="2_pctre"]
+[ext_resource type="MeshLibrary" uid="uid://c1tw5c0a0ibgc" path="res://data/kits/chullpa_la_kit.tres" id="3_rkkpu"]
+[ext_resource type="ArrayMesh" uid="uid://c66lohwh5s188" path="res://assets/epiphany/meshes/paredes_la/puerta_persiana_chullpa_la.res" id="6_ggun3"]
+[ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="7_itf2e"]
+[ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="22_8cjpq"]
+[ext_resource type="PackedScene" path="res://src/world/look/polvo_chullpa.tscn" id="23_b6vir"]
+[ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="26_b18bf"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_chullpa.tscn" id="archer"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="camera"]
+[ext_resource type="PackedScene" path="res://src/world/door.tscn" id="door"]
+[ext_resource type="PackedScene" path="res://src/entities/watcher_eye/warden_mini.tscn" id="eye"]
+[ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="heart_piece"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="hud"]
+[ext_resource type="NavigationMesh" path="res://levels/nav/huaca_navmesh.tres" id="nav"]
+[ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
+[ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="player"]
+[ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="portal"]
+[ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="pot"]
+[ext_resource type="PackedScene" path="res://src/world/tarima_huaca.tscn" id="tarima"]
+[ext_resource type="Resource" uid="uid://dteshjodcq26c" path="res://data/drops/pot_hearts.tres" id="pot_hearts"]
+[ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="room"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_chullpa.tscn" id="shield"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_chullpa.tscn" id="skel"]
+[ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="spawn_point"]
+[ext_resource type="Script" uid="uid://osa5pl45qand" path="res://src/world/wave_spawn.gd" id="wave_spawn"]
+[ext_resource type="Script" uid="uid://cpa78s7g8p1jd" path="res://src/world/wave_spawner.gd" id="wave_spawner"]
+
+[sub_resource type="Environment" id="Environment_ee45e"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(0.76, 0.7, 0.66, 1)
+ambient_light_energy = 1.25
+glow_enabled = true
+glow_intensity = 0.2
+glow_blend_mode = 0
+glow_hdr_threshold = 0.25
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_q5fsk"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("1_bvirt")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_igjny"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("2_pctre")
+exposure = 1.0
+
+[sub_resource type="Compositor" id="Compositor_punlm"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_q5fsk"), SubResource("CompositorEffect_igjny")])
+
+[sub_resource type="BoxShape3D" id="RoomShape"]
+size = Vector3(16, 2.4, 12)
+
+[sub_resource type="BoxShape3D" id="PortalShape"]
+size = Vector3(2, 2.4, 1.4)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_qr1v3"]
+dof_blur_far_distance = 40.5
+dof_blur_far_transition = 6.0
+dof_blur_near_enabled = true
+dof_blur_near_distance = 29.0
+dof_blur_near_transition = 3.0
+dof_blur_amount = 0.12
+
+[node name="Huaca" type="Node3D" unique_id=1774705999]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=28679827]
+environment = SubResource("Environment_ee45e")
+compositor = SubResource("Compositor_punlm")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1128371639]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
+light_color = Color(0.85, 0.8, 0.74, 1)
+light_energy = 0.65
+
+[node name="GridMap" type="GridMap" parent="." unique_id=605610155 groups=["navmesh_source"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+mesh_library = ExtResource("3_rkkpu")
+cell_size = Vector3(2, 1, 2)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65531, 65532, 39, 65531, 65533, 22, 65531, 65534, 22, 65531, 65535, 22, 65531, 0, 22, 65531, 1, 22, 65531, 2, 22, 65531, 3, 37, 65532, 65532, 33, 65532, 65533, 0, 65532, 65534, 0, 65532, 65535, 0, 65532, 0, 0, 65532, 1, 0, 65532, 2, 0, 65532, 3, 26, 65533, 65532, 33, 65533, 65533, 0, 65533, 65534, 0, 65533, 65535, 0, 65533, 0, 0, 65533, 1, 0, 65533, 2, 0, 65533, 3, 26, 65534, 65532, 33, 65534, 65533, 0, 65534, 65534, 77, 65534, 65535, 0, 65534, 0, 0, 65534, 1, 77, 65534, 2, 0, 65534, 3, 26, 65535, 65532, 33, 65535, 65533, 0, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 65535, 1, 0, 65535, 2, 0, 65535, 3, 27, 0, 65532, 33, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 42, 1, 65532, 33, 1, 65533, 0, 1, 65534, 77, 1, 65535, 0, 1, 0, 0, 1, 1, 77, 1, 2, 0, 1, 3, 28, 2, 65532, 33, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 2, 0, 0, 2, 1, 0, 2, 2, 0, 2, 3, 26, 3, 65532, 33, 3, 65533, 0, 3, 65534, 0, 3, 65535, 0, 3, 0, 0, 3, 1, 0, 3, 2, 0, 3, 3, 26, 4, 65532, 40, 4, 65533, 30, 4, 65534, 30, 4, 65535, 30, 4, 0, 30, 4, 1, 30, 4, 2, 30, 4, 3, 38, 65530, 65531, 36, 65530, 65532, 36, 65530, 65533, 36, 65530, 65534, 36, 65530, 65535, 36, 65530, 0, 36, 65530, 1, 36, 65530, 2, 36, 65530, 3, 36, 65530, 4, 36, 65531, 65531, 36, 65531, 4, 36, 65532, 65531, 36, 65532, 4, 36, 65533, 65531, 36, 65533, 4, 36, 65534, 65531, 36, 65535, 65531, 36, 0, 65531, 36, 1, 65531, 36, 2, 65531, 36, 3, 65531, 36, 3, 4, 36, 4, 65531, 36, 4, 4, 36, 5, 65531, 36, 5, 65532, 36, 5, 65533, 36, 5, 65534, 36, 5, 65535, 36, 5, 0, 36, 5, 1, 36, 5, 2, 36, 5, 3, 36, 5, 4, 36)
+}
+
+[node name="Room" type="Area3D" parent="." unique_id=733223559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.2, -1)
+script = ExtResource("room")
+display_name = "PLACE_WARRIORS_HUACA"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room" unique_id=716623003]
+shape = SubResource("RoomShape")
+
+[node name="LuzSala" type="SpotLight3D" parent="Room" unique_id=576409885]
+transform = Transform3D(1, 0, 0, 0, 0.22495104, 0.97437006, 0, -0.97437006, 0.22495104, 0, 5.8, 1.5)
+light_color = Color(1, 0.87, 0.7, 1)
+light_energy = 2.3
+light_specular = 0.6
+spot_range = 17.5
+spot_attenuation = 0.0
+spot_angle = 75.0
+spot_angle_attenuation = 0.5
+
+[node name="ReflejoSala" type="ReflectionProbe" parent="Room" unique_id=1121086438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.7683717e-08, 0)
+size = Vector3(20, 5, 16)
+box_projection = true
+interior = true
+ambient_mode = 0
+
+[node name="ShutterDoor" parent="." unique_id=2123489862 node_paths=PackedStringArray("room") instance=ExtResource("door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+kind = 2
+room = NodePath("../Room")
+depth = 2.0
+leaf_meshes = "res://assets/epiphany/meshes/paredes_la/%s_chullpa_la.res"
+sink = 3.2
+
+[node name="LeafMesh" parent="ShutterDoor/Leaf" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -0.16666667, 1, 0, 0, 0.77)
+mesh = ExtResource("6_ggun3")
+
+[node name="LeafBackLA" type="MeshInstance3D" parent="ShutterDoor/Leaf" index="1" unique_id=1794557925]
+transform = Transform3D(-1, 4.0797296e-08, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0.46666667, -1, -6.731554e-08, 0, -0.77)
+material_overlay = ExtResource("7_itf2e")
+mesh = ExtResource("6_ggun3")
+
+[node name="Interactable" parent="ShutterDoor" index="3"]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+
+[node name="TarimaO" parent="." groups=["navmesh_source"] instance=ExtResource("tarima")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -6)
+
+[node name="TarimaE" parent="." groups=["navmesh_source"] instance=ExtResource("tarima")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -6)
+
+[node name="Pot1" parent="." unique_id=613736073 instance=ExtResource("pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+drops = ExtResource("pot_hearts")
+
+[node name="Pot2" parent="." unique_id=317192988 instance=ExtResource("pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+drops = ExtResource("pot_hearts")
+
+[node name="Pot3" parent="." unique_id=2069333714 instance=ExtResource("pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 4)
+drops = ExtResource("pot_hearts")
+
+[node name="Pot4" parent="." unique_id=1715336375 instance=ExtResource("pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+drops = ExtResource("pot_hearts")
+
+[node name="HeartPieceTrial" parent="." unique_id=393265884 instance=ExtResource("heart_piece")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+flag = &"ow_heart_piece_trial"
+hidden_until_revealed = true
+
+[node name="Waves" type="Node3D" parent="." unique_id=786961566 node_paths=PackedStringArray("room")]
+script = ExtResource("wave_spawner")
+room = NodePath("../Room")
+flag = &"ow_trial_waves"
+
+[node name="PersistentFlag" type="Node" parent="Waves" unique_id=1445210336]
+script = ExtResource("persistent_flag")
+
+[node name="Wave1" type="Node3D" parent="Waves" unique_id=109940893]
+
+[node name="Spawn1" type="Marker3D" parent="Waves/Wave1" unique_id=859696947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("skel")
+
+[node name="Spawn2" type="Marker3D" parent="Waves/Wave1" unique_id=614191211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("skel")
+
+[node name="Spawn3" type="Marker3D" parent="Waves/Wave1" unique_id=122631305]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -5)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("skel")
+
+[node name="Spawn4" type="Marker3D" parent="Waves/Wave1" unique_id=2029118805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("skel")
+
+[node name="Wave2" type="Node3D" parent="Waves" unique_id=430642219]
+
+[node name="Spawn1" type="Marker3D" parent="Waves/Wave2" unique_id=1806520732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -1)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("shield")
+
+[node name="Spawn2" type="Marker3D" parent="Waves/Wave2" unique_id=1250374496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -1)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("shield")
+
+[node name="Spawn3" type="Marker3D" parent="Waves/Wave2" unique_id=1413813012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.6, -6)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("archer")
+
+[node name="Spawn4" type="Marker3D" parent="Waves/Wave2" unique_id=19293750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.6, -6)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("archer")
+
+[node name="Wave3" type="Node3D" parent="Waves" unique_id=166383158]
+
+[node name="Spawn1" type="Marker3D" parent="Waves/Wave3" unique_id=1281040287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("eye")
+
+[node name="Spawn2" type="Marker3D" parent="Waves/Wave3" unique_id=1667761233]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("skel")
+
+[node name="Spawn3" type="Marker3D" parent="Waves/Wave3" unique_id=482796108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+script = ExtResource("wave_spawn")
+enemy = ExtResource("skel")
+
+[node name="Spawn_entrada" type="Marker3D" parent="." unique_id=889088138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+script = ExtResource("spawn_point")
+id = &"entrada"
+
+[node name="ExitPortal" type="Area3D" parent="." unique_id=763993895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 6.6)
+script = ExtResource("portal")
+target_scene = "res://levels/overworld.tscn"
+target_spawn = &"huaca"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPortal" unique_id=1962340264]
+shape = SubResource("PortalShape")
+
+[node name="Player" parent="." unique_id=745630620 instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="TopDownCamera" parent="." unique_id=876571430 node_paths=PackedStringArray("target_node") instance=ExtResource("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.4, 10.7)
+attributes = SubResource("CameraAttributesPractical_qr1v3")
+target_node = NodePath("../Player")
+offset = Vector3(0, 34.439697, 16.059494)
+field_of_view = 28.0
+wall_height = 5.4
+mask_margin = 2.0
+south_wall_cut = 3.6
+south_wall_reach = 1.7
+
+[node name="EnfoqueLA" type="Node" parent="TopDownCamera" unique_id=1155730263]
+script = ExtResource("22_8cjpq")
+near_margin = 9.0
+
+[node name="Polvo" parent="TopDownCamera" unique_id=376821268 instance=ExtResource("23_b6vir")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="HUD" parent="." unique_id=637396545 instance=ExtResource("hud")]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=298905853]
+navigation_mesh = ExtResource("nav")
+
+[node name="BrilloLA" type="Node" parent="." unique_id=1078617251]
+script = ExtResource("26_b18bf")
+
+[connection signal="activated" from="Waves" to="HeartPieceTrial" method="reveal"]
+
+[editable path="ShutterDoor"]

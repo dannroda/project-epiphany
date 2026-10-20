@@ -747,6 +747,9 @@ msgstr "Summit"
 msgid "PLACE_NECROPOLIS"
 msgstr "Necropolis"
 
+msgid "PLACE_WARRIORS_HUACA"
+msgstr "Huaca of the Warriors"
+
 msgid "PLACE_LOOKOUT"
 msgstr "Lookout"
 

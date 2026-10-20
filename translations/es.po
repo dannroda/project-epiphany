@@ -747,6 +747,9 @@ msgstr "Cumbre"
 msgid "PLACE_NECROPOLIS"
 msgstr "Necrópolis"
 
+msgid "PLACE_WARRIORS_HUACA"
+msgstr "Huaca de los guerreros"
+
 msgid "PLACE_LOOKOUT"
 msgstr "Mirador"
 
