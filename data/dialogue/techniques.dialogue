@@ -4,7 +4,7 @@ Probalo con el muñeco\: avisa sus golpes como un esqueleto. [ID:tech_counter_2]
 => END
 
 ~ plunge
-Saltá con {item:feather} y atacá con {btn:attack} en el aire\: caés clavando la espada y la onda golpea alrededor. [ID:tech_plunge_1]
+Saltá con {item:feather} y atacá con {btn:attack} en el aire\: subís un poco más, caés y clavás la espada en el piso; la onda golpea alrededor. [ID:tech_plunge_1]
 Probalo con el muñeco. [ID:tech_plunge_2]
 => END
 

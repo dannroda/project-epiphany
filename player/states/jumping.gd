@@ -65,9 +65,9 @@ func _exit() -> void:
 	player.anim_tree.set(&"parameters/UseItem/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
 
 
-## Atacar ahora clava el golpe en picada (Plunging), si ya la aprendió y está bien arriba.
+## Atacar ahora clava el golpe en picada (Plunging), si ya la aprendió y despegó del piso.
 func can_plunge() -> bool:
-	return airborne_height() > 0.2 and GameState.get_flag(&"ow_tech_plunge")
+	return _left_floor and GameState.get_flag(Plunging.LEARNED)
 
 
 ## En el aire, ¿por encima de qué altura del piso de donde saltó?

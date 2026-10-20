@@ -1581,7 +1581,7 @@ msgid "TECH_PLUNGE"
 msgstr "Plunge"
 
 msgid "TECH_PLUNGE_DESC"
-msgstr "Attack in the air of a feather jump: you drop sword first and the shockwave hits all around."
+msgstr "Attack at any point of a feather jump: you rise a bit higher, drop and drive your sword into the ground; the shockwave hits all around."
 
 msgid "TECH_PLUNGE_HOW"
 msgstr "Attack in the air"
@@ -1610,8 +1610,8 @@ msgid "Probalo con el muñeco: avisa sus golpes como un esqueleto."
 msgstr "Try it on the dummy: it winds up like a skeleton."
 
 msgctxt "tech_plunge_1"
-msgid "Saltá con {item:feather} y atacá con {btn:attack} en el aire: caés clavando la espada y la onda golpea alrededor."
-msgstr "Jump with {item:feather} and attack with {btn:attack} in the air: you drop sword first and the shockwave hits all around."
+msgid "Saltá con {item:feather} y atacá con {btn:attack} en el aire: subís un poco más, caés y clavás la espada en el piso; la onda golpea alrededor."
+msgstr "Jump with {item:feather} and attack with {btn:attack} in the air: you rise a bit higher, drop and drive your sword into the ground; the shockwave hits all around."
 
 msgctxt "tech_plunge_2"
 msgid "Probalo con el muñeco."

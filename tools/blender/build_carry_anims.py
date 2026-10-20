@@ -1,6 +1,7 @@
 # Arma assets/epiphany/anim/carry.glb: animaciones de cargar algo sobre la cabeza para el Rig_Medium de KayKit
 # (Carry_Lift, Carry_Idle, Carry_Walk, Carry_Throw), de levantar un ítem recién conseguido (ItemGet_Raise, _Hold, _Lower)
-# y de trepar la escalera de soga (Climb). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
+# de trepar la escalera de soga (Climb) y del golpe en picada (Plunge_Rise, _Fall, _Stuck, _Pull: la espada arriba, apuntando
+# derecho abajo, clavada en el piso y sacándola). Parten de Idle_A y Walking_A; los brazos van por IK a puntos
 # fijos y el torso se dobla a mano (las piernas siguen la base). Se hornea todo a claves FK por hueso. El frente del rig mira a -Y.
 # Con la cabeza chibi las manos no llegan arriba del casco: quedan levantadas a los costados de la cabeza y el objeto
 # va apoyado arriba. Después: tools/build_carry_library.gd arma player/animation/libs/Carry.res.
@@ -9,7 +10,7 @@ import math
 import os
 
 import bpy
-from mathutils import Matrix, Vector
+from mathutils import Matrix, Quaternion, Vector
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SOURCE = os.path.join(ROOT, "assets", "kaykit_charanim", "Animations", "gltf", "Rig_Medium", "Rig_Medium_%s.glb")
@@ -24,10 +25,11 @@ def load_rig():
 	bpy.context.scene.render.fps = FPS
 	bpy.ops.import_scene.gltf(filepath=SOURCE % "General")
 	rig = next(o for o in bpy.data.objects if o.type == "ARMATURE")
-	before = set(bpy.data.objects)
-	bpy.ops.import_scene.gltf(filepath=SOURCE % "MovementBasic")
-	for obj in set(bpy.data.objects) - before:
-		bpy.data.objects.remove(obj)
+	for extra in ("MovementBasic", "MovementAdvanced"):
+		before = set(bpy.data.objects)
+		bpy.ops.import_scene.gltf(filepath=SOURCE % extra)
+		for obj in set(bpy.data.objects) - before:
+			bpy.data.objects.remove(obj)
 	return rig
 
 
@@ -77,15 +79,29 @@ def lerp_keys(keys, f):
 	return keys[-1][1]
 
 
-def bake(rig, ik, name, base, frames, pose_at, loop=False):
-	"""Para cada cuadro: pose de `base`, los cambios de pose_at(fracción) y las IK; guarda la pose final como FK."""
+def sample(rig, action, f):
+	use(rig, action)
+	bpy.context.scene.frame_set(int(round(action.frame_range[0] + f * (action.frame_range[1] - action.frame_range[0]))))
+	return {b.name: b.matrix_basis.copy() for b in rig.pose.bones}
+
+
+def blend(a, b, w):
+	la, ra, sa = a.decompose()
+	lb, rb, sb = b.decompose()
+	return Matrix.LocRotScale(la.lerp(lb, w), ra.slerp(rb, w), sa.lerp(sb, w))
+
+
+def bake(rig, ik, name, base, frames, pose_at, loop=False, mix=None):
+	"""Para cada cuadro: pose de `base` (mezclada con mix = (acción, peso(fracción))), los cambios de pose_at(fracción)
+	y las IK; guarda la pose final como FK."""
 	bones = rig.pose.bones
 	result = {b.name: [] for b in bones}
 	for i in range(frames + (0 if loop else 1)):
 		f = i / frames
-		use(rig, base)
-		bpy.context.scene.frame_set(int(round(base.frame_range[0] + f * (base.frame_range[1] - base.frame_range[0]))))
-		basis = {b.name: b.matrix_basis.copy() for b in bones}
+		basis = sample(rig, base, f)
+		if mix:
+			other, w = sample(rig, mix[0], f), mix[1](f)
+			basis = {n: blend(m, other[n], w) for n, m in basis.items()}
 		rig.animation_data.action = None
 		for b in bones:
 			b.matrix_basis = basis[b.name]
@@ -98,10 +114,17 @@ def bake(rig, ik, name, base, frames, pose_at, loop=False):
 			pb.matrix = Matrix.Translation(head) @ Matrix.Rotation(angle, 4, axis) @ Matrix.Translation(-head) @ pb.matrix
 			bpy.context.view_layer.update()
 		for bone_name, (t, p, c) in ik.items():
-			c.influence = edit.get("arms", 1.0)
 			left = bone_name.endswith(".l")
+			c.influence = edit.get("arms_l", edit.get("arms", 1.0)) if left else edit.get("arms", 1.0)
 			t.location = mirror(edit["hands"] if left else edit.get("hands_r", edit["hands"]), 1 if left else -1)
 		bpy.context.view_layer.update()
+		if "blade" in edit:
+			pb = bones["hand.r"]
+			now = -(rig.matrix_world @ pb.matrix).col[0].xyz
+			turn = Quaternion().slerp(now.rotation_difference(edit["blade"].normalized()), edit.get("blade_w", 1.0))
+			head = pb.matrix.to_translation()
+			pb.matrix = Matrix.Translation(head) @ turn.to_matrix().to_4x4() @ Matrix.Translation(-head) @ pb.matrix
+			bpy.context.view_layer.update()
 		for b in bones:
 			result[b.name].append(rig.convert_space(pose_bone=b, matrix=b.matrix, from_space="POSE", to_space="LOCAL"))
 	for _, _, c in ik.values():
@@ -196,11 +219,62 @@ def climb_pose(f, chest):
 	}
 
 
+# Golpe en picada. La hoja sale por -X de hand.r; "blade" la apunta en el mundo. Las manos van juntas en el mango: la
+# izquierda (sobre la derecha) se da en su lado espejado, como hands_r.
+DOWN = Vector((0, 0, -1))
+PLUNGE_GRIP = Vector((0.06, -0.38, 0.85))
+STUCK_GRIP = Vector((0.06, -0.42, 0.62))
+IDLE_HAND = Vector((0.48, -0.07, 0.63))
+
+
+def grip(right):
+	return {"hands_r": right, "hands": Vector((-right.x, right.y, right.z + 0.12))}
+
+
+def rise_pose(f, chest):
+	up = lerp_keys([(0.0, 0.0), (0.5, 1.0)], f)
+	return {
+		"hands_r": lerp_keys([(0.0, IDLE_HAND), (0.6, Vector((0.3, 0.05, 1.45)))], f),
+		"hands": Vector((0.5, -0.2, 0.85)),
+		"arms": up,
+		"blade": Vector((0, -1, 0)).lerp(Vector((0, 0.25, 1)), lerp_keys([(0.0, 0.0), (0.6, 1.0)], f)),
+		"blade_w": up,
+		"bend": {"spine": (Vector((1, 0, 0)), 0.12 * up)},
+	}
+
+
+def fall_pose(f, chest):
+	return {**grip(PLUNGE_GRIP), "blade": DOWN, "bend": {"spine": (Vector((1, 0, 0)), -0.2)}}
+
+
+def stuck_pose(f, chest):
+	return {
+		**grip(STUCK_GRIP + (chest.to_translation() - REST_CHEST)),
+		"blade": DOWN,
+		"bend": {"spine": (Vector((1, 0, 0)), -0.25)},
+	}
+
+
+def pull_pose(f, chest):
+	offset = chest.to_translation() - REST_CHEST
+	right = lerp_keys([(0.0, STUCK_GRIP), (0.4, STUCK_GRIP + Vector((0, 0.04, 0.33))), (1.0, IDLE_HAND)], f) + offset * (1.0 - f)
+	return {
+		**grip(right),
+		"arms": lerp_keys([(0.0, 1.0), (0.45, 1.0), (1.0, 0.0)], f),
+		"arms_l": lerp_keys([(0.0, 1.0), (0.35, 1.0), (0.7, 0.0)], f),
+		"blade": DOWN,
+		"blade_w": lerp_keys([(0.0, 1.0), (0.4, 1.0), (1.0, 0.0)], f),
+		"bend": {"spine": (Vector((1, 0, 0)), lerp_keys([(0.0, -0.25), (0.4, -0.1), (1.0, 0.0)], f))},
+	}
+
+
 rig = load_rig()
 rig.animation_data_create()
 ik = add_ik(rig)
 idle = bpy.data.actions["Idle_A"]
 walk = bpy.data.actions["Walking_A"]
+air = bpy.data.actions["Jump_Idle"]
+crouch = bpy.data.actions["Crouching"]
 use(rig, idle)
 bpy.context.scene.frame_set(int(idle.frame_range[0]))
 REST_CHEST = (rig.matrix_world @ rig.pose.bones["chest"].matrix).to_translation()
@@ -219,6 +293,10 @@ made = [
 	bake(rig, ik, "ItemGet_Hold", idle, frames_of(idle), hold_pose, loop=True),
 	bake(rig, ik, "ItemGet_Lower", idle, int(0.3 * FPS), lower_pose),
 	bake(rig, ik, "Climb", idle, int(0.9 * FPS), climb_pose, loop=True),
+	bake(rig, ik, "Plunge_Rise", air, int(0.3 * FPS), rise_pose),
+	bake(rig, ik, "Plunge_Fall", air, frames_of(air), fall_pose, loop=True),
+	bake(rig, ik, "Plunge_Stuck", crouch, frames_of(crouch), stuck_pose, loop=True),
+	bake(rig, ik, "Plunge_Pull", crouch, int(0.35 * FPS), pull_pose, mix=(idle, lambda f: lerp_keys([(0.0, 0.0), (0.3, 0.0), (1.0, 1.0)], f))),
 ]
 for b in rig.pose.bones:
 	for c in list(b.constraints):

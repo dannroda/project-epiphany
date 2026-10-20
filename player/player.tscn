@@ -159,6 +159,18 @@ animation = &"Carry/ItemGet_Lower"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_climb"]
 animation = &"Carry/Climb"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_plungerise"]
+animation = &"Carry/Plunge_Rise"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_plungefall"]
+animation = &"Carry/Plunge_Fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_plungestuck"]
+animation = &"Carry/Plunge_Stuck"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_plungepull"]
+animation = &"Carry/Plunge_Pull"
+
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_carryphase"]
 xfade_time = 0.12
 input_0/name = "Lift"
@@ -193,6 +205,22 @@ input_7/name = "Climb"
 input_7/auto_advance = false
 input_7/break_loop_at_end = false
 input_7/reset = true
+input_8/name = "PlungeRise"
+input_8/auto_advance = false
+input_8/break_loop_at_end = false
+input_8/reset = true
+input_9/name = "PlungeFall"
+input_9/auto_advance = false
+input_9/break_loop_at_end = false
+input_9/reset = true
+input_10/name = "PlungeStuck"
+input_10/auto_advance = false
+input_10/break_loop_at_end = false
+input_10/reset = true
+input_11/name = "PlungePull"
+input_11/auto_advance = false
+input_11/break_loop_at_end = false
+input_11/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_peicu"]
 xfade_time = 0.3
@@ -407,13 +435,21 @@ nodes/ItemHold/node = SubResource("AnimationNodeAnimation_itemhold")
 nodes/ItemHold/position = Vector2(2453.3333, 2050)
 nodes/ItemLower/node = SubResource("AnimationNodeAnimation_itemlower")
 nodes/ItemLower/position = Vector2(2453.3333, 2200)
+nodes/PlungeRise/node = SubResource("AnimationNodeAnimation_plungerise")
+nodes/PlungeRise/position = Vector2(2453.3333, 2350)
+nodes/PlungeFall/node = SubResource("AnimationNodeAnimation_plungefall")
+nodes/PlungeFall/position = Vector2(2453.3333, 2500)
+nodes/PlungeStuck/node = SubResource("AnimationNodeAnimation_plungestuck")
+nodes/PlungeStuck/position = Vector2(2453.3333, 2650)
+nodes/PlungePull/node = SubResource("AnimationNodeAnimation_plungepull")
+nodes/PlungePull/position = Vector2(2453.3333, 2800)
 nodes/Climb/node = SubResource("AnimationNodeAnimation_climb")
 nodes/Climb/position = Vector2(2453.3333, 2350)
 nodes/CarryPhase/node = SubResource("AnimationNodeTransition_carryphase")
 nodes/CarryPhase/position = Vector2(2800, 1400)
 nodes/Carry/node = SubResource("AnimationNodeTransition_carry")
 nodes/Carry/position = Vector2(3100, 1000)
-node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Guard", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"Guard", 0, &"Combat", &"Guard", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"AttackType", 2, &"Backhand", &"AttackType", 3, &"Spin", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"Carry", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"Bow", 0, &"UseItem", &"Bow", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"Carry", 0, &"Bow", &"Carry", 1, &"CarryPhase"]
+node_connections = [&"output", 0, &"Dodge", &"Movement", 0, &"Idle", &"Movement", 1, &"Running", &"Attack", 0, &"Guard", &"Attack", 1, &"AttackType", &"Combat", 0, &"Movement", &"Combat", 1, &"Targeting", &"Guard", 0, &"Combat", &"Guard", 1, &"MeleeBlocking", &"AttackType", 0, &"SwordSlice", &"AttackType", 1, &"Stab", &"AttackType", 2, &"Backhand", &"AttackType", 3, &"Spin", &"Hurt", 0, &"Attack", &"Hurt", 1, &"HurtAnim+ Engine capabi", &"BlockHit", 0, &"Hurt", &"BlockHit", 1, &"BlockHitAnim", &"DodgeDir", 0, &"DodgeForward", &"DodgeDir", 1, &"DodgeBackward", &"DodgeDir", 2, &"DodgeLeft", &"DodgeDir", 3, &"DodgeRight", &"Dodge", 0, &"Carry", &"Dodge", 1, &"DodgeDir", &"UseItem", 0, &"BlockHit", &"UseItem", 1, &"ItemAnim", &"BowPhase", 0, &"BowDraw", &"BowPhase", 1, &"BowIdle", &"BowPhase", 2, &"BowRelease", &"Bow", 0, &"UseItem", &"Bow", 1, &"BowPhase", &"CarryPhase", 0, &"CarryLift", &"CarryPhase", 1, &"CarryIdle", &"CarryPhase", 2, &"CarryWalk", &"CarryPhase", 3, &"CarryThrow", &"CarryPhase", 4, &"ItemRaise", &"CarryPhase", 5, &"ItemHold", &"CarryPhase", 6, &"ItemLower", &"CarryPhase", 7, &"Climb", &"CarryPhase", 8, &"PlungeRise", &"CarryPhase", 9, &"PlungeFall", &"CarryPhase", 10, &"PlungeStuck", &"CarryPhase", 11, &"PlungePull", &"Carry", 0, &"Bow", &"Carry", 1, &"CarryPhase"]
 
 [sub_resource type="AnimationNodeObserverOneShot" id="AnimationNodeObserverOneShot_4uxyr"]
 
@@ -1225,6 +1261,12 @@ attack = ExtResource("atk_counter")
 [node name="Plunging" type="LimboState" parent="MovementState"]
 script = ExtResource("st_plunging")
 wave = ExtResource("plunge_wave")
+rise_height = 1.0
+hang_time = 0.24
+fall_speed = 9.0
+stuck_time = 0.9
+pull_time = 0.7
+shake = 0.4
 
 [node name="Spirit" type="Node3D" parent="."]
 visible = false
