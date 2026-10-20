@@ -1,4 +1,4 @@
-extends Control
+extends UiScreen
 ## Pantalla de título (mockup Main): Continuar, Cargar partida, Nueva partida, Opciones, Salir; en debug, cargar un escenario.
 ## La primera vez que se abre el juego, antes pide el idioma (mockup Language).
 ## Es el estado raíz de la máquina de UI: todo lo que abre pasa por `MenuStack`.

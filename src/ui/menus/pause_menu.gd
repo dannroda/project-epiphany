@@ -33,20 +33,12 @@ func show_page(index: int) -> void:
 
 
 func focus_default() -> void:
-	var page := pages.get_child(current)
-	if page.has_method(&"focus_default"):
-		page.focus_default()
-		return
-	for control in page.find_children("*", "Control", true, false):
-		if (control as Control).focus_mode == FOCUS_ALL and (control as Control).is_visible_in_tree():
-			(control as Control).grab_focus()
-			return
+	(pages.get_child(current) as PausePage).focus_default()
 
 
 ## Atrás lo resuelve primero la pestaña (Sistema vuelve de Guardar/Cargar a los controles).
 func cancel() -> bool:
-	var page := pages.get_child(current)
-	return page.has_method(&"cancel") and page.cancel()
+	return (pages.get_child(current) as PausePage).cancel()
 
 
 func _unhandled_input(event: InputEvent) -> void:

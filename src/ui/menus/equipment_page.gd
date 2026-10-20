@@ -1,4 +1,4 @@
-extends Control
+extends PausePage
 ## Pestaña Equipo: ranuras por categoría, detalle del ítem enfocado, stats y preview del modelo.
 
 const SECTIONS := { ^"Sword": ItemData.Category.SWORD, ^"Shield": ItemData.Category.SHIELD, ^"Armor": ItemData.Category.ARMOR }

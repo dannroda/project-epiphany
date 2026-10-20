@@ -26,6 +26,38 @@ func test_every_eye_is_the_logo_eye() -> void:
 		root.free()
 
 
+## Script que empuja → escena que empuja. Agregar acá cada pantalla nueva de la pila.
+const PUSHED := {
+	"res://src/ui/menus/game_over.gd": "res://src/ui/menus/game_over.tscn",
+	"res://src/ui/controls/controls_screen.gd": "res://src/ui/controls/controls_screen.tscn",
+	"res://src/ui/text_box/text_box.gd": "res://src/ui/text_box/text_box.tscn",
+	"res://src/ui/title/file_select.gd": "res://src/ui/title/file_select.tscn",
+	"res://src/ui/title/language_select.gd": "res://src/ui/title/language_select.tscn",
+	"res://src/ui/title/scenario_list.gd": "res://src/ui/title/scenario_list.tscn",
+	"res://src/ui/menus/options_screen.gd": "res://src/ui/menus/options_screen.tscn",
+	"res://src/ui/menus/confirm_dialog.gd": "res://src/ui/menus/confirm_dialog.tscn",
+	"res://player/states/item_get.gd": "res://src/ui/item_get/item_get.tscn",
+	"res://src/ui/menus/menu_stack.gd": "res://src/ui/menus/pause_menu.tscn",
+}
+
+
+func test_every_screen_on_the_stack_is_a_ui_screen() -> void:
+	var pushing: PackedStringArray = []
+	for path in _scripts("res://src") + _scripts("res://player"):
+		if path != "res://src/ui/menus/menu_stack.gd" and FileAccess.get_file_as_string(path).contains("MenuStack.push("):
+			pushing.append(path)
+	for path in pushing:
+		assert_true(PUSHED.has(path), "%s empuja una pantalla: sumarla a PUSHED" % path.get_file())
+	for scene: String in PUSHED.values() + ["res://src/ui/title/title_screen.tscn"]:
+		var root := (load(scene) as PackedScene).instantiate()
+		assert_true(root is UiScreen, "%s tiene una UiScreen de raíz" % scene.get_file())
+		root.free()
+	var pause := (load("res://src/ui/menus/pause_menu.tscn") as PackedScene).instantiate()
+	for page in pause.get_node(^"%Pages").get_children():
+		assert_true(page is PausePage, "la pestaña %s es una PausePage" % page.name)
+	pause.free()
+
+
 func _is_ui_type(type: StringName, bases: Dictionary) -> bool:
 	while bases.has(type):
 		type = bases[type]

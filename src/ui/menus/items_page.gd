@@ -1,4 +1,4 @@
-extends Control
+extends PausePage
 ## Pestaña Ítems: ítems secundarios para asignar a X/Y (item_1/item_2), la fila fija de las cuatro botellas, objetos de
 ## la mazmorra y detalle.
 ## En co-op, en vez del detalle, una tarjeta por player con lo que lleva (13.9). Con el menú compartido cada invitado

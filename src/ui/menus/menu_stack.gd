@@ -2,7 +2,7 @@
 extends CanvasLayer
 ## Máquina de estados de la UI: una pila de pantallas (autómata de pila). Solo la de arriba recibe input y foco;
 ## las de abajo quedan desactivadas (y ocultas si la de arriba las cubre). Con alguna abierta, el juego queda en pausa.
-## La raíz (`set_base`, la pantalla de título) puede ser cualquier Control: de ella se leen los métodos si los tiene.
+## La raíz (`set_base`, la pantalla de título) también es una UiScreen, aunque no esté en la pila.
 
 signal changed
 
@@ -11,7 +11,7 @@ const MAP_PAGE := 2
 
 var _stack: Array[UiScreen] = []
 ## Estado raíz que no es de la pila (la pantalla de título): queda desactivado mientras haya algo encima.
-var _base: Control
+var _base: UiScreen
 var _focus_memory: Dictionary[Control, Control] = {}
 
 
@@ -33,7 +33,7 @@ func top() -> UiScreen:
 
 
 ## La pantalla raíz se desregistra sola al salir del árbol.
-func set_base(screen: Control) -> void:
+func set_base(screen: UiScreen) -> void:
 	_base = screen
 	screen.tree_exiting.connect(func() -> void:
 		if _base == screen:
@@ -41,14 +41,13 @@ func set_base(screen: Control) -> void:
 
 
 func push(screen: UiScreen) -> void:
-	var covered: Control = top() if is_open() else _base
+	var covered: UiScreen = top() if is_open() else _base
 	if covered:
 		_focus_memory[covered] = get_viewport().gui_get_focus_owner()
 		covered.process_mode = PROCESS_MODE_DISABLED
 		if screen.hides_below:
 			covered.hide()
-		if covered.has_method(&"screen_covered"):
-			covered.screen_covered()
+		covered.screen_covered()
 	_stack.append(screen)
 	screen.process_mode = PROCESS_MODE_ALWAYS
 	add_child(screen)
@@ -67,12 +66,11 @@ func pop() -> void:
 	screen.queue_free()
 	if not is_open():
 		Pause.release(&"menu")
-	var uncovered: Control = top() if is_open() else _base
+	var uncovered: UiScreen = top() if is_open() else _base
 	if uncovered:
 		uncovered.process_mode = PROCESS_MODE_ALWAYS if is_open() else PROCESS_MODE_INHERIT
 		uncovered.show()
-		if uncovered.has_method(&"screen_uncovered"):
-			uncovered.screen_uncovered()
+		uncovered.screen_uncovered()
 		var remembered: Variant = _focus_memory.get(uncovered)
 		if is_instance_valid(remembered) and uncovered.is_ancestor_of(remembered):
 			remembered.grab_focus()
@@ -116,9 +114,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			pop()
 
 
-func _focus(screen: Control) -> void:
-	if screen.has_method(&"focus_default"):
-		screen.focus_default.call_deferred()
+func _focus(screen: UiScreen) -> void:
+	screen.focus_default.call_deferred()
 
 
 ## No se pausa sin player vivo (pantallas de carga, muerte, título) ni si ya hay algo pausando el juego (un reveal de

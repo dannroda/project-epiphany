@@ -1,4 +1,4 @@
-extends Control
+extends PausePage
 ## Pestaña Sistema de la pausa (mockups Pause_System, Pause_System_Save y Pause_System_Load): Guardar, Cargar,
 ## Opciones y Volver al título; a la derecha los controles básicos del dispositivo en uso (Y/T cambia de vista).
 ## Guardar pisa siempre la partida cargada; Cargar elige entre el último checkpoint (la Auto, si es de esta partida)

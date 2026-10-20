@@ -1,4 +1,4 @@
-extends Control
+extends PausePage
 ## Pestaña Mapa. En mazmorra: las salas (visitadas; con mapa, todas; con brújula, cofres sin abrir y el jefe), las
 ## puertas y dónde está el player; el cursor salta de sala en sala. En el overworld: la foto cenital con las zonas sin
 ## explorar en sombra, las marcas (entradas, cofres abiertos, tablillas leídas, portales prendidos), los pines del
