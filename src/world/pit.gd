@@ -13,9 +13,7 @@ extends Area3D
 
 
 func _ready() -> void:
-	collision_layer = 0
-	collision_mask = 1 | 2
-	monitorable = false
+	PhysicsLayers.sensor(self)
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter:
 			_fall.call_deferred(body))

@@ -18,9 +18,7 @@ func _ready() -> void:
 	tree_exiting.connect(func() -> void:
 		if _current == self:
 			_current = null)
-	collision_layer = 0
-	collision_mask = 1 | 2
-	monitorable = false
+	PhysicsLayers.sensor(self)
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter:
 			GameState.visit_zone(key())
@@ -43,12 +41,7 @@ func contains(point: Vector3) -> bool:
 
 ## Rectángulo de la zona en XZ del mundo.
 func bounds() -> Rect2:
-	var shape := get_node_or_null(^"CollisionShape3D") as CollisionShape3D
-	if shape == null or not shape.shape is BoxShape3D:
-		return Rect2(Vector2(global_position.x, global_position.z), Vector2.ZERO)
-	var size := (shape.shape as BoxShape3D).size
-	var center := shape.global_position
-	return Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
+	return BoxBounds.xz(self)
 
 
 ## Las zonas de la región de persecución del punto; vacío si no cae en ninguna.

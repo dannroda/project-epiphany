@@ -5,7 +5,7 @@ signal interacted(by: PlayerCharacter)
 ## Algún player lo tiene de foco (el prompt del HUD apunta a esto).
 signal focused(on: bool)
 
-const LAYER := 1 << 5
+const LAYER := PhysicsLayers.INTERACTABLE
 
 @export var prompt: String = "PROMPT_OPEN" ## Lo muestra el HUD en el botón contextual (4.1)
 @export var enabled: bool = true

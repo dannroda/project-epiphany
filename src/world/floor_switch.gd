@@ -12,7 +12,7 @@ signal deactivated
 
 enum Mode { HOLD, ONCE, BLOCK, WEIGHT, STRIKE }
 
-const HURTBOX_LAYER := 16
+const HURTBOX_LAYER := PhysicsLayers.HURTBOX
 
 @export var mode: Mode = Mode.HOLD:
 	set(value):

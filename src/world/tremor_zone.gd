@@ -12,9 +12,7 @@ var _next := 0.0
 
 
 func _ready() -> void:
-	collision_layer = 0
-	collision_mask = 1 | 2
-	monitorable = false
+	PhysicsLayers.sensor(self)
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter:
 			if _players == 0:

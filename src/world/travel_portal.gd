@@ -28,9 +28,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	add_to_group(GROUP)
-	collision_layer = 0
-	collision_mask = 1 | 2
-	monitorable = false
+	PhysicsLayers.sensor(self)
 	arrival.id = spawn_id()
 	persistent.flag = flag
 	persistent.changed.connect(func(value: Variant) -> void: _set_lit(value == true))

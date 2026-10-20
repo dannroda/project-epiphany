@@ -21,9 +21,4 @@ func _physics_process(_delta: float) -> void:
 
 
 func bounds() -> Rect2:
-	var shape := get_node_or_null(^"CollisionShape3D") as CollisionShape3D
-	if shape == null or not shape.shape is BoxShape3D:
-		return Rect2(Vector2(global_position.x, global_position.z), Vector2.ZERO)
-	var size := (shape.shape as BoxShape3D).size
-	var center := shape.global_position
-	return Rect2(center.x - size.x / 2.0, center.z - size.z / 2.0, size.x, size.z)
+	return BoxBounds.xz(self)

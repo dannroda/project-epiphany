@@ -2,7 +2,7 @@ class_name ThrownObject
 extends RigidBody3D
 ## El cuerpo físico de algo levantado (Liftable): lo sostiene el Carrier y, tirado, al chocar daña y se rompe.
 
-const LAYER := 8
+const LAYER := PhysicsLayers.OBJECT
 
 var liftable: Liftable
 ## Tirado o soltado: el próximo choque cuenta como impacto.

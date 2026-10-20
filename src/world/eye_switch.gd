@@ -11,9 +11,6 @@ const OPEN := Color(1.25, 1.15, 1.0)
 ## Los valores por defecto de epiphany_outdoor.gdshader.
 const GLOW := 1.5
 const ALBEDO := Color(0.72, 0.72, 0.72)
-const LOOK_RANGE := 10.0
-const LOOK_LIMIT := deg_to_rad(40.0)
-const LOOK_SPEED := 6.0
 
 @export var flag: StringName:
 	set(value):
@@ -21,6 +18,12 @@ const LOOK_SPEED := 6.0
 		update_configuration_warnings()
 ## Con tiempo: se apaga solo a los tantos segundos (sin flag; se vuelve a flechar).
 @export var open_time := 0.0
+@export_group("Mirada")
+## Desde qué distancia sigue al player con el ojo cerrado.
+@export var look_range := 10.0
+@export_range(0.0, 90.0, 1.0, "suffix:°") var look_limit_deg := 40.0
+@export var look_speed := 6.0
+@export_group("")
 
 @onready var hurtbox: Hurtbox = $Hurtbox
 @onready var eye: MeshInstance3D = %Eye
@@ -56,15 +59,16 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var goal := _rest
 	var player := Players.nearest(eye.global_position)
-	if not active and player and player.global_position.distance_to(eye.global_position) < LOOK_RANGE:
+	if not active and player and player.global_position.distance_to(eye.global_position) < look_range:
 		var to := eye.get_parent_node_3d().global_basis.inverse() * (player.global_position + Vector3.UP * 0.8 - eye.global_position)
 		var ahead := _rest * Vector3.BACK
 		var turn := Quaternion(ahead, to.normalized()) if not to.is_zero_approx() else Quaternion.IDENTITY
 		var angle := turn.get_angle()
-		if angle > LOOK_LIMIT:
-			turn = Quaternion.IDENTITY.slerp(turn, LOOK_LIMIT / angle)
+		var limit := deg_to_rad(look_limit_deg)
+		if angle > limit:
+			turn = Quaternion.IDENTITY.slerp(turn, limit / angle)
 		goal = turn * _rest
-	eye.quaternion = eye.quaternion.slerp(goal, 1.0 - exp(-LOOK_SPEED * delta))
+	eye.quaternion = eye.quaternion.slerp(goal, 1.0 - exp(-look_speed * delta))
 
 
 func _get_configuration_warnings() -> PackedStringArray:

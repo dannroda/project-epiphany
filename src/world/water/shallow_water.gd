@@ -31,9 +31,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	add_to_group(GROUP)
-	collision_layer = 0
-	collision_mask = 1 | 2
-	monitorable = false
+	PhysicsLayers.sensor(self)
 	body_entered.connect(func(body: Node3D) -> void:
 		var player := body as PlayerCharacter
 		if player:

@@ -4,7 +4,7 @@ extends Node3D
 ## `punta` (la cabeza de la maza) toca el piso. Le pegan a todo lo que esté en el piso adentro del anillo (players y
 ## otros enemigos), menos al que las larga (`emitter`, por defecto el padre del modelo). Las mallas son los hijos.
 
-const HURTBOX_LAYER := 16
+const HURTBOX_LAYER := PhysicsLayers.HURTBOX
 
 @export var skeleton: Skeleton3D
 @export var punta: Node3D

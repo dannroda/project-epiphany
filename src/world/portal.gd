@@ -34,9 +34,7 @@ var _flag_open := true
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	collision_layer = 0
-	collision_mask = 1 | 2
-	monitorable = false
+	PhysicsLayers.sensor(self)
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter and not SceneFlow.traveling:
 			player_entered.emit(body)

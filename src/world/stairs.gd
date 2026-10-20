@@ -12,9 +12,7 @@ var _busy := false
 
 
 func _ready() -> void:
-	collision_layer = 0
-	collision_mask = 1 | 2
-	monitorable = false
+	PhysicsLayers.sensor(self)
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter and to and not _busy and not SceneFlow.traveling and (gate == null or gate.is_open):
 			_climb(body))
