@@ -61,6 +61,8 @@ var _wake_frame := 0
 var _checked := false
 
 static var _waking := false
+static var _camera: TopDownCamera
+static var _camera_frame := -1
 static var _outline_material: StandardMaterial3D
 ## La sala cuyo preset se está editando en el editor y lo que tenían la cámara y el entorno antes.
 static var _editing: Room
@@ -153,10 +155,15 @@ func waves_running() -> bool:
 
 ## También la sala de la cámara: en una puerta el player no está en ninguna, y sigue siendo la sala de la que viene.
 func has_player() -> bool:
-	var camera := TopDownCamera.find(get_tree())
-	if camera and camera.room == self:
+	if _camera_frame != Engine.get_physics_frames():
+		_camera_frame = Engine.get_physics_frames()
+		_camera = TopDownCamera.find(get_tree())
+	if is_instance_valid(_camera) and _camera.room == self:
 		return true
-	return Players.all.any(func(player: PlayerCharacter) -> bool: return contains(player.global_position))
+	for player in Players.all:
+		if contains(player.global_position):
+			return true
+	return false
 
 
 func _request_wake() -> void:

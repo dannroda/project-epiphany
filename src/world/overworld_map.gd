@@ -34,6 +34,8 @@ var _retake_pending := false
 var _layout_flags: Dictionary[StringName, bool] = {}
 var _layout_flags_known := false
 var _painted_at: Dictionary[PlayerCharacter, Vector2] = {}
+var _all_veils: Array = []
+var _veils_read := false
 
 @onready var _viewport: SubViewport = $Snapshot
 @onready var _camera: Camera3D = $Snapshot/Camera
@@ -64,9 +66,16 @@ func _physics_process(_delta: float) -> void:
 ## Lo descubierto es del mundo, no del HUD: se pinta en GameState.map_revealed (1 px por metro) aunque no haya minimapa.
 func _reveal() -> void:
 	GameState.ensure_map_revealed(reveal_key(), world_rect)
-	var veils := get_tree().get_nodes_in_group(ZoneVeil.GROUP).filter(func(veil: ZoneVeil) -> bool: return veil.visible)
-	if veils.any(func(veil: ZoneVeil) -> bool: return veil.is_revealing()):
-		_painted_at.clear()
+	if not _veils_read:
+		_all_veils = get_tree().get_nodes_in_group(ZoneVeil.GROUP)
+		_veils_read = true
+	var veils := []
+	for node: Node in _all_veils:
+		var veil := node as ZoneVeil if is_instance_valid(node) else null
+		if veil and veil.visible:
+			veils.append(veil)
+			if veil.is_revealing():
+				_painted_at.clear()
 	var changed := false
 	for player in Players.all:
 		var here := Vector2(player.global_position.x, player.global_position.z)

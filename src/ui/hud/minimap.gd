@@ -11,6 +11,8 @@ const GRID_ORIGIN := Vector2(10, 8)
 const DOOR_SIZE := 7.0
 ## Píxeles del minimapa por metro en el overworld.
 const OVERWORLD_SCALE := 5.0
+## Sin cambios a la vista (player, sala, puertas), redibuja igual cada tanto: cofres abiertos, brújula, mapa.
+const REDRAW_ANYWAY := 0.25
 
 ## Los marcos de la pestaña Mapa, a esta escala.
 @export var frame_scale := 0.5
@@ -44,6 +46,9 @@ var _portals: Array = []
 var _tablets: Array = []
 var _zones: Array = []
 var _revealed: ImageTexture
+var _floors := 0
+var _drawn: Array = []
+var _since_drawn := 0.0
 
 
 func _ready() -> void:
@@ -72,6 +77,14 @@ func _process(delta: float) -> void:
 			_passages = MapData.passages(tree, _door_nodes)
 			_passages_read = true
 		_doors = MapData.door_marks(_door_nodes) + _passages
+	var lead := Players.lead()
+	var drawn := [room, lead.global_position.snapped(Vector3.ONE * 0.05), lead.model.global_basis.z.snapped(Vector3.ONE * 0.02),
+		_doors, GameState.map_pins.size()]
+	_since_drawn += delta
+	if drawn == _drawn and _since_drawn < REDRAW_ANYWAY:
+		return
+	_drawn = drawn
+	_since_drawn = 0.0
 	view.queue_redraw()
 	marks.queue_redraw()
 
@@ -92,7 +105,7 @@ func covers_a_player() -> bool:
 ## Etiqueta del piso arriba del minimapa (solo en mazmorras de varios pisos).
 func _show_floor(room: Room) -> void:
 	var dungeon_floor := DungeonFloor.of(room) if room else null
-	if get_tree().get_nodes_in_group(DungeonFloor.GROUP).size() < 2:
+	if _floors < 2:
 		dungeon_floor = null
 	floor_tag.visible = dungeon_floor != null
 	if dungeon_floor:
@@ -102,12 +115,14 @@ func _show_floor(room: Room) -> void:
 
 func _bind(scene: Node) -> void:
 	_scene = scene
+	_drawn = []
 	var tree := get_tree()
 	_map = MapData.find(tree, OverworldMap) as OverworldMap if scene else null
 	_door_nodes = MapData.door_nodes(tree)
 	_passages = []
 	_passages_read = false
 	_pitch = MapData.room_pitch(tree, Vector2.ZERO)
+	_floors = tree.get_nodes_in_group(DungeonFloor.GROUP).size()
 	_portals = scene.find_children("*", "Portal", true, false) if scene else []
 	_tablets = scene.find_children("*", "Tablet", true, false) if scene else []
 	_zones = scene.find_children("*", "AreaZone", true, false) if scene else []

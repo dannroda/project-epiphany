@@ -247,10 +247,19 @@ func _in_sight(target: Node3D) -> bool:
 ## salvo los de otro piso de la mazmorra.
 func _sync_posts() -> void:
 	var reach := player.hook_reach()
+	if reach <= 0.0:
+		for i in range(possible_targets.size() - 1, -1, -1):
+			if possible_targets[i] is HookPost:
+				possible_targets.remove_at(i)
+		return
 	var hand := player.global_position + Vector3.UP * Hook.HEIGHT
-	var here := _room_of(player.global_position)
+	var here: Room = null
+	var here_read := false
 	for post: HookPost in get_tree().get_nodes_in_group(HookPost.GROUP):
-		var near := reach > 0.0 and hand.distance_to(post.ring()) <= reach
+		var near := hand.distance_to(post.ring()) <= reach
+		if near and not here_read:
+			here = _room_of(player.global_position)
+			here_read = true
 		if near and here:
 			var there := _room_of(post.global_position)
 			near = there == null or there.floor_level() == here.floor_level()
