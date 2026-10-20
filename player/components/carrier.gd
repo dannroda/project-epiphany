@@ -111,7 +111,7 @@ func _release() -> RigidBody3D:
 	carried = null
 	body.tree_exiting.disconnect(_on_gone)
 	_uncover()
-	body.reparent(get_tree().current_scene)
+	body.reparent(Spawns.root(self))
 	body.freeze = false
 	if body is ThrownObject:
 		(body as ThrownObject).liftable.show_outline(false)

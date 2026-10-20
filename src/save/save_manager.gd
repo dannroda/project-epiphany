@@ -190,8 +190,7 @@ func _load_path(path: String, slot: int) -> Error:
 	if err != OK:
 		Log.error(&"save", "No se pudo entrar a la partida", path, error_string(err))
 		return err
-	GameState.save_tampered = tampered
-	if GameState.save_tampered:
+	if tampered:
 		Log.warning(&"save", "La partida fue modificada a mano:", path)
 	Log.success(&"save", "Partida cargada:", path)
 	Log.debug(&"save", "Inventario:", ", ".join(GameState.inventory.ids().map(func(id: StringName) -> String: return "%s=%d" % [id, GameState.inventory.count(id)])))

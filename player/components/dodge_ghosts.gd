@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 
 
 func spawn() -> Afterimage:
-	var scene := get_tree().current_scene
+	var scene := Spawns.root(self)
 	if scene == null:
 		return null
 	var ghost: Afterimage = ghost_scene.instantiate()

@@ -69,7 +69,6 @@ var current_dungeon: StringName = &"":
 var spawn_scene: String = ""
 var spawn_point: StringName = &""
 var player_position: Variant = null ## Vector3 hasta que haya puntos de aparición con nombre
-var save_tampered := false
 ## Segundos jugados (con player en escena y sin pausa): los suma Players.
 var play_time := 0.0
 
@@ -489,7 +488,6 @@ func _clear() -> void:
 	spawn_scene = ""
 	spawn_point = &""
 	player_position = null
-	save_tampered = false
 	cleared.emit()
 
 

@@ -57,8 +57,7 @@ func make_body() -> ThrownObject:
 	body.liftable = self
 	_home = target.get_parent()
 	((body.get_node(^"CollisionShape3D") as CollisionShape3D).shape as SphereShape3D).radius = body_radius
-	var scene := target.get_tree().current_scene
-	scene.add_child(body)
+	Spawns.root(target).add_child(body)
 	body.global_position = target.global_position + Vector3.UP * body_height
 	if target.has_method(&"lift_off"):
 		target.lift_off()
@@ -71,14 +70,14 @@ func make_body() -> ThrownObject:
 ## Vuelve a la escena antes de romperse, así lo que suelta no se va con el cuerpo.
 func shatter() -> void:
 	if target.has_method(&"smash"):
-		target.reparent(target.get_tree().current_scene)
+		target.reparent(Spawns.root(target))
 		target.smash()
 
 
 ## Lo deja en `spot` y el cuerpo físico se va: el objeto vuelve a ser lo que era antes de levantarlo.
 func put_down(spot: Vector3) -> void:
 	var body := target.get_parent() as ThrownObject
-	target.reparent(_home if is_instance_valid(_home) else target.get_tree().current_scene)
+	target.reparent(_home if is_instance_valid(_home) else Spawns.root(target))
 	target.set_down()
 	target.global_transform = Transform3D(Basis.IDENTITY, spot)
 	if body:

@@ -161,13 +161,8 @@ func _change_scene(scene_path: String) -> bool:
 
 ## Una vez por cambio de escena: Dungeon no lo limpia al salir mientras se viaja (no avisa "" y enseguida el id).
 func _sync_dungeon() -> void:
-	var id := &""
-	var scene := get_tree().current_scene
-	if scene:
-		for child in scene.get_children():
-			if child is Dungeon:
-				id = child.id
-	GameState.current_dungeon = id
+	var dungeon := Dungeon.current(get_tree())
+	GameState.current_dungeon = dungeon.id if dungeon else &""
 
 
 func _warm_up_pipelines() -> void:
@@ -345,15 +340,15 @@ func location() -> String:
 	var scene := get_tree().current_scene
 	if scene == null:
 		return ""
-	for child in scene.get_children():
-		if child is Dungeon:
-			var camera := TopDownCamera.current(get_tree())
-			var room_name := camera.room.display_name if camera and camera.room else ""
-			return child.display_name + (" · " + room_name if not room_name.is_empty() else "")
+	var dungeon := Dungeon.current(get_tree())
+	if dungeon:
+		var camera := TopDownCamera.current(get_tree())
+		var room_name := camera.room.display_name if camera and camera.room else ""
+		return dungeon.display_name + (" · " + room_name if not room_name.is_empty() else "")
 	var player := Players.lead()
-	for child in scene.get_children():
-		if child is AreaZone and player and (child as AreaZone).contains(player.global_position):
-			return (child as AreaZone).region_name()
+	for zone: AreaZone in get_tree().get_nodes_in_group(AreaZone.GROUP):
+		if player and zone.contains(player.global_position):
+			return zone.region_name()
 	for child in scene.get_children():
 		if child is OverworldMap:
 			return child.display_name
