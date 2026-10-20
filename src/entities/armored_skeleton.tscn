@@ -3,9 +3,11 @@
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/armored_skeleton.tres" id="2_config"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/armadura.res" id="3_armor"]
+[ext_resource type="Script" path="res://src/entities/enemy_armor.gd" id="4_plate"]
 
-[node name="ArmoredSkeleton" instance=ExtResource("1_enemy")]
+[node name="ArmoredSkeleton" node_paths=PackedStringArray("armor") instance=ExtResource("1_enemy")]
 config = ExtResource("2_config")
+armor = NodePath("ArmorPlate")
 
 [node name="Chest" type="BoneAttachment3D" parent="ModelController/Skeleton3D" index="1"]
 bone_name = "chest"
@@ -14,3 +16,9 @@ bone_idx = 8
 [node name="Armor" type="MeshInstance3D" parent="ModelController/Skeleton3D/Chest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0.02)
 mesh = ExtResource("3_armor")
+
+[node name="ArmorPlate" type="Node" parent="." node_paths=PackedStringArray("body", "mesh")]
+script = ExtResource("4_plate")
+body = NodePath("..")
+mesh = NodePath("../ModelController/Skeleton3D/Chest/Armor")
+torn_by = &"hook"

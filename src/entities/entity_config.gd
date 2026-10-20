@@ -38,17 +38,6 @@ var features: int = 0
 ## Pausa entre paseos, en segundos (mínimo y máximo).
 @export var wander_pause := Vector2(1.5, 3.5)
 
-@export_group("Escudo")
-## Frena de frente golpes y proyectiles; las explosiones pasan.
-@export var guards_front := false
-@export_range(0.0, 180.0, 1.0) var guard_angle_deg := 70.0
-## Un golpe que aturde (el golpe de escudo) le baja la guardia este tiempo.
-@export_range(0.0, 10.0, 0.1, "or_greater") var guard_break_time := 1.5
-
-@export_group("Coraza")
-## Rebota todo menos las explosiones; la primera que lo alcanza le vuela la coraza (el nodo "Armor") y lo aturde.
-@export var armored := false
-
 
 func has(feature: Feature) -> bool:
 	return (features & feature) != 0

@@ -55,7 +55,7 @@ func test_shield_bash_lowers_the_guard_for_a_moment() -> void:
 	assert_eq(_hit(skeleton, attacker, Vector3(0, 0, 2), 1.2), 0, "el golpe de escudo no daña")
 	assert_eq(skeleton.is_guarding(), false, "pero le baja la guardia")
 	assert_eq(_hit(skeleton, attacker, Vector3(0, 0, 2)), 2, "y la espada entra de frente")
-	await tree.create_timer(skeleton.config.guard_break_time + 0.2).timeout
+	await tree.create_timer(skeleton.guard.break_time + 0.2).timeout
 	assert_eq(_hit(skeleton, attacker, Vector3(0, 0, 2)), 0, "después vuelve a cubrirse")
 	tree.root.get_node(^"GameState").reset()
 
@@ -69,7 +69,7 @@ func test_a_blocked_swing_stuns_it_and_lowers_its_shield() -> void:
 	assert_true(skeleton.is_recoiling(), "chocó contra el escudo del player y quedó aturdido")
 	assert_eq(skeleton.is_guarding(), false, "con el escudo bajo")
 	assert_eq(_hit(skeleton, attacker, Vector3(0, 0, 2)), 2, "y la espada entra de frente")
-	await tree.create_timer(skeleton.config.guard_break_time + 0.2).timeout
+	await tree.create_timer(skeleton.guard.break_time + 0.2).timeout
 	assert_eq(skeleton.is_guarding(), true, "después vuelve a cubrirse")
 	tree.root.get_node(^"GameState").reset()
 

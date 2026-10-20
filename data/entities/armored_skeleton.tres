@@ -15,4 +15,3 @@ attack = ExtResource("3_attack")
 attack_knockback = 8.0
 drops = ExtResource("2_drops")
 move_speed = 2.2
-armored = true

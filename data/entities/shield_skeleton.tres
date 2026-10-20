@@ -15,4 +15,3 @@ drops = ExtResource("2_drops")
 model = ExtResource("3_model")
 move_speed = 1.8
 turn_speed = 2.2
-guards_front = true

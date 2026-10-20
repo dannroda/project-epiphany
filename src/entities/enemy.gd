@@ -2,7 +2,6 @@ class_name Enemy
 extends CharacterBody3D
 
 const GROUP := &"enemies"
-const ARMOR_PIECE := preload("res://src/entities/armor_piece.tscn")
 const KNOCKBACK_FRICTION: float = 18.0
 const KNOCKBACK_LIFT: float = 4.0
 const DEAD_COLLISION_LAYER: int = 4
@@ -21,6 +20,9 @@ signal defeated(enemy: Enemy)
 @export var corpse_time := 4.0
 @export var sink_time := 1.0
 @export var sink_depth := 0.9
+## Escudo de frente (EnemyGuard) y coraza (EnemyArmor), en las escenas que los tienen.
+@export var guard: EnemyGuard
+@export var armor: EnemyArmor
 
 @onready var anim_player: AnimationPlayer = $ModelController/AnimationPlayer
 @onready var bt_player: BTPlayer = $BTPlayer
@@ -38,9 +40,6 @@ var desired_velocity := Vector3.ZERO
 var flash: HitFlash
 var _knockback := Vector3.ZERO
 var _facing_goal := Vector3.ZERO
-var _guard_down_left := 0.0
-var _guard_pose: PoseOverlay
-var _armor: Node3D
 var _recoil_left := 0.0
 var _airborne := false
 ## Donde deambula: donde empezó (o donde cayó), su sala y, en el overworld, las zonas de su región.
@@ -75,11 +74,10 @@ func _ready() -> void:
 	hurtbox.hit.connect(_on_hit)
 	flash = %HitFlash
 	flash.cover($ModelController/Visuals)
-	_guard_pose = model.find_child("GuardPose", true, false) as PoseOverlay
-	if config.armored:
-		_armor = model.find_child("Armor", true, false) as Node3D
-	if _guard_pose:
-		_guard_pose.influence = 1.0 if config.guards_front else 0.0
+	if guard:
+		guard.blocked.connect(func(push: Vector3) -> void: _knockback = push)
+	if armor:
+		armor.broken.connect(func() -> void: bt_player.blackboard.set_var(BB_STUNNED, true))
 	for held in model.find_children("*", "BoneAttachment3D", true, false):
 		flash.cover(held)
 	health.damaged.connect(_on_damaged)
@@ -105,7 +103,6 @@ func _swap_model(scene: PackedScene) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	_guard_down_left = maxf(_guard_down_left - delta, 0.0)
 	if _recoil_left > 0.0:
 		_recoil_left -= delta
 		if _recoil_left <= 0.0 and not is_dead:
@@ -126,9 +123,8 @@ func _physics_process(delta: float) -> void:
 		if _home != Vector3.INF and absf(global_position.y - _home.y) > 1.0:
 			_home = Vector3.INF
 	_turn(delta)
-	if _guard_pose:
-		var goal := 1.0 if is_guarding() and not _is_attacking() else 0.0
-		_guard_pose.influence = move_toward(_guard_pose.influence, goal, delta / 0.15)
+	if guard:
+		guard.update(delta, not is_dead and not _is_attacking())
 
 
 ## Si cayó por un hueco pasa al piso de abajo: los pisos de arriba del player se ocultan y lo dejarían invisible.
@@ -229,43 +225,23 @@ func _turn(delta: float) -> void:
 
 
 func is_guarding() -> bool:
-	return config.guards_front and not is_dead and _guard_down_left <= 0.0
+	return guard != null and not is_dead and guard.is_up()
 
 
-## El escudo frena solo cuando se ve levantado (mientras ataca lo baja).
 func shield_up() -> bool:
-	return is_guarding() and (_guard_pose == null or _guard_pose.influence > 0.5)
+	return is_guarding() and guard.shield_up()
 
 
 func _is_attacking() -> bool:
 	return String(anim_player.current_animation).contains("Attack")
 
 
-## Escudo de frente: frena todo salvo explosiones y martillazos; un golpe que aturde le baja la guardia.
-func _guard_stops(info: DamageInfo) -> bool:
-	if not shield_up() or info.source == null or info.element == DamageInfo.EXPLOSIVE or info.strong:
-		return false
-	var to_source := info.source.global_position - global_position
-	to_source.y = 0.0
-	if to_source.is_zero_approx() or rad_to_deg(facing().angle_to(to_source)) > config.guard_angle_deg:
-		return false
-	if info.stun_time > 0.0:
-		_guard_down_left = config.guard_break_time
-		Log.debug(&"combat", name, "bajó la guardia")
-		Feel.sfx(&"deny", global_position)
-	else:
-		Feel.sfx(&"block", global_position)
-		_knockback = -to_source.normalized() * info.knockback * 0.3
-	Feel.burst(&"sparks", global_position + Vector3.UP * 1.1 + to_source.normalized() * 0.5, to_source.normalized())
-	return true
-
-
 ## Su golpe chocó contra un escudo: corta el ataque, retrocede y queda aturdido un instante, con el escudo bajo.
 func recoil(seconds: float, from: Vector3) -> void:
 	if is_dead:
 		return
-	if config.guards_front:
-		_guard_down_left = maxf(_guard_down_left, maxf(seconds, config.guard_break_time))
+	if guard:
+		guard.lower(seconds)
 	attack_runner.stop()
 	stop_moving()
 	bt_player.active = false
@@ -281,50 +257,17 @@ func is_recoiling() -> bool:
 
 
 func is_armored() -> bool:
-	return config.armored and _armor != null and not is_dead
+	return armor != null and armor.is_on() and not is_dead
 
 
-## La coraza frena todo salvo explosiones y martillazos; una explosión o un martillazo la vuela y lo deja aturdido. El gancho se la arranca sin dañarlo.
-func _armor_stops(info: DamageInfo) -> bool:
-	if not is_armored():
+func _shielded_from(info: DamageInfo) -> bool:
+	if is_dead:
 		return false
-	if info.element == DamageInfo.EXPLOSIVE or info.element == Hook.ELEMENT or info.strong:
-		_break_armor()
-		return info.element == Hook.ELEMENT
-	Feel.sfx(&"block", global_position)
-	var from := info.source.global_position if info.source else global_position + facing()
-	var toward := (from - global_position) * Vector3(1, 0, 1)
-	Feel.burst(&"sparks", global_position + Vector3.UP * 1.3 + toward.normalized() * 0.4, toward.normalized() + Vector3.UP * 0.3)
-	return true
-
-
-func _break_armor() -> void:
-	var at := _armor.global_transform
-	_armor.get_parent().remove_child(_armor)
-	_fling_armor.call_deferred(_armor, at)
-	_armor = null
-	Feel.burst(&"shards", global_position + Vector3.UP * 1.3, Vector3.UP)
-	Feel.sfx(&"boom", global_position)
-	bt_player.blackboard.set_var(BB_STUNNED, true)
-	Log.debug(&"combat", name, "perdió la coraza")
-
-
-## Diferido: el golpe llega en un callback de física y acá se agrega un cuerpo nuevo.
-func _fling_armor(armor: Node3D, at: Transform3D) -> void:
-	var piece := ARMOR_PIECE.instantiate() as RigidBody3D
-	get_parent().add_child(piece)
-	piece.global_transform = at
-	piece.add_child(armor)
-	armor.transform = Transform3D.IDENTITY
-	piece.linear_velocity = Vector3.UP * 5.0 - facing() * 2.0
-	piece.angular_velocity = Vector3(randf_range(-6, 6), randf_range(-6, 6), randf_range(-6, 6))
-	var fade := piece.create_tween()
-	fade.tween_interval(2.5)
-	fade.tween_callback(piece.queue_free)
+	return (armor != null and armor.stops(info)) or (guard != null and guard.stops(info))
 
 
 func _on_hit(info: DamageInfo) -> void:
-	var stopped := _armor_stops(info) or _guard_stops(info)
+	var stopped := _shielded_from(info)
 	hurtbox.surface = "metal" if stopped else "flesh"
 	if stopped:
 		return
