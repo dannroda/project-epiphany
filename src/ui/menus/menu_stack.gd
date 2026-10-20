@@ -79,6 +79,15 @@ func pop() -> void:
 	changed.emit()
 
 
+## Cierra `screen` y lo que tenga encima; si ya no está, nada.
+func close(screen: UiScreen) -> void:
+	if not _stack.has(screen):
+		return
+	while top() != screen:
+		pop()
+	pop()
+
+
 ## Abre el menú de pausa en la pestaña Mapa (la acción `map`, un portal de viaje).
 func open_map() -> void:
 	var menu := PAUSE_MENU.instantiate()

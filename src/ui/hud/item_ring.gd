@@ -94,8 +94,8 @@ func _open() -> void:
 	_was_captured = player.controls.captured
 	player.controls.captured = true
 	visible = true
-	if Players.all.size() == 1 and Engine.time_scale >= 1.0:
-		Engine.time_scale = solo_time_scale
+	if Players.all.size() == 1:
+		TimeScale.hold(&"item_ring", solo_time_scale)
 		_slowed = true
 	_refresh()
 	opened.emit()
@@ -106,7 +106,7 @@ func _close() -> void:
 	if is_instance_valid(player):
 		player.controls.captured = _was_captured
 	if _slowed:
-		Engine.time_scale = 1.0
+		TimeScale.release(&"item_ring")
 		_slowed = false
 	closed.emit()
 

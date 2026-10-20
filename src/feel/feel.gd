@@ -162,11 +162,11 @@ func hit_stop(nodes: Array, duration: float) -> void:
 ## Frena todo el juego un rato (golpes grandes, cámara lenta del final). A diferencia de `hit_stop`, la física sigue:
 ## los golpes conectan. Vive en el autoload para volver a velocidad normal aunque se libere quien lo pidió.
 func freeze(duration: float, scale := 0.05) -> void:
-	if duration <= 0.0 or Engine.time_scale < 1.0:
+	if duration <= 0.0 or TimeScale.is_held(&"freeze"):
 		return
-	Engine.time_scale = scale
+	TimeScale.hold(&"freeze", scale)
 	await get_tree().create_timer(duration, true, false, true).timeout
-	Engine.time_scale = 1.0
+	TimeScale.release(&"freeze")
 
 
 ## La opción de accesibilidad (Opciones › temblor de cámara): la decide el jugador, no feel.tres.

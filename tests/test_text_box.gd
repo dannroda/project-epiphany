@@ -88,3 +88,15 @@ func test_responses_show_inside_the_box_and_follow_the_choice() -> void:
 	assert_eq(box.body.text, "Sentate.", "y sigue por la respuesta elegida")
 	MenuStack.clear()
 	tree.paused = false
+
+
+## 11.217: un globo que termina después de que lo sacaron no cierra la pantalla de abajo.
+func test_a_finished_box_only_closes_itself() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var below := TextBox.open(DialogueManager.create_resource_from_text(TEXT), "start")
+	var box := TextBox.open(DialogueManager.create_resource_from_text(TEXT), "start")
+	MenuStack.pop()
+	box.finished.emit()
+	assert_eq(MenuStack.top(), below, "la de abajo sigue abierta")
+	MenuStack.clear()
+	await tree.process_frame

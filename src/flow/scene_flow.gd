@@ -247,6 +247,7 @@ func _go_to_title() -> void:
 	while MenuStack.is_open():
 		MenuStack.pop()
 	Pause.clear()
+	TimeScale.clear()
 	get_tree().change_scene_to_file(TITLE)
 	await get_tree().scene_changed
 	_sync_dungeon()

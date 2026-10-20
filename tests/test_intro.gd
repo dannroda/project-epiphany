@@ -106,3 +106,20 @@ func test_loading_or_continuing_never_replays_it() -> void:
 	await tree.process_frame
 	assert_eq(tree.current_scene.find_children("*", "Cutscene", true, false).size(), 0, "sin with_intro no hay intro (tests y escenarios)")
 	_cleanup(tree)
+
+
+## 11.217: el P2 que entra a mitad de la intro queda quieto con los demás y se suelta al terminar.
+func test_a_player_joining_mid_cutscene_waits_with_the_others() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var players: Node = tree.root.get_node(^"Players")
+	var intro := await _start(tree)
+	players.lead_pad = 0
+	var second: PlayerCharacter = players.join(1)
+	assert_true(second.controls.captured, "entra con los controles tomados")
+	intro.player.seek(intro.player.current_animation_length - 0.05, true)
+	await intro.finished
+	assert_true(not second.controls.captured, "y se mueve cuando termina")
+	for slot in players.guests.keys():
+		players.leave(slot)
+	players.lead_pad = -1
+	_cleanup(tree)

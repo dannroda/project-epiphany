@@ -94,3 +94,21 @@ func test_sword_hits_sound_by_surface() -> void:
 	for hand in [^"HandLeft/Hurtbox", ^"HandRight/Hurtbox"]:
 		assert_eq((boss.get_node(hand) as Hurtbox).surface, "metal", "las manos del jefe son de hierro")
 	boss.free()
+
+
+## 11.217: dos que frenan el tiempo a la vez: manda el más lento y soltar uno no pisa al otro.
+func test_overlapping_slowdowns_keep_the_slowest() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	TimeScale.hold(&"item_ring", 0.05)
+	Feel.freeze(0.1, 0.3)
+	assert_eq(Engine.time_scale, 0.05, "manda el anillo, más lento")
+	await tree.create_timer(0.2, true, false, true).timeout
+	assert_eq(Engine.time_scale, 0.05, "termina el congelado y el anillo sigue frenando")
+	TimeScale.release(&"item_ring")
+	assert_eq(Engine.time_scale, 1.0)
+	Feel.freeze(0.1, 0.3)
+	TimeScale.hold(&"item_ring", 0.05)
+	TimeScale.release(&"item_ring")
+	assert_eq(Engine.time_scale, 0.3, "cerrar el anillo deja el congelado")
+	await tree.create_timer(0.2, true, false, true).timeout
+	assert_eq(Engine.time_scale, 1.0)

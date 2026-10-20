@@ -28,12 +28,14 @@ var playing := false
 var _held := 0.0
 var _trauma := 0.0
 var _shake_time := 0.0
+var _has_controls := false
 
 
 func _ready() -> void:
 	caption.text = ""
 	skip_hint.visible = false
 	(%SkipHints as HintBar).hints = [[&"ui_accept", "CUTSCENE_HOLD_SKIP"]]
+	Players.joined.connect(_on_player_joined)
 	if autoplay:
 		play.call_deferred()
 
@@ -100,7 +102,7 @@ func _finish() -> void:
 	skip_hint.visible = false
 	var game_camera := _game_camera()
 	if game_camera:
-		game_camera.call(&"snap_to_target")
+		game_camera.snap_to_target()
 		var tween := create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		tween.tween_property(camera, ^"global_transform", game_camera.global_transform, settle_time)
 		tween.tween_property(camera, ^"fov", game_camera.fov, settle_time)
@@ -119,15 +121,22 @@ func _restore() -> void:
 	_set_gameplay(true)
 
 
-func _game_camera() -> Camera3D:
+func _game_camera() -> TopDownCamera:
 	return TopDownCamera.current(get_tree())
 
 
+## El que entra en co-op a mitad de la cinemática queda quieto como los demás.
+func _on_player_joined(joined: PlayerCharacter) -> void:
+	if _has_controls:
+		joined.controls.captured = true
+
+
 func _set_gameplay(on: bool) -> void:
+	_has_controls = not on
 	for each in Players.all:
 		each.controls.captured = not on
 	for hud in get_tree().get_nodes_in_group(Hud.GROUP):
 		hud.visible = on
-	var game_camera := _game_camera() as TopDownCamera
+	var game_camera := _game_camera()
 	if game_camera:
 		game_camera.set_cinematic(not on)

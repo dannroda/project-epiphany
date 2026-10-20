@@ -63,7 +63,7 @@ static func open(dialogue: DialogueResource, start_cue := "", box_style := Style
 	box.cue = start_cue
 	box.style = box_style
 	box.extra_states = states
-	box.finished.connect(MenuStack.pop)
+	box.finished.connect(MenuStack.close.bind(box))
 	MenuStack.push(box)
 	return box
 
