@@ -49,7 +49,7 @@ func _enter_example() -> Array:
 	await tree.scene_changed
 	await tree.create_timer(0.3).timeout
 	var level := tree.current_scene
-	var camera := tree.get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+	var camera := TopDownCamera.current(tree)
 	return [tree, level, level.get_node("WorldEnvironment"), camera, tree.get_first_node_in_group(&"player")]
 
 

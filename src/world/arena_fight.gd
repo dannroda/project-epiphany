@@ -102,7 +102,7 @@ func _begin() -> void:
 	in_intro = false
 	if not started or not is_inside_tree():
 		return
-	get_tree().call_group(Hud.GROUP, &"show_boss", BossBar.new(display_name, bar_changed, bar_fraction))
+	Hud.events.boss_shown.emit(BossBar.new(display_name, bar_changed, bar_fraction))
 	_spawn_escorts()
 	for fighter in _fighters:
 		fighter.start()
@@ -114,7 +114,7 @@ func _begin() -> void:
 
 
 func _awaken() -> void:
-	get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
+	Hud.events.area_announced.emit(tr(display_name))
 	Feel.sfx(&"rumble", _fighters[0].body.global_position, true)
 	Feel.shake(0.35)
 	for fighter in _fighters:
@@ -141,7 +141,7 @@ func _reset() -> void:
 	started = false
 	_attacker = null
 	Music.release_boss(self)
-	get_tree().call_group(Hud.GROUP, &"hide_boss")
+	Hud.events.boss_hidden.emit()
 	for fighter in _fighters:
 		fighter.reset()
 	_clear_escorts()
@@ -197,7 +197,7 @@ func _win(announce: bool) -> void:
 	started = false
 	_persistent.value = true
 	Music.release_boss(self)
-	get_tree().call_group(Hud.GROUP, &"hide_boss")
+	Hud.events.boss_hidden.emit()
 	for door in doors:
 		door.open()
 	if barrier:

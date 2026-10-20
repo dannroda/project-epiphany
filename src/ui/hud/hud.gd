@@ -6,6 +6,14 @@ extends CanvasLayer
 
 const GROUP := &"hud"
 
+## Lo que el mundo le avisa al HUD sin buscarlo: `Hud.events.area_announced.emit(...)`.
+class Events:
+	signal area_announced(text: String)
+	signal boss_shown(bar: BossBar)
+	signal boss_hidden
+
+static var events := Events.new()
+
 @export var solo_panel: PackedScene
 @export var coop_panel: PackedScene
 @export var item_ring: PackedScene
@@ -48,6 +56,9 @@ var _boss_tween: Tween
 
 func _ready() -> void:
 	add_to_group(GROUP)
+	events.area_announced.connect(show_area_name)
+	events.boss_shown.connect(show_boss)
+	events.boss_hidden.connect(hide_boss)
 	SaveManager.saved.connect(func(_slot: int) -> void: _flash_saved())
 	GameState.dungeon_changed.connect(_bind_dungeon)
 	GameState.loaded.connect(_bind_dungeon)

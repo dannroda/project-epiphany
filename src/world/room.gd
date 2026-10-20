@@ -114,7 +114,7 @@ func mark_entered() -> void:
 		dungeon.visit(room_index)
 	_announced = true
 	if first and not display_name.is_empty():
-		get_tree().call_group(Hud.GROUP, &"show_area_name", tr(display_name))
+		Hud.events.area_announced.emit(tr(display_name))
 	if debug_disble: return
 	player_entered.emit(self)
 	if autosave_on_enter:
@@ -150,7 +150,7 @@ func waves_running() -> bool:
 
 ## También la sala de la cámara: en una puerta el player no está en ninguna, y sigue siendo la sala de la que viene.
 func has_player() -> bool:
-	var camera := get_tree().get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+	var camera := TopDownCamera.current(get_tree())
 	if camera and camera.room == self:
 		return true
 	return Players.all.any(func(player: PlayerCharacter) -> bool: return contains(player.global_position))

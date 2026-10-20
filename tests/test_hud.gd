@@ -101,3 +101,21 @@ func test_fades_restart_from_the_current_alpha() -> void:
 	assert_true(half < 0.9 and hud.boss_bar.modulate.a <= half + 0.05, "esconder en la entrada no salta a 1 (%.2f → %.2f)" % [half, hud.boss_bar.modulate.a])
 	hud.free()
 	fight.free()
+
+
+## 16.34: el mundo le avisa al HUD por las señales de Hud.events, y uno liberado deja de escuchar.
+func test_events_reach_the_hud() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var before := Hud.events.area_announced.get_connections().size()
+	var hud := (load("res://src/ui/hud/hud.tscn") as PackedScene).instantiate() as Hud
+	tree.root.add_child(hud)
+	Hud.events.area_announced.emit("Chullpa")
+	assert_eq(hud.area_label.text, "Chullpa")
+	var fight := ArenaFight.new()
+	Hud.events.boss_shown.emit(BossBar.new("X", fight.bar_changed, func() -> float: return 0.5))
+	assert_true(is_equal_approx(hud.boss_health.value, 0.5), "la barra toma la fracción (%.2f)" % hud.boss_health.value)
+	Hud.events.boss_hidden.emit()
+	assert_true(hud._boss == null, "suelta la barra")
+	hud.free()
+	fight.free()
+	assert_eq(Hud.events.area_announced.get_connections().size(), before, "el HUD liberado se desconecta")

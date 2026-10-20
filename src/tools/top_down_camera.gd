@@ -157,6 +157,10 @@ func _forget_player_rids(_player: PlayerCharacter) -> void:
 	_player_rids.clear()
 
 
+static func current(tree: SceneTree) -> TopDownCamera:
+	return tree.get_first_node_in_group(GROUP) as TopDownCamera
+
+
 ## Por la escalera: la sala que queda atrás se entera, como al cruzar una puerta (bloques, torretas, peleas).
 func leave_room() -> void:
 	var left := room

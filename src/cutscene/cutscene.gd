@@ -120,7 +120,7 @@ func _restore() -> void:
 
 
 func _game_camera() -> Camera3D:
-	return get_tree().get_first_node_in_group(TopDownCamera.GROUP) as Camera3D
+	return TopDownCamera.current(get_tree())
 
 
 func _set_gameplay(on: bool) -> void:

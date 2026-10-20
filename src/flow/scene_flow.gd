@@ -318,15 +318,17 @@ func _spawn_at_start() -> void:
 func _place_at_spawn() -> void:
 	if Players.all.is_empty():
 		return
-	get_tree().call_group(TopDownCamera.GROUP, &"reset_room")
+	var camera := TopDownCamera.current(get_tree())
+	if camera:
+		camera.reset_room()
 	if GameState.current_dungeon != &"" and session.room_entry != null:
 		place_players(session.room_entry)
-		get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
-		return
-	var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
-	if point:
-		place_players(point.global_position)
-	get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
+	else:
+		var point := SpawnPoint.find(get_tree(), GameState.spawn_point)
+		if point:
+			place_players(point.global_position)
+	if camera:
+		camera.snap_to_target()
 
 
 ## El primero en `at` y los demás en fila al costado.
@@ -345,7 +347,7 @@ func location() -> String:
 		return ""
 	for child in scene.get_children():
 		if child is Dungeon:
-			var camera := get_tree().get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+			var camera := TopDownCamera.current(get_tree())
 			var room_name := camera.room.display_name if camera and camera.room else ""
 			return child.display_name + (" · " + room_name if not room_name.is_empty() else "")
 	var player := Players.lead()

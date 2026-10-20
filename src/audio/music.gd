@@ -77,7 +77,7 @@ func release_boss(owner: Node) -> void:
 
 
 func current_doom() -> float:
-	var camera := get_tree().get_first_node_in_group(TopDownCamera.GROUP) as TopDownCamera
+	var camera := TopDownCamera.current(get_tree())
 	return camera.room.doom if camera and camera.room else 0.0
 
 

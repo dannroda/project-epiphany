@@ -33,9 +33,12 @@ func _climb(crosser: PlayerCharacter) -> void:
 			i += 1
 		player.global_position = to.global_position + spot
 		player.velocity = Vector3.ZERO
-	get_tree().call_group(TopDownCamera.GROUP, &"leave_room")
+	var camera := TopDownCamera.current(get_tree())
+	if camera:
+		camera.leave_room()
 	await get_tree().physics_frame
-	get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
+	if is_instance_valid(camera):
+		camera.snap_to_target()
 	await SceneFlow.fade_in(fade_time)
 	SceneFlow.end_transition()
 	_busy = false

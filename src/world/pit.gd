@@ -36,7 +36,9 @@ func _fall(player: PlayerCharacter) -> void:
 	player.global_position = back
 	player.velocity = Vector3.ZERO
 	player.controls.hold_still(still_time)
-	get_tree().call_group(TopDownCamera.GROUP, &"snap_to_target")
+	var camera := TopDownCamera.current(get_tree())
+	if camera:
+		camera.snap_to_target()
 
 
 func _nearest_respawn(from: Vector3) -> Vector3:

@@ -28,7 +28,7 @@ func _ready() -> void:
 			var same_region := is_instance_valid(_current) and _current.region == region
 			_current = self
 			if region and not same_region:
-				get_tree().call_group(Hud.GROUP, &"show_area_name", tr(region.display_name)))
+				Hud.events.area_announced.emit(tr(region.display_name)))
 
 
 ## Si el punto (en XZ) cae dentro de la zona.

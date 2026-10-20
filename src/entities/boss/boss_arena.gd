@@ -80,7 +80,7 @@ func _begin() -> void:
 	_sharpen()
 	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
 	in_intro = false
-	get_tree().call_group(Hud.GROUP, &"show_boss", BossBar.new(boss.display_name, boss.bar_changed, boss.bar_fraction, boss.phase))
+	Hud.events.boss_shown.emit(BossBar.new(boss.display_name, boss.bar_changed, boss.bar_fraction, boss.phase))
 	boss.start_fight()
 	fight_started.emit()
 
@@ -95,7 +95,7 @@ func _sharpen() -> void:
 
 
 func _awaken() -> void:
-	get_tree().call_group(Hud.GROUP, &"show_area_name", tr(boss.display_name))
+	Hud.events.area_announced.emit(tr(boss.display_name))
 	Feel.sfx(&"rumble", boss.eye.global_position, true)
 	Feel.shake(0.35)
 	var player := Players.nearest(boss.eye.global_position)
@@ -116,7 +116,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func _on_defeated() -> void:
 	Music.release_boss(self)
-	get_tree().call_group(Hud.GROUP, &"hide_boss")
+	Hud.events.boss_hidden.emit()
 
 
 func _on_death_finished() -> void:
