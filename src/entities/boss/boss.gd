@@ -24,6 +24,8 @@ const BODY_HEIGHT_OPEN := 2.6
 const BODY_HEIGHT_STUNNED := 2.4
 const BOB_HEIGHT := 0.12
 const BOB_SPEED := 1.3
+## En co-op cambia de objetivo solo si otro player está esta distancia (m) más cerca del ojo: no alterna entre dos pegados.
+const RETARGET_MARGIN := 3.0
 const LEAN_ANGLE := 9.0
 const BLINK_EVERY := Vector2(2.5, 6.0)
 ## Cuánto cierra los párpados mientras apunta el orbe.
@@ -98,6 +100,8 @@ var _eye_stun_left := 0.0
 var _eye_attacking := false
 ## El último ataque del ojo: con las manos fuera de juego alterna orbe y rayo.
 var _last_eye_attack: StringName
+## Quien le pegó al ojo aturdido: es el objetivo de la próxima decisión aunque esté más lejos.
+var _aggro: PlayerCharacter
 var _laser_tween: Tween
 var _laser_from := Vector3.ZERO
 var _laser_to := Vector3.ZERO
@@ -184,7 +188,9 @@ func _ready() -> void:
 
 
 func start_fight() -> void:
-	target = Players.nearest(eye.global_position)
+	_aggro = null
+	target = null
+	pick_target()
 	phases.initialize(self)
 	phases.set_active(true)
 
@@ -268,6 +274,8 @@ func _physics_process(delta: float) -> void:
 ## cerca del mejor: así no se vuelve un patrón fijo pero tampoco elige algo que no conviene.
 func choose_attack(for_phase: int) -> bool:
 	if is_eye_stunned() or _transforming:
+		return false
+	if not Players.all.is_empty() and pick_target() == null:
 		return false
 	var options: Array[Array] = []
 	var best_score := 0.0
@@ -393,13 +401,61 @@ func _clamp_to_arena(point: Vector3) -> Vector3:
 	return Vector3(clampf(point.x, arena.position.x, arena.end.x), 0.0, clampf(point.z, arena.position.y, arena.end.y))
 
 
+## La segunda mano va al otro player vivo, si hay: así nadie queda a salvo mientras la primera ataca.
 func _combo_hand() -> void:
+	var other := _other_target()
 	for hand in [hand_left, hand_right]:
-		if hand.is_available() and is_instance_valid(target):
+		if hand.is_available() and is_instance_valid(other):
 			for attack in attacks:
 				if attack.id == BossAttack.SLAM:
-					hand.perform(attack, target, arena)
+					hand.perform(attack, other, arena)
 					return
+
+
+## Se elige en cada decisión de ataque (11.214): sigue con el de antes salvo que muera, se vaya o salga de la arena, u
+## otro esté RETARGET_MARGIN más cerca del ojo; quien pegó al ojo aturdido gana la próxima. Sin nadie en la arena, null.
+func pick_target() -> PlayerCharacter:
+	var candidates := _targets_in_arena()
+	if candidates.is_empty():
+		target = null
+		return null
+	if _aggro in candidates:
+		target = _aggro
+		_aggro = null
+		return target
+	_aggro = null
+	var nearest: PlayerCharacter = candidates[0]
+	for player in candidates:
+		if _eye_distance(player) < _eye_distance(nearest):
+			nearest = player
+	if not target in candidates or _eye_distance(nearest) + RETARGET_MARGIN < _eye_distance(target):
+		target = nearest
+	return target
+
+
+func _other_target() -> Node3D:
+	for player in _targets_in_arena():
+		if player != target:
+			return player
+	return target
+
+
+func _targets_in_arena() -> Array[PlayerCharacter]:
+	var area := arena.grow(1.0)
+	return Players.alive().filter(func(player: PlayerCharacter) -> bool:
+		return arena.size == Vector2.ZERO or area.has_point(Vector2(player.global_position.x, player.global_position.z)))
+
+
+func _eye_distance(player: Node3D) -> float:
+	return Vector2(player.global_position.x - eye.global_position.x, player.global_position.z - eye.global_position.z).length()
+
+
+static func _player_from(source: Node) -> PlayerCharacter:
+	if source is Projectile:
+		source = (source as Projectile).shooter
+	while source and not source is PlayerCharacter:
+		source = source.get_parent()
+	return source as PlayerCharacter
 
 
 func _blast(point: Vector3) -> void:
@@ -593,6 +649,9 @@ func _on_eye_hit(info: DamageInfo) -> void:
 		Feel.sfx(&"block", eye.global_position)
 		return
 	if is_eye_stunned():
+		var hitter := _player_from(info.source)
+		if hitter:
+			_aggro = hitter
 		if health.damage(info.amount):
 			Feel.sfx(&"hit", eye.global_position)
 			_jolt_eye()

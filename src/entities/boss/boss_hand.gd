@@ -321,7 +321,7 @@ func _slam_once(attack: BossAttack, target: Node3D, area: Rect2) -> bool:
 	var left := slam_track_time
 	while left > 0.0:
 		await get_tree().physics_frame
-		if state != State.BUSY:
+		if state != State.BUSY or not is_instance_valid(target):
 			return false
 		var delta := get_physics_process_delta_time()
 		left -= delta
@@ -405,7 +405,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	_tilt_goal = Vector3(0.15, 0.0, 0.0)
 	while elapsed < grab_lunge_time:
 		await get_tree().physics_frame
-		if state != State.BUSY:
+		if state != State.BUSY or not is_instance_valid(target):
 			return
 		elapsed += get_physics_process_delta_time()
 		global_position = from.lerp(to, ease(elapsed / grab_lunge_time, 0.5))
