@@ -1,0 +1,15 @@
+{
+  "assignee": "project-epiphany-e0",
+  "checklist": [],
+  "code": "11.220",
+  "created_at": "2026-10-20T00:34:34.348Z",
+  "description": "Visto 2026-10-19 (-e0): en main, --jobs=1 --only=test_arena_fighter.gd,test_centinela.gd,test_audio.gd falla 1 de 3 corridas: test_tweens_wait_stops_with_the_pause_not_with_the_node (no termina sin pausa), test_starting_mid_roar_leaves_the_rest_pose y test_an_interrupt_drops_the_pending_waits (las esperas no avanzan). Solo, test_arena_fighter pasa siempre. Sospecha: algo de la corrida anterior deja el árbol en pausa o time_scale en 0 (Pause.hold / hit-stop sin liberar).",
+  "milestone": "m11",
+  "notes": "",
+  "order": 216,
+  "refs": [],
+  "status": "todo",
+  "test": "",
+  "title": "Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio",
+  "updated_at": "2026-10-20T00:34:42.886Z"
+}

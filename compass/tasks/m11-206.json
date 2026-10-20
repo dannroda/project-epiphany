@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:06.212Z",
   "description": "Revisión con patrones (2026-10-19): HandGuard.reset llama hand.regenerate, que no saca a la mano de BUSY: si caés por un pozo a mitad del golpe termina el combo. Sin verificar.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (-e0): HandGuard.reset ahora llama _interrupt() y hand.reset() (antes hand.regenerate()): _drop_everything sube _run, mata los tweens del golpe y suelta al player, y recién después regenera. Con regenerate sola la mano seguía BUSY y el combo caía aunque el player hubiera caído por un pozo. test_arena_fighter › test_resetting_the_hand_guard_cuts_its_attack: reset a mitad del golpe → striking false, no queda aturdida, vuelve a READY (falla sin el arreglo).",
   "order": 203,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "bug"
   ],
   "test": "",
   "title": "Guardián mano: reiniciar la pelea no corta el ataque",
-  "updated_at": "2026-10-19T22:56:35.298Z"
+  "updated_at": "2026-10-20T00:34:43.513Z"
 }

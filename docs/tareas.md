@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (159/213)
+## M11 — Pulido: contenido y feel  (159/214)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5553,11 +5553,13 @@ Pedido de Daniel (2026-10-16): el escudo va siempre en la mano y solo bloquea mi
 
 **Notas:** Hecho (cb, 2026-10-16, d6417d81): Z (z-lock) levanta la guardia; en modo alternar, mientras hay un blanco fijado. Sin acción block ni escudo en la espalda: lo de atrás pega siempre. Estocada: sword_stab.tres (Melee_1H_Attack_Stab, hitbox 0,22–0,42, cancel 0,5, lunge 3, aturde 1,2 s y baja guardias). El escudo solo sale de la mano mientras sostiene el arco. Diagramas de controles sin la fila de bloquear; textos de escudos y CONTROLS_LOCK actualizados. Para revisar jugando: velocidad con Z, ritmo de la estocada (la animación dura 1,6 s), RT libre.
 
-### 11.213 Guardián mano: reiniciar la pelea no corta el ataque · Pendiente
+### 11.213 Guardián mano: reiniciar la pelea no corta el ataque · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): HandGuard.reset llama hand.regenerate, que no saca a la mano de BUSY: si caés por un pozo a mitad del golpe termina el combo. Sin verificar.
+
+**Notas:** Hecho (-e0): HandGuard.reset ahora llama _interrupt() y hand.reset() (antes hand.regenerate()): _drop_everything sube _run, mata los tweens del golpe y suelta al player, y recién después regenera. Con regenerate sola la mano seguía BUSY y el combo caía aunque el player hubiera caído por un pozo. test_arena_fighter › test_resetting_the_hand_guard_cuts_its_attack: reset a mitad del golpe → striking false, no queda aturdida, vuelve a READY (falla sin el arreglo).
 
 ### 11.214 Jefe final: elige a un player al empezar y no cambia · Revisión
 
@@ -5672,6 +5674,12 @@ Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_s
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `camara`
 
 Revisión de Totora con paredes dobles (12.41, 2026-10-19). Desde Gancho, el canal de agua del cruce del gancho hacia Balsas, que atraviesa la pared doble sur, se ve como un hueco negro. Desde Balsas se ve bien. No es el nivel: en top_down_camera._mask_around, detrás del labio sur de la sala, la tira 5 tapa hasta piso − 0.3 (cc571214, 11.151 d5e0d9a5, para que no asome el piso de abajo) y el agua está a −0.35, así que queda bajo la máscara. Pasa en toda puerta sur de toda mazmorra; con agua se lee como agujero. Arreglo posible: excepción de cámara (no bajar la tira 5 en celdas con agua, o que la sala vea su canal). Toca la cámara de todos los niveles: coordinar con 16.54. Capturas: debug/tmp/design/tot_Gancho.png y tot_Balsas.png en wt/design.
+
+### 11.220 Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio · Pendiente
+
+**Responsable:** project-epiphany-e0
+
+Visto 2026-10-19 (-e0): en main, --jobs=1 --only=test_arena_fighter.gd,test_centinela.gd,test_audio.gd falla 1 de 3 corridas: test_tweens_wait_stops_with_the_pause_not_with_the_node (no termina sin pausa), test_starting_mid_roar_leaves_the_rest_pose y test_an_interrupt_drops_the_pending_waits (las esperas no avanzan). Solo, test_arena_fighter pasa siempre. Sospecha: algo de la corrida anterior deja el árbol en pausa o time_scale en 0 (Pause.hold / hit-stop sin liberar).
 
 ## M12 — Assets propios (Blender)  (27/39)
 
