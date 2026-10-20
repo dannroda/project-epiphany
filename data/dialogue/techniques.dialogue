@@ -1,10 +1,10 @@
 ~ counter
-Fijá un enemigo con {btn:z-lock}. Cuando prepare el golpe y tu espada destelle, atacá con {btn:attack}: lo esquivás y le pegás por la espalda. [ID:tech_counter_1]
-Probalo con el muñeco: avisa sus golpes como un esqueleto. [ID:tech_counter_2]
+Fijá un enemigo con {btn:z-lock}. Cuando prepare el golpe y tu espada destelle, atacá con {btn:attack}\: lo esquivás y le pegás por la espalda. [ID:tech_counter_1]
+Probalo con el muñeco\: avisa sus golpes como un esqueleto. [ID:tech_counter_2]
 => END
 
 ~ plunge
-Saltá con {item:feather} y atacá con {btn:attack} en el aire: caés clavando la espada y la onda golpea alrededor. [ID:tech_plunge_1]
+Saltá con {item:feather} y atacá con {btn:attack} en el aire\: caés clavando la espada y la onda golpea alrededor. [ID:tech_plunge_1]
 Probalo con el muñeco. [ID:tech_plunge_2]
 => END
 
