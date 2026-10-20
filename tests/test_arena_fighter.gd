@@ -119,3 +119,26 @@ func test_a_nested_hurtbox_belongs_to_its_fighter() -> void:
 		if fighter.hurtbox:
 			assert_eq(fighter.hurtbox.entity(), fighter, path + ": el hurtbox es del peleador")
 		fighter.free()
+
+
+## Reiniciar la pelea (el player cayó por un hueco) corta el golpe de la Mano a mitad: no termina el combo.
+func test_resetting_the_hand_guard_cuts_its_attack() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var guard := (load(FIGHTERS[5]) as PackedScene).instantiate() as HandGuard
+	tree.root.add_child(guard)
+	var target := Node3D.new()
+	tree.root.add_child(target)
+	target.global_position = guard.hand.global_position + Vector3(0, -guard.hand.global_position.y, 2)
+	guard.hand.perform(guard.attacks[0], target, Rect2())
+	await tree.create_timer(0.2).timeout
+	assert_eq(guard.hand.state, BossHand.State.BUSY, "está atacando")
+	guard.reset()
+	assert_true(not guard.hand.striking, "el golpe se corta al reiniciar")
+	var landed := false
+	for i in 180:
+		await tree.physics_frame
+		landed = landed or guard.hand.state == BossHand.State.STUNNED
+	assert_true(not landed, "el golpe cortado no cae ni la deja aturdida")
+	assert_eq(guard.hand.state, BossHand.State.READY, "vuelve al reposo lista")
+	target.free()
+	guard.free()

@@ -41,10 +41,10 @@ func roar() -> void:
 
 
 func reset() -> void:
-	_turn += 1
+	_interrupt()
 	_running = false
 	remove_from_group(Enemy.GROUP)
-	hand.regenerate()
+	hand.reset()
 
 
 func is_vulnerable() -> bool:
