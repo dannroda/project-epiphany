@@ -6,6 +6,7 @@ extends StaticBody3D
 signal activated
 signal deactivated
 
+const GROUP := &"eye_switches"
 const CLOSED := Color(0.85, 0.82, 0.9)
 const OPEN := Color(1.25, 1.15, 1.0)
 ## Los valores por defecto de epiphany_outdoor.gdshader.
@@ -44,6 +45,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_process(false)
 		return
+	add_to_group(GROUP)
 	hurtbox.hit.connect(_on_hit)
 	if flag != &"":
 		_persistent = $PersistentFlag

@@ -10,6 +10,8 @@ const SILHOUETTE := preload("res://src/feel/occluded_silhouette.gdshader")
 
 ## El HUD sacude el slot del botón que no se pudo usar.
 signal item_denied(button: int)
+## Arrancó a usar un ítem de un botón (11.105: los mini tutoriales de la pluma y las sandalias).
+signal item_used(item: ItemData)
 ## Se soltó de un agarre a fuerza de botones.
 signal escaped
 

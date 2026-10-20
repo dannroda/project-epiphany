@@ -14,6 +14,22 @@ Tocá el botón para dejar una bomba delante tuyo; mantenelo para levantarla, ap
 Se equipa solo. Bloqueá dentro de un haz de luz y el espejo lo desvía hacia donde mirás; mientras lo atajás, el stick derecho (o el mouse) te gira y el izquierdo te mueve sin perderlo. [ID:get_shield_mirror_1]
 => END
 
+~ feather
+Una pluma de cóndor, liviana como el viento. Con ella vas a poder saltar. [ID:get_feather_1]
+=> END
+
+~ sandals
+Unas sandalias de cuero de llama, gastadas de tanto camino. [ID:get_sandals_1]
+=> END
+
+~ hookshot
+Una cadena de bronce con punta de garra. Llega lejos y no suelta. [ID:get_hookshot_1]
+=> END
+
+~ hammer
+Un martillo de piedra que pesa como un cerro. Lo que la espada no rompe, esto sí. [ID:get_hammer_1]
+=> END
+
 ~ heart_piece_1
 Una de cuatro. Juntá cuatro piezas y tu vida máxima sube un corazón. [ID:get_heart_piece_1]
 => END

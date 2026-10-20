@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3]
+
+[ext_resource type="Script" path="res://src/tutorial/tutorial_data.gd" id="1_tut"]
+[ext_resource type="Resource" path="res://data/items/sandals.tres" id="2_item"]
+
+[resource]
+script = ExtResource("1_tut")
+id = &"sandals"
+item = ExtResource("2_item")
+what = "TUT_SANDALS_WHAT"
+button = "TUT_SANDALS_BUTTON"
+try = "TUT_SANDALS_TRY"
+task = "TUT_SANDALS_TASK"

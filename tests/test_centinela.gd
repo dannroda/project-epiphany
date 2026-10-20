@@ -85,8 +85,11 @@ func test_the_sentinel_falls_with_its_escort_and_leaves_the_hammer() -> void:
 	player.global_position = pedestal.global_position + Vector3(0, 0, 1.4)
 	assert_true(await _until(func() -> bool: return state.inventory.has(&"hammer")), "se lleva el martillo")
 	assert_eq(state.get_flag(&"ow_hammer_taken"), true, "tomado")
-	tree.root.get_node(^"MenuStack").clear()
-	await tree.create_timer(0.6).timeout
+	var stack: Node = tree.root.get_node(^"MenuStack")
+	assert_true(await _until(func() -> bool:
+		if stack.is_open():
+			stack.pop()
+		return not stack.is_open() and player.movement_state.get_active_state().name == &"Idle"), "cierra el item get y la tarjeta")
 	state.reset()
 
 

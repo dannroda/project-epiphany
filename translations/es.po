@@ -1383,3 +1383,105 @@ msgstr "¼ de corazón, hasta 6 m"
 
 msgid "TECH_NEW"
 msgstr "Técnica nueva: {name}"
+
+msgid "TUT_HOW"
+msgstr "CÓMO SE USA"
+
+msgid "TUT_WHAT"
+msgstr "QUÉ HACE"
+
+msgid "TUT_BUTTON"
+msgstr "BOTÓN"
+
+msgid "TUT_TRY"
+msgstr "PROBALO"
+
+msgid "TUT_OK"
+msgstr "Entendido"
+
+msgid "TUT_WITH"
+msgstr "con"
+
+msgid "TUT_FEATHER_WHAT"
+msgstr "Salta huecos de una baldosa y escalones bajos, y esquiva lo que golpea el piso."
+
+msgid "TUT_FEATHER_BUTTON"
+msgstr "Tocá {item:feather} y saltás hacia donde mirás."
+
+msgid "TUT_FEATHER_TRY"
+msgstr "Para salir de esta isla, saltá el hueco."
+
+msgid "TUT_FEATHER_TASK"
+msgstr "Saltá un hueco"
+
+msgid "TUT_BOW_WHAT"
+msgstr "Dispara flechas lejos. Despierta los ojos de piedra y voltea a lo que vuela."
+
+msgid "TUT_BOW_BUTTON"
+msgstr "Mantené {item:bow} para tensar, apuntá y soltá. Con un objetivo fijado ({btn:z-lock}), la flecha va derecho."
+
+msgid "TUT_BOW_TRY"
+msgstr "Hay un ojo de piedra en la sala que sigue: disparale."
+
+msgid "TUT_BOW_TASK"
+msgstr "Dispará al ojo de piedra"
+
+msgid "TUT_BOMB_BAG_WHAT"
+msgstr "Rompe muros agrietados y corazas que la espada no atraviesa."
+
+msgid "TUT_BOMB_BAG_BUTTON"
+msgstr "Tocá {item:bomb_bag} para dejar una bomba; mantenelo para levantarla, apuntá y soltá para tirarla."
+
+msgid "TUT_BOMB_BAG_TRY"
+msgstr "Al lado hay un muro agrietado: volalo."
+
+msgid "TUT_BOMB_BAG_TASK"
+msgstr "Volá un muro agrietado"
+
+msgid "TUT_HOOKSHOT_WHAT"
+msgstr "Una cadena de cuatro baldosas: en un poste te lleva hasta él, por encima del agua y los huecos."
+
+msgid "TUT_HOOKSHOT_BUTTON"
+msgstr "Tocá {item:hookshot}. Con un poste cerca, fijalo con {btn:z-lock} y la cadena va derecho a él."
+
+msgid "TUT_HOOKSHOT_TRY"
+msgstr "Para salir de la sala, clavá el gancho en el poste."
+
+msgid "TUT_HOOKSHOT_TASK"
+msgstr "Cruzá hasta un poste"
+
+msgid "TUT_HAMMER_WHAT"
+msgstr "Un golpe fuerte: rompe lo que la espada no puede, aprieta las placas de golpe y baja guardias."
+
+msgid "TUT_HAMMER_BUTTON"
+msgstr "Tocá {item:hammer} para dar el martillazo delante tuyo."
+
+msgid "TUT_HAMMER_TRY"
+msgstr "Cerca hay una placa de golpe: dale un martillazo."
+
+msgid "TUT_HAMMER_TASK"
+msgstr "Martillá una placa de golpe"
+
+msgid "TUT_SANDALS_WHAT"
+msgstr "Corrés recto y rápido. El choque sacude árboles y muros; con la pluma en plena carrera, saltás tres baldosas."
+
+msgid "TUT_SANDALS_BUTTON"
+msgstr "Mantené {item:sandals}: tomás impulso y corrés hasta soltar o chocar."
+
+msgid "TUT_SANDALS_TRY"
+msgstr "Corré contra una queñoa y mirá qué cae."
+
+msgid "TUT_SANDALS_TASK"
+msgstr "Tomá carrera"
+
+msgid "TUT_SHIELD_MIRROR_WHAT"
+msgstr "Desvía los haces de luz hacia donde mirás y devuelve los orbes."
+
+msgid "TUT_SHIELD_MIRROR_BUTTON"
+msgstr "Cubrite con {btn:z-lock} dentro del haz; el stick derecho te gira sin perderlo."
+
+msgid "TUT_SHIELD_MIRROR_TRY"
+msgstr "El cristal de esta sala espera la luz: llevásela con el escudo."
+
+msgid "TUT_SHIELD_MIRROR_TASK"
+msgstr "Llevá la luz a un cristal"

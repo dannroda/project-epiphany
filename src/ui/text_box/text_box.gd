@@ -16,7 +16,7 @@ enum Style { ITEM, STONE }
 
 ## `{btn:accion}` en el texto se muestra como el ícono del botón de esa acción en el dispositivo actual;
 ## `{btn:move}`, el stick o las cuatro teclas; `{item:id}`, el botón al que está asignado ese ítem.
-const BUTTON_TOKEN := "\\{(btn|item):(\\w+)\\}"
+const BUTTON_TOKEN := "\\{(btn|item):([\\w-]+)\\}"
 const MOVE_ACTIONS: Array[StringName] = [&"move_forward", &"move_left", &"move_backward", &"move_right"]
 const BUTTON_ICON_SIZE := 32
 
@@ -170,29 +170,37 @@ func _show(text: String, character: String) -> void:
 
 
 func _set_body(text: String) -> void:
-	var tokens := RegEx.create_from_string(BUTTON_TOKEN)
-	var rich := tokens.search(text) != null
+	var rich := has_tokens(text)
 	_label.visible = not rich
 	_rich.visible = rich
 	body = _rich if rich else _label
 	if not rich:
 		_label.text = text
 		return
-	_rich.clear()
+	fill_rich(_rich, text)
+
+
+static func has_tokens(text: String) -> bool:
+	return RegEx.create_from_string(BUTTON_TOKEN).search(text) != null
+
+
+## Escribe `text` en `rich` con cada {btn:…} / {item:…} como el ícono del botón en el dispositivo actual.
+static func fill_rich(rich: RichTextLabel, text: String, icon_size := BUTTON_ICON_SIZE) -> void:
+	rich.clear()
 	var from := 0
-	for found in tokens.search_all(text):
-		_rich.add_text(text.substr(from, found.get_start() - from))
+	for found in RegEx.create_from_string(BUTTON_TOKEN).search_all(text):
+		rich.add_text(text.substr(from, found.get_start() - from))
 		for action in _token_actions(found.get_string(1), found.get_string(2)):
 			var icon := InputPrompts.icon_for_current(action)
 			if icon:
-				_rich.add_image(icon, BUTTON_ICON_SIZE, BUTTON_ICON_SIZE, Color.WHITE, INLINE_ALIGNMENT_CENTER)
+				rich.add_image(icon, icon_size, icon_size, Color.WHITE, INLINE_ALIGNMENT_CENTER)
 			else:
-				_rich.add_text(action)
+				rich.add_text(action)
 		from = found.get_end()
-	_rich.add_text(text.substr(from))
+	rich.add_text(text.substr(from))
 
 
-func _token_actions(kind: String, value: String) -> Array[StringName]:
+static func _token_actions(kind: String, value: String) -> Array[StringName]:
 	if kind == "item":
 		var button := GameState.item_buttons.find(StringName(value))
 		return [PlayerCharacter.ITEM_ACTIONS[maxi(button, 0)]]

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3]
+
+[ext_resource type="Script" path="res://src/tutorial/tutorial_data.gd" id="1_tut"]
+[ext_resource type="Resource" path="res://data/items/hammer.tres" id="2_item"]
+
+[resource]
+script = ExtResource("1_tut")
+id = &"hammer"
+item = ExtResource("2_item")
+what = "TUT_HAMMER_WHAT"
+button = "TUT_HAMMER_BUTTON"
+try = "TUT_HAMMER_TRY"
+task = "TUT_HAMMER_TASK"
+target_group = &"strike_plates"
+done_signal = &"activated"
+solved_property = &"active"

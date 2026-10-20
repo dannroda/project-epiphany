@@ -94,6 +94,7 @@ func _pull_to_post(post: HookPost, delta: float) -> void:
 	if player.global_position.distance_to(_landing) < 0.01 or _pull_time >= max_pull_time:
 		player.global_position = _landing
 		_hook.release()
+		post.reached.emit()
 		dispatch("finished")
 
 

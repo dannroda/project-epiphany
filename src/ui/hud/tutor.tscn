@@ -1,0 +1,141 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/hud/tutor.gd" id="1_tutor"]
+[ext_resource type="Resource" path="res://data/tutorials/catalog.tres" id="2_catalog"]
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Marker/Box:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bob"]
+resource_name = "bob"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Marker/Box:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -6), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tutor"]
+_data = {
+&"RESET": SubResource("Animation_reset"),
+&"bob": SubResource("Animation_bob")
+}
+
+[node name="Tutor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_tutor")
+catalog = ExtResource("2_catalog")
+
+[node name="Chip" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 32.0
+offset_top = 76.0
+offset_right = 100.0
+offset_bottom = 124.0
+mouse_filter = 2
+theme_type_variation = &"HudPill"
+
+[node name="Row" type="HBoxContainer" parent="Chip"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="ChipIcon" type="TextureRect" parent="Chip/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ChipTask" type="Label" parent="Chip/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HudPillText"
+theme_override_font_sizes/font_size = 18
+
+[node name="ChipWith" type="Label" parent="Chip/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Hint"
+text = "TUT_WITH"
+
+[node name="ChipButton" type="TextureRect" parent="Chip/Row"]
+unique_name_in_owner = true
+self_modulate = Color(0.8509804, 0.6431373, 0.25490198, 1)
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Marker" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(50, 64)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="Box" type="Control" parent="Marker"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 64.0
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Marker/Box"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+mouse_filter = 2
+theme_type_variation = &"Chip"
+
+[node name="MarkerIcon" type="TextureRect" parent="Marker/Box/Panel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Arrow" type="Polygon2D" parent="Marker/Box"]
+color = Color(0.9529412, 0.83137256, 0.54901963, 1)
+polygon = PackedVector2Array(17, 54, 33, 54, 25, 63)
+
+[node name="MarkerAnim" type="AnimationPlayer" parent="."]
+deterministic = false
+libraries = {
+&"": SubResource("AnimationLibrary_tutor")
+}
+autoplay = &"bob"

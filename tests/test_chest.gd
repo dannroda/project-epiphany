@@ -15,6 +15,7 @@ func test_chest_gives_once_and_stays_open() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	state.reset()
+	state.set_flag(&"tut_bomb_bag_shown", true)
 	await _load_level(tree)
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	var chest: Node = tree.current_scene.get_node(^"Chest")
@@ -73,6 +74,7 @@ func test_item_get_raises_both_hands_until_the_box_closes() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var stack: Node = tree.root.get_node(^"MenuStack")
 	state.reset()
+	state.set_flag(&"tut_bow_shown", true)
 	await _load_level(tree)
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.play_item_get(Items.get_item(&"bow"))

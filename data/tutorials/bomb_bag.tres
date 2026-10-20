@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3]
+
+[ext_resource type="Script" path="res://src/tutorial/tutorial_data.gd" id="1_tut"]
+[ext_resource type="Resource" path="res://data/items/bomb_bag.tres" id="2_item"]
+
+[resource]
+script = ExtResource("1_tut")
+id = &"bomb_bag"
+item = ExtResource("2_item")
+what = "TUT_BOMB_BAG_WHAT"
+button = "TUT_BOMB_BAG_BUTTON"
+try = "TUT_BOMB_BAG_TRY"
+task = "TUT_BOMB_BAG_TASK"
+target_group = &"cracked_walls"
+done_signal = &"broken"
+solved_property = &"is_broken"

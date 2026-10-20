@@ -7,6 +7,8 @@ extends StaticBody3D
 
 signal broken
 
+const GROUP := &"cracked_walls"
+
 @export var flag: StringName:
 	set(value):
 		flag = value
@@ -30,6 +32,7 @@ var _wiring: Wiring
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	add_to_group(GROUP)
 	hurtbox.hit.connect(_on_hit)
 	_persistent = $PersistentFlag
 	_persistent.flag = flag

@@ -5,10 +5,13 @@ extends PlayerState
 const ITEM_GET := preload("res://src/ui/item_get/item_get.tscn")
 const RAISE := &"Carry/ItemGet_Raise"
 const LOWER := &"Carry/ItemGet_Lower"
+const TUTORIAL_CARD := preload("res://src/ui/tutorial/tutorial_card.tscn")
 ## Pausa con las manos arriba antes de abrir la caja.
 @export var beat := 0.12
 ## Los anillos (con el ítem) van sobre la cabeza, donde se carga lo levantado; corrimiento en pantalla.
 @export var rings_offset := Vector2(0, -40)
+## Al cerrar la caja, la tarjeta del mini tutorial del ítem si tiene uno y no se vio (11.105).
+@export var tutorials: TutorialCatalog
 
 var _elapsed := 0.0
 var _show_at := 0.0
@@ -54,6 +57,20 @@ func _show() -> void:
 
 
 func _on_closed() -> void:
+	var item: ItemData = blackboard.get_var(BB_GOT_ITEM)
+	var tutorial := tutorials.for_item(item.id) if tutorials and item else null
+	if tutorial and not tutorial.is_shown():
+		var card := TUTORIAL_CARD.instantiate()
+		card.tutorial = tutorial
+		card.closed.connect(func() -> void:
+			GameState.set_flag(tutorial.shown_flag(), true)
+			_lower())
+		MenuStack.push.call_deferred(card)
+		return
+	_lower()
+
+
+func _lower() -> void:
 	player.carrier.lower_item()
 	_lowered_at = _elapsed
 

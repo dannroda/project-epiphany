@@ -74,6 +74,8 @@ func _open_chest(node: NodePath) -> void:
 	await tree.create_timer(1.0).timeout
 	while stack.is_open():
 		stack.pop()
+		await tree.process_frame
+		await tree.process_frame
 	await tree.create_timer(1.2).timeout
 
 

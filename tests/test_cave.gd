@@ -52,6 +52,8 @@ func test_get_the_bombs_and_break_the_practice_wall() -> void:
 	await tree.create_timer(1.0).timeout
 	while stack.is_open():
 		stack.pop()
+		await tree.process_frame
+		await tree.process_frame
 	await tree.create_timer(1.2).timeout
 	assert_eq(state.inventory.has(&"bomb_bag"), true, "el cofre da la bolsa de bombas")
 	assert_true(state.inventory.count(&"bomb") > 0, "con bombas adentro")

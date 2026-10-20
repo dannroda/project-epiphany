@@ -33,6 +33,7 @@
 [ext_resource type="Material" path="res://data/materials/player_p2.tres" id="mat_p2"]
 [ext_resource type="Script" uid="uid://do4y7vq0jtpd1" path="res://player/states/dodging.gd" id="st_dodging"]
 [ext_resource type="Script" uid="uid://dvf1o4fohyli8" path="res://player/states/item_get.gd" id="st_item_get"]
+[ext_resource type="Resource" path="res://data/tutorials/catalog.tres" id="tutorial_catalog"]
 [ext_resource type="Script" path="res://player/states/grabbed.gd" id="st_grabbed"]
 [ext_resource type="Script" uid="uid://baq8rk6hfarca" path="res://player/states/pushing.gd" id="st_pushing"]
 [ext_resource type="Script" uid="uid://dkmh3vf34vltv" path="res://player/states/transition.gd" id="st_transition"]
@@ -1178,6 +1179,7 @@ follows_room_transition = false
 
 [node name="ItemGet" type="LimboState" parent="MovementState" unique_id=686383829]
 script = ExtResource("st_item_get")
+tutorials = ExtResource("tutorial_catalog")
 follows_room_transition = false
 can_be_grabbed = false
 can_be_hurt = false

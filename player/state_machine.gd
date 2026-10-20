@@ -122,7 +122,9 @@ func _try_item(buffer: InputBuffer) -> bool:
 			player.deny_item(i)
 			return true
 		blackboard.set_var(PlayerState.BB_ITEM_BUTTON, i)
-		if dispatch(player.usable_item(i).behavior.entry_event()):
+		var item := player.usable_item(i)
+		if dispatch(item.behavior.entry_event()):
 			buffer.consume(PlayerCharacter.ITEM_ACTIONS[i])
+			player.item_used.emit(item)
 			return true
 	return false

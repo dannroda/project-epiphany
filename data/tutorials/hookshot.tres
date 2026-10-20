@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3]
+
+[ext_resource type="Script" path="res://src/tutorial/tutorial_data.gd" id="1_tut"]
+[ext_resource type="Resource" path="res://data/items/hookshot.tres" id="2_item"]
+
+[resource]
+script = ExtResource("1_tut")
+id = &"hookshot"
+item = ExtResource("2_item")
+what = "TUT_HOOKSHOT_WHAT"
+button = "TUT_HOOKSHOT_BUTTON"
+try = "TUT_HOOKSHOT_TRY"
+task = "TUT_HOOKSHOT_TASK"
+target_group = &"hook_posts"
+done_signal = &"reached"

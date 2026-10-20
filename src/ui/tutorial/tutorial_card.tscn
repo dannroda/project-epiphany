@@ -1,0 +1,155 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/ui/tutorial/tutorial_card.gd" id="1_card"]
+[ext_resource type="Script" path="res://src/ui/hint_bar.gd" id="2_hints"]
+
+[node name="TutorialCard" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_card")
+hides_below = false
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03137255, 0.03529412, 0.047058824, 0.6)
+
+[node name="Box" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -350.0
+offset_top = 110.0
+offset_right = 350.0
+offset_bottom = 200.0
+grow_horizontal = 2
+theme_type_variation = &"ItemGetBox"
+
+[node name="Layout" type="VBoxContainer" parent="Box"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="Box/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Badge" type="Control" parent="Box/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Box/Layout/Header/Badge"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Names" type="VBoxContainer" parent="Box/Layout/Header"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="Kicker" type="Label" parent="Box/Layout/Header/Names"]
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "TUT_HOW"
+
+[node name="Title" type="Label" parent="Box/Layout/Header/Names"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ItemGetTitle"
+
+[node name="RuleHeader" type="HSeparator" parent="Box/Layout"]
+layout_mode = 2
+
+[node name="WhatRow" type="HBoxContainer" parent="Box/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Key" type="Label" parent="Box/Layout/WhatRow"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "TUT_WHAT"
+
+[node name="What" type="RichTextLabel" parent="Box/Layout/WhatRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ItemGetText"
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="RuleWhat" type="HSeparator" parent="Box/Layout"]
+layout_mode = 2
+
+[node name="ButtonRow" type="HBoxContainer" parent="Box/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Key" type="Label" parent="Box/Layout/ButtonRow"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "TUT_BUTTON"
+
+[node name="Button" type="RichTextLabel" parent="Box/Layout/ButtonRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ItemGetText"
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="RuleButton" type="HSeparator" parent="Box/Layout"]
+layout_mode = 2
+
+[node name="TryRow" type="HBoxContainer" parent="Box/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Key" type="Label" parent="Box/Layout/TryRow"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_type_variation = &"Caps"
+text = "TUT_TRY"
+
+[node name="Try" type="RichTextLabel" parent="Box/Layout/TryRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"ItemGetText"
+theme_override_colors/default_color = Color(0.9529412, 0.83137256, 0.54901963, 1)
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+
+[node name="Hints" type="HBoxContainer" parent="Box/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+script = ExtResource("2_hints")

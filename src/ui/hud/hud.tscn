@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/frames/divider_flipped.png" id="6_divider_flipped"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/minimap.tscn" id="7_minimap"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/item_ring.tscn" id="9_ring"]
+[ext_resource type="PackedScene" path="res://src/ui/hud/tutor.tscn" id="10_tutor"]
 
 [sub_resource type="StyleBoxFlat" id="CoopKeysStyle"]
 content_margin_left = 16.0
@@ -334,6 +335,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Tutor" parent="." instance=ExtResource("10_tutor")]
+unique_name_in_owner = true
 
 [node name="Saved" type="Label" parent="."]
 unique_name_in_owner = true

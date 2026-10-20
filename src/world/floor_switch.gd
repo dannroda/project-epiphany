@@ -12,6 +12,7 @@ signal deactivated
 
 enum Mode { HOLD, ONCE, BLOCK, WEIGHT, STRIKE }
 
+const STRIKE_GROUP := &"strike_plates"
 const HURTBOX_LAYER := PhysicsLayers.HURTBOX
 
 @export var mode: Mode = Mode.HOLD:
@@ -43,6 +44,8 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_physics_process(false)
 		return
+	if mode == Mode.STRIKE:
+		add_to_group(STRIKE_GROUP)
 	_plate_y = plate.position.y
 	collision_layer = 0
 	collision_mask = 1 | 8

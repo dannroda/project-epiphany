@@ -6,6 +6,8 @@ extends StaticBody3D
 signal activated
 signal deactivated
 
+const GROUP := &"light_receivers"
+
 @export var latch := false
 @export var flag: StringName:
 	set(value):
@@ -31,7 +33,10 @@ func _ready() -> void:
 	_material.emission = Color(1.0, 0.9, 0.55)
 	crystal.material_override = _material
 	_show(false)
-	if Engine.is_editor_hint() or flag == &"":
+	if Engine.is_editor_hint():
+		return
+	add_to_group(GROUP)
+	if flag == &"":
 		return
 	_persistent = $PersistentFlag
 	_persistent.flag = flag

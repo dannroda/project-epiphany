@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3]
+
+[ext_resource type="Script" path="res://src/tutorial/tutorial_data.gd" id="1_tut"]
+[ext_resource type="Resource" path="res://data/items/shield_mirror.tres" id="2_item"]
+
+[resource]
+script = ExtResource("1_tut")
+id = &"shield_mirror"
+item = ExtResource("2_item")
+what = "TUT_SHIELD_MIRROR_WHAT"
+button = "TUT_SHIELD_MIRROR_BUTTON"
+try = "TUT_SHIELD_MIRROR_TRY"
+task = "TUT_SHIELD_MIRROR_TASK"
+action = &"z-lock"
+target_group = &"light_receivers"
+done_signal = &"activated"
+solved_property = &"active"

@@ -1639,3 +1639,121 @@ msgstr "Try it on the dummy, from afar."
 
 msgid "TECH_NEW"
 msgstr "New technique: {name}"
+
+msgid "TUT_HOW"
+msgstr "HOW TO USE"
+
+msgid "TUT_WHAT"
+msgstr "WHAT IT DOES"
+
+msgid "TUT_BUTTON"
+msgstr "BUTTON"
+
+msgid "TUT_TRY"
+msgstr "TRY IT"
+
+msgid "TUT_OK"
+msgstr "Got it"
+
+msgid "TUT_WITH"
+msgstr "with"
+
+msgid "TUT_FEATHER_WHAT"
+msgstr "Jumps over one-tile gaps and low steps, and dodges blows that hit the ground."
+
+msgid "TUT_FEATHER_BUTTON"
+msgstr "Tap {item:feather} to jump the way you face."
+
+msgid "TUT_FEATHER_TRY"
+msgstr "To leave this island, jump the gap."
+
+msgid "TUT_FEATHER_TASK"
+msgstr "Jump a gap"
+
+msgid "TUT_BOW_WHAT"
+msgstr "Shoots arrows far. Wakes stone eyes and brings down what flies."
+
+msgid "TUT_BOW_BUTTON"
+msgstr "Hold {item:bow} to draw, aim and let go. With a target locked on ({btn:z-lock}), the arrow flies straight."
+
+msgid "TUT_BOW_TRY"
+msgstr "There is a stone eye in the next room: shoot it."
+
+msgid "TUT_BOW_TASK"
+msgstr "Shoot the stone eye"
+
+msgid "TUT_BOMB_BAG_WHAT"
+msgstr "Breaks cracked walls and armor the sword cannot pierce."
+
+msgid "TUT_BOMB_BAG_BUTTON"
+msgstr "Tap {item:bomb_bag} to drop a bomb; hold it to pick the bomb up, aim and let go to throw."
+
+msgid "TUT_BOMB_BAG_TRY"
+msgstr "There is a cracked wall right here: blow it up."
+
+msgid "TUT_BOMB_BAG_TASK"
+msgstr "Blow up a cracked wall"
+
+msgid "TUT_HOOKSHOT_WHAT"
+msgstr "A four-tile chain: on a post it pulls you to it, over water and gaps."
+
+msgid "TUT_HOOKSHOT_BUTTON"
+msgstr "Tap {item:hookshot}. With a post nearby, lock on with {btn:z-lock} and the chain flies straight to it."
+
+msgid "TUT_HOOKSHOT_TRY"
+msgstr "To leave the room, hook the post."
+
+msgid "TUT_HOOKSHOT_TASK"
+msgstr "Cross to a post"
+
+msgid "TUT_HAMMER_WHAT"
+msgstr "A strong blow: breaks what the sword cannot, presses strike plates and breaks guards."
+
+msgid "TUT_HAMMER_BUTTON"
+msgstr "Tap {item:hammer} to slam it down in front of you."
+
+msgid "TUT_HAMMER_TRY"
+msgstr "There is a strike plate nearby: hammer it."
+
+msgid "TUT_HAMMER_TASK"
+msgstr "Hammer a strike plate"
+
+msgid "TUT_SANDALS_WHAT"
+msgstr "You run straight and fast. Crashing shakes trees and walls; with the feather at full speed, you jump three tiles."
+
+msgid "TUT_SANDALS_BUTTON"
+msgstr "Hold {item:sandals}: you build up speed and run until you let go or crash."
+
+msgid "TUT_SANDALS_TRY"
+msgstr "Run into a queñoa tree and see what falls."
+
+msgid "TUT_SANDALS_TASK"
+msgstr "Take a run"
+
+msgid "TUT_SHIELD_MIRROR_WHAT"
+msgstr "Turns beams of light the way you face and sends orbs back."
+
+msgid "TUT_SHIELD_MIRROR_BUTTON"
+msgstr "Guard with {btn:z-lock} inside the beam; the right stick turns you without losing it."
+
+msgid "TUT_SHIELD_MIRROR_TRY"
+msgstr "The crystal in this room is waiting for light: bring it with the shield."
+
+msgid "TUT_SHIELD_MIRROR_TASK"
+msgstr "Bring light to a crystal"
+
+msgctxt "get_feather_1"
+msgid "Una pluma de cóndor, liviana como el viento. Con ella vas a poder saltar."
+msgstr "A condor feather, light as the wind. With it you can jump."
+
+msgctxt "get_sandals_1"
+msgid "Unas sandalias de cuero de llama, gastadas de tanto camino."
+msgstr "Llama leather sandals, worn from so many roads."
+
+msgctxt "get_hookshot_1"
+msgid "Una cadena de bronce con punta de garra. Llega lejos y no suelta."
+msgstr "A bronze chain with a claw tip. It reaches far and does not let go."
+
+msgctxt "get_hammer_1"
+msgid "Un martillo de piedra que pesa como un cerro. Lo que la espada no rompe, esto sí."
+msgstr "A stone hammer as heavy as a hill. What the sword cannot break, this can."
