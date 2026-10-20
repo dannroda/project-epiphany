@@ -15,6 +15,8 @@ static var LOGS := ROOT + "test_logs/"
 const MAX_JOBS := 4
 ## Lo que se supone que tarda un archivo que nunca se midió (s).
 const UNKNOWN_TIME := 20.0
+## Un proceso que pasa este tiempo sin terminar un test se da por colgado: se mata y cuenta como falla (s).
+const STALL_SECONDS := 300.0
 
 
 ## Junta los errores de script (los que cortan la función que corría) para fallar el test en curso.
@@ -106,21 +108,32 @@ func _run_in_processes(buckets: Array[PackedStringArray]) -> Dictionary:
 			"--script", "res://tests/run_tests.gd", "--", "--worker=%d" % i, "--files=" + ",".join(buckets[i])])
 		var log_file := FileAccess.open(LOGS + "worker_%d.log" % i, FileAccess.WRITE)
 		log_file.store_line("# pid %d: %s" % [pipes.pid, ", ".join(buckets[i])])
-		var threads: Array[Thread] = []
+		var worker := {pid = pipes.pid, threads = [], log_file = log_file, files = buckets[i], progress_ms = Time.get_ticks_msec(), last_test = "", hung = false}
 		for pipe: FileAccess in [pipes.stdio, pipes.stderr]:
 			var thread := Thread.new()
-			thread.start(_pump.bind(pipe, pipes.pid, log_file, mutex))
-			threads.append(thread)
-		workers.append({pid = pipes.pid, threads = threads, log_file = log_file, files = buckets[i]})
-	while workers.any(func(worker: Dictionary) -> bool: return OS.is_process_running(worker.pid)):
+			thread.start(_pump.bind(pipe, worker, mutex))
+			worker.threads.append(thread)
+		workers.append(worker)
+	while workers.any(func(worker: Dictionary) -> bool: return not worker.hung and OS.is_process_running(worker.pid)):
 		await create_timer(0.5).timeout
+		mutex.lock()
+		for worker: Dictionary in workers:
+			if not worker.hung and OS.is_process_running(worker.pid) and Time.get_ticks_msec() - worker.progress_ms > STALL_SECONDS * 1000.0:
+				worker.hung = true
+				OS.kill(worker.pid)
+		mutex.unlock()
 	var merged := {total = 0, failures = PackedStringArray(), times = {}}
 	for i in workers.size():
+		if workers[i].hung:
+			merged.total += 1
+			merged.failures.append("el proceso %d se colgó %d s después de %s; se mató (%s)" % [i, STALL_SECONDS, workers[i].last_test if workers[i].last_test else "arrancar", ", ".join(workers[i].files)])
 		for thread: Thread in workers[i].threads:
 			thread.wait_to_finish()
 		workers[i].log_file.close()
 		var result := ConfigFile.new()
 		if result.load(_result_path(i)) != OK:
+			if workers[i].hung:
+				continue
 			merged.total += 1
 			merged.failures.append("el proceso %d terminó sin resultados (salió con %d; %s); ver %s" % [i, OS.get_process_exit_code(workers[i].pid), ", ".join(workers[i].files), ProjectSettings.globalize_path(LOGS + "worker_%d.log" % i)])
 			continue
@@ -132,15 +145,17 @@ func _run_in_processes(buckets: Array[PackedStringArray]) -> Dictionary:
 
 
 ## Copia todo lo que imprime un proceso a su log y muestra solo las líneas de resultado.
-func _pump(pipe: FileAccess, pid: int, log_file: FileAccess, mutex: Mutex) -> void:
+func _pump(pipe: FileAccess, worker: Dictionary, mutex: Mutex) -> void:
 	while true:
 		var line := pipe.get_line()
-		if line.is_empty() and (pipe.eof_reached() or not OS.is_process_running(pid)):
+		if line.is_empty() and (pipe.eof_reached() or worker.hung or not OS.is_process_running(worker.pid)):
 			break
 		mutex.lock()
-		log_file.store_line(line)
+		worker.log_file.store_line(line)
 		if line.begins_with("ok") or line.begins_with("FALLA"):
 			print(line)
+			worker.progress_ms = Time.get_ticks_msec()
+			worker.last_test = line.substr(5).strip_edges()
 		mutex.unlock()
 
 
