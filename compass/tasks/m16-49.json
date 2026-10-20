@@ -10,11 +10,11 @@
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "arte"
   ],
   "test": "",
   "title": "Build del terreno determinista",
-  "updated_at": "2026-10-20T00:48:07.694Z"
+  "updated_at": "2026-10-20T03:14:49.373Z"
 }

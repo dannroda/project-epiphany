@@ -5,7 +5,7 @@
   "created_at": "2026-10-13T17:30:45.078Z",
   "description": "cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una pieza en el pasto alto, dos tras la piedra herida y una junto al carcaj. Ahora hay 6 piezas en el overworld (escalón de la Pradera, Cerros, Islote, queñoa, Risco, Cumbre); solo una tras muro agrietado y ninguna en el pasto. Reescribir la pista (y en.po).",
   "milestone": "m11",
-  "notes": "Daniel (2026-10-13): muy temprano para fijar cuántas piezas hay; la tablilla se ajusta cuando el total esté cerrado.",
+  "notes": "Daniel (2026-10-13): muy temprano para fijar cuántas piezas hay; la tablilla se ajusta cuando el total esté cerrado.\n\nText approved with 11.124 (2026-10-20): \"El corazón se partió en dieciséis. Tres duermen tras la piedra herida, cinco esperan en las salas de los antiguos, y el resto donde solo llega quien ya tiene cada herramienta.\" Apply it once the 16 pieces are placed.",
   "order": 120,
   "priority": "low",
   "refs": [],
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "Tablilla del Risco desactualizada",
-  "updated_at": "2026-10-20T02:53:56.028Z"
+  "updated_at": "2026-10-20T03:14:48.994Z"
 }

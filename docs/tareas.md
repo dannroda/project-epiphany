@@ -3150,6 +3150,8 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
 
 **Notas:** Hecho pasos 1 y 2 (-72, d68b55e1; 3–6 esperan a Daniel). Combo: MeleeBehavior = attack + combo[] + spin. sword_basic/golden: tajo → revés (sword_backhand, Slice_Horizontal, AttackType Backhand) → estocada (sword_thrust, Stab, ×1,5 daño, ×2 empuje, avance 4,5). Avanza si el golpe nuevo llega dentro de combo_window (0,45 s, export) desde que terminó o se cortó el anterior, contado en tiempo de juego (cuadros de física). Se reinicia fuera de la ventana, después de la estocada o si pasa por otro estado que no sea Idle/Moving. La estocada con guardia sigue siendo SWORD_STAB. Giro: nodo SwordCharge (charge_time 0,9, show_from 0,3, move_factor 0,55, exports) cuenta el ataque mantenido en Idle/Moving/Attacking, nunca cubriéndose ni rodando; la luz ChargeGlow anima en su AnimationPlayer (RESET/charging/charged). Al soltar con carga llena, estado Spinning (sword_spin, Melee_2H_Attack_Spinning, AttackType Spin, hitbox cilindro de 1,8 m, ×2 daño). test_combo (7) y test_items. Capturas en wt/design debug/tmp/design/combo_*.png. Great Spin (d1049ae2): SwordCharge.great_charge_time (2,2 s, export); al pasarlo ChargeAnim toca "great" (luz dorada, pulso más rápido); al soltar, Spinning usa MeleeBehavior.great_spin = sword_great_spin.tres (hitbox GreatSpin cilindro de 3 m, ×3 daño, ×2,5 empuje, 0,6 s de aturdida). Entre los dos umbrales, el giro normal; nunca cubriéndose ni rodando. Tests test_combo › test_holding_longer_charges_the_great_spin y test_the_great_spin_reaches_farther. Captura combo_7_great_charged.png. Nota de integración: el código de los pasos 1 y 2 sin el Great Spin quedó dentro del commit fbeb9d5b de main (un cherry-pick cortado por el lock del índice), con el mismo contenido que d68b55e1.
 
+Daniel (2026-10-20) approved -72's proposal for steps 3–6 as written: counterattack (attack in a 0.35 s window while locked on, Roll+Slash / Jump+Slash, ×2 damage, 0.8 s stun, skips the shield guard), plunge attack in the air (×2, 1.2 m shockwave, presses STRIKE plates), sword beam at full health (6 m, 1 damage, never triggers puzzles). Learned at technique stones with a dummy: counterattack in the Pradera, plunge in the Arboleda (feather), beam in the Cumbre (hookshot posts); flags ow_tech_counter/plunge/beam. Técnicas panel in Equipo with a mockup first. No new buttons; first window at half speed via TimeScale &"counter_hint". GDD §4.3.
+
 **Referencias:** `gdd.md#combate`, `gdd.md#input`
 
 **Relacionadas:** 11.22 Tablillas de historia; 11.35 Saltar: ítem tipo Pluma de Roc
@@ -4329,6 +4331,8 @@ Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la me
 
 **Notas:** Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.
 
+Daniel (2026-10-20) approved -72's proposal as written: tutorial card after the item get (QUÉ HACE / BOTÓN / PROBALO; scene on the MenuStack with a mockup first), HUD chip with the task until it's done once (flags tut_<mecánica>_done), 30 s idle hint marking the target with the item icon. start_controls, start_combat and start_lift tablets go away (in-context prompts); start_temple stays; the bomb cave tablet keeps only the story line. New: item-get texts for feather, sandals, hookshot and hammer; hammer and sandals get a nearby test.
+
 ### 11.106 Intro al día con el overworld nuevo · Hecho
 
 **Terminada:** 2026-10-13 · **Prioridad:** baja · **Tamaño:** S · **Etiquetas:** `camara`
@@ -4498,6 +4502,8 @@ Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Tod
 **Notas:** 
 Daniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quietos (paso 1 vale para todos).
 
+Daniel (2026-10-20) step 2: Devotos del Ojo. Humans on Rig_Medium, long burgundy-and-black poncho, hood, white mask with a single eye (epi.logo_eye), spear with a red ribbon; long-wind-up thrust built for the 11.34 counterattack; camps with a fire and a banner in the Cardonal and the Bañado; later variant: the slinger.
+
 ### 11.116 Tests: un error de script cuenta como falla · Hecho
 
 **Terminada:** 2026-10-13 · **Prioridad:** alta · **Tamaño:** S · **Responsable:** Claude · **Etiquetas:** `bug`, `tests`
@@ -4589,6 +4595,8 @@ cliff_heart (overworld.dialogue) dice que el corazón se partió en cuatro: una 
 
 **Notas:** Daniel (2026-10-13): muy temprano para fijar cuántas piezas hay; la tablilla se ajusta cuando el total esté cerrado.
 
+Text approved with 11.124 (2026-10-20): "El corazón se partió en dieciséis. Tres duermen tras la piedra herida, cinco esperan en las salas de los antiguos, y el resto donde solo llega quien ya tiene cada herramienta." Apply it once the 16 pieces are placed.
+
 ### 11.124 Piezas de corazón: 13, no múltiplo de 4 · Pendiente
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `diseño`
@@ -4601,6 +4609,8 @@ Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES
 Opciones de -72 (2026-10-19) con 11.27 y 11.26: hoy 13 piezas, 4 por contenedor. 1) Ir a 16: el santuario de reflejos y la prueba de combate dan una pieza cada uno (15) y falta una más (recomendada). 2) Ir a 12: ninguna da pieza (bolsa grande y botella) y se saca una de las que hay. 3) Mezcla: una da pieza (14) y faltan dos para 16, o se sacan dos.
 
 Decisión de Daniel (2026-10-19): 16 piezas. El santuario de reflejos (11.27) y la prueba de combate (11.26) dan una pieza cada uno y falta una más en otro lado del overworld.
+
+Daniel (2026-10-20): piece 16 at the Mirador with the hammer (STRIKE plate on the ledge lowers a niche's gate; HeartPieceMirador, ow_heart_piece_mirador). Total 16: 11 overworld (meadow, tree, hills, grotto, shrine, islet, cliff, mirador, summit, reflejos 11.27, huaca 11.26) + 5 dungeons (ch, qv, tt, cu, te).
 
 ### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Hecho
 
@@ -7019,7 +7029,7 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): terreno_organico.tscn
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): Un typo en style cae en silencio al terreno por defecto (STYLES.get(style, {})). Arreglo: @export_enum con las claves de STYLES y que Python falle con un estilo desconocido.
 
-### 16.51 Build del terreno determinista · Pendiente
+### 16.51 Build del terreno determinista · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `arte`
 

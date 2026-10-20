@@ -26,7 +26,7 @@
   "created_at": "2026-10-13T04:42:36.897Z",
   "description": "Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Todos deambulan cerca de su lugar: caminan despacio a puntos al azar de la navmesh dentro de unos metros de donde empiezan, paran un rato y miran alrededor (reemplaza la rama Quieto de enemy_bt.tres; radio, velocidad y pausas en EntityConfig). Alerta y búsqueda solo para un tipo de enemigo nuevo: el centinela o guardia de una guarida de un grupo enemigo que no son monstruos. Al verte hace una pausa de alerta (un !) antes de atacar; si te pierde va a tu último lugar visto, mira alrededor y vuelve a su puesto. Descartados por ahora: rondas fijas y cono de visión.",
   "milestone": "m11",
-  "notes": "\nDaniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quietos (paso 1 vale para todos).",
+  "notes": "\nDaniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quietos (paso 1 vale para todos).\n\nDaniel (2026-10-20) step 2: Devotos del Ojo. Humans on Rig_Medium, long burgundy-and-black poncho, hood, white mask with a single eye (epi.logo_eye), spear with a red ribbon; long-wind-up thrust built for the 11.34 counterattack; camps with a fire and a banner in the Cardonal and the Bañado; later variant: the slinger.",
   "order": 112,
   "priority": "high",
   "refs": [],
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda",
-  "updated_at": "2026-10-20T02:53:45.896Z"
+  "updated_at": "2026-10-20T03:14:48.239Z"
 }

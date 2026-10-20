@@ -5,7 +5,7 @@
   "created_at": "2026-10-13T17:30:45.368Z",
   "description": "Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES_PER_HEART = 4: tres contenedores y una pieza que nunca completa uno. Quitar una o agregar tres (o cambiar la regla).",
   "milestone": "m11",
-  "notes": "Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.\n2026-10-15 (-43, 11.190): con la pieza del templo el total es 13 (8 overworld + 5 mazmorras): una de más sobre 12. Quitar una o agregar tres.\n\nOpciones de -72 (2026-10-19) con 11.27 y 11.26: hoy 13 piezas, 4 por contenedor. 1) Ir a 16: el santuario de reflejos y la prueba de combate dan una pieza cada uno (15) y falta una más (recomendada). 2) Ir a 12: ninguna da pieza (bolsa grande y botella) y se saca una de las que hay. 3) Mezcla: una da pieza (14) y faltan dos para 16, o se sacan dos.\n\nDecisión de Daniel (2026-10-19): 16 piezas. El santuario de reflejos (11.27) y la prueba de combate (11.26) dan una pieza cada uno y falta una más en otro lado del overworld.",
+  "notes": "Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.\n2026-10-15 (-43, 11.190): con la pieza del templo el total es 13 (8 overworld + 5 mazmorras): una de más sobre 12. Quitar una o agregar tres.\n\nOpciones de -72 (2026-10-19) con 11.27 y 11.26: hoy 13 piezas, 4 por contenedor. 1) Ir a 16: el santuario de reflejos y la prueba de combate dan una pieza cada uno (15) y falta una más (recomendada). 2) Ir a 12: ninguna da pieza (bolsa grande y botella) y se saca una de las que hay. 3) Mezcla: una da pieza (14) y faltan dos para 16, o se sacan dos.\n\nDecisión de Daniel (2026-10-19): 16 piezas. El santuario de reflejos (11.27) y la prueba de combate (11.26) dan una pieza cada uno y falta una más en otro lado del overworld.\n\nDaniel (2026-10-20): piece 16 at the Mirador with the hammer (STRIKE plate on the ledge lowers a niche's gate; HeartPieceMirador, ow_heart_piece_mirador). Total 16: 11 overworld (meadow, tree, hills, grotto, shrine, islet, cliff, mirador, summit, reflejos 11.27, huaca 11.26) + 5 dungeons (ch, qv, tt, cu, te).",
   "order": 121,
   "priority": "medium",
   "refs": [],
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "Piezas de corazón: 13, no múltiplo de 4",
-  "updated_at": "2026-10-20T02:53:47.185Z"
+  "updated_at": "2026-10-20T03:14:48.617Z"
 }
