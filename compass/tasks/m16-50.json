@@ -1,21 +1,21 @@
 {
-  "assignee": "project-epiphany-3e",
+  "assignee": "project-epiphany-e0",
   "checklist": [],
   "code": "16.52",
   "created_at": "2026-10-19T22:56:18.028Z",
   "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): arena_fight.gd:55-58,168-172 libera las escoltas puestas a mano y las recrea con load(scene_file_path), conservando solo el transform; se conectan con connect(&\"defeated\") y is_dead por duck typing. Arreglo: duplicate() del nodo original, o PackedScene + Marker3D con señal tipada.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-e0): las escoltas puestas a mano se empaquetan (PackedScene.pack) en _enter_tree de ArenaFight, antes de entrar al árbol y de su _ready, así cada pelea las instancia como están en el nivel (con los overrides de sus hijos) en vez de recargar su escena; tipadas Enemy y conectadas a defeated. No sirvió duplicate() (crashea la 4.8 beta con una instancia suelta ya lista) ni empaquetar después de _ready (guarda estado de runtime). test_centinela › test_escorts_keep_their_instance_overrides (falla sin el arreglo).",
   "order": 111,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "combate"
   ],
   "test": "",
   "title": "Escoltas de ArenaFight pierden sus overrides de instancia",
-  "updated_at": "2026-10-19T22:56:18.028Z"
+  "updated_at": "2026-10-20T01:05:49.039Z"
 }

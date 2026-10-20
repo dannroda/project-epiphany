@@ -6997,11 +6997,13 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): Reconstruir build_ter
 
 **Notas:** -3e, 2026-10-19 (16.47): el ruido es mayor que ~1 mm. Dos builds desde el mismo terreno_overworld.json dan distinta cantidad de vértices en 11 de las 12 tiras de terreno_organico (solo .0 sale igual), y muros_organicos.glb mueve hasta 2,7 m por índice. Por eso en 16.47 se regeneró el JSON sin rehacer los glb. Hasta arreglarlo, que el JSON coincida con el nivel no prueba que los glb estén al día.
 
-### 16.52 Escoltas de ArenaFight pierden sus overrides de instancia · Pendiente
+### 16.52 Escoltas de ArenaFight pierden sus overrides de instancia · Revisión
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `combate`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `overworld`, `combate`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): arena_fight.gd:55-58,168-172 libera las escoltas puestas a mano y las recrea con load(scene_file_path), conservando solo el transform; se conectan con connect(&"defeated") y is_dead por duck typing. Arreglo: duplicate() del nodo original, o PackedScene + Marker3D con señal tipada.
+
+**Notas:** Hecho (-e0): las escoltas puestas a mano se empaquetan (PackedScene.pack) en _enter_tree de ArenaFight, antes de entrar al árbol y de su _ready, así cada pelea las instancia como están en el nivel (con los overrides de sus hijos) en vez de recargar su escena; tipadas Enemy y conectadas a defeated. No sirvió duplicate() (crashea la 4.8 beta con una instancia suelta ya lista) ni empaquetar después de _ready (guarda estado de runtime). test_centinela › test_escorts_keep_their_instance_overrides (falla sin el arreglo).
 
 ### 16.53 Limpiezas menores del overworld · Pendiente
 
