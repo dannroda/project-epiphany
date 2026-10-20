@@ -99,6 +99,34 @@ func test_boss_music_is_held_by_each_arena() -> void:
 	assert_true(not music.boss_fight)
 
 
+func test_the_final_boss_theme_adds_a_layer_per_phase() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var music: Node = tree.root.get_node(^"Music")
+	use_empty_scene()
+	if tree.current_scene == null:
+		var level := Node3D.new()
+		tree.root.add_child(level)
+		tree.current_scene = level
+	var state: Node = tree.root.get_node(^"GameState")
+	state.current_dungeon = &"templo"
+	var arena := Node.new()
+	tree.root.add_child(arena)
+	var phase := [0]
+	music.hold_boss(arena, func() -> int: return phase[0])
+	var layers := func() -> Array:
+		var wanted: Dictionary = music.targets()
+		return [&"boss_drums", &"boss_theme", &"boss_fury"].filter(func(layer: StringName) -> bool: return wanted[layer] > 0.0)
+	assert_eq(layers.call(), [&"boss_drums"], "en la presentación, el bombo y el bajo")
+	phase[0] = 2
+	assert_eq(layers.call(), [&"boss_drums", &"boss_theme"], "en la fase 2 entra la quena")
+	phase[0] = 3
+	assert_eq(layers.call(), [&"boss_drums", &"boss_theme", &"boss_fury"], "y en la 3, la furia")
+	assert_eq(music.targets()[&"heartbeat"], 0.0, "el latido del templo no se pisa con el tema")
+	arena.free()
+	assert_eq(music.boss_theme_phase(), -1, "al irse la arena, vuelve la música del templo")
+	state.reset()
+
+
 func test_boss_bar_shown_again_right_after_hiding_stays() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var hud := (load("res://src/ui/hud/hud.tscn") as PackedScene).instantiate() as Hud

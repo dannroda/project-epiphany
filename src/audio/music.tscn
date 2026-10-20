@@ -6,6 +6,9 @@
 [ext_resource type="AudioStream" path="res://assets/audio/music/pulse.wav" id="4_pulse"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/murmur.wav" id="5_murmur"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/heartbeat.wav" id="6_heartbeat"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/boss_drums.wav" id="7_boss_drums"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/boss_theme.wav" id="8_boss_theme"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/boss_fury.wav" id="9_boss_fury"]
 
 [node name="Music" type="Node"]
 process_mode = 3
@@ -33,5 +36,20 @@ bus = &"Ambience"
 
 [node name="heartbeat" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_heartbeat")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="boss_drums" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_boss_drums")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="boss_theme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_boss_theme")
+volume_db = -80.0
+bus = &"Music"
+
+[node name="boss_fury" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_boss_fury")
 volume_db = -80.0
 bus = &"Music"

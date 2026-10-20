@@ -76,7 +76,7 @@ func _begin() -> void:
 	await Tweens.wait(self, door.open_time)
 	in_intro = true
 	boss.presents_phases = true
-	Music.hold_boss(self)
+	Music.hold_boss(self, boss.phase)
 	_sharpen()
 	await TopDownCamera.reveal(boss.eye, _awaken, intro_hold)
 	in_intro = false
