@@ -5675,11 +5675,13 @@ Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_s
 
 Revisión de Totora con paredes dobles (12.41, 2026-10-19). Desde Gancho, el canal de agua del cruce del gancho hacia Balsas, que atraviesa la pared doble sur, se ve como un hueco negro. Desde Balsas se ve bien. No es el nivel: en top_down_camera._mask_around, detrás del labio sur de la sala, la tira 5 tapa hasta piso − 0.3 (cc571214, 11.151 d5e0d9a5, para que no asome el piso de abajo) y el agua está a −0.35, así que queda bajo la máscara. Pasa en toda puerta sur de toda mazmorra; con agua se lee como agujero. Arreglo posible: excepción de cámara (no bajar la tira 5 en celdas con agua, o que la sala vea su canal). Toca la cámara de todos los niveles: coordinar con 16.54. Capturas: debug/tmp/design/tot_Gancho.png y tot_Balsas.png en wt/design.
 
-### 11.220 Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio · Pendiente
+### 11.220 Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio · Revisión
 
 **Responsable:** project-epiphany-e0
 
 Visto 2026-10-19 (-e0): en main, --jobs=1 --only=test_arena_fighter.gd,test_centinela.gd,test_audio.gd falla 1 de 3 corridas: test_tweens_wait_stops_with_the_pause_not_with_the_node (no termina sin pausa), test_starting_mid_roar_leaves_the_rest_pose y test_an_interrupt_drops_the_pending_waits (las esperas no avanzan). Solo, test_arena_fighter pasa siempre. Sospecha: algo de la corrida anterior deja el árbol en pausa o time_scale en 0 (Pause.hold / hit-stop sin liberar).
+
+**Notas:** Hecho (-e0): el orden de los archivos en un proceso cambia según los tiempos; cuando test_centinela corría antes, su nivel seguía cargado y sus cuadros largos hacían que el timer de 0,2 s venciera antes que un tween de 0,05 s en el mismo cuadro (los timers se procesan primero). No era una pausa colgada (lo verifiqué registrando Pause/time_scale después de cada test). TestCase.use_empty_scene() saca el nivel que quedó; lo usan test_arena_fighter y test_boss._spawn. 8 de 8 corridas sin fallos (antes 1 de 3 fallaba).
 
 ## M12 — Assets propios (Blender)  (27/39)
 
@@ -6857,11 +6859,13 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 **Notas:** Hecho en wt/art (4e7ad654). Carry pasó a Transition (Off/On, xfade 0,12; su estado inicial guardado en el árbol, si no la cadena de abajo no corre). Guardia y arco no pueden ser Transition: Transition ignora los filtros (FILTER_IGNORE en el código de Godot) y los dos mezclan solo el torso; pasaron a OneShot con fadein/fadeout, disparados y apagados como UseItem. Melee_Blocking y Ranged_Bow_Draw sostienen su último cuadro con un timeline propio largo, así el OneShot no termina solo. test_shield: la guardia mueve el brazo del escudo y no las piernas.
 
-### 16.34 call_group al HUD y a la cámara: acceso tipado y señales · Pendiente
+### 16.34 call_group al HUD y a la cámara: acceso tipado y señales · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): 15 llamadas con nombre de método fallan en silencio si se renombra. Cámara: TopDownCamera.current(tree) tipado. HUD: tres señales tipadas (anuncio de zona, mostrar/ocultar barra del jefe). Sin EventBus completo.
+
+**Notas:** Hecho (-72): TopDownCamera.current(tree) (estático, tipado) reemplaza los call_group a la cámara en stairs, pit y scene_flow._place_at_spawn, y los get_first_node_in_group (music, cutscene, room, doom_ambience, map_data, scene_flow.location, 4 tests). En la cámara solo cambió el punto de acceso; 16.54 no tiene nada que limpiar. HUD: Hud.events (clase interna Events, static var) con tres señales tipadas: area_announced(text), boss_shown(bar: BossBar), boss_hidden. Cada Hud las conecta en _ready; al liberarse, Godot lo desconecta. Emisores: room, area_zone, arena_fight, boss_arena. No queda call_group en src. Test: test_hud › test_events_reach_the_hud.
 
 ### 16.35 Nodos creados por código: pasto, overlay y buses de audio · Pendiente
 
@@ -6993,7 +6997,7 @@ Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 8
 
 ### 16.55 Enemy carga la defensa de dos variantes · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): enemy.gd:231-325 (guardia _guard_stops; coraza _armor_stops/_break_armor/_fling_armor) solo lo usan shield_skeleton y armored_skeleton, y conoce Hook.ELEMENT (enemy.gd:292), una clase de ítem. Arreglo: componentes Guard y Armor (Node) con @export, el elemento como propiedad de la coraza. No es la guardia del player de 16.37.
 

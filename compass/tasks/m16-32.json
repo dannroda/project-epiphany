@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:07.939Z",
   "description": "Revisión con patrones (2026-10-19): 15 llamadas con nombre de método fallan en silencio si se renombra. Cámara: TopDownCamera.current(tree) tipado. HUD: tres señales tipadas (anuncio de zona, mostrar/ocultar barra del jefe). Sin EventBus completo.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-72): TopDownCamera.current(tree) (estático, tipado) reemplaza los call_group a la cámara en stairs, pit y scene_flow._place_at_spawn, y los get_first_node_in_group (music, cutscene, room, doom_ambience, map_data, scene_flow.location, 4 tests). En la cámara solo cambió el punto de acceso; 16.54 no tiene nada que limpiar. HUD: Hud.events (clase interna Events, static var) con tres señales tipadas: area_announced(text), boss_shown(bar: BossBar), boss_hidden. Cada Hud las conecta en _ready; al liberarse, Godot lo desconecta. Emisores: room, area_zone, arena_fight, boss_arena. No queda call_group en src. Test: test_hud › test_events_reach_the_hud.",
   "order": 93,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "call_group al HUD y a la cámara: acceso tipado y señales",
-  "updated_at": "2026-10-20T00:27:53.002Z"
+  "updated_at": "2026-10-20T00:40:39.283Z"
 }

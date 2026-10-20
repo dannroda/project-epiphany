@@ -5,11 +5,11 @@
   "created_at": "2026-10-20T00:34:34.348Z",
   "description": "Visto 2026-10-19 (-e0): en main, --jobs=1 --only=test_arena_fighter.gd,test_centinela.gd,test_audio.gd falla 1 de 3 corridas: test_tweens_wait_stops_with_the_pause_not_with_the_node (no termina sin pausa), test_starting_mid_roar_leaves_the_rest_pose y test_an_interrupt_drops_the_pending_waits (las esperas no avanzan). Solo, test_arena_fighter pasa siempre. Sospecha: algo de la corrida anterior deja el árbol en pausa o time_scale en 0 (Pause.hold / hit-stop sin liberar).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (-e0): el orden de los archivos en un proceso cambia según los tiempos; cuando test_centinela corría antes, su nivel seguía cargado y sus cuadros largos hacían que el timer de 0,2 s venciera antes que un tween de 0,05 s en el mismo cuadro (los timers se procesan primero). No era una pausa colgada (lo verifiqué registrando Pause/time_scale después de cada test). TestCase.use_empty_scene() saca el nivel que quedó; lo usan test_arena_fighter y test_boss._spawn. 8 de 8 corridas sin fallos (antes 1 de 3 fallaba).",
   "order": 216,
   "refs": [],
-  "status": "todo",
+  "status": "review",
   "test": "",
   "title": "Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio",
-  "updated_at": "2026-10-20T00:34:42.886Z"
+  "updated_at": "2026-10-20T00:40:41.266Z"
 }
