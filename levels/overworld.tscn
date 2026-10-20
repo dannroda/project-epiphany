@@ -50,6 +50,7 @@
 [ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
 [ext_resource type="PackedScene" path="res://src/world/cumbre_entrada.tscn" id="ent_cumbre"]
 [ext_resource type="PackedScene" path="res://src/world/reflejos_entrada.tscn" id="ent_reflejos"]
+[ext_resource type="PackedScene" path="res://src/world/huaca_hundida.tscn" id="huaca_mouth"]
 [ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
 [ext_resource type="Script" uid="uid://cnuecr7682x4j" path="res://src/world/arena_area.gd" id="hm_area"]
@@ -168,6 +169,9 @@ size = Vector3(28, 14, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_springportal"]
 size = Vector3(0.8, 2.4, 1.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_huacaportal"]
+size = Vector3(1.6, 2.4, 1.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
 size = Vector3(0.45, 2.6, 2)
@@ -1976,6 +1980,23 @@ shape = SubResource("BoxShape3D_springportal")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -42.4)
 script = ExtResource("4_cr2by")
 id = &"reflejos"
+
+[node name="HuacaMouth" parent="." instance=ExtResource("huaca_mouth")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 2.6, -6)
+
+[node name="HuacaDoor" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 3.8, -6.3)
+script = ExtResource("14_5vrew")
+target_scene = "res://levels/huaca.tscn"
+target_spawn = &"entrada"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HuacaDoor"]
+shape = SubResource("BoxShape3D_huacaportal")
+
+[node name="Spawn_huaca" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 2.6, -2.5)
+script = ExtResource("4_cr2by")
+id = &"huaca"
 
 [node name="PlaceCumbre" type="Marker3D" parent="." unique_id=1465752225]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -43)

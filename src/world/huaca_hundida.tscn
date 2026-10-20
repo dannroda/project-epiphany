@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cq8huacahund1"]
+
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/huaca/huaca_hundida.res" id="1_mesh"]
+
+[sub_resource type="BoxShape3D" id="Stone"]
+size = Vector3(1.0, 0.7, 0.42)
+
+[node name="HuacaHundida" type="Node3D"]
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_mesh")
+
+[node name="Ring" type="StaticBody3D" parent="."]
+
+[node name="Stone1" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(0.866025, 0, -0.500000, 0, 1, 0, 0.500000, 0, 0.866025, 0.9100, 0.35, 1.5762)
+shape = SubResource("Stone")
+
+[node name="Stone2" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(0.500000, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.500000, 1.5762, 0.35, 0.9100)
+shape = SubResource("Stone")
+
+[node name="Stone3" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(0.000000, 0, -1.000000, 0, 1, 0, 1.000000, 0, 0.000000, 1.8200, 0.35, 0.0000)
+shape = SubResource("Stone")
+
+[node name="Stone4" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(-0.500000, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.500000, 1.5762, 0.35, -0.9100)
+shape = SubResource("Stone")
+
+[node name="Stone5" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(-0.866025, 0, -0.500000, 0, 1, 0, 0.500000, 0, -0.866025, 0.9100, 0.35, -1.5762)
+shape = SubResource("Stone")
+
+[node name="Stone6" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(-1.000000, 0, -0.000000, 0, 1, 0, 0.000000, 0, -1.000000, 0.0000, 0.35, -1.8200)
+shape = SubResource("Stone")
+
+[node name="Stone7" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(-0.866025, 0, 0.500000, 0, 1, 0, -0.500000, 0, -0.866025, -0.9100, 0.35, -1.5762)
+shape = SubResource("Stone")
+
+[node name="Stone8" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(-0.500000, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.500000, -1.5762, 0.35, -0.9100)
+shape = SubResource("Stone")
+
+[node name="Stone9" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(-0.000000, 0, 1.000000, 0, 1, 0, -1.000000, 0, -0.000000, -1.8200, 0.35, -0.0000)
+shape = SubResource("Stone")
+
+[node name="Stone10" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(0.500000, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.500000, -1.5762, 0.35, 0.9100)
+shape = SubResource("Stone")
+
+[node name="Stone11" type="CollisionShape3D" parent="Ring"]
+transform = Transform3D(0.866025, 0, 0.500000, 0, 1, 0, -0.500000, 0, 0.866025, -0.9100, 0.35, 1.5762)
+shape = SubResource("Stone")
