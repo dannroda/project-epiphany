@@ -1982,7 +1982,7 @@ Una salida de la sala del jefe: un portal en el centro de la arena que lleva a l
 
 **Notas:** Sin flag por ahora porque no hay jefe; 9.6 le pone d1_boss_defeated.
 
-## M10 — Terminación  (26/31)
+## M10 — Terminación  (28/31, 2 en revisión)
 
 Título, selección de partida, game over, opciones, ambientación del doom, audio y build para playtesters (compilar las plantillas de LimboAI).
 
@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (159/214)
+## M11 — Pulido: contenido y feel  (212/214, 53 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4329,7 +4329,7 @@ Los ítems conseguidos en la mazmorra (mapa, brújula, llave del jefe, llaves ch
 
 **Notas:** Sesión: overworld (-74). Mockup primero.
 
-### 11.105 Repensar el tutorial · Pendiente
+### 11.105 Repensar el tutorial · En curso
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `diseno`, `ui`
 
@@ -4344,6 +4344,8 @@ Playtest 2026-10-12: las tablitas del claro (11.45) funcionan, pero no son la me
 **Notas:** Con 11.90 (cada mazmorra enseña su ítem). Daniel 2026-10-13: queda para el final, porque va a involucrar bastante rediseño.
 
 Daniel (2026-10-20) approved -72's proposal as written: tutorial card after the item get (QUÉ HACE / BOTÓN / PROBALO; scene on the MenuStack with a mockup first), HUD chip with the task until it's done once (flags tut_<mecánica>_done), 30 s idle hint marking the target with the item icon. start_controls, start_combat and start_lift tablets go away (in-context prompts); start_temple stays; the bomb cave tablet keeps only the story line. New: item-get texts for feather, sandals, hookshot and hammer; hammer and sandals get a nearby test.
+
+Core merged (-72, 43217633): 'Cómo se usa' card after the item get (tut_<id>_shown), HUD chip until the task is done (tut_<id>_done), 30 s hint over the nearest unsolved target; feather, bow, bombs, hookshot, hammer, sandals and mirror shield; item get texts for feather/sandals/hookshot/hammer. Fixed in passing: TextBox's tokens didn't accept hyphens ({btn:z-lock}). Missing: removing start_controls/combat/lift with in-context prompts, and hammer/sandals tests on the overworld.
 
 ### 11.106 Intro al día con el overworld nuevo · Hecho
 
@@ -5741,7 +5743,7 @@ Visto por -5c (2026-10-19) en 11.9: boss_hand.gd esperaba get_tree().physics_fra
 
 **Notas:** Hecho (-e0): las esperas por cuadro de las manos pasan por _physics_frame(), que devuelve false si la mano ya no está en el árbol; un cambio de escena a mitad de golpe, agarre, barrido o reset termina la corrutina en vez de esperar sobre un árbol null. test_boss › test_leaving_the_tree_mid_slam_ends_quietly (falla sin el arreglo en boss_hand.gd:350).
 
-## M12 — Assets propios (Blender)  (27/39)
+## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -6412,7 +6414,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
 
-## M16 — Salud del código  (0/56)
+## M16 — Salud del código  (53/56, 53 en revisión)
 
 Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
 
@@ -7704,7 +7706,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (0/13)
+## M15 — Optimización  (8/13, 8 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
