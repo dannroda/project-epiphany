@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:08.967Z",
   "description": "Revisión con patrones (2026-10-19): input_buffer, equipment, carrier, zone_veil, enfoque_la usan get_parent/owner; la guardia del escudo se apaga a mano en 5 estados (usar active_state_changed). doom_ambience: cadena de clases en vez de grupo.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-e0): InputBuffer y Equipment exportan player (y Equipment visuals), Carrier exporta thrower, conectados en player.tscn. EnfoqueLA lee la cámara del viewport en vez de su padre (sin rehornear niveles). ZoneVeil queda para 16.44 (-3e, quizás se borra). La guardia se sincroniza en active_state_changed de la máquina del player: los 5 estados que la bajaban a mano ya no lo hacen. doom_ambience.is_legible queda con la cadena de clases a propósito: un grupo obligaría a etiquetar cada pickup/rompible puesto en niveles guardados por el editor y los drops creados por código, y is ya cubre las subclases. test_shield › test_dodging_lowers_the_guard_at_once.",
   "order": 96,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "Componentes que asumen su padre y la guardia copiada",
-  "updated_at": "2026-10-19T22:56:37.737Z"
+  "updated_at": "2026-10-20T00:48:17.395Z"
 }

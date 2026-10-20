@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:41:09.668Z",
   "description": "Revisión con patrones (2026-10-19): carrier, bomb, dodge_ghosts, liftable usan current_scene; SceneFlow busca Dungeon/AreaZone solo entre hijos directos; save_tampered se escribe y nadie lo lee.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-e0): carrier, bomb, dodge_ghosts y liftable cuelgan/reparentan bajo Spawns.root en vez de current_scene. Dungeon entra a un grupo y Dungeon.current(tree) devuelve la de la escena actual (la anterior puede seguir en el grupo un cuadro al cambiar), así SceneFlow (id de la mazmorra y ubicación de la ranura) no necesita que sea hija directa; las zonas salen de AreaZone.GROUP. GameState.save_tampered (se escribía y nadie lo leía) se fue; la carga lo sigue registrando en el log. 157 pruebas relacionadas, 0 fallos.",
   "order": 98,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "Spawns.root salteado, Dungeon como hijo directo y checksum sin uso",
-  "updated_at": "2026-10-19T22:56:38.039Z"
+  "updated_at": "2026-10-20T00:48:19.197Z"
 }

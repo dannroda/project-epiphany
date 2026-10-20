@@ -5,7 +5,7 @@
   "created_at": "2026-10-19T22:56:17.680Z",
   "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): Reconstruir build_terreno_organico.py reescribe muros_organicos.glb y plantas_overworld.json con ruido de ~1 mm y deja diffs ruidosos. Encontrar el origen y redondear o fijar semilla.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "-3e, 2026-10-19 (16.47): el ruido es mayor que ~1 mm. Dos builds desde el mismo terreno_overworld.json dan distinta cantidad de vértices en 11 de las 12 tiras de terreno_organico (solo .0 sale igual), y muros_organicos.glb mueve hasta 2,7 m por índice. Por eso en 16.47 se regeneró el JSON sin rehacer los glb. Hasta arreglarlo, que el JSON coincida con el nivel no prueba que los glb estén al día.",
   "order": 110,
   "priority": "low",
   "refs": [],
@@ -16,5 +16,5 @@
   ],
   "test": "",
   "title": "Build del terreno determinista",
-  "updated_at": "2026-10-19T22:56:17.680Z"
+  "updated_at": "2026-10-20T00:48:07.694Z"
 }

@@ -5589,9 +5589,11 @@ Revisión con patrones (2026-10-19): Escena que existe pero no carga deja pantal
 
 ### 11.217 Co-op: P2 en una cinemática y time_scale con dos dueños · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `co-op`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `co-op`
 
 Revisión con patrones (2026-10-19): Un player que entra durante una cinemática camina libre. El anillo de ítems y Feel.freeze escriben Engine.time_scale sin dueño. TextBox hace pop de la pantalla de arriba, no de sí mismo (latente).
+
+**Notas:** Hecho (-72): (1) Cinemática: un player que entra mientras tiene los controles (Players.joined) queda captured=true y se suelta en _restore como el resto; _game_camera() tipado TopDownCamera (se fue el call(&"snap_to_target") que quedaba de 16.34). (2) TimeScale (src/flow/time_scale.gd), estático como Pause: hold(reason, scale)/release/is_held/clear, gana el más lento. Feel.freeze toma &"freeze" (no se repite si ya está), el anillo de ítems en solitario toma &"item_ring"; SceneFlow._go_to_title llama TimeScale.clear() junto a Pause.clear(). Nadie más escribe Engine.time_scale en src. (3) TextBox: finished → MenuStack.close(box), cierra esa pantalla y lo que tenga encima, y nada si ya no está (antes hacía pop de lo de arriba). Tests: test_feel › test_overlapping_slowdowns_keep_the_slowest, test_intro › test_a_player_joining_mid_cutscene_waits_with_the_others, test_text_box › test_a_finished_box_only_closes_itself. 50 archivos, 321 pruebas, 0 fallos.
 
 ### 11.206 Sub-jefes: las esperas siguen después de un reinicio · Revisión
 
@@ -6879,11 +6881,13 @@ Revisión con patrones (2026-10-19): GrassPatch instancia el pasto en _ready; De
 
 Revisión con patrones (2026-10-19): Cada sfx crea un player nuevo sin límite: N sonidos iguales en el mismo cuadro saturan. Feel sintetiza ~10 s al arrancar que después reemplaza con .ogg. Los sonidos de UI salen del input crudo.
 
-### 16.37 Componentes que asumen su padre y la guardia copiada · Pendiente
+### 16.37 Componentes que asumen su padre y la guardia copiada · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): input_buffer, equipment, carrier, zone_veil, enfoque_la usan get_parent/owner; la guardia del escudo se apaga a mano en 5 estados (usar active_state_changed). doom_ambience: cadena de clases en vez de grupo.
+
+**Notas:** Hecho (-e0): InputBuffer y Equipment exportan player (y Equipment visuals), Carrier exporta thrower, conectados en player.tscn. EnfoqueLA lee la cámara del viewport en vez de su padre (sin rehornear niveles). ZoneVeil queda para 16.44 (-3e, quizás se borra). La guardia se sincroniza en active_state_changed de la máquina del player: los 5 estados que la bajaban a mano ya no lo hacen. doom_ambience.is_legible queda con la cadena de clases a propósito: un grupo obligaría a etiquetar cada pickup/rompible puesto en niveles guardados por el editor y los drops creados por código, y is ya cubre las subclases. test_shield › test_dodging_lowers_the_guard_at_once.
 
 ### 16.38 Rendimiento: trabajo por cuadro sin cambios · Pendiente
 
@@ -6891,17 +6895,21 @@ Revisión con patrones (2026-10-19): input_buffer, equipment, carrier, zone_veil
 
 Revisión con patrones (2026-10-19): Minimapa (redibuja y escanea grupos cada cuadro), Room.has_player por tick, Targeting._sync_posts, Music.targets, overworld_map._reveal. Después de los assets.
 
-### 16.39 Spawns.root salteado, Dungeon como hijo directo y checksum sin uso · Pendiente
+### 16.39 Spawns.root salteado, Dungeon como hijo directo y checksum sin uso · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
 
 Revisión con patrones (2026-10-19): carrier, bomb, dodge_ghosts, liftable usan current_scene; SceneFlow busca Dungeon/AreaZone solo entre hijos directos; save_tampered se escribe y nadie lo lee.
 
-### 16.40 AnimationPlayers que faltan con deterministic = false · Pendiente
+**Notas:** Hecho (-e0): carrier, bomb, dodge_ghosts y liftable cuelgan/reparentan bajo Spawns.root en vez de current_scene. Dungeon entra a un grupo y Dungeon.current(tree) devuelve la de la escena actual (la anterior puede seguir en el grupo un cuadro al cambiar), así SceneFlow (id de la mazmorra y ubicación de la ranura) no necesita que sea hija directa; las zonas salen de AreaZone.GROUP. GameState.save_tampered (se escribía y nadie lo leía) se fue; la carga lo sigue registrando en el log. 157 pruebas relacionadas, 0 fallos.
+
+### 16.40 AnimationPlayers que faltan con deterministic = false · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Sin deterministic = false (cambiar de clip resetea lo que el nuevo no anima): cutscene.tscn, scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model; boss.tscn va con 16.32.
+
+**Notas:** Hecho en wt/art (c5525be4). deterministic = false en cutscene (y su Outro), scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model y también atoq (mismo caso que el centinela). Ninguno de estos tenía un cambio de clip que se rompiera hoy (los modelos animan los mismos huesos en todos sus clips y el resto tiene un solo clip), así que en vez de un test de un caso inventado, test_animation_players barre src, levels y player: falla si un AnimationPlayer no lo tiene. Los que alimentan un AnimationTree quedan afuera (los mezcla el árbol); boss.tscn espera a 16.32.
 
 ### 16.41 Clips que arrancan de claves fijas en vez del valor actual · Revisión
 
@@ -6947,17 +6955,21 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): Una región hoy es 'z
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): Nada verifica que los 34 rects de AreaZone no se superpongan ni dejen celdas caminables sin cubrir (se chequeaba con scripts temporales). Agregarlo a test_overworld.
 
-### 16.47 Test: terreno_overworld.json coincide con el nivel · Pendiente
+### 16.47 Test: terreno_overworld.json coincide con el nivel · Revisión
 
 **Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `tests`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): El nivel y tools/terreno_overworld.json se desfasan sin aviso (un punto pasó de -38.4 a -37.5 sin rebuild). Arreglo: un test que corre el export en memoria y lo compara con el JSON commiteado (= hace falta rebuild del terreno).
 
-### 16.48 El export del terreno elige nodos por convenciones de nombre · Pendiente
+**Notas:** Hecho (-3e): export_terreno_overworld.gd tiene un build(level, forced) estático que devuelve el dict; la CLI escribe el mismo archivo. test_overworld › test_the_terrain_json_matches_the_level compara un export en memoria con el JSON commiteado y dice la clave y el primer índice distinto (con el JSON viejo falla en fixed[305], SummitStairsUp que movió 11.29). JSON regenerado, terreno NO rehecho: el build de Blender no es determinista (ver 16.51).
+
+### 16.48 El export del terreno elige nodos por convenciones de nombre · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `arte`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): export_terreno_overworld.gd depende del prefijo Zone_, el sufijo Mouth, scene_file_path exacto, wade_speed por duck typing y una lista IGNORED; build_terreno_organico.py nombra muros muro_<NodoGodot> que overworld.tscn referencia. Renombrar un nodo cambia el terreno o deja una malla huérfana. Arreglo: elegir por grupo/script y dar a las paredes agrietadas un id exportado estable.
+
+**Notas:** Hecho (-3e): el export del terreno elige nodos por clase y grupo, no por nombre. _is(node, "Clase") sin tipar (corre con --script) mira la clase de Godot o el global_name del script y sus bases. IGNORED es una lista de clases (AreaZone, ShallowWater, PlayerCharacter, OverworldMap y tipos del motor) en vez del prefijo Zone_ y el duck typing de wade_speed. CrackedWall, HookPost y EyeSwitch por clase; las 7 bocas de cueva en el grupo cave_mouths en vez del sufijo Mouth; CrackedWall.terrain_id con los nombres actuales (los .res muro_/tapa_ no cambian). JSON regenerado idéntico byte a byte. test_every_cracked_wall_has_its_terrain_rock. overworld.tscn: solo agregados.
 
 ### 16.49 El grupo de la baranda del terreno depende de la tira donde cae · Pendiente
 
@@ -6977,6 +6989,8 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): Un typo en style cae 
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): Reconstruir build_terreno_organico.py reescribe muros_organicos.glb y plantas_overworld.json con ruido de ~1 mm y deja diffs ruidosos. Encontrar el origen y redondear o fijar semilla.
 
+**Notas:** -3e, 2026-10-19 (16.47): el ruido es mayor que ~1 mm. Dos builds desde el mismo terreno_overworld.json dan distinta cantidad de vértices en 11 de las 12 tiras de terreno_organico (solo .0 sale igual), y muros_organicos.glb mueve hasta 2,7 m por índice. Por eso en 16.47 se regeneró el JSON sin rehacer los glb. Hasta arreglarlo, que el JSON coincida con el nivel no prueba que los glb estén al día.
+
 ### 16.52 Escoltas de ArenaFight pierden sus overrides de instancia · Pendiente
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`, `combate`
@@ -6991,15 +7005,17 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/
 
 ### 16.54 TopDownCamera hace demasiado · Pendiente
 
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 813 líneas y 8 @export_group (lock-on, look, apuntado, reveals, cinemática, salas, oclusión, co-op); diseño y arte editan los reveals en el mismo archivo (pasó con AmbienteZoom). Arreglo: Reveal y Occlusion como nodos hijos en la escena de la cámara. Coordinar con arte.
 
-### 16.55 Enemy carga la defensa de dos variantes · Pendiente
+### 16.55 Enemy carga la defensa de dos variantes · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): enemy.gd:231-325 (guardia _guard_stops; coraza _armor_stops/_break_armor/_fling_armor) solo lo usan shield_skeleton y armored_skeleton, y conoce Hook.ELEMENT (enemy.gd:292), una clase de ítem. Arreglo: componentes Guard y Armor (Node) con @export, el elemento como propiedad de la coraza. No es la guardia del player de 16.37.
+
+**Notas:** Hecho (-72): escudo y coraza son componentes de escena con @export. EnemyGuard (enemy_guard.gd, nodo Guard en shield_skeleton.tscn: body, pose, angle_deg, break_time; señal blocked(push)) y EnemyArmor (enemy_armor.gd, nodo ArmorPlate en armored_skeleton.tscn: body, mesh, torn_by = &"hook"; señal broken). El elemento es propiedad de la coraza: enemy.gd ya no conoce Hook.ELEMENT ni ARMOR_PIECE. Enemy exporta guard/armor y mantiene is_guarding/shield_up/is_armored/recoil. EntityConfig pierde guards_front/guard_angle_deg/guard_break_time/armored (fuera de los 3 .tres). Las 8 variantes de guerreros y el huanca heredan los nodos. gdd actualizado. 66 archivos de tests, 432 pruebas, 0 fallos.
 
 ### 16.56 Pantallas tipadas por convención · Revisión
 

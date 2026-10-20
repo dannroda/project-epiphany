@@ -1,11 +1,11 @@
 {
-  "assignee": "project-epiphany-e0",
+  "assignee": "project-epiphany-72",
   "checklist": [],
   "code": "11.217",
   "created_at": "2026-10-19T22:41:07.592Z",
   "description": "Revisión con patrones (2026-10-19): Un player que entra durante una cinemática camina libre. El anillo de ítems y Feel.freeze escriben Engine.time_scale sin dueño. TextBox hace pop de la pantalla de arriba, no de sí mismo (latente).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Hecho (-72): (1) Cinemática: un player que entra mientras tiene los controles (Players.joined) queda captured=true y se suelta en _restore como el resto; _game_camera() tipado TopDownCamera (se fue el call(&\"snap_to_target\") que quedaba de 16.34). (2) TimeScale (src/flow/time_scale.gd), estático como Pause: hold(reason, scale)/release/is_held/clear, gana el más lento. Feel.freeze toma &\"freeze\" (no se repite si ya está), el anillo de ítems en solitario toma &\"item_ring\"; SceneFlow._go_to_title llama TimeScale.clear() junto a Pause.clear(). Nadie más escribe Engine.time_scale en src. (3) TextBox: finished → MenuStack.close(box), cierra esa pantalla y lo que tenga encima, y nada si ya no está (antes hacía pop de lo de arriba). Tests: test_feel › test_overlapping_slowdowns_keep_the_slowest, test_intro › test_a_player_joining_mid_cutscene_waits_with_the_others, test_text_box › test_a_finished_box_only_closes_itself. 50 archivos, 321 pruebas, 0 fallos.",
   "order": 207,
   "priority": "low",
   "refs": [],
@@ -17,5 +17,5 @@
   ],
   "test": "",
   "title": "Co-op: P2 en una cinemática y time_scale con dos dueños",
-  "updated_at": "2026-10-19T22:56:36.523Z"
+  "updated_at": "2026-10-20T00:52:39.048Z"
 }

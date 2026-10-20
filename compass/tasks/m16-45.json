@@ -5,17 +5,17 @@
   "created_at": "2026-10-19T22:56:16.229Z",
   "description": "Revisión de arquitectura del overworld (-3e, 2026-10-19): El nivel y tools/terreno_overworld.json se desfasan sin aviso (un punto pasó de -38.4 a -37.5 sin rebuild). Arreglo: un test que corre el export en memoria y lo compara con el JSON commiteado (= hace falta rebuild del terreno).",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-3e): export_terreno_overworld.gd tiene un build(level, forced) estático que devuelve el dict; la CLI escribe el mismo archivo. test_overworld › test_the_terrain_json_matches_the_level compara un export en memoria con el JSON commiteado y dice la clave y el primer índice distinto (con el JSON viejo falla en fixed[305], SummitStairsUp que movió 11.29). JSON regenerado, terreno NO rehecho: el build de Blender no es determinista (ver 16.51).",
   "order": 106,
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "overworld",
     "tests"
   ],
   "test": "",
   "title": "Test: terreno_overworld.json coincide con el nivel",
-  "updated_at": "2026-10-19T22:56:16.229Z"
+  "updated_at": "2026-10-20T00:48:11.289Z"
 }

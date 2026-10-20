@@ -5,17 +5,17 @@
   "created_at": "2026-10-19T22:55:43.620Z",
   "description": "Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Sin deterministic = false (cambiar de clip resetea lo que el nuevo no anima): cutscene.tscn, scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model; boss.tscn va con 16.32.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho en wt/art (c5525be4). deterministic = false en cutscene (y su Outro), scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model y también atoq (mismo caso que el centinela). Ninguno de estos tenía un cambio de clip que se rompiera hoy (los modelos animan los mismos huesos en todos sus clips y el resto tiene un solo clip), así que en vez de un test de un caso inventado, test_animation_players barre src, levels y player: falla si un AnimationPlayer no lo tiene. Los que alimentan un AnimationTree quedan afuera (los mezcla el árbol); boss.tscn espera a 16.32.",
   "order": 99,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "animacion"
   ],
   "test": "",
   "title": "AnimationPlayers que faltan con deterministic = false",
-  "updated_at": "2026-10-20T00:20:05.328Z"
+  "updated_at": "2026-10-20T00:48:09.660Z"
 }
