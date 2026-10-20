@@ -1,0 +1,17 @@
+{
+  "assignee": "design",
+  "checklist": [],
+  "code": "11.228",
+  "created_at": "2026-10-20T19:46:19.758Z",
+  "description": "Daniel (2026-10-20): en el combo, la animación del segundo ataque tiene que arrancar donde termina el primero. Hoy el 1 es sword_slash (Melee_1H_Attack_Slice_Diagonal) y el 2 es sword_backhand (Melee_1H_Attack_Slice_Horizontal), que arranca desde su propia guardia: el brazo vuelve atrás antes de pegar. El revés tiene que salir de la pose final del diagonal (espada abajo y cruzada) y volver en sentido contrario, y lo mismo revisar del 2 al 3 (sword_stab). Animación autorada (bake como las Carry/Plunge_* o recorte o espejado del clip), sin tocar los tiempos del golpe ni los de 11.226. Encargado a diseño (-88).",
+  "milestone": "m11",
+  "notes": "-88 (wt/design-fix 6641f184, main 23d408c3): Slice_Diagonal y Slice_Horizontal de KayKit barren los dos de izquierda a derecha, así que el revés volvía a cargar a la izquierda y la espada pasaba de golpe por la guardia. Clips nuevos en player/animation/libs/Combo.res, armados por tools/build_combo_library.gd sampleando CombatMelee: Combo/Backhand arranca en la pose del tajo en su cancel_from (0,55, espada abajo a la derecha), sube por ese lado y barre de derecha a izquierda, pasa sobre el hombro izquierdo y vuelve a la guardia; Combo/Thrust arranca en el revés encadenado (0,45, espada arriba a la izquierda) y entra en la carga de Stab. Mismas duraciones que los de KayKit: no cambian las ventanas de AttackData ni de cancelación. sword_thrust usa una entrada nueva \"Thrust\" en AttackType; Stab queda para la estocada de escudo.",
+  "order": 224,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "review",
+  "test": "test_combo, test_player_timing (combo sigue en 42/64/78 cuadros), test_animation_players, test_items. Capturas antes/después de 1→2 y 2→3 en epiphany-wt/design/debug/tmp/design/combo_golpe1a2_antes_despues.png y combo_golpe2a3_antes_despues.png. A mano: encadenar los tres golpes.",
+  "title": "Combo: el segundo golpe arranca donde termina el primero",
+  "updated_at": "2026-10-20T19:56:23.910Z"
+}

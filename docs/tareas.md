@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (220/220, 61 en revisión)
+## M11 — Pulido: contenido y feel  (221/221, 62 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5810,6 +5810,16 @@ Para Daniel: escapar del agarre son 4 apretadas reales (eran 8 en el código, ca
 **Prueba:** test_overworld › test_the_decor_plants_match_the_terrain_plants (Decor/Plantas igual a tools/plantas_overworld.json a su altura, salvo portales y arenas; con la decoración vieja daba 13 faltantes y 8 de más), test_walk_every_zone. Dos corridas seguidas de decorate_levels.gd dejan el mismo archivo.
 
 **Notas:** -3e (wt/overworld 6c3d7f25, main 03b3b430): decorate_levels.gd arranca de la decoración anterior: una pieza que sigue sobre piso y lejos de los nodos jugables se queda donde estaba aunque su zona se haya movido; solo se vuelve a ubicar lo que desapareció, con un RNG sembrado por celda (jitter, giro, prioridad) para que un cambio local no reordene la zona. Lo que vuelve a salir (misma malla en el mismo x,z) conserva nombre, posición en el archivo y unique_id, y su transform exacto si el terreno nuevo lo mueve menos de 5 cm. Idempotente; `-- --fresh` rearma de cero. La corrida completa vieja rompía test_walk_every_zone porque Zone_start se había corrido al este y una pasada de cero ponía piezas nuevas en la ruta del claro. Corrida de puesta al día (143 líneas en vez de ≈3300): 9 plantas en la orilla recortada del Bañado, 2 menos en el campamento del Cardonal, la bahía del salto largo limpia, 4 yaretas menos en la Cumbre, grupos de zona vacíos al día. La decoración no entra en la navmesh: no hace falta rehornear.
+
+### 11.228 Combo: el segundo golpe arranca donde termina el primero · Revisión
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** design
+
+Daniel (2026-10-20): en el combo, la animación del segundo ataque tiene que arrancar donde termina el primero. Hoy el 1 es sword_slash (Melee_1H_Attack_Slice_Diagonal) y el 2 es sword_backhand (Melee_1H_Attack_Slice_Horizontal), que arranca desde su propia guardia: el brazo vuelve atrás antes de pegar. El revés tiene que salir de la pose final del diagonal (espada abajo y cruzada) y volver en sentido contrario, y lo mismo revisar del 2 al 3 (sword_stab). Animación autorada (bake como las Carry/Plunge_* o recorte o espejado del clip), sin tocar los tiempos del golpe ni los de 11.226. Encargado a diseño (-88).
+
+**Prueba:** test_combo, test_player_timing (combo sigue en 42/64/78 cuadros), test_animation_players, test_items. Capturas antes/después de 1→2 y 2→3 en epiphany-wt/design/debug/tmp/design/combo_golpe1a2_antes_despues.png y combo_golpe2a3_antes_despues.png. A mano: encadenar los tres golpes.
+
+**Notas:** -88 (wt/design-fix 6641f184, main 23d408c3): Slice_Diagonal y Slice_Horizontal de KayKit barren los dos de izquierda a derecha, así que el revés volvía a cargar a la izquierda y la espada pasaba de golpe por la guardia. Clips nuevos en player/animation/libs/Combo.res, armados por tools/build_combo_library.gd sampleando CombatMelee: Combo/Backhand arranca en la pose del tajo en su cancel_from (0,55, espada abajo a la derecha), sube por ese lado y barre de derecha a izquierda, pasa sobre el hombro izquierdo y vuelve a la guardia; Combo/Thrust arranca en el revés encadenado (0,45, espada arriba a la izquierda) y entra en la carga de Stab. Mismas duraciones que los de KayKit: no cambian las ventanas de AttackData ni de cancelación. sword_thrust usa una entrada nueva "Thrust" en AttackType; Stab queda para la estocada de escudo.
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
