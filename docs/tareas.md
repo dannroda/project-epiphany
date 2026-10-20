@@ -5749,7 +5749,7 @@ Visto por -5c (2026-10-19) en 11.9: boss_hand.gd esperaba get_tree().physics_fra
 
 **Notas:** Hecho (-e0): las esperas por cuadro de las manos pasan por _physics_frame(), que devuelve false si la mano ya no está en el árbol; un cambio de escena a mitad de golpe, agarre, barrido o reset termina la corrutina en vez de esperar sobre un árbol null. test_boss › test_leaving_the_tree_mid_slam_ends_quietly (falla sin el arreglo en boss_hand.gd:350).
 
-### 11.222 Salto largo de prueba con las sandalias · Pendiente
+### 11.222 Salto largo de prueba con las sandalias · En curso
 
 **Responsable:** project-epiphany-3e
 
