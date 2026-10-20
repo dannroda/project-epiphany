@@ -12,8 +12,8 @@
       "text": "Cambiar las instancias de cada mazmorra (diseño, -43)"
     },
     {
-      "detail": "Daniel (2026-10-15): variantes. Cada enemigo del overworld y cada cueva toma la variante de la mazmorra de su región: Cerros → chullpa, Arboleda → quenoa, Laguna y Bañado → totora, Cumbre → cumbre, Necrópolis y explanada del templo → templo. Los guardias del templo ya están (569c5621).",
-      "done": false,
+      "detail": "Daniel (2026-10-15): variantes. Cada enemigo del overworld y cada cueva toma la variante de la mazmorra de su región: Cerros → chullpa, Arboleda → quenoa, Laguna y Bañado → totora, Cumbre → cumbre, Necrópolis y explanada del templo → templo. Los guardias del templo ya están (569c5621).\nHecho el 2026-10-15 (296a3287, ya en main; faltaba tildarlo): esqueletos de Pradera y Arboleda quenoa, guardias del Risco, Mirador y la explanada templo, bomb_cave y grotto_cave chullpa (sus entradas están en los Cerros y el Primer Claro, junto a los Cerros). shrine_cave, bush_cave y spring_cave no tienen guerreros. Ningún enemigo del overworld cae en Cerros, Laguna, Bañado ni Cumbre. test_dungeon_enemies ahora cubre el overworld y las cuevas (17644498).",
+      "done": true,
       "text": "Overworld y cuevas con la variante de su zona (-5d)"
     },
     {
@@ -30,7 +30,7 @@
   "priority": "medium",
   "refs": [],
   "size": "l",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte",
     "enemigos",
@@ -38,5 +38,5 @@
   ],
   "test": "",
   "title": "Enemigos comunes estilizados según el theme de cada mazmorra",
-  "updated_at": "2026-10-20T00:13:34.576Z"
+  "updated_at": "2026-10-20T00:20:26.005Z"
 }

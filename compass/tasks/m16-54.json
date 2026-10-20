@@ -5,16 +5,16 @@
   "created_at": "2026-10-19T22:57:40.017Z",
   "description": "Auditoría con patrones de diseño (-72, 2026-10-19): menu_stack.gd:50/74/120 y pause_menu.gd:37/49 usan has_method(&\"screen_covered\"/\"screen_uncovered\"/\"focus_default\"/\"cancel\"): un typo en una pantalla se ignora en silencio. Arreglo: clase base MenuScreen (extends Control) con virtuales vacías.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "Hecho (-72): ya existía UiScreen (src/ui/ui_screen.gd) con las virtuales y la pila tipada; los has_method eran por la raíz y las pestañas. La pantalla de título pasa a extender UiScreen y MenuStack tipa _base/set_base/covered/uncovered/_focus como UiScreen, sin has_method. Las cuatro pestañas del menú de pausa extienden PausePage (src/ui/menus/pause_page.gd: focus_default con el primer control enfocable como antes, cancel false) y pause_menu las llama tipadas. No queda has_method en src/ui. test_ui_scenes › test_every_screen_on_the_stack_is_a_ui_screen: cada script que hace MenuStack.push está en PUSHED (si se agrega uno nuevo, falla hasta sumarlo), cada escena empujada y el título tienen UiScreen de raíz, y cada pestaña es PausePage.",
   "order": 115,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor"
   ],
-  "test": "",
+  "test": "tests/test_ui_scenes.gd",
   "title": "Pantallas tipadas por convención",
-  "updated_at": "2026-10-20T00:13:34.226Z"
+  "updated_at": "2026-10-20T00:20:27.820Z"
 }

@@ -5575,7 +5575,7 @@ En solitario, igual que hoy. Tests: muere P1 → el próximo ataque va a P2; P2 
 
 ### 11.215 Usar un ítem se come el empujón del golpe · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`
 
 Revisión con patrones (2026-10-19): El tween de velocidad de using_item.gd sigue después del estado. Sin verificar.
 
@@ -6331,7 +6331,7 @@ Daniel (2026-10-15): la reja de la Cumbre tiene los bosses de la Chullpa. Todas 
 
 Pedido de -43 (11.129 paso 8) y de Daniel: Kuntur joven y Apu Kuntur con modelo de cóndor en lugar de las primitivas. Hecho por -5d en 5520a17d (build_kuntur.py): Kuntur negro con collar blanco y banda en el ala, cabeza roja con cresta; Apu Kuntur con sol de oro en la frente, pectoral y alas de oro. Las alas tienen el origen en el hombro; los nodos del script no cambian.
 
-### 12.39 Enemigos comunes estilizados según el theme de cada mazmorra · En curso
+### 12.39 Enemigos comunes estilizados según el theme de cada mazmorra · Revisión
 
 **Prioridad:** media · **Tamaño:** L · **Responsable:** project-epiphany-5c · **Etiquetas:** `arte`, `enemigos`, `mazmorra`
 
@@ -6341,8 +6341,9 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
   Hecho, aprobado por Daniel: b19ba666 (guerrero_<mazmorra>, armas, 20 escenas en src/entities/guerreros/<tipo>_<mazmorra>.tscn), ae1ed827 (armadura_<mazmorra>). test_guerreros.
 - [x] Cambiar las instancias de cada mazmorra (diseño, -43)
   Hecho el 2026-10-15 (27f82209): en cada mazmorra los ext_resource de esqueleto, escudo, arquero y acorazado apuntan a guerreros/<tipo>_<mazmorra>.tscn, así cambian todas las instancias y los spawns de oleadas (cripta de la Chullpa, Combinada del templo) sin overrides. test_dungeon_enemies falla si un refresh vuelve a las escenas base.
-- [ ] Overworld y cuevas con la variante de su zona (-5d)
+- [x] Overworld y cuevas con la variante de su zona (-5d)
   Daniel (2026-10-15): variantes. Cada enemigo del overworld y cada cueva toma la variante de la mazmorra de su región: Cerros → chullpa, Arboleda → quenoa, Laguna y Bañado → totora, Cumbre → cumbre, Necrópolis y explanada del templo → templo. Los guardias del templo ya están (569c5621).
+  Hecho el 2026-10-15 (296a3287, ya en main; faltaba tildarlo): esqueletos de Pradera y Arboleda quenoa, guardias del Risco, Mirador y la explanada templo, bomb_cave y grotto_cave chullpa (sus entradas están en los Cerros y el Primer Claro, junto a los Cerros). shrine_cave, bush_cave y spring_cave no tienen guerreros. Ningún enemigo del overworld cae en Cerros, Laguna, Bañado ni Cumbre. test_dungeon_enemies ahora cubre el overworld y las cuevas (17644498).
 - [ ] Probarlo (Daniel)
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
@@ -6890,7 +6891,7 @@ Revisión con patrones (2026-10-19): carrier, bomb, dodge_ghosts, liftable usan 
 
 ### 16.40 AnimationPlayers que faltan con deterministic = false · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `animacion`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Revisión de 16.28-16.31 de la sesión de arte (2026-10-19): Sin deterministic = false (cambiar de clip resetea lo que el nuevo no anima): cutscene.tscn, scene_flow, warp_portal, travel_portal, temple_eye_glow, centinela_model; boss.tscn va con 16.32.
 
@@ -6992,11 +6993,15 @@ Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 8
 
 Auditoría con patrones de diseño (-72, 2026-10-19): enemy.gd:231-325 (guardia _guard_stops; coraza _armor_stops/_break_armor/_fling_armor) solo lo usan shield_skeleton y armored_skeleton, y conoce Hook.ELEMENT (enemy.gd:292), una clase de ítem. Arreglo: componentes Guard y Armor (Node) con @export, el elemento como propiedad de la coraza. No es la guardia del player de 16.37.
 
-### 16.56 Pantallas tipadas por convención · Pendiente
+### 16.56 Pantallas tipadas por convención · Revisión
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): menu_stack.gd:50/74/120 y pause_menu.gd:37/49 usan has_method(&"screen_covered"/"screen_uncovered"/"focus_default"/"cancel"): un typo en una pantalla se ignora en silencio. Arreglo: clase base MenuScreen (extends Control) con virtuales vacías.
+
+**Prueba:** tests/test_ui_scenes.gd
+
+**Notas:** Hecho (-72): ya existía UiScreen (src/ui/ui_screen.gd) con las virtuales y la pila tipada; los has_method eran por la raíz y las pestañas. La pantalla de título pasa a extender UiScreen y MenuStack tipa _base/set_base/covered/uncovered/_focus como UiScreen, sin has_method. Las cuatro pestañas del menú de pausa extienden PausePage (src/ui/menus/pause_page.gd: focus_default con el primer control enfocable como antes, cancel false) y pause_menu las llama tipadas. No queda has_method en src/ui. test_ui_scenes › test_every_screen_on_the_stack_is_a_ui_screen: cada script que hace MenuStack.push está en PUSHED (si se agrega uno nuevo, falla hasta sumarlo), cada escena empujada y el título tienen UiScreen de raíz, y cada pestaña es PausePage.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/17)
 
