@@ -14,6 +14,8 @@ signal broken
 @export var switches: Array[NodePath] = []
 @export var condition: Wiring.Condition = Wiring.Condition.ALL
 @export var covers: Array[NodePath] = []
+## En el overworld, su roca en el terreno (muro_<id>, tapa_<id>): renombrar el nodo no la pierde.
+@export var terrain_id: StringName = &""
 
 @onready var wall: Node3D = %Wall
 @onready var rubble: Node3D = %Rubble

@@ -456,7 +456,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -69.
 script = ExtResource("4_cr2by")
 id = &"cueva"
 
-[node name="GrottoMouth" type="Node3D" parent="." unique_id=250931739]
+[node name="GrottoMouth" type="Node3D" parent="." unique_id=250931739 groups=["cave_mouths"]]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -83.97, 0, 14)
 
 [node name="Jambs" type="StaticBody3D" parent="GrottoMouth" unique_id=1513579944]
@@ -486,7 +486,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -81.
 script = ExtResource("4_cr2by")
 id = &"gruta"
 
-[node name="ShrineMouth" type="Node3D" parent="." unique_id=1386575311]
+[node name="ShrineMouth" type="Node3D" parent="." unique_id=1386575311 groups=["cave_mouths"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88, 2.6, -23.55)
 
 [node name="Jambs" type="StaticBody3D" parent="ShrineMouth" unique_id=1558102465]
@@ -870,7 +870,7 @@ flag = &"ow_cumbre_ladder"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -37.25)
 reveal_on_open = false
 
-[node name="SummitMouth" type="Node3D" parent="." unique_id=1895928823]
+[node name="SummitMouth" type="Node3D" parent="." unique_id=1895928823 groups=["cave_mouths"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 5.2, -37)
 
 [node name="Jambs" type="StaticBody3D" parent="SummitMouth" unique_id=1862321257]
@@ -946,6 +946,7 @@ flag = &"ow_heart_piece_hills"
 hidden_until_revealed = false
 
 [node name="SecretHillsWall" parent="." unique_id=859565622 instance=ExtResource("21_uay0b")]
+terrain_id = &"SecretHillsWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 0, -2)
 flag = &"ow_secret_hills_wall"
 covers = Array[NodePath]([NodePath("Lid")])
@@ -969,6 +970,7 @@ amount = 5
 flag = &"ow_secret_cactus_chest"
 
 [node name="SecretCactusWall" parent="." unique_id=1199083833 instance=ExtResource("21_uay0b")]
+terrain_id = &"SecretCactusWall"
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 90, 0, 24)
 flag = &"ow_secret_cactus_wall"
 covers = Array[NodePath]([NodePath("Lid")])
@@ -991,6 +993,7 @@ item = ExtResource("33_yqe63")
 flag = &"ow_secret_lookout_chest"
 
 [node name="SecretLookoutWall" parent="." unique_id=114446066 instance=ExtResource("21_uay0b")]
+terrain_id = &"SecretLookoutWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 8)
 flag = &"ow_secret_lookout_wall"
 covers = Array[NodePath]([NodePath("Lid")])
@@ -1014,6 +1017,7 @@ amount = 10
 flag = &"ow_secret_ravine_chest"
 
 [node name="SecretRavineWall" parent="." unique_id=716008109 instance=ExtResource("21_uay0b")]
+terrain_id = &"SecretRavineWall"
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -18, 0, -28)
 flag = &"ow_secret_ravine_wall"
 covers = Array[NodePath]([NodePath("Lid")])
@@ -1037,6 +1041,7 @@ amount = 5
 flag = &"ow_secret_summit_chest"
 
 [node name="SecretSummitWall" parent="." unique_id=631678416 instance=ExtResource("21_uay0b")]
+terrain_id = &"SecretSummitWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -26)
 flag = &"ow_secret_summit_wall"
 covers = Array[NodePath]([NodePath("Lid")])
@@ -1523,6 +1528,7 @@ target_spawn = &"start"
 shape = SubResource("BoxShape3D_1rjbp")
 
 [node name="ShrineCrackedWall" parent="." unique_id=1931097377 instance=ExtResource("21_uay0b")]
+terrain_id = &"ShrineCrackedWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88, 2.6, -22)
 flag = &"ow_shrine_cracked_wall"
 
@@ -1552,6 +1558,7 @@ script = ExtResource("32_v1yde")
 shape = SubResource("BoxShape3D_7se6l")
 
 [node name="GrottoCrackedWall" parent="." unique_id=454893272 instance=ExtResource("21_uay0b")]
+terrain_id = &"GrottoCrackedWall"
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -84, 0, 14)
 flag = &"ow_grotto_cracked_wall"
 
@@ -1672,7 +1679,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, 5.2, -36)
 flag = &"ow_heart_piece_cliff"
 hidden_until_revealed = false
 
-[node name="SpringCaveMouth" type="Node3D" parent="." unique_id=156304344]
+[node name="SpringCaveMouth" type="Node3D" parent="." unique_id=156304344 groups=["cave_mouths"]]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -99.85, 0, 38)
 
 [node name="Jambs" type="StaticBody3D" parent="SpringCaveMouth" unique_id=774572202]
@@ -1697,7 +1704,7 @@ target_spawn = &"entrada"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SpringCaveDoor" unique_id=668428541]
 shape = SubResource("BoxShape3D_springportal")
 
-[node name="BombCaveMouth" type="Node3D" parent="." unique_id=2130645365]
+[node name="BombCaveMouth" type="Node3D" parent="." unique_id=2130645365 groups=["cave_mouths"]]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -71.97, 0, -16)
 
 [node name="Jambs" type="StaticBody3D" parent="BombCaveMouth" unique_id=2075727006]
@@ -1816,7 +1823,7 @@ script = ExtResource("101_place")
 display_name = "PLACE_TOTORA"
 kind = 0
 
-[node name="CumbreMouth" type="Node3D" parent="." unique_id=840187496]
+[node name="CumbreMouth" type="Node3D" parent="." unique_id=840187496 groups=["cave_mouths"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -46)
 
 [node name="Jambs" type="StaticBody3D" parent="CumbreMouth" unique_id=1325530251]
@@ -1856,7 +1863,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 5.2, -27.5)
 [node name="AtoqC2" parent="." unique_id=424458702 instance=ExtResource("atoq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -28.6)
 
-[node name="LairMouth" type="Node3D" parent="." unique_id=2002806997]
+[node name="LairMouth" type="Node3D" parent="." unique_id=2002806997 groups=["cave_mouths"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 43)
 
 [node name="Jambs" type="StaticBody3D" parent="LairMouth" unique_id=834385811]

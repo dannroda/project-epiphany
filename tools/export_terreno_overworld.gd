@@ -19,7 +19,13 @@ const SPECIAL := {"Escalón": "S", "Andén borde": "v", "Hueco": "W"}
 const MOUNTAIN := 3
 ## Las plantas de la grilla apenas aplanan el terreno: si no, una hilera de árboles deja el borde de la terraza en escalera.
 const PLANTS := ["Árbol", "Queñoa chica", "Cardón", "Cardón brazos"]
-const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "Decor", "Player", "HUD", "OverworldMap", "TerrainStyles"]
+## Lo que no es un punto fijo: la grilla, el entorno y lo que no está en el piso, por clase (de Godot o del juego).
+const IGNORED := ["GridMap", "WorldEnvironment", "DirectionalLight3D", "NavigationRegion3D", "Camera3D", "PlayerCharacter", "OverworldMap",
+	"AreaZone", "ShallowWater"]
+const DECOR := "Decor"
+const STYLES := "TerrainStyles"
+## Las bocas de cueva (un Node3D con la boca y sus jambas) van en este grupo: el risco se recorta delante.
+const MOUTHS := &"cave_mouths"
 
 
 func _initialize() -> void:
@@ -69,7 +75,7 @@ static func build(level: Node3D, forced: Dictionary = {}) -> Dictionary:
 		rows.append(row)
 		levels.append(heights)
 	for water in level.get_children():
-		if not "wade_speed" in water:
+		if not _is(water, "ShallowWater"):
 			continue
 		var rect := Rect2(Vector2(water.position.x, water.position.z) - water.size / 2.0, water.size)
 		for r in rows.size():
@@ -78,7 +84,7 @@ static func build(level: Node3D, forced: Dictionary = {}) -> Dictionary:
 				if row[c] in ".:" and rect.has_point(Vector2((lo.x + c) * 2.0, (lo.y + r) * 2.0)):
 					row = row.substr(0, c) + "w" + row.substr(c + 1)
 			rows[r] = row
-	for area in level.get_node("TerrainStyles").get_children():
+	for area in level.get_node(STYLES).get_children():
 		var style := String(forced.get(String(area.name), area.style))
 		if style.is_empty():
 			continue
@@ -86,30 +92,43 @@ static func build(level: Node3D, forced: Dictionary = {}) -> Dictionary:
 		var half: Vector2 = area.size / 2.0
 		regions.append({"style": style, "rect": [center.x - half.x, center.z - half.y, center.x + half.x, center.z + half.y]})
 	for child in level.get_children():
-		if child is Node3D and not (child.get_class() in IGNORED or child.name in IGNORED) and not String(child.name).begins_with("Zone_") and not "wade_speed" in child:
+		if child is Node3D and not IGNORED.any(func(type: String) -> bool: return _is(child, type)) and not child.name in [DECOR, STYLES]:
 			var at := (child as Node3D).position
 			fixed.append([at.x, at.z, 1.6])
-			if child.scene_file_path.begins_with("res://src/world/cracked_wall"):
+			if _is(child, "CrackedWall"):
 				var t := (child as Node3D).transform
-				cracked.append({"name": String(child.name), "x": at.x, "z": at.z, "yaw": t.basis.get_euler().y})
-			if child.scene_file_path == "res://src/world/hook_post.tscn":
+				cracked.append({"name": String(child.terrain_id), "x": at.x, "z": at.z, "yaw": t.basis.get_euler().y})
+			if _is(child, "HookPost"):
 				posts.append([at.x, at.z])
-			if String(child.name).ends_with("Mouth"):
+			if child.is_in_group(MOUTHS):
 				mouths.append({"name": String(child.name), "x": at.x, "y": at.y, "z": at.z, "yaw": (child as Node3D).transform.basis.get_euler().y})
 			if "solved_position" in child:
 				fixed.append([child.solved_position.x, child.solved_position.z, 1.6])
-	var plants := level.get_node_or_null("Decor/Plantas")
-	for piece in level.get_node("Decor").find_children("*", "MeshInstance3D", true, false):
+	var plants := level.get_node_or_null(DECOR + "/Plantas")
+	for piece in level.get_node(DECOR).find_children("*", "MeshInstance3D", true, false):
 		if plants and plants.is_ancestor_of(piece):
 			continue
 		var at := _placed(piece, level)
 		decor.append([at.x, at.z, 0.8])
 	var eyes := []
 	for eye in level.find_children("*", "Node3D", true, false):
-		if eye.scene_file_path == "res://src/world/eye_switch.tscn":
+		if _is(eye, "EyeSwitch"):
 			var t := _xform(eye, level)
 			eyes.append({"x": t.origin.x, "z": t.origin.z, "dx": -t.basis.z.x, "dz": -t.basis.z.z})
 	return {"origin": [lo.x, lo.y], "cell": 2.0, "rows": rows, "levels": levels, "fixed": fixed, "decor": decor, "cracked": cracked, "mouths": mouths, "posts": posts, "eyes": eyes, "regions": regions}
+
+
+## Si el nodo es de esa clase de Godot o de un script con ese class_name (o que hereda de él). Sin tipar: este script
+## corre con --script, antes de que existan los autoloads que usan las clases del juego.
+static func _is(node: Node, type: String) -> bool:
+	if node.is_class(type):
+		return true
+	var script := node.get_script() as Script
+	while script:
+		if script.get_global_name() == type:
+			return true
+		script = script.get_base_script()
+	return false
 
 
 static func _placed(node: Node3D, level: Node3D) -> Vector3:

@@ -679,3 +679,17 @@ func test_the_terrain_json_matches_the_level() -> void:
 		elif now != then:
 			stale.append("%s: %s → %s" % [key, then, now])
 	assert_eq(stale, [], "el JSON del terreno quedó viejo")
+
+
+## 16.48: cada pared agrietada del overworld nombra su roca del terreno con `terrain_id`, no con el nombre del nodo.
+func test_every_cracked_wall_has_its_terrain_rock() -> void:
+	var level: Node3D = (load(LEVEL) as PackedScene).instantiate()
+	var missing: Array[String] = []
+	var walls := level.find_children("*", "CrackedWall", false, false)
+	assert_eq(walls.size(), 7, "las siete paredes agrietadas del overworld")
+	for wall: CrackedWall in walls:
+		var rock := "res://assets/epiphany/meshes/muros_organicos/muro_%s.res" % wall.terrain_id
+		if wall.terrain_id.is_empty() or not ResourceLoader.exists(rock):
+			missing.append(String(wall.name))
+	assert_eq(missing, [], "paredes agrietadas sin su roca")
+	level.free()
