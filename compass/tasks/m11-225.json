@@ -5,13 +5,13 @@
   "created_at": "2026-10-20T18:34:15.510Z",
   "description": "Daniel (2026-10-20): el escudo parece que lo lleva arrastrando. Referencias (Link de Minish Cap y de A Link Between Worlds): sin cubrirse, el escudo va en el antebrazo izquierdo, delante del cuerpo a la altura del pecho o la cintura, con el borde de abajo bien lejos del piso; al cubrirse, el brazo sube y se adelanta y el escudo tapa torso y cabeza de frente a la amenaza. Hoy es ShieldSocket (Marker3D en Hand_L de player.tscn) con transform a mano, y al cubrirse Melee_Blocking. Revisar quieto, caminando, corriendo, rodando y atacando. Encargado a diseño (-88).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "-88 (wt/design-fix faeb5450, main 3ce8872a): sin cubrirse, ShieldSocket a mitad del antebrazo izquierdo, cara al frente (≈35° a la izquierda), borde lejos del piso; pose nueva Carry/Shield_Hold (build_carry_anims.py). Al cubrirse Carry/Shield_Block reemplaza a Melee_Blocking: antebrazo parado delante del pecho, tapa torso y mentón (con el brazo chibi no llega a toda la cabeza). AnimationTree: ShieldArm (Blend2 filtrado al brazo izquierdo) sobre moverse y atacar; ShieldRoll al rodar con la pose de base para que el OneShot de Dodge conserve su duración; Guard arriba de Attack. Equipment apaga las capas sin escudo en la mano (arco). Arreglos de paso: SwordBeam ignora los cuerpos de quien lo tira (el StaticBody del escudo lo deshacía); el fantasma del rodar en test_player mide el AABB entero.",
   "order": 221,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "test_shield › test_the_shield_rides_in_front_and_rises_to_block (mira al frente, va delante, borde a más de 0,25 m del piso, sube al cubrirse), test_the_shield_arm_lets_go_without_the_shield_in_hand. Capturas antes/después (idle, carrera, rodar, ataque, bloqueo quieto y caminando) en epiphany-wt/design/debug/tmp/design/escudo_antes_despues.png.",
   "title": "Escudo del player: en el brazo, no arrastrándolo",
-  "updated_at": "2026-10-20T18:34:15.510Z"
+  "updated_at": "2026-10-20T19:00:06.713Z"
 }

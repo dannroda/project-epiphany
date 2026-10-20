@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (215/219, 56 en revisión)
+## M11 — Pulido: contenido y feel  (216/219, 57 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5774,11 +5774,15 @@ Daniel (2026-10-20): el golpe en picada (11.34 paso 4) no se entiende y se sient
 **Notas:** -88 (wt/design-fix 708d9ea2, main e82f5bee): can_plunge solo pide haber despegado y ow_tech_plunge. Sube rise_height (1 m) con la espada en alto, frena mientras la espada gira hacia abajo, cae a fall_speed; en el impacto onda ×2 de 1,2 m, polvo, Feel.shake y hit_stone; la espada queda clavada stuck_time y la saca (pull_time). Poses Carry/Plunge_Rise, _Fall, _Stuck, _Pull horneadas en build_carry_anims.py (IK al mango) en lugar de Melee_2H_Attack_Chop. Exports en el nodo Plunging de player.tscn: rise_height, hang_time, fall_speed, stuck_time, pull_time, shake. GDD 4.2 y TECH_PLUNGE_DESC/tech_plunge_1 (es/en).
 Bug de antes que encontró: el HSM del player corre dos veces por cuadro de física (LimboHSM update_mode PHYSICS por defecto + movement_state.update(delta) en player.gd). Los valores del picado están pensados para eso: hang 0,24 / stuck 0,9 / pull 0,7 ≈ 0,12 / 0,45 / 0,35 s reales, fall 9 ≈ 18 m/s.
 
-### 11.225 Escudo del player: en el brazo, no arrastrándolo · En curso
+### 11.225 Escudo del player: en el brazo, no arrastrándolo · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** design
 
 Daniel (2026-10-20): el escudo parece que lo lleva arrastrando. Referencias (Link de Minish Cap y de A Link Between Worlds): sin cubrirse, el escudo va en el antebrazo izquierdo, delante del cuerpo a la altura del pecho o la cintura, con el borde de abajo bien lejos del piso; al cubrirse, el brazo sube y se adelanta y el escudo tapa torso y cabeza de frente a la amenaza. Hoy es ShieldSocket (Marker3D en Hand_L de player.tscn) con transform a mano, y al cubrirse Melee_Blocking. Revisar quieto, caminando, corriendo, rodando y atacando. Encargado a diseño (-88).
+
+**Prueba:** test_shield › test_the_shield_rides_in_front_and_rises_to_block (mira al frente, va delante, borde a más de 0,25 m del piso, sube al cubrirse), test_the_shield_arm_lets_go_without_the_shield_in_hand. Capturas antes/después (idle, carrera, rodar, ataque, bloqueo quieto y caminando) en epiphany-wt/design/debug/tmp/design/escudo_antes_despues.png.
+
+**Notas:** -88 (wt/design-fix faeb5450, main 3ce8872a): sin cubrirse, ShieldSocket a mitad del antebrazo izquierdo, cara al frente (≈35° a la izquierda), borde lejos del piso; pose nueva Carry/Shield_Hold (build_carry_anims.py). Al cubrirse Carry/Shield_Block reemplaza a Melee_Blocking: antebrazo parado delante del pecho, tapa torso y mentón (con el brazo chibi no llega a toda la cabeza). AnimationTree: ShieldArm (Blend2 filtrado al brazo izquierdo) sobre moverse y atacar; ShieldRoll al rodar con la pose de base para que el OneShot de Dodge conserve su duración; Guard arriba de Attack. Equipment apaga las capas sin escudo en la mano (arco). Arreglos de paso: SwordBeam ignora los cuerpos de quien lo tira (el StaticBody del escudo lo deshacía); el fantasma del rodar en test_player mide el AABB entero.
 
 ### 11.226 HSM del player corre dos veces por cuadro · En curso
 
