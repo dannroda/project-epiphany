@@ -20,6 +20,9 @@ const DEFAULTS := {
 	&"ui_scale": 100,
 	## Tope de cuadros por segundo (0 = sin límite): con un monitor de 200 Hz el juego dibujaba 200 sin necesidad.
 	&"max_fps": 60,
+	## Calidad de la sombra del sol (15.3): 2 = alta (atlas 4096, filtro del proyecto); 1 = baja (2048, filtro bajo), ~0.5 ms
+	## menos de GPU en el overworld a 1080p.
+	&"shadows": 2,
 	&"language": "",
 	## Co-op, a prueba (13.9): "ring" = cada uno elige con su anillo; "shared" = el menú de pausa con un cursor por player.
 	&"coop_item_menu": "ring",
@@ -111,6 +114,11 @@ func _apply(key := &"") -> void:
 		return
 	if all or key == &"max_fps":
 		Engine.max_fps = get_value(&"max_fps")
+	if all or key == &"shadows":
+		var high: bool = get_value(&"shadows") >= 2
+		RenderingServer.directional_shadow_atlas_set_size(ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/size") if high else 2048,
+			ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/16_bits"))
+		RenderingServer.directional_soft_shadow_filter_set_quality(ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality") if high else RenderingServer.SHADOW_QUALITY_SOFT_VERY_LOW)
 	if all or key == &"fullscreen":
 		var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if get_value(&"fullscreen") else DisplayServer.WINDOW_MODE_WINDOWED
 		if DisplayServer.window_get_mode() != mode:

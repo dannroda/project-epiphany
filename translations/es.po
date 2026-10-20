@@ -1156,6 +1156,15 @@ msgstr "Tope de cuadros por segundo"
 msgid "OPTIONS_MAX_FPS_UNLIMITED"
 msgstr "Sin límite"
 
+msgid "OPTIONS_SHADOWS"
+msgstr "Sombras"
+
+msgid "OPTIONS_SHADOWS_HIGH"
+msgstr "Altas"
+
+msgid "OPTIONS_SHADOWS_LOW"
+msgstr "Bajas"
+
 msgid "CUTSCENE_HOLD_SKIP"
 msgstr "Mantener: saltar"
 

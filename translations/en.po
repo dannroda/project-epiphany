@@ -1360,6 +1360,15 @@ msgstr "Frame rate cap"
 msgid "OPTIONS_MAX_FPS_UNLIMITED"
 msgstr "Unlimited"
 
+msgid "OPTIONS_SHADOWS"
+msgstr "Shadows"
+
+msgid "OPTIONS_SHADOWS_HIGH"
+msgstr "High"
+
+msgid "OPTIONS_SHADOWS_LOW"
+msgstr "Low"
+
 msgctxt "character"
 msgid "Fin de la demo"
 msgstr "End of the demo"

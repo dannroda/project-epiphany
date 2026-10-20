@@ -296,3 +296,23 @@ popup/item_2/text = "120"
 popup/item_2/id = 120
 popup/item_3/text = "OPTIONS_MAX_FPS_UNLIMITED"
 popup/item_3/id = 0
+
+[node name="Shadows" type="HBoxContainer" parent="Right"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Right/Shadows"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_SHADOWS"
+
+[node name="shadows" type="OptionButton" parent="Right/Shadows"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "OPTIONS_SHADOWS_HIGH"
+popup/item_0/id = 2
+popup/item_1/text = "OPTIONS_SHADOWS_LOW"
+popup/item_1/id = 1
