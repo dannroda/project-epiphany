@@ -5,17 +5,17 @@
   "created_at": "2026-10-17T05:58:31.504Z",
   "description": "Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Ojo: blink, roar, awaken, carga del láser y del orbe, relax, flare, sacudida, muerte; marcas y blasts en sus plantillas; flotar y aturdido en AnimationTree. Manos: un AnimationPlayer por mano para aturdida, desaparecer, colapsar, onda, aviso del agarre, flex. El resorte de _animate queda en código. Tocar boss.tscn solo cuando Daniel no tenga cambios sin commitear ahí.",
   "milestone": "m16",
-  "notes": "",
+  "notes": "-5c (2026-10-19): done in 34cb4107. Eye: clips on Lids (roar, awaken, scream, death), Blink, Charging (orb_charge, laser_charge, relax), Glow, Flare and Pupil, driven by eye_shine, body_shine, charging and sink. Float and stunned live in the Float AnimationTree (closed, open, stunned, with xfade and curves). Marks and blasts: an Anim player in their templates. Hands (boss and hand guard): Anim (stunned, grab_warn, collapse, vanish, flex) and Wave, from shared libraries boss_hand_anim.tres and boss_hand_wave.tres. Still in code: the jolt when the eye is hit (random rotations), the hit tint, the _animate spring, the slam/sweep moves and the laser (runtime targets). 673/0.",
   "order": 91,
   "priority": "low",
   "refs": [],
   "size": "l",
-  "status": "todo",
+  "status": "review",
   "tags": [
     "refactor",
     "animacion"
   ],
   "test": "",
   "title": "Animaciones a AnimationPlayer: jefe final (ojo y manos)",
-  "updated_at": "2026-10-20T00:27:53.386Z"
+  "updated_at": "2026-10-20T01:29:06.827Z"
 }

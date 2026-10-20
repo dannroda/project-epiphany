@@ -5673,11 +5673,9 @@ Auditoría con patrones de diseño (-72, 2026-10-19): save_manager.gd:135 copy_s
 
 ### 11.219 Cámara: el canal de agua tras el labio sur se ve negro · Pendiente
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `camara`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `camara`
 
 Revisión de Totora con paredes dobles (12.41, 2026-10-19). Desde Gancho, el canal de agua del cruce del gancho hacia Balsas, que atraviesa la pared doble sur, se ve como un hueco negro. Desde Balsas se ve bien. No es el nivel: en top_down_camera._mask_around, detrás del labio sur de la sala, la tira 5 tapa hasta piso − 0.3 (cc571214, 11.151 d5e0d9a5, para que no asome el piso de abajo) y el agua está a −0.35, así que queda bajo la máscara. Pasa en toda puerta sur de toda mazmorra; con agua se lee como agujero. Arreglo posible: excepción de cámara (no bajar la tira 5 en celdas con agua, o que la sala vea su canal). Toca la cámara de todos los niveles: coordinar con 16.54. Capturas: debug/tmp/design/tot_Gancho.png y tot_Balsas.png en wt/design.
-
-**Bloqueada por:** 16.54 TopDownCamera hace demasiado
 
 ### 11.220 Tests: test_arena_fighter falla a veces junto a test_centinela y test_audio · Revisión
 
@@ -6849,11 +6847,13 @@ Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTre
 
 **Notas:** Hecho en main (35dc0a89..4b6842bb). Momia, Ojo Vigía, Amaru/Yacumama, Centinela, Kuntur, torreta y el hundirse del enemigo usan clips en %Moves (ArenaFighter._clip: speed_scale = pace, estirado a la duración de la instancia). Alturas por instancia normalizadas (lift, hover/rise, submerge, tail_up, squash, sunk). Alas del Kuntur: un AnimationPlayer %Wings con un clip por pose y cruce con play(pose, blend) en vez de AnimationTree (cada cambio trae su tiempo de mezcla). Centinela: aim_lock y warn_lead pasaron a ser llamadas del clip windup. Todos los AnimationPlayers nuevos con deterministic = false y cortes con stop(true). Para probar: pelear cada sub-jefe y mirar rugido, saltos, temblor trabado y muerte; Kuntur: alas en cada ataque.
 
-### 16.32 Animaciones a AnimationPlayer: jefe final (ojo y manos) · Pendiente
+### 16.32 Animaciones a AnimationPlayer: jefe final (ojo y manos) · Revisión
 
 **Prioridad:** baja · **Tamaño:** L · **Responsable:** project-epiphany-5c · **Etiquetas:** `refactor`, `animacion`
 
 Daniel (2026-10-17): lo animado por código pasa a AnimationPlayer (AnimationTree cuando hay estados o mezclas), para verlo y ajustarlo en el editor. Los tweens quedan solo para destinos calculados en runtime y esperas. Ojo: blink, roar, awaken, carga del láser y del orbe, relax, flare, sacudida, muerte; marcas y blasts en sus plantillas; flotar y aturdido en AnimationTree. Manos: un AnimationPlayer por mano para aturdida, desaparecer, colapsar, onda, aviso del agarre, flex. El resorte de _animate queda en código. Tocar boss.tscn solo cuando Daniel no tenga cambios sin commitear ahí.
+
+**Notas:** -5c (2026-10-19): done in 34cb4107. Eye: clips on Lids (roar, awaken, scream, death), Blink, Charging (orb_charge, laser_charge, relax), Glow, Flare and Pupil, driven by eye_shine, body_shine, charging and sink. Float and stunned live in the Float AnimationTree (closed, open, stunned, with xfade and curves). Marks and blasts: an Anim player in their templates. Hands (boss and hand guard): Anim (stunned, grab_warn, collapse, vanish, flex) and Wave, from shared libraries boss_hand_anim.tres and boss_hand_wave.tres. Still in code: the jolt when the eye is hit (random rotations), the hit tint, the _animate spring, the slam/sweep moves and the laser (runtime targets). 673/0.
 
 ### 16.33 Mezclas del player en el AnimationTree, no con tweens · Revisión
 
@@ -7018,8 +7018,6 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 813 líneas y 8 @export_group (lock-on, look, apuntado, reveals, cinemática, salas, oclusión, co-op); diseño y arte editan los reveals en el mismo archivo (pasó con AmbienteZoom). Arreglo: Reveal y Occlusion como nodos hijos en la escena de la cámara. Coordinar con arte.
-
-**Bloquea a:** 11.219 Cámara: el canal de agua tras el labio sur se ve negro
 
 ### 16.55 Enemy carga la defensa de dos variantes · Revisión
 

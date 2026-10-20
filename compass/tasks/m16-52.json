@@ -4,12 +4,6 @@
   "code": "16.54",
   "created_at": "2026-10-19T22:57:39.322Z",
   "description": "Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 813 líneas y 8 @export_group (lock-on, look, apuntado, reveals, cinemática, salas, oclusión, co-op); diseño y arte editan los reveals en el mismo archivo (pasó con AmbienteZoom). Arreglo: Reveal y Occlusion como nodos hijos en la escena de la cámara. Coordinar con arte.",
-  "links": [
-    {
-      "task": "m11-219",
-      "type": "blocks"
-    }
-  ],
   "milestone": "m16",
   "notes": "",
   "order": 113,
@@ -22,5 +16,5 @@
   ],
   "test": "",
   "title": "TopDownCamera hace demasiado",
-  "updated_at": "2026-10-20T00:58:43.038Z"
+  "updated_at": "2026-10-20T01:26:51.698Z"
 }
