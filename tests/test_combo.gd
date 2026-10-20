@@ -163,8 +163,8 @@ func test_guarding_does_not_charge() -> void:
 	assert_true(player.is_blocking(), "se cubre")
 	_event(&"attack", true)
 	Input.action_press(&"attack")
-	await tree.create_timer(player.sword_charge.charge_time + 0.3).timeout
-	assert_true(not player.sword_charge.is_charged(), "cubriéndose no carga")
+	await tree.create_timer(player.sword_charge.great_charge_time + 0.3).timeout
+	assert_true(not player.sword_charge.is_charged() and not player.sword_charge.is_great_charged(), "cubriéndose no carga, ni el giro grande")
 	Input.action_release(&"attack")
 	_event(&"attack", false)
 	for i in 4:
@@ -187,3 +187,42 @@ func test_rolling_does_not_charge() -> void:
 	Input.action_release(&"attack")
 	assert_eq(during, 0.0, "rodando no carga")
 	await _done(tree)
+
+
+func test_holding_longer_charges_the_great_spin() -> void:
+	var setup: Array = await _level()
+	var tree: SceneTree = setup[0]
+	var player: PlayerCharacter = setup[1]
+	var charge := player.sword_charge
+	var sword := player.equipment.weapon.behavior as MeleeBehavior
+	_event(&"attack", true)
+	Input.action_press(&"attack")
+	assert_true(await _until(tree, func() -> bool: return charge.is_charged(), 120), "primero la carga normal")
+	assert_true(not charge.is_great_charged() and charge.glow.current_animation == &"charged")
+	assert_true(await _until(tree, func() -> bool: return charge.is_great_charged(), 180), "manteniendo más, la grande")
+	assert_eq(charge.glow.current_animation, &"great", "con otro brillo")
+	Input.action_release(&"attack")
+	_event(&"attack", false)
+	assert_true(await _until(tree, func() -> bool: return _state(player) == &"Spinning", 10), "al soltar, gira")
+	await _until(tree, func() -> bool: return player.attack_runner.is_active())
+	assert_eq(player.attack_runner.current, sword.great_spin, "el giro grande")
+	assert_true(sword.great_spin.damage_multiplier > sword.spin.damage_multiplier, "pega más que el normal")
+	await _until(tree, func() -> bool: return _state(player) == &"Idle")
+	_event(&"attack", true)
+	Input.action_press(&"attack")
+	await _until(tree, func() -> bool: return charge.is_charged(), 120)
+	Input.action_release(&"attack")
+	_event(&"attack", false)
+	await _until(tree, func() -> bool: return player.attack_runner.is_active() and _state(player) == &"Spinning")
+	assert_eq(player.attack_runner.current, sword.spin, "soltando antes del segundo umbral, el normal")
+	await _done(tree)
+
+
+func test_the_great_spin_reaches_farther() -> void:
+	var setup: Array = await _level()
+	var player: PlayerCharacter = setup[1]
+	var radius := func(name: StringName) -> float:
+		var hitbox := player.attack_runner.hitboxes.get(name) as Hitbox
+		return ((hitbox.get_child(0) as CollisionShape3D).shape as CylinderShape3D).radius
+	assert_true(radius.call(&"great_spin") > radius.call(&"spin"), "el grande abarca más (%.1f > %.1f m)" % [radius.call(&"great_spin"), radius.call(&"spin")])
+	await _done(setup[0])

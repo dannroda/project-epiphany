@@ -7,6 +7,8 @@ extends ItemBehavior
 @export var combo: Array[AttackData] = []
 ## Mantener ataque y soltar con la carga llena (SwordCharge); sin él, no carga.
 @export var spin: AttackData
+## Cargando más (SwordCharge.great_charge_time): el giro grande; sin él, el normal.
+@export var great_spin: AttackData
 
 
 func get_animation(_item: ItemData) -> StringName:

@@ -280,10 +280,12 @@ func combo_length() -> int:
 	return melee.chain().size() if melee else 1
 
 
-## El giro cargado del arma en la mano; null si no tiene o se está cubriendo.
-func spin_attack() -> AttackData:
+## El giro cargado del arma en la mano (`great`: el grande, si lo tiene); null si no tiene o se está cubriendo.
+func spin_attack(great := false) -> AttackData:
 	var melee := _melee()
-	return melee.spin if melee and not is_blocking() else null
+	if melee == null or is_blocking():
+		return null
+	return melee.great_spin if great and melee.great_spin else melee.spin
 
 
 func _melee() -> MeleeBehavior:

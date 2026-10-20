@@ -10,6 +10,7 @@ const BB_IS_BLOCKING := &"is_blocking"
 const BB_INPUT_DIR := &"input_dir"
 const BB_ITEM_BUTTON := &"item_button"
 const BB_GRABBED_BY := &"grabbed_by"
+const BB_GREAT_SPIN := &"great_spin"
 
 ## Al cruzar de sala pasa a Transition.
 @export var follows_room_transition := true

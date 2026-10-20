@@ -7,4 +7,4 @@ func _setup() -> void:
 
 
 func _pick_attack() -> AttackData:
-	return player.spin_attack()
+	return player.spin_attack(blackboard.get_var(BB_GREAT_SPIN, false))

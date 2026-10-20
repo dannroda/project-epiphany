@@ -530,6 +530,10 @@ _data = {
 height = 1.4
 radius = 1.8
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_great_spin"]
+height = 1.6
+radius = 3.0
+
 [sub_resource type="Animation" id="ChargeReset"]
 resource_name = "RESET"
 length = 0.001
@@ -556,6 +560,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:light_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(0.55, 0.9, 1, 1)]
 }
 
 [sub_resource type="Animation" id="ChargeCharging"]
@@ -584,6 +600,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:light_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(0.55, 0.9, 1, 1)]
 }
 
 [sub_resource type="Animation" id="ChargeCharged"]
@@ -614,12 +642,66 @@ tracks/1/keys = {
 "update": 0,
 "values": [3.0, 1.8, 3.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:light_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(0.55, 0.9, 1, 1)]
+}
+
+[sub_resource type="Animation" id="ChargeGreat"]
+resource_name = "great"
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:light_energy")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [6.0, 3.5, 6.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:light_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(1, 0.85, 0.45, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="ChargeLib"]
 _data = {
 &"RESET": SubResource("ChargeReset"),
 &"charged": SubResource("ChargeCharged"),
-&"charging": SubResource("ChargeCharging")
+&"charging": SubResource("ChargeCharging"),
+&"great": SubResource("ChargeGreat")
 }
 
 [node name="Player" type="CharacterBody3D" unique_id=1694148988]
@@ -941,6 +1023,17 @@ script = ExtResource("c_hitbox")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ModelController/Hitboxes/Spin"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CylinderShape3D_spin")
+
+[node name="GreatSpin" type="Area3D" parent="ModelController/Hitboxes"]
+collision_layer = 0
+collision_mask = 24
+monitoring = false
+monitorable = false
+script = ExtResource("c_hitbox")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ModelController/Hitboxes/GreatSpin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CylinderShape3D_great_spin")
 
 [node name="TargetDetector" type="Area3D" parent="." unique_id=1133754967]
 

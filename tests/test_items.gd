@@ -52,7 +52,7 @@ func test_player_attacks_play_their_own_animation() -> void:
 	var tree_root := (player.get_node(^"ModelController/AnimationTree") as AnimationTree).tree_root as AnimationNodeBlendTree
 	var types := tree_root.get_node(&"AttackType") as AnimationNodeTransition
 	var sword := Items.get_item(&"sword_basic").behavior as MeleeBehavior
-	for attack: AttackData in sword.chain() + [sword.spin, PlayerCharacter.SWORD_STAB]:
+	for attack: AttackData in sword.chain() + [sword.spin, sword.great_spin, PlayerCharacter.SWORD_STAB]:
 		var inputs := range(types.input_count).map(func(i: int) -> StringName: return types.get_input_name(i))
 		assert_true(attack.tree_state in inputs, "%s: AttackType tiene la entrada %s" % [attack.resource_path, attack.tree_state])
 		var node := tree_root.get_node(NODE_OF[attack.tree_state]) as AnimationNodeAnimation
