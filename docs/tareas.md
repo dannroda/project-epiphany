@@ -3133,7 +3133,7 @@ Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-anima
 
 **Relacionadas:** 10.28 Playtest de revisión (lo que está en Revisión); 11.49 VFX de combate
 
-### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Pendiente
+### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · En curso
 
 **Prioridad:** media · **Responsable:** project-epiphany-72 · **Etiquetas:** `combate`
 
@@ -3143,13 +3143,13 @@ Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro c
   Tajo, revés y estocada encadenados con el buffer; el tercero hace más daño y empuja. Animaciones de Rig_Medium (CombatMelee).
 - [x] Ataque giratorio cargado
   Mantener ataque: la espada brilla (neón), al soltar gira 360°. Versión grande al cargar más (Great Spin).
-- [ ] Contraataque (parry de Wind Waker)
+- [x] Contraataque (parry de Wind Waker)
   Cuando un enemigo telegrafía, aparece un prompt corto: al apretarlo, el player salta por encima o rodea y pega por la espalda. Sirve también con las manos del jefe.
-- [ ] Técnicas extra a elegir
+- [x] Técnicas extra a elegir
   Estocada en carrera (dash attack), salto con golpe (jump strike), rayo de espada con la vida llena (Minish Cap). Elegir 1–2 para la demo.
 - [ ] Cómo se aprenden
   Como los pergaminos de Minish Cap: algunas técnicas se enseñan en tablillas/santuarios del overworld (cruza con 11.22 y 11.24); el combo y el giro desde el inicio. Mostrarlas en la pantalla de equipo.
-- [ ] Input y tutorial
+- [x] Input y tutorial
   Que no choquen con lock-on, bloqueo y rodar; prompt la primera vez que se aprende cada una; anotar en el mapa de input del GDD §4.3.
 
 **Prueba:** Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.
@@ -3161,6 +3161,8 @@ Daniel (2026-10-20) approved -72's proposal for steps 3–6 as written: countera
 Daniel (2026-10-20, via -72, with the mockups Pause_Equipo_Tecnicas, Technique_Learned, HUD_Counter, Tutorial_Card and HUD_Practice_Chip on the canvas): a practice dummy at every technique stone; half speed in the counter window ALWAYS, with an option in Opciones to turn it off (not just the first time).
 
 Step 3 counterattack (55931a63) and step 4 plunge (897b80e5) merged. Daniel (2026-10-20): STRIKE plates stay hammer-only; the plunge doesn't press them (-72 changes FloorSwitch). The boss hands can't be countered (they can't be locked on): pending Daniel's decision.
+
+Merged (-72): beam 969bb550, Técnicas row in Equipo 6acb8973, technique stones + dummy + Técnica nueva screen 1276342c, hammer-only STRIKE plates a42845ed. Step 5 is missing: placing the stones in the overworld (Pradera, Arboleda, Cumbre).
 
 **Referencias:** `gdd.md#combate`, `gdd.md#input`
 
