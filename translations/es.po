@@ -1162,6 +1162,9 @@ msgstr "Sombras"
 msgid "OPTIONS_SHADOWS_HIGH"
 msgstr "Altas"
 
+msgid "OPTIONS_RENDER_SCALE"
+msgstr "Resolución 3D"
+
 msgid "OPTIONS_SHADOWS_LOW"
 msgstr "Bajas"
 

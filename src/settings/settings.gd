@@ -23,6 +23,8 @@ const DEFAULTS := {
 	## Calidad de la sombra del sol (15.3): 2 = alta (atlas 4096, filtro del proyecto); 1 = baja (2048, filtro bajo), ~0.5 ms
 	## menos de GPU en el overworld a 1080p.
 	&"shadows": 2,
+	## Escala de la resolución 3D en % (15.7): por debajo de 100 escala con FSR; la UI sigue a resolución completa.
+	&"render_scale": 100,
 	&"language": "",
 	## Co-op, a prueba (13.9): "ring" = cada uno elige con su anillo; "shared" = el menú de pausa con un cursor por player.
 	&"coop_item_menu": "ring",
@@ -110,6 +112,10 @@ func _apply(key := &"") -> void:
 		get_tree().root.content_scale_factor = float(get_value(&"ui_scale")) / 100.0
 	if all or key == &"language":
 		TranslationServer.set_locale(language())
+	if all or key == &"render_scale":
+		var scale: int = get_value(&"render_scale")
+		get_tree().root.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR if scale < 100 else Viewport.SCALING_3D_MODE_BILINEAR
+		get_tree().root.scaling_3d_scale = scale / 100.0
 	if DisplayServer.get_name() == "headless":
 		return
 	if all or key == &"max_fps":

@@ -33,7 +33,7 @@ func _ready() -> void:
 		radio.toggled.connect(func(on: bool) -> void:
 			if on:
 				Settings.set_value(&"language", language))
-	for key: StringName in [&"ui_scale", &"max_fps", &"shadows"]:
+	for key: StringName in [&"ui_scale", &"max_fps", &"shadows", &"render_scale"]:
 		var picker := get_node("%" + key) as OptionButton
 		picker.select(picker.get_item_index(Settings.get_value(key)))
 		picker.item_selected.connect(func(index: int) -> void: Settings.set_value(key, picker.get_item_id(index)))
