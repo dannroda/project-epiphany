@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-72",
   "checklist": [
     {
       "detail": "Tajo, revés y estocada encadenados con el buffer; el tercero hace más daño y empuja. Animaciones de Rig_Medium (CombatMelee).",
@@ -60,5 +61,5 @@
   ],
   "test": "Con el combate pulido (11.33): encadenar el combo de 3, cargar y soltar el giro, contraatacar a un chullpa en su telegraph y usar una técnica aprendida en una tablilla; ninguna se dispara sin querer al rodar, bloquear o fijar.",
   "title": "Combos y técnicas especiales (Minish Cap / Wind Waker)",
-  "updated_at": "2026-10-15T19:53:07.272Z"
+  "updated_at": "2026-10-20T01:30:24.899Z"
 }

@@ -3111,7 +3111,7 @@ Skills: `disciplines:game-feel`, `disciplines:input-systems`, `godot:godot-anima
 
 ### 11.34 Combos y técnicas especiales (Minish Cap / Wind Waker) · Pendiente
 
-**Prioridad:** media · **Etiquetas:** `combate`
+**Prioridad:** media · **Responsable:** project-epiphany-72 · **Etiquetas:** `combate`
 
 Técnicas de espada al estilo Minish Cap y Wind Waker: combo de 3 golpes, giro cargado, contraataque y 1–2 técnicas extra que se aprenden en el mundo, sin chocar con fijar, bloquear y rodar.
 
@@ -3405,7 +3405,7 @@ VFX de combate en el estilo del juego: estela de la espada y partículas low pol
 
 ### 11.50 Audio del jefe · Pendiente
 
-**Prioridad:** baja · **Etiquetas:** `jefe`, `audio`
+**Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `jefe`, `audio`
 
 Audio propio para el jefe: voz mecánica, chirridos, carga del orbe y golpes con grave, y un tema de música con capas por fase en lugar del placeholder.
 
@@ -7013,11 +7013,13 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/
 
 **Notas:** Hecho (-e0): PhysicsLayers (src/world/physics_layers.gd) nombra las capas del proyecto y PhysicsLayers.sensor(area) arma los 7 sensores (area_zone, tremor_zone, pit, portal, travel_portal, shallow_water, stairs) en vez de escribir layer/mask/monitorable a mano; los números copiados de hurtbox/object/interactable apuntan ahí. BoxBounds.xz es el único bounds() de Room, AreaZone y ArenaArea. EyeSwitch exporta look_range, look_limit_deg y look_speed (grupo Mirada); EyeFollow mueve un iris y EyeSwitch gira el ojo, no comparten mirada. Quedan para 16.38 (después de los assets): el sondeo de ArenaArea, el grupo que consulta enfoque_la por cuadro y los materiales de brillo_la por node_added. 331 pruebas relacionadas, 0 fallos.
 
-### 16.54 TopDownCamera hace demasiado · Pendiente
+### 16.54 TopDownCamera hace demasiado · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-72 · **Etiquetas:** `refactor`
 
 Auditoría con patrones de diseño (-72, 2026-10-19): top_down_camera.gd tiene 813 líneas y 8 @export_group (lock-on, look, apuntado, reveals, cinemática, salas, oclusión, co-op); diseño y arte editan los reveals en el mismo archivo (pasó con AmbienteZoom). Arreglo: Reveal y Occlusion como nodos hijos en la escena de la cámara. Coordinar con arte.
+
+**Notas:** Hecho (-72): escena nueva src/tools/top_down_camera.tscn: raíz TopDownCamera e hijos Reveal (CameraReveal: pan_time, look = zoom.tres, tone_time, hold, zoom; hace el reveal, el salteo y SKIP_ACTIONS) y Occlusion (CameraOcclusion: overhead_time, overhead_hold; rayos, resorte de arriba, player_hole). Cada parte con sus exports; el ajuste de AmbienteZoom va en Reveal.look. La cámara baja de 825 a ~630 líneas y mantiene su API pública. Los 17 niveles instancian la escena (el de test_targeting se llama Camera); solo cambió el encabezado y la línea del script; ningún nivel sobreescribía reveal_*/overhead_*. Prueba de refresh en chullpa: overrides y EnfoqueLA/Polvo sobreviven al repack (ahí salió el bug current=Callable, arreglado en 80b84b1a con TopDownCamera.find). test_camera › test_every_level_instances_the_camera_scene. gdd actualizado.
 
 ### 16.55 Enemy carga la defensa de dos variantes · Revisión
 
