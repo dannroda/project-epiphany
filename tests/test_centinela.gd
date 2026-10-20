@@ -174,3 +174,25 @@ func test_the_sentinel_is_solid() -> void:
 	Input.action_release(&"move_forward")
 	assert_true(closest > 1.1, "no se lo atraviesa caminando (%.2f m)" % closest)
 	tree.root.get_node(^"GameState").reset()
+
+
+## Las escoltas salen como estaban en el nivel, con los overrides de sus hijos (16.52), no recargadas de su escena.
+func test_escorts_keep_their_instance_overrides() -> void:
+	tree = Engine.get_main_loop() as SceneTree
+	tree.root.get_node(^"GameState").reset()
+	var original := (load(LEVEL) as PackedScene).instantiate()
+	var probe := (original.get_node(^"HammerFight").get(&"escorts")[0] as Node).get_child(0)
+	probe.set_meta(&"override_probe", 7)
+	tree.change_scene_to_node(original)
+	await tree.scene_changed
+	await tree.create_timer(0.3).timeout
+	level = tree.current_scene
+	player = tree.get_first_node_in_group(&"player") as PlayerCharacter
+	player.health.invulnerability_time = 0.0
+	fight = level.get_node(^"HammerFight") as ArenaFight
+	TopDownCamera.unlock_reveals = true
+	var hold := _hold_player(fight.global_position + Vector3(0, 0, 4))
+	assert_true(await _until(func() -> bool: return _escorts().size() == 2), "aparecen los huancas")
+	var kept := _escorts().filter(func(enemy: Enemy) -> bool: return enemy.get_child(0).get_meta(&"override_probe", 0) == 7)
+	assert_eq(kept.size(), 1, "la escolta trae lo que se cambió en su hijo")
+	tree.physics_frame.disconnect(hold)

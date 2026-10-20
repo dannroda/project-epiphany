@@ -25,9 +25,9 @@ signal bar_changed
 ## Aparece al ganar (el contenedor de corazón): queda fuera del árbol hasta entonces; tomado, no vuelve.
 @export var reward: Pickup
 @export var reward_flag: StringName
-## Monstruos que acompañan al jefe (instancias de escena): aparecen al arrancar la pelea, nuevos cada vez, y también hay
-## que vencerlos para ganar.
-@export var escorts: Array[Node3D] = []
+## Monstruos que acompañan al jefe: aparecen al arrancar la pelea, copias nuevas de los puestos a mano (con sus overrides)
+## cada vez, y también hay que vencerlos para ganar.
+@export var escorts: Array[Enemy] = []
 @export var arena_margin := 1.5
 @export var close_delay := 0.6
 @export var intro_hold := 1.6
@@ -42,8 +42,30 @@ var in_intro := false
 var _fighters: Array[ArenaFighter] = []
 var _attacker: ArenaFighter
 var _persistent: PersistentFlag
-var _escort_spawns: Array[Array] = []
-var _escorts_alive: Array[Node3D] = []
+var _escort_scenes: Array[PackedScene] = []
+var _escort_transforms: Array[Transform3D] = []
+var _escorts_alive: Array[Enemy] = []
+
+
+## Antes de que entren al árbol: se guardan tal como están en el nivel (con los overrides de sus hijos) y salen de él.
+func _enter_tree() -> void:
+	if not _escort_scenes.is_empty():
+		return
+	for escort in escorts:
+		var scene := PackedScene.new()
+		scene.pack(escort)
+		_escort_scenes.append(scene)
+		_escort_transforms.append(global_transform * _transform_to(escort))
+		escort.get_parent().remove_child(escort)
+		escort.queue_free()
+
+
+func _transform_to(node: Node3D) -> Transform3D:
+	var local := Transform3D.IDENTITY
+	while node and node != self:
+		local = node.transform * local
+		node = node.get_parent() as Node3D
+	return local
 
 
 func _ready() -> void:
@@ -52,10 +74,6 @@ func _ready() -> void:
 			_fighters.append(child)
 	if reward:
 		remove_child(reward)
-	for escort in escorts:
-		_escort_spawns.append([load(escort.scene_file_path), escort.global_transform])
-		escort.get_parent().remove_child(escort)
-		escort.queue_free()
 	_persistent = $PersistentFlag
 	_persistent.flag = flag
 	if _persistent.value == true:
@@ -165,11 +183,11 @@ func _on_attack_finished(fighter: ArenaFighter) -> void:
 
 func _spawn_escorts() -> void:
 	_clear_escorts()
-	for spawn in _escort_spawns:
-		var escort := (spawn[0] as PackedScene).instantiate() as Node3D
+	for i in _escort_scenes.size():
+		var escort := _escort_scenes[i].instantiate() as Enemy
 		add_child(escort)
-		escort.global_transform = spawn[1]
-		escort.connect(&"defeated", func(_who: Node3D) -> void: _on_defeated(null))
+		escort.global_transform = _escort_transforms[i]
+		escort.defeated.connect(func(_who: Enemy) -> void: _on_defeated(null))
 		_escorts_alive.append(escort)
 		Feel.burst(&"dust", escort.global_position, Vector3.UP)
 
@@ -186,7 +204,7 @@ func _on_defeated(_fighter: Node3D) -> void:
 	var left := _fighters.filter(func(fighter: ArenaFighter) -> bool: return not fighter.is_dead)
 	for fighter in left:
 		fighter.pace = enrage_pace
-	var escorts_left := _escorts_alive.any(func(escort: Node3D) -> bool: return is_instance_valid(escort) and not escort.is_dead)
+	var escorts_left := _escorts_alive.any(func(escort: Enemy) -> bool: return is_instance_valid(escort) and not escort.is_dead)
 	if left.is_empty() and not escorts_left and started:
 		await Tweens.wait(self, 1.2)
 		_win(true)
