@@ -1062,3 +1062,22 @@ func test_the_orb_goes_through_the_boss_own_body() -> void:
 	assert_eq(orb.is_queued_for_deletion(), true, "contra una pared sí")
 	wall.free()
 	boss.free()
+
+
+## Cambiar de escena a mitad de un golpe (la mano sale del árbol) no rompe sus esperas por cuadro.
+func test_leaving_the_tree_mid_slam_ends_quietly() -> void:
+	var boss := _spawn()
+	var tree := Engine.get_main_loop() as SceneTree
+	await _frames(2)
+	var target := Node3D.new()
+	boss.add_child(target)
+	target.global_position = boss.hand_rest(boss.hand_left).global_position + Vector3(0, 0, 2)
+	for attack in boss.attacks:
+		if attack.id == BossAttack.SLAM:
+			boss.hand_left.perform(attack, target, boss.arena)
+	await tree.create_timer(boss.hand_left.slam_rise_time + 0.2).timeout
+	assert_eq(boss.hand_left.state, BossHand.State.BUSY, "siguiendo al blanco")
+	tree.root.remove_child(boss)
+	await _frames(5)
+	assert_true(not boss.is_inside_tree(), "fuera del árbol, sin errores de script")
+	boss.free()

@@ -257,8 +257,8 @@ func regenerate() -> void:
 ## Cambio de fase: corta lo que esté haciendo (ataque, aturdida, caída), suelta al player y vuelve al reposo con la vida llena.
 func reset() -> void:
 	_drop_everything()
-	await get_tree().physics_frame
-	regenerate()
+	if await _physics_frame():
+		regenerate()
 
 
 ## Muere el jefe: como el ojo, el neón se apaga titilando, tiembla y le estallan las juntas, y se hunde achicándose.
@@ -347,8 +347,7 @@ func _slam_once(attack: BossAttack, target: Node3D, area: Rect2) -> bool:
 		return false
 	var left := slam_track_time
 	while left > 0.0:
-		await get_tree().physics_frame
-		if state != State.BUSY or not is_instance_valid(target):
+		if not await _physics_frame() or state != State.BUSY or not is_instance_valid(target):
 			return false
 		var delta := get_physics_process_delta_time()
 		left -= delta
@@ -422,8 +421,7 @@ func _grab(_attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	_grip_goal = 0.3
 	_tilt_goal = Vector3(0.15, 0.0, 0.0)
 	while elapsed < grab_lunge_time:
-		await get_tree().physics_frame
-		if state != State.BUSY or not is_instance_valid(target):
+		if not await _physics_frame() or state != State.BUSY or not is_instance_valid(target):
 			return
 		elapsed += get_physics_process_delta_time()
 		global_position = from.lerp(to, ease(elapsed / grab_lunge_time, 0.5))
@@ -460,7 +458,8 @@ func _hold(target: PlayerCharacter) -> void:
 	var left := grab_hold_time
 	var tick := grab_tick
 	while lifted and left > 0.0 and not escaped[0] and state == State.BUSY and target.is_grabbed():
-		await get_tree().physics_frame
+		if not await _physics_frame():
+			return
 		var delta := get_physics_process_delta_time()
 		left -= delta
 		tick -= delta
@@ -515,8 +514,7 @@ func _sweep(attack: BossAttack, target: Node3D, area: Rect2) -> void:
 	var from := global_position
 	var elapsed := 0.0
 	while elapsed < sweep_time:
-		await get_tree().physics_frame
-		if state != State.BUSY:
+		if not await _physics_frame() or state != State.BUSY:
 			return
 		elapsed += get_physics_process_delta_time()
 		global_position = from.lerp(finish, elapsed / sweep_time)
@@ -737,3 +735,11 @@ func _apply_grip() -> void:
 ## Al volver en la fase 2: cierra y abre el puño, como desperezándose.
 func _flex() -> void:
 	Tweens.replay(anim, &"flex")
+
+
+## Espera un cuadro de física; false si la mano ya no está en el árbol (cambió la escena a mitad de un ataque).
+func _physics_frame() -> bool:
+	if not is_inside_tree():
+		return false
+	await get_tree().physics_frame
+	return is_inside_tree()
