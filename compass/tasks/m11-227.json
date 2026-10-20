@@ -1,0 +1,17 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "11.227",
+  "created_at": "2026-10-20T19:19:22.765Z",
+  "description": "-3e en 11.222: tools/decorate_levels.gd no se corre en cada rearmado del terreno, porque una pasada completa reescribe ≈3300 líneas de decor y rompe test_walk_every_zone en la Pradera. Por eso la decoración no siguió al recorte de BanadoWater1 (11.115), y los cardones del salto largo se sacaron a mano. Hacer que la pasada sea determinista y estable (misma semilla y orden, que solo cambie lo que toca el terreno nuevo), que respete los caminos de test_walk_every_zone y marcadores como LongJumpGap, y correrla una vez para el Bañado. Encargado a -3e.",
+  "milestone": "m11",
+  "notes": "",
+  "order": 223,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "test": "",
+  "title": "Decoración del overworld que se pueda volver a correr",
+  "updated_at": "2026-10-20T19:19:22.765Z"
+}

@@ -5,11 +5,11 @@
   "created_at": "2026-10-20T06:45:27.431Z",
   "description": "De 11.105 (propuesta aprobada por Daniel): cerca de donde se consiguen las sandalias (Necrópolis), un hueco de 3 celdas que solo se cruza con el salto largo (pluma en carrera con sandalias), con 10 flechas del otro lado. Pide GridMap y terreno, así que va por el overworld (-3e): rearmar el terreno y rehornear la navmesh (-5c) si cambian las celdas.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "-3e (wt/overworld 1da09005, main 13c32d16): el hueco del borde este quedó descartado porque caía sobre el nicho del Mirador (11.124). Ahora es una bahía en el borde sur de la meseta de la Necrópolis (celdas x 14–21, z 1–5, a nivel 0, abierta al Cardonal) con un pilar de nivel 1 a 3 celdas (17–18, z 4–6) y LongJumpChest arriba (10 flechas, ow_long_jump_chest). Errar cae al piso de la bahía, con escalera al lado: sin abismo. El borde de arriba (16–18, 0) y el norte del pilar (17–18, 4) son Andén borde (v) para que la baranda no corte la carrera. Hueco real ≈5,7 m (bordes orgánicos redondeados) contra 6,59 m del salto largo; ida y vuelta con ≈5,3 m de carrera aterrizan 0,9 y 1,2 m pasado el borde. Se sacaron a mano CardonChico12/13/16 de overworld_decor.tscn; un marcador LongJumpGap aleja las plantas de la línea. decorate_levels.gd no se volvió a correr (reescribe ≈3300 líneas y rompe test_walk_every_zone en la Pradera). Falta la navmesh (-25).",
   "order": 218,
   "refs": [],
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "test_sandals › test_the_necropolis_pillar_takes_a_long_jump_there_and_back, test_a_running_feather_jump_falls_short_of_the_necropolis_pillar. A mano: sandalias + pluma en carrera desde el borde sur de la Necrópolis hasta el pilar del cofre.",
   "title": "Salto largo de prueba con las sandalias",
-  "updated_at": "2026-10-20T18:30:11.671Z"
+  "updated_at": "2026-10-20T19:19:14.388Z"
 }

@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (217/219, 58 en revisión)
+## M11 — Pulido: contenido y feel  (219/220, 60 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -4502,7 +4502,7 @@ Daniel (2026-10-12): las botellas tienen su fila fija, separada de los ítems co
 - [x] items_page: grilla de 8 sin botellas y BottleGrid con bottle_1..4; el cursor de co-op recorre las dos
 - [x] Tests: test_bottles_have_their_own_fixed_row y test_item_ring al día
 
-### 11.115 Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · En curso
+### 11.115 Enemigos que deambulan mientras no te ven; centinelas con alerta y búsqueda · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `ia`, `enemigos`
 
@@ -4516,15 +4516,17 @@ Daniel (2026-10-13): los enemigos que no te detectaron no se quedan quietos. Tod
   Hecho (-fd, 2026-10-15) con un guardia provisorio (src/entities/guard.tscn, esqueleto; guard_bt.tres): al verte se frena con un ! (bt_alert, 0,7 s) y después ataca o persigue; si te pierde corre a tu último lugar visto (FindPlayer guarda last_seen), mira a los lados (bt_search) y camina de vuelta a su puesto (Enemy.home) antes de calmarse. Cuando se decida el modelo (paso 2) se cambia la escena, no la IA.
 - [x] Tests
   test_guard (alerta, persecución, búsqueda, vuelta y nueva alerta); deambular en test_enemy_ai.
-- [ ] Construir los Devotos del Ojo
+- [x] Construir los Devotos del Ojo
   Enemigo con la IA del centinela (alerta y búsqueda), estocada de lanza con aviso largo pensada para el contraataque; guaridas con fogón y estandarte en el Cardonal y el Bañado. El modelo (poncho, máscara con epi.logo_eye, lanza) lo arma arte.
+
+**Prueba:** test_camps (fogón, estandarte y dos Devotos a menos de 5 m de cada fuego, sobre piso caminable, a más de 15 m de los portales), test_devoto (alerta, búsqueda y vuelta; la estocada larga se puede contraatacar), test_guard, test_enemy_ai. A mano: caminar al Cardonal (28, 0, 25) y al Bañado (84, 0, 37).
 
 **Notas:** 
 Daniel (2026-10-14): deambular es para que los enemigos no parezcan objetos quietos (paso 1 vale para todos).
 
 Daniel (2026-10-20) step 2: Devotos del Ojo. Humans on Rig_Medium, long burgundy-and-black poncho, hood, white mask with a single eye (epi.logo_eye), spear with a red ribbon; long-wind-up thrust built for the 11.34 counterattack; camps with a fire and a banner in the Cardonal and the Bañado; later variant: the slinger.
 
-2026-10-20, step 5 split: -72 enemy (devoto.tscn d706f286, model 7ce46a7c: thrust with a 0.9 s windup, counterable; test_devoto); -3e camps (fogon.tscn and estandarte.tscn props done; Cardonal at (24, 0, 18.5–21); Bañado: Daniel picked trimming BanadoWater1 by 6 m to the east, camp at ~(84, 0, 38)). Pending: place the Devotos, a single terrain rebuild, then the overworld navmesh rebake (-5c).
+Paso 5 hecho (2026-10-20): enemigo -72 (devoto.tscn f6125106, modelo d1bf4927: estocada con 0,9 s de aviso, contraatacable); campamentos -3e (bd9b8735): Cardonal en (28, 0, 24.5–27), al sur de la ruta de test_walk_the_east_bank; Bañado en (84, 0, 35.5–38) con BanadoWater1 recortado 6 m al este; dos Devotos por fogón; terreno rearmado. Navmesh rehorneada por -25 (edfc2647). La decoración del Bañado no siguió al recorte: 11.227. Falta que Daniel lo vea.
 
 ### 11.116 Tests: un error de script cuenta como falla · Hecho
 
@@ -5749,11 +5751,15 @@ Visto por -5c (2026-10-19) en 11.9: boss_hand.gd esperaba get_tree().physics_fra
 
 **Notas:** Hecho (-e0): las esperas por cuadro de las manos pasan por _physics_frame(), que devuelve false si la mano ya no está en el árbol; un cambio de escena a mitad de golpe, agarre, barrido o reset termina la corrutina en vez de esperar sobre un árbol null. test_boss › test_leaving_the_tree_mid_slam_ends_quietly (falla sin el arreglo en boss_hand.gd:350).
 
-### 11.222 Salto largo de prueba con las sandalias · En curso
+### 11.222 Salto largo de prueba con las sandalias · Revisión
 
 **Responsable:** project-epiphany-3e
 
 De 11.105 (propuesta aprobada por Daniel): cerca de donde se consiguen las sandalias (Necrópolis), un hueco de 3 celdas que solo se cruza con el salto largo (pluma en carrera con sandalias), con 10 flechas del otro lado. Pide GridMap y terreno, así que va por el overworld (-3e): rearmar el terreno y rehornear la navmesh (-5c) si cambian las celdas.
+
+**Prueba:** test_sandals › test_the_necropolis_pillar_takes_a_long_jump_there_and_back, test_a_running_feather_jump_falls_short_of_the_necropolis_pillar. A mano: sandalias + pluma en carrera desde el borde sur de la Necrópolis hasta el pilar del cofre.
+
+**Notas:** -3e (wt/overworld 1da09005, main 13c32d16): el hueco del borde este quedó descartado porque caía sobre el nicho del Mirador (11.124). Ahora es una bahía en el borde sur de la meseta de la Necrópolis (celdas x 14–21, z 1–5, a nivel 0, abierta al Cardonal) con un pilar de nivel 1 a 3 celdas (17–18, z 4–6) y LongJumpChest arriba (10 flechas, ow_long_jump_chest). Errar cae al piso de la bahía, con escalera al lado: sin abismo. El borde de arriba (16–18, 0) y el norte del pilar (17–18, 4) son Andén borde (v) para que la baranda no corte la carrera. Hueco real ≈5,7 m (bordes orgánicos redondeados) contra 6,59 m del salto largo; ida y vuelta con ≈5,3 m de carrera aterrizan 0,9 y 1,2 m pasado el borde. Se sacaron a mano CardonChico12/13/16 de overworld_decor.tscn; un marcador LongJumpGap aleja las plantas de la línea. decorate_levels.gd no se volvió a correr (reescribe ≈3300 líneas y rompe test_walk_every_zone en la Pradera). Falta la navmesh (-25).
 
 ### 11.223 Opciones en dos pestañas: Juego y Video · Revisión
 
@@ -5794,6 +5800,12 @@ Encontrado por -88 en 11.224 y medido (120 updates en 60 cuadros): MovementState
 
 **Notas:** -25 (wt/art-hsm feb42d0a, main fea8c637): MovementState en MANUAL con un solo update. Valores en unidades reales: velocidades ×2 (caminar 10, rodar 16, salto 8 / largo 17,2, dash 19, gancho 28…), duraciones ×0,5, tasas exp y pasos move_toward ×2, embestidas de la espada ×2 en data/attacks, gravedad ×4 por PlayerCharacter.gravity_scale / fall_gravity(). Esperas atadas al largo de una animación usan PlayerState.ANIM_PART = 0,5, como antes. La gravedad y el despacho de input pasaron a PlayerStateMachine.read_input() antes de update(): LimboHSM difiere un dispatch hecho dentro de su update y con un solo update el estado nuevo actuaba un cuadro tarde. El salto le resta un cuarto de cuadro de gravedad para conservar el arco (cima 0,71 m, salto largo 6,59 m en el aire).
 Para Daniel: escapar del agarre son 4 apretadas reales (eran 8 en el código, cada una contaba doble) y ahora se ve el meneo del agarre. Cosas que el doble update escondía y se conservaron: el knockback del player es 2× el de un enemigo (Hurt.knockback_scale 2), los iframes del rodar duran más que el rodar (iframes_to 1,4), Dead aplica gravedad dos veces (los 8g de antes). test_jump: los pinches pasaron de 1,5 a 1,7 m.
+
+### 11.227 Decoración del overworld que se pueda volver a correr · En curso
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-3e
+
+-3e en 11.222: tools/decorate_levels.gd no se corre en cada rearmado del terreno, porque una pasada completa reescribe ≈3300 líneas de decor y rompe test_walk_every_zone en la Pradera. Por eso la decoración no siguió al recorte de BanadoWater1 (11.115), y los cardones del salto largo se sacaron a mano. Hacer que la pasada sea determinista y estable (misma semilla y orden, que solo cambie lo que toca el terreno nuevo), que respete los caminos de test_walk_every_zone y marcadores como LongJumpGap, y correrla una vez para el Bañado. Encargado a -3e.
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
