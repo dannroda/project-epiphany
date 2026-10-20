@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-72",
   "checklist": [
     {
       "detail": "Todo con el escudo espejo: haces de luz, ojos-interruptor, espejos que giran.",
@@ -25,5 +26,5 @@
   ],
   "test": "Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.",
   "title": "Mini-santuario de reflejos",
-  "updated_at": "2026-10-11T07:51:04.142Z"
+  "updated_at": "2026-10-20T01:57:54.558Z"
 }

@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-72",
   "checklist": [
     {
       "detail": "3 oleadas mezclando enemigos; la puerta se cierra hasta terminar.",
@@ -25,5 +26,5 @@
   ],
   "test": "Entrar, sobrevivir las 3 oleadas, la puerta abre y aparece la recompensa; no se repite al cargar.",
   "title": "Prueba de combate opcional",
-  "updated_at": "2026-10-15T19:54:10.146Z"
+  "updated_at": "2026-10-20T01:57:54.896Z"
 }

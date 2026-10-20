@@ -2720,15 +2720,15 @@ Cuando una pared tapa al player se pierde de vista. Mostrar su silueta por encim
 
 **Notas:** Overlay por stencil: hit_flash escribe el stencil donde el player se ve y occluded_silhouette (sin depth test) pinta en dorado solo donde no. Revisado detrás del jefe y bajo la máscara de la puerta norte del Hub. Test test_silhouette_only_on_the_player.
 
-### 11.9 Navmesh sobre el piso · Pendiente
+### 11.9 Navmesh sobre el piso · En curso
 
 **Prioridad:** baja · **Responsable:** project-epiphany-5c · **Etiquetas:** `ia`
 
 La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas arriba de paredes y acantilados, a 3 m). Por eso el `NavigationAgent3D` de los enemigos necesita `path_desired_distance` 1.0 para no trabarse en las esquinas. Bajarla al piso y sacar la compensación.
 
-- [ ] Encontrar de dónde salen los 0.5 m
+- [x] Encontrar de dónde salen los 0.5 m
   El piso del kit gris tiene el techo de la colisión en y = 0, pero los vértices quedan en 0.5 (overworld y templo). Revisar cell_size/cell_height del NavigationMesh contra los del mapa de navegación (Project Settings › navigation), agent_max_climb y la posición del NavigationRegion3D.
-- [ ] Sacar las islas arriba de paredes y acantilados
+- [x] Sacar las islas arriba de paredes y acantilados
   Hay polígonos a y = 3 sobre Pared y Acantilado. Un enemigo nunca llega ahí, pero ensucian el mapa y algún punto aleatorio o el más cercano puede caer arriba. Opciones: filter_baking_aabb, agent_max_climb o colisión de pared sin techo transitable.
 - [ ] Rehornear overworld, mazmorras y niveles de prueba
   Botón Bake de cada NavigationRegion3D (levels/overworld.tscn, templo.tscn, chullpa.tscn, quenoa.tscn, totora.tscn, cumbre.tscn, test.tscn, dungeon_test.tscn, test_rooms.tscn).
@@ -2738,6 +2738,8 @@ La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas a
   [[gdd#overworld-layout]] › Blockout (7.2) cuenta la compensación; dejar lo nuevo.
 
 **Prueba:** Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.
+
+**Notas:** -5c (2026-10-19), pasos 1-2 en e0682a06. Los 0.5 m: Recast deja cada superficie dos cell_height arriba del techo de la colisión (piso en 0 → 0.5, paredes en 2.6 → 3.0 con 0.25; con 0.1 → 0.2 y 2.8); no es la posición de la región ni agent_max_climb. Con cell_height 0.05 el piso queda en 0.1 (hay que poner navigation/3d/default_cell_height = 0.05 junto con el rehorneado). Islas: WallTops (src/world/nav/wall_tops.gd), un parser de geometría registrado por epiphany_tools (Bake del editor) y bake_overworld_nav.gd, pone una obstrucción proyectada en el techo de cada celda del GridMap cuya caja sube una altura de agente (paredes, columnas, acantilados, árboles). Prueba en copia (debug/tmp/nav/templo_scratch.tscn): 171 vértices todos en 0.1, camino de punta a punta en 0.1, ningún punto más cercano sobre 200 paredes cae arriba. Chullpa: quedan solo los tres pisos. Overworld: las islas a 2.7 son del Terreno/Terrazas, no del GridMap; ver después de 16.49.
 
 **Referencias:** `gdd.md#overworld-layout`
 
@@ -2963,7 +2965,7 @@ Enemigos nuevos con los modelos que ya hay: un arquero chullpa, esqueletos que d
 
 ### 11.26 Prueba de combate opcional · Pendiente
 
-**Prioridad:** baja · **Etiquetas:** `combate`
+**Prioridad:** baja · **Responsable:** project-epiphany-72 · **Etiquetas:** `combate`
 
 Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada hasta terminar y una recompensa al final (pieza de corazón u otra; la cota reforzada ya la da el santuario después de D4 y el carcaj el Risco).
 
@@ -2976,7 +2978,7 @@ Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada
 
 ### 11.27 Mini-santuario de reflejos · Pendiente
 
-**Prioridad:** baja · **Etiquetas:** `mazmorra`, `puzzles`
+**Prioridad:** baja · **Responsable:** project-epiphany-72 · **Etiquetas:** `mazmorra`, `puzzles`
 
 Un mini-santuario de 3–4 salas que se resuelven solo con el escudo espejo, cada una enseñando una variante del reflejo, con recompensa al final.
 

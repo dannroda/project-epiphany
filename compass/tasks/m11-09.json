@@ -3,12 +3,12 @@
   "checklist": [
     {
       "detail": "El piso del kit gris tiene el techo de la colisión en y = 0, pero los vértices quedan en 0.5 (overworld y templo). Revisar cell_size/cell_height del NavigationMesh contra los del mapa de navegación (Project Settings › navigation), agent_max_climb y la posición del NavigationRegion3D.",
-      "done": false,
+      "done": true,
       "text": "Encontrar de dónde salen los 0.5 m"
     },
     {
       "detail": "Hay polígonos a y = 3 sobre Pared y Acantilado. Un enemigo nunca llega ahí, pero ensucian el mapa y algún punto aleatorio o el más cercano puede caer arriba. Opciones: filter_baking_aabb, agent_max_climb o colisión de pared sin techo transitable.",
-      "done": false,
+      "done": true,
       "text": "Sacar las islas arriba de paredes y acantilados"
     },
     {
@@ -40,7 +40,7 @@
     "levels/cumbre.tscn"
   ],
   "milestone": "m11",
-  "notes": "",
+  "notes": "-5c (2026-10-19), pasos 1-2 en e0682a06. Los 0.5 m: Recast deja cada superficie dos cell_height arriba del techo de la colisión (piso en 0 → 0.5, paredes en 2.6 → 3.0 con 0.25; con 0.1 → 0.2 y 2.8); no es la posición de la región ni agent_max_climb. Con cell_height 0.05 el piso queda en 0.1 (hay que poner navigation/3d/default_cell_height = 0.05 junto con el rehorneado). Islas: WallTops (src/world/nav/wall_tops.gd), un parser de geometría registrado por epiphany_tools (Bake del editor) y bake_overworld_nav.gd, pone una obstrucción proyectada en el techo de cada celda del GridMap cuya caja sube una altura de agente (paredes, columnas, acantilados, árboles). Prueba en copia (debug/tmp/nav/templo_scratch.tscn): 171 vértices todos en 0.1, camino de punta a punta en 0.1, ningún punto más cercano sobre 200 paredes cae arriba. Chullpa: quedan solo los tres pisos. Overworld: las islas a 2.7 son del Terreno/Terrazas, no del GridMap; ver después de 16.49.",
   "order": 9,
   "priority": "low",
   "refs": [
@@ -49,11 +49,11 @@
       "section": "overworld-layout"
     }
   ],
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "ia"
   ],
   "test": "Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.",
   "title": "Navmesh sobre el piso",
-  "updated_at": "2026-10-20T01:46:10.176Z"
+  "updated_at": "2026-10-20T01:58:53.601Z"
 }
