@@ -5,13 +5,13 @@
   "created_at": "2026-10-20T18:36:37.386Z",
   "description": "Encontrado por -88 en 11.224 y medido (120 updates en 60 cuadros): MovementState (LimboHSM) tiene update_mode PHYSICS por defecto y además player.gd llama a movement_state.update(delta) en _physics_process. Todos los _update de estados, la gravedad de state_machine y move_and_slide corren dos veces: velocidades al doble, timers a la mitad, gravedad efectiva ×4 en el player. Daniel (2026-10-20): arreglarlo con la misma sensación. MovementState en MANUAL y convertir los valores del player para que juegue igual que hoy en unidades reales, con un test que compare arcos y duraciones antes y después. Encargado a -25.",
   "milestone": "m11",
-  "notes": "",
+  "notes": "-25 (wt/art-hsm feb42d0a, main fea8c637): MovementState en MANUAL con un solo update. Valores en unidades reales: velocidades ×2 (caminar 10, rodar 16, salto 8 / largo 17,2, dash 19, gancho 28…), duraciones ×0,5, tasas exp y pasos move_toward ×2, embestidas de la espada ×2 en data/attacks, gravedad ×4 por PlayerCharacter.gravity_scale / fall_gravity(). Esperas atadas al largo de una animación usan PlayerState.ANIM_PART = 0,5, como antes. La gravedad y el despacho de input pasaron a PlayerStateMachine.read_input() antes de update(): LimboHSM difiere un dispatch hecho dentro de su update y con un solo update el estado nuevo actuaba un cuadro tarde. El salto le resta un cuarto de cuadro de gravedad para conservar el arco (cima 0,71 m, salto largo 6,59 m en el aire).\nPara Daniel: escapar del agarre son 4 apretadas reales (eran 8 en el código, cada una contaba doble) y ahora se ve el meneo del agarre. Cosas que el doble update escondía y se conservaron: el knockback del player es 2× el de un enemigo (Hurt.knockback_scale 2), los iframes del rodar duran más que el rodar (iframes_to 1,4), Dead aplica gravedad dos veces (los 8g de antes). test_jump: los pinches pasaron de 1,5 a 1,7 m.",
   "order": 222,
   "priority": "high",
   "refs": [],
   "size": "l",
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "tests/test_player_timing.gd: duraciones (±1 cuadro) y distancias (±5 cm) de caminar, rodar, salto, salto largo, dash y rebote, combo, giro, golpe recibido, contra, picado, gancho, levantar y tirar, poción, arco, item get, cruce de sala, agarre, trepar y empujar bloque, medidas en main antes del arreglo. A mano: que el player se sienta igual que antes.",
   "title": "HSM del player corre dos veces por cuadro",
-  "updated_at": "2026-10-20T18:36:37.386Z"
+  "updated_at": "2026-10-20T19:13:08.243Z"
 }

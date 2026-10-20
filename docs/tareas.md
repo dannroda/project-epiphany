@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (216/219, 57 en revisión)
+## M11 — Pulido: contenido y feel  (217/219, 58 en revisión)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -5784,11 +5784,16 @@ Daniel (2026-10-20): el escudo parece que lo lleva arrastrando. Referencias (Lin
 
 **Notas:** -88 (wt/design-fix faeb5450, main 3ce8872a): sin cubrirse, ShieldSocket a mitad del antebrazo izquierdo, cara al frente (≈35° a la izquierda), borde lejos del piso; pose nueva Carry/Shield_Hold (build_carry_anims.py). Al cubrirse Carry/Shield_Block reemplaza a Melee_Blocking: antebrazo parado delante del pecho, tapa torso y mentón (con el brazo chibi no llega a toda la cabeza). AnimationTree: ShieldArm (Blend2 filtrado al brazo izquierdo) sobre moverse y atacar; ShieldRoll al rodar con la pose de base para que el OneShot de Dodge conserve su duración; Guard arriba de Attack. Equipment apaga las capas sin escudo en la mano (arco). Arreglos de paso: SwordBeam ignora los cuerpos de quien lo tira (el StaticBody del escudo lo deshacía); el fantasma del rodar en test_player mide el AABB entero.
 
-### 11.226 HSM del player corre dos veces por cuadro · En curso
+### 11.226 HSM del player corre dos veces por cuadro · Revisión
 
 **Prioridad:** alta · **Tamaño:** L · **Responsable:** project-epiphany-25
 
 Encontrado por -88 en 11.224 y medido (120 updates en 60 cuadros): MovementState (LimboHSM) tiene update_mode PHYSICS por defecto y además player.gd llama a movement_state.update(delta) en _physics_process. Todos los _update de estados, la gravedad de state_machine y move_and_slide corren dos veces: velocidades al doble, timers a la mitad, gravedad efectiva ×4 en el player. Daniel (2026-10-20): arreglarlo con la misma sensación. MovementState en MANUAL y convertir los valores del player para que juegue igual que hoy en unidades reales, con un test que compare arcos y duraciones antes y después. Encargado a -25.
+
+**Prueba:** tests/test_player_timing.gd: duraciones (±1 cuadro) y distancias (±5 cm) de caminar, rodar, salto, salto largo, dash y rebote, combo, giro, golpe recibido, contra, picado, gancho, levantar y tirar, poción, arco, item get, cruce de sala, agarre, trepar y empujar bloque, medidas en main antes del arreglo. A mano: que el player se sienta igual que antes.
+
+**Notas:** -25 (wt/art-hsm feb42d0a, main fea8c637): MovementState en MANUAL con un solo update. Valores en unidades reales: velocidades ×2 (caminar 10, rodar 16, salto 8 / largo 17,2, dash 19, gancho 28…), duraciones ×0,5, tasas exp y pasos move_toward ×2, embestidas de la espada ×2 en data/attacks, gravedad ×4 por PlayerCharacter.gravity_scale / fall_gravity(). Esperas atadas al largo de una animación usan PlayerState.ANIM_PART = 0,5, como antes. La gravedad y el despacho de input pasaron a PlayerStateMachine.read_input() antes de update(): LimboHSM difiere un dispatch hecho dentro de su update y con un solo update el estado nuevo actuaba un cuadro tarde. El salto le resta un cuarto de cuadro de gravedad para conservar el arco (cima 0,71 m, salto largo 6,59 m en el aire).
+Para Daniel: escapar del agarre son 4 apretadas reales (eran 8 en el código, cada una contaba doble) y ahora se ve el meneo del agarre. Cosas que el doble update escondía y se conservaron: el knockback del player es 2× el de un enemigo (Hurt.knockback_scale 2), los iframes del rodar duran más que el rodar (iframes_to 1,4), Dead aplica gravedad dos veces (los 8g de antes). test_jump: los pinches pasaron de 1,5 a 1,7 m.
 
 ## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
 
