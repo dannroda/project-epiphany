@@ -280,13 +280,15 @@ func _physics_process(delta: float) -> void:
 	var blackboard := phases.blackboard
 	blackboard.set_var(&"target", target)
 	blackboard.set_var(&"phase", phase())
-	blackboard.set_var(&"hand_left", BossHand.State.keys()[hand_left.state])
-	blackboard.set_var(&"hand_right", BossHand.State.keys()[hand_right.state])
+	blackboard.set_var(&"hand_left", hand_left.state)
+	blackboard.set_var(&"hand_right", hand_right.state)
 	blackboard.set_var(&"eye_stunned", is_eye_stunned())
-	DebugOverlay.watch("boss/phase", phase())
-	DebugOverlay.watch("boss/hand_left", blackboard.get_var(&"hand_left"))
-	DebugOverlay.watch("boss/hand_right", blackboard.get_var(&"hand_right"))
-	DebugOverlay.watch("boss/attack", "%s (%s)" % [chosen_attack.id, attacker.name] if chosen_attack else "-")
+	var debug: bool = DebugOverlay.visible
+	if debug:
+		DebugOverlay.watch("boss/phase", phase())
+		DebugOverlay.watch("boss/hand_left", BossHand.State.keys()[hand_left.state])
+		DebugOverlay.watch("boss/hand_right", BossHand.State.keys()[hand_right.state])
+		DebugOverlay.watch("boss/attack", "%s (%s)" % [chosen_attack.id, attacker.name] if chosen_attack else "-")
 
 
 ## Puntúa cada ataque posible por cada pieza libre que lo puede hacer y sortea, por puntaje, entre los que quedan

@@ -353,6 +353,9 @@ func _on_died() -> void:
 
 
 func _watch_debug_values() -> void:
+	var debug: bool = DebugOverlay.visible
+	if not debug:
+		return
 	var state := movement_state.get_active_state()
 	DebugOverlay.watch("player/state", state.name if state else &"-")
 	DebugOverlay.watch("player/animation", anim_tree.get(&"parameters/Movement/current_state"))

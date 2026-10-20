@@ -25,6 +25,8 @@ var active_attack: AttackData:
 var _already_hit: Array[Hurtbox] = []
 ## hits_on_landing: los que entraron en el aire; les pega si tocan el piso adentro.
 var _airborne: Array[Hurtbox] = []
+## Solo un Hitbox común duerme sin _airborne; las subclases (proyectil, martillo, explosión) usan su propio cuadro.
+var _sleeps := false
 
 
 func _ready() -> void:
@@ -33,15 +35,20 @@ func _ready() -> void:
 		if area is Hurtbox:
 			_airborne.erase(area))
 	body_entered.connect(_on_body_entered)
+	_sleeps = get_script() == Hitbox
+	set_physics_process(not _sleeps)
 
 
 func _physics_process(_delta: float) -> void:
-	for hurtbox in _airborne.duplicate():
+	for i in range(_airborne.size() - 1, -1, -1):
+		var hurtbox := _airborne[i]
 		if not is_instance_valid(hurtbox) or not monitoring:
-			_airborne.erase(hurtbox)
+			_airborne.remove_at(i)
 		elif hurtbox.is_grounded():
-			_airborne.erase(hurtbox)
+			_airborne.remove_at(i)
 			_on_area_entered(hurtbox)
+	if _sleeps:
+		set_physics_process(not _airborne.is_empty())
 
 
 ## Cada activación es un golpe nuevo: olvida a quién le pegó la anterior.
@@ -78,6 +85,7 @@ func _on_area_entered(area: Area3D) -> void:
 	if ground_only and not hurtbox.is_grounded():
 		if hits_on_landing and not hurtbox in _airborne:
 			_airborne.append(hurtbox)
+			set_physics_process(true)
 		return
 	_already_hit.append(hurtbox)
 	hurtbox.receive(build_damage())

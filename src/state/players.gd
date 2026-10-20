@@ -70,7 +70,9 @@ func any_alive() -> bool:
 func nearest(point: Vector3, living := true) -> PlayerCharacter:
 	var best: PlayerCharacter = null
 	var best_distance := INF
-	for player in (alive() if living else all):
+	for player in all:
+		if living and player.is_dead:
+			continue
 		var distance := Vector2(player.global_position.x - point.x, player.global_position.z - point.z).length()
 		if distance < best_distance:
 			best = player

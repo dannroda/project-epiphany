@@ -33,6 +33,7 @@ var _age := 0.0
 var _rest_height := 0.5
 var _vertical_speed := 5.0
 var _visual: Node3D
+var _touching: Array[Node3D] = []
 ## Lo apaga y prende el clip "blink" de $Blink cuando está por desaparecer.
 var shown := true:
 	set(value):
@@ -60,6 +61,8 @@ static func offer_once(pickup: Pickup, flag: StringName, parent: Node) -> bool:
 
 
 func _ready() -> void:
+	body_entered.connect(_touching.append)
+	body_exited.connect(_touching.erase)
 	var mesh := item.pickup_mesh if item else heart_mesh
 	if mesh:
 		var box := mesh.get_aabb()
@@ -86,7 +89,7 @@ func _physics_process(delta: float) -> void:
 		to.y = 0.0
 		if to.length() < magnet_radius:
 			global_position += to.limit_length(magnet_speed * delta)
-		if get_overlapping_bodies().has(player):
+		if player in _touching:
 			collect(player)
 			return
 	if lifetime <= 0.0:

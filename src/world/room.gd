@@ -11,6 +11,8 @@ signal player_left(room: Room)
 const GROUP := &"rooms"
 ## Lo que solo corre mientras haya algún player en su sala (enemigos, trampas); fuera de toda sala corre siempre.
 const SLEEPERS := &"room_sleepers"
+## Cerrada, mira si quedan enemigos u oleadas cada tantos frames de física, no en cada uno.
+const LOCK_CHECK_TICKS := 6
 
 @export var debug_disble:bool = false
 
@@ -49,6 +51,7 @@ const SLEEPERS := &"room_sleepers"
 ## Copia lo de la cámara y el entorno al preset (lo guarda en su .tres) y deja el nivel como estaba.
 @export_tool_button("Guardar en el preset", "Save") var _guardar_ambiente := guardar_ambiente
 @export_tool_button("Cancelar la edición", "Close") var _cancelar_ambiente := cancelar_ambiente
+
 
 var _outline: MeshInstance3D
 var _announced := false
@@ -204,7 +207,7 @@ func _physics_process(_delta: float) -> void:
 	if _wake_frame and Engine.get_physics_frames() >= _wake_frame:
 		_wake_frame = 0
 		_request_wake()
-	if not locked:
+	if not locked or Engine.get_physics_frames() % LOCK_CHECK_TICKS != 0:
 		return
 	if enemies_inside().is_empty() and not waves_running():
 		locked = false

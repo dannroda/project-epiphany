@@ -308,13 +308,15 @@ func test_overlay_shows_the_fight() -> void:
 	boss.start_fight()
 	boss.target = null
 	assert_true(boss.choose_attack(1))
+	DebugOverlay.visible = true
 	await (Engine.get_main_loop() as SceneTree).physics_frame
 	await (Engine.get_main_loop() as SceneTree).physics_frame
+	DebugOverlay.visible = false
 	var values: Dictionary = DebugOverlay.get(&"_values")
 	assert_eq(values.get("boss/phase"), 1)
 	assert_eq(values.get("boss/hand_left"), "READY")
 	assert_true(String(values.get("boss/attack", "-")) != "-", "muestra el ataque elegido")
-	assert_eq(boss.phases.blackboard.get_var(&"hand_right"), "READY", "el blackboard tiene el estado de las manos")
+	assert_eq(boss.phases.blackboard.get_var(&"hand_right"), BossHand.State.READY, "el blackboard tiene el estado de las manos")
 	boss.free()
 
 
