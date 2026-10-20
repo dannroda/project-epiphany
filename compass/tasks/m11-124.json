@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-72",
+  "assignee": "project-epiphany-3e",
   "checklist": [],
   "code": "11.124",
   "created_at": "2026-10-13T17:30:45.368Z",
@@ -10,12 +10,12 @@
   "priority": "medium",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "bug",
     "diseño"
   ],
   "test": "",
   "title": "Piezas de corazón: 13, no múltiplo de 4",
-  "updated_at": "2026-10-20T03:14:48.617Z"
+  "updated_at": "2026-10-20T04:46:23.374Z"
 }

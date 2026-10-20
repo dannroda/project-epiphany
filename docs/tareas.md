@@ -4607,9 +4607,9 @@ Text approved with 11.124 (2026-10-20): "El corazón se partió en dieciséis. T
 
 Done (cacad828): cliff_heart in overworld.dialogue and en.po with the approved text.
 
-### 11.124 Piezas de corazón: 13, no múltiplo de 4 · Pendiente
+### 11.124 Piezas de corazón: 13, no múltiplo de 4 · En curso
 
-**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-72 · **Etiquetas:** `bug`, `diseño`
+**Prioridad:** media · **Tamaño:** S · **Responsable:** project-epiphany-3e · **Etiquetas:** `bug`, `diseño`
 
 Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES_PER_HEART = 4: tres contenedores y una pieza que nunca completa uno. Quitar una o agregar tres (o cambiar la regla).
 
@@ -7812,15 +7812,17 @@ Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir rele
 
 **Relacionadas:** 10.8 Pasada de rendimiento
 
-### 15.9 Overworld: optimizar el dibujado (después de los assets) · Pendiente
+### 15.9 Overworld: optimizar el dibujado (después de los assets) · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`, `overworld`
 
 Daniel (2026-10-15) preguntó por el texture streaming de Godot 4.8: descartado, el proyecto tiene 3422 PNG que suman ~5 MB (paleta y colores por vértice). Lo que pesa en el overworld es la geometría (terreno_organico.0..11 de 15-72 MB, paredes LA, decor, plantas) y la cantidad de mallas por cuadro. Va después de terminar los assets, junto con 11.126 y 11.59.
 
-- [ ] Medir con el profiler: vértices, draw calls, sombras
+- [x] Medir con el profiler: vértices, draw calls, sombras
 - [ ] Rangos de visibilidad/LOD en decor y plantas
 - [ ] Terreno en bloques más chicos que se descarten fuera de cámara
+
+**Notas:** -3e (7d7987f8): GPU in the overworld was the outdoor shader's detail (7–10 of 12–15 ms), not geometry. The bevel now uses the analytic gradient (one Voronoi per pixel instead of four): start 12.9→6.5 ms, cardonal 14.7→6.2, arboleda 9.8→6.4. Steps 2 (decor/plant LOD) and 3 (smaller chunks) would win ≤1 ms: -3e suggests dropping them or parking them until the assets are done; that's Daniel's call.
 
 ### 15.10 Salas y targeting: dejar de consultar todo cada frame · Revisión
 
