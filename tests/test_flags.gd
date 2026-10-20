@@ -22,7 +22,7 @@ func test_flag_ids_are_unique() -> void:
 ## flags de mazmorras que solo se leen.
 func test_every_level_flag_has_its_dungeon_prefix() -> void:
 	var checked := 0
-	for level in ["overworld", "bomb_cave", "bush_cave", "grotto_cave", "shrine_cave", "spring_cave", "chullpa", "quenoa", "totora", "cumbre", "templo", "dungeon_test"]:
+	for level in ["overworld", "bomb_cave", "bush_cave", "grotto_cave", "shrine_cave", "spring_cave", "reflejos", "chullpa", "quenoa", "totora", "cumbre", "templo", "dungeon_test"]:
 		var root: Node = load("res://levels/%s.tscn" % level).instantiate()
 		var prefix := PersistentFlag.prefix_for(root)
 		assert_true(prefix != "" and not "_" in prefix, "%s: prefijo %s" % [level, prefix])

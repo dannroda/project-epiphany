@@ -1252,6 +1252,18 @@ msgstr "Antesala"
 msgid "PLACE_CU_SUMMIT"
 msgstr "Cima del Intihuatana"
 
+msgid "PLACE_RF_CROWN"
+msgstr "Corona"
+
+msgid "PLACE_RF_TURNS"
+msgstr "Giros"
+
+msgid "PLACE_RF_ORBS"
+msgstr "Orbes"
+
+msgid "PLACE_RF_ANGLE"
+msgstr "Ángulo"
+
 msgid "BOSS_CU_KUNTUR"
 msgstr "Kuntur joven"
 

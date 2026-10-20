@@ -1484,6 +1484,18 @@ msgstr "Antechamber"
 msgid "PLACE_CU_SUMMIT"
 msgstr "Intihuatana Summit"
 
+msgid "PLACE_RF_CROWN"
+msgstr "Crown"
+
+msgid "PLACE_RF_TURNS"
+msgstr "Turns"
+
+msgid "PLACE_RF_ORBS"
+msgstr "Orbs"
+
+msgid "PLACE_RF_ANGLE"
+msgstr "Angle"
+
 msgid "BOSS_CU_KUNTUR"
 msgstr "Young Kuntur"
 
