@@ -2591,7 +2591,7 @@ Grabar videos para presentar el juego. Pensar un trailer o teaser corto para gen
 - [ ] Grabar los planos y editar el teaser
   Primera versión (b343f5ce): tools/teaser/record.sh graba las 12 tomas de teaser.tscn (Movie Maker, 1080p60, ~4,5 min) y tools/teaser/edit.sh arma debug/tmp/teaser/teaser.mp4 (40,8 s: overworld 13,5 s con calma, templo 13 s con capas de mazmorra, jefe 11 s con todas, cierre con el título en Cinzel). Las tomas, el corte (CUTS en edit.sh) y la música se cambian y se vuelve a correr. Falta: que Daniel lo vea y ajustar; probar la misma secuencia con gpu-screen-recorder (no está instalado).
 
-## M11 — Pulido: contenido y feel  (159/214)
+## M11 — Pulido: contenido y feel  (159/215)
 
 Vestir el templo y el overworld, más enemigos, trampas, un doom legible, feel de combate y del jefe y los detalles técnicos de la revisión del 2026-10-09. El arte nuevo va a M12.
 
@@ -2740,6 +2740,8 @@ La navmesh horneada del GridMap queda 0.5 m sobre el piso (y hay islas sueltas a
 **Prueba:** Con Debug › Visible Navigation, la navmesh se ve pegada al piso y no hay islas arriba de las paredes; los enemigos persiguen alrededor de columnas y por las puertas sin quedarse girando en una esquina; test_enemy_ai pasa.
 
 **Notas:** -5c (2026-10-19), pasos 1-2 en e0682a06. Los 0.5 m: Recast deja cada superficie dos cell_height arriba del techo de la colisión (piso en 0 → 0.5, paredes en 2.6 → 3.0 con 0.25; con 0.1 → 0.2 y 2.8); no es la posición de la región ni agent_max_climb. Con cell_height 0.05 el piso queda en 0.1 (hay que poner navigation/3d/default_cell_height = 0.05 junto con el rehorneado). Islas: WallTops (src/world/nav/wall_tops.gd), un parser de geometría registrado por epiphany_tools (Bake del editor) y bake_overworld_nav.gd, pone una obstrucción proyectada en el techo de cada celda del GridMap cuya caja sube una altura de agente (paredes, columnas, acantilados, árboles). Prueba en copia (debug/tmp/nav/templo_scratch.tscn): 171 vértices todos en 0.1, camino de punta a punta en 0.1, ningún punto más cercano sobre 200 paredes cae arriba. Chullpa: quedan solo los tres pisos. Overworld: las islas a 2.7 son del Terreno/Terrazas, no del GridMap; ver después de 16.49.
+
+-5c (2026-10-19), paso 3 sin el overworld en 278e9416: cell_height 0.05 en levels/nav/*_navmesh.tres y en las navmesh de los niveles de prueba, navigation/3d/default_cell_height 0.05; mazmorras, cuevas y levels/test.tscn rehorneados con la herramienta, pisos en 0.1. El .tres del overworld solo tiene cell_height 0.05 (para coincidir con el mapa); falta rehornearlo después de 16.49. Paso 4: con la navmesh nueva hace falta path_desired_distance 0.25 (con 0.5 y 1.0 el esqueleto da por alcanzada la esquina de la columna y se traba contra ella); pero 0.5 o menos deja trabados a los esqueletos de la pradera mientras el overworld siga a 0.5 m del piso. enemy.tscn y atoq.tscn siguen en 1.0; test_an_enemy_goes_around_a_column le pone 0.25 a su agente. Cuando se rehornee el overworld: 0.25 en enemy.tscn y atoq.tscn y sacar eso de la prueba.
 
 **Referencias:** `gdd.md#overworld-layout`
 
@@ -5710,6 +5712,14 @@ Revisión de Totora con paredes dobles (12.41, 2026-10-19). Desde Gancho, el can
 Visto 2026-10-19 (-e0): en main, --jobs=1 --only=test_arena_fighter.gd,test_centinela.gd,test_audio.gd falla 1 de 3 corridas: test_tweens_wait_stops_with_the_pause_not_with_the_node (no termina sin pausa), test_starting_mid_roar_leaves_the_rest_pose y test_an_interrupt_drops_the_pending_waits (las esperas no avanzan). Solo, test_arena_fighter pasa siempre. Sospecha: algo de la corrida anterior deja el árbol en pausa o time_scale en 0 (Pause.hold / hit-stop sin liberar).
 
 **Notas:** Hecho (-e0): el orden de los archivos en un proceso cambia según los tiempos; cuando test_centinela corría antes, su nivel seguía cargado y sus cuadros largos hacían que el timer de 0,2 s venciera antes que un tween de 0,05 s en el mismo cuadro (los timers se procesan primero). No era una pausa colgada (lo verifiqué registrando Pause/time_scale después de cada test). TestCase.use_empty_scene() saca el nivel que quedó; lo usan test_arena_fighter y test_boss._spawn. 8 de 8 corridas sin fallos (antes 1 de 3 fallaba).
+
+### 11.221 Jefe: las manos rompen si cambia la escena a mitad de un golpe · Revisión
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `bug`, `jefe`
+
+Visto por -5c (2026-10-19) en 11.9: boss_hand.gd esperaba get_tree().physics_frame en un bucle; si la escena cambia a mitad de un golpe, get_tree() es null y tira error.
+
+**Notas:** Hecho (-e0): las esperas por cuadro de las manos pasan por _physics_frame(), que devuelve false si la mano ya no está en el árbol; un cambio de escena a mitad de golpe, agarre, barrido o reset termina la corrutina en vez de esperar sobre un árbol null. test_boss › test_leaving_the_tree_mid_slam_ends_quietly (falla sin el arreglo en boss_hand.gd:350).
 
 ## M12 — Assets propios (Blender)  (27/39)
 

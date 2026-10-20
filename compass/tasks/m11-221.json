@@ -1,0 +1,21 @@
+{
+  "assignee": "project-epiphany-e0",
+  "checklist": [],
+  "code": "11.221",
+  "created_at": "2026-10-20T02:36:32.803Z",
+  "description": "Visto por -5c (2026-10-19) en 11.9: boss_hand.gd esperaba get_tree().physics_frame en un bucle; si la escena cambia a mitad de un golpe, get_tree() es null y tira error.",
+  "milestone": "m11",
+  "notes": "Hecho (-e0): las esperas por cuadro de las manos pasan por _physics_frame(), que devuelve false si la mano ya no está en el árbol; un cambio de escena a mitad de golpe, agarre, barrido o reset termina la corrutina en vez de esperar sobre un árbol null. test_boss › test_leaving_the_tree_mid_slam_ends_quietly (falla sin el arreglo en boss_hand.gd:350).",
+  "order": 217,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "review",
+  "tags": [
+    "bug",
+    "jefe"
+  ],
+  "test": "",
+  "title": "Jefe: las manos rompen si cambia la escena a mitad de un golpe",
+  "updated_at": "2026-10-20T02:40:49.070Z"
+}
