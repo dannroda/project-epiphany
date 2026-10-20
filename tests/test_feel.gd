@@ -77,7 +77,7 @@ func test_bursts_reuse_one_low_poly_template() -> void:
 func test_sword_hits_sound_by_surface() -> void:
 	var feel := (Engine.get_main_loop() as SceneTree).root.get_node(^"Feel")
 	for surface in ["flesh", "metal", "stone"]:
-		assert_true(not feel._sounds.get(StringName("hit_" + surface), []).is_empty(), "hay sonido para %s" % surface)
+		assert_true(not feel.streams_of(StringName("hit_" + surface)).is_empty(), "hay sonido para %s" % surface)
 	var expected := {
 		"res://src/world/grass.tscn": "none",
 		"res://src/world/pot.tscn": "none",

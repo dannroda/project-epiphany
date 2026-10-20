@@ -125,7 +125,7 @@ func test_death_turns_off_the_neon_and_slows_time_briefly() -> void:
 
 func test_the_boss_has_its_own_voice() -> void:
 	for sound in [&"boss_lid", &"boss_roar", &"boss_slam", &"boss_eye_hit"]:
-		assert_true(Feel._sounds.has(sound), "%s tiene sus muestras (11.50)" % sound)
+		assert_true(not Feel.streams_of(sound).is_empty(), "%s tiene sus muestras (11.50)" % sound)
 	var boss := _spawn()
 	assert_true(boss.get_node(^"%Hum").playing, "zumba de fondo")
 	boss.eye_open = 1.0

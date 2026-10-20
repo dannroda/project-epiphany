@@ -7,7 +7,7 @@ func test_buses_and_varied_samples() -> void:
 		assert_true(AudioServer.get_bus_index(bus) != -1, "bus %s" % bus)
 	var feel: Node = tree.root.get_node(^"Feel")
 	for sound in [&"hit", &"hurt", &"block", &"break", &"deny", &"ui_move", &"ui_accept"]:
-		assert_true(feel._sounds.get(sound, []).size() >= 3, "%s tiene varias muestras" % sound)
+		assert_true(feel.streams_of(sound).size() >= 3, "%s tiene varias muestras" % sound)
 	tree.root.get_node(^"GameState").reset()
 	tree.change_scene_to_file("res://levels/test.tscn")
 	await tree.scene_changed
@@ -163,5 +163,5 @@ func test_sounds_in_one_frame_are_capped() -> void:
 		for sound in [&"hit", &"block", &"break"]:
 			feel.sfx(sound, Vector3.ZERO)
 	assert_true(voices.call() <= feel.MAX_VOICES, "nunca más de MAX_VOICES a la vez (%d)" % voices.call())
-	assert_true(feel._sounds[&"boom"].size() == 1 and feel._sounds[&"boom"][0] is AudioStreamWAV, "lo que no tiene .ogg se sintetiza")
-	assert_true(not feel._sounds[&"hit"][0] is AudioStreamWAV, "lo que tiene .ogg no se sintetiza de más")
+	assert_true(feel.streams_of(&"boom").size() == 1 and feel.streams_of(&"boom")[0] is AudioStreamWAV, "lo sintetizado sale de su .wav")
+	assert_true(not feel.streams_of(&"hit")[0] is AudioStreamWAV, "lo que tiene .ogg usa sus muestras")
