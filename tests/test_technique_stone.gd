@@ -123,7 +123,7 @@ func _flat_under(space: PhysicsDirectSpaceState3D, body: Node3D, skip: Array[RID
 	var ys: Array[float] = []
 	for dx in [-0.8, 0.0, 0.8]:
 		for dz in [-0.8, 0.0, 0.8]:
-			var at := body.global_position + Vector3(dx, 0, dz)
+			var at := body.global_position + Vector3(dx + 0.03, 0, dz + 0.03)
 			var query := PhysicsRayQueryParameters3D.create(at + Vector3.UP * 1.2, at + Vector3.DOWN * 1.5)
 			query.exclude = skip
 			var hit := space.intersect_ray(query)
