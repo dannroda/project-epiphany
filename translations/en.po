@@ -705,6 +705,9 @@ msgstr "You got the Tunic!"
 msgid "PLACE_SANCTUARY"
 msgstr "Sanctuary"
 
+msgid "PLACE_REFLEX"
+msgstr "Shrine of Reflections"
+
 msgid "PLACE_TEMPLE_ENTRANCE"
 msgstr "Temple Entrance"
 

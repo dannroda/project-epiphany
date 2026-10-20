@@ -296,7 +296,7 @@ func test_every_dungeon_entrance_is_on_the_overworld_map() -> void:
 	await tree.scene_changed
 	var level := tree.current_scene
 	var map: OverworldMap = level.get_node(^"OverworldMap")
-	var places := level.get_children().filter(func(n: Node) -> bool: return n is MapPlace and n.kind == MapPlace.Kind.DUNGEON)
+	var places := level.get_children().filter(func(n: Node) -> bool: return n is MapPlace and n.kind in [MapPlace.Kind.DUNGEON, MapPlace.Kind.SHRINE])
 	var shown := 0
 	for node: Node in level.get_children():
 		var path := node.scene_file_path

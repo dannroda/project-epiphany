@@ -705,6 +705,9 @@ msgstr "¡Conseguiste la Túnica!"
 msgid "PLACE_SANCTUARY"
 msgstr "Santuario"
 
+msgid "PLACE_REFLEX"
+msgstr "Santuario de reflejos"
+
 msgid "PLACE_TEMPLE_ENTRANCE"
 msgstr "Entrada del templo"
 

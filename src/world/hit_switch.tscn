@@ -158,6 +158,7 @@ shape = SubResource("HurtShape")
 
 [node name="Glow" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
+deterministic = false
 libraries = {
 &"": SubResource("Library")
 }
