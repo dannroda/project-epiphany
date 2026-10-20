@@ -7005,11 +7005,13 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): arena_fight.gd:55-58,
 
 **Notas:** Hecho (-e0): las escoltas puestas a mano se empaquetan (PackedScene.pack) en _enter_tree de ArenaFight, antes de entrar al árbol y de su _ready, así cada pelea las instancia como están en el nivel (con los overrides de sus hijos) en vez de recargar su escena; tipadas Enemy y conectadas a defeated. No sirvió duplicate() (crashea la 4.8 beta con una instancia suelta ya lista) ni empaquetar después de _ready (guarda estado de runtime). test_centinela › test_escorts_keep_their_instance_overrides (falla sin el arreglo).
 
-### 16.53 Limpiezas menores del overworld · Pendiente
+### 16.53 Limpiezas menores del overworld · Revisión
 
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `overworld`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `overworld`
 
 Revisión de arquitectura del overworld (-3e, 2026-10-19): collision_layer/mask/monitorable a mano en 7 scripts de sensores (area_zone, tremor_zone, pit, portal, travel_portal, shallow_water, stairs) → en el .tscn o constantes de capa; bounds() repetido (area_zone, arena_area, room) → un helper; ArenaArea sondea players cada cuadro → señales de Area3D; constantes de eye_switch y look-at repetido con eye_follow → exportar y compartir; brillo_la.gd cambia materiales en cada node_added → paleta brillante .tres al importar; enfoque_la.gd consulta un grupo cada cuadro → cachear (se cruza con 16.37).
+
+**Notas:** Hecho (-e0): PhysicsLayers (src/world/physics_layers.gd) nombra las capas del proyecto y PhysicsLayers.sensor(area) arma los 7 sensores (area_zone, tremor_zone, pit, portal, travel_portal, shallow_water, stairs) en vez de escribir layer/mask/monitorable a mano; los números copiados de hurtbox/object/interactable apuntan ahí. BoxBounds.xz es el único bounds() de Room, AreaZone y ArenaArea. EyeSwitch exporta look_range, look_limit_deg y look_speed (grupo Mirada); EyeFollow mueve un iris y EyeSwitch gira el ojo, no comparten mirada. Quedan para 16.38 (después de los assets): el sondeo de ArenaArea, el grupo que consulta enfoque_la por cuadro y los materiales de brillo_la por node_added. 331 pruebas relacionadas, 0 fallos.
 
 ### 16.54 TopDownCamera hace demasiado · Pendiente
 
