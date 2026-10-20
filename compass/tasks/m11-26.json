@@ -16,7 +16,7 @@
   "created_at": "2026-10-10T05:29:41.451Z",
   "description": "Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada hasta terminar y una recompensa al final (pieza de corazón u otra; la cota reforzada ya la da el santuario después de D4 y el carcaj el Risco).",
   "milestone": "m11",
-  "notes": "",
+  "notes": "Propuesta de -72 (2026-10-19), solo diseño, falta que Daniel la apruebe.\nOjo: el templo ya tiene sala de oleadas (la Combinada); esta es la versión del overworld, más temprana y chica.\nDónde: Necrópolis (hub este, acto 2, con arco), \"la Huaca de los guerreros\", chullpa grande hundida con escalera. Alternativa: el Cardonal, detrás de un muro agrietado.\nRegla de ítems: en el acto 2 puede no haber gancho ni escudo espejo: nada de acorazados ni orbes que devolver.\nSala de 16×12 m con persianas, dos tarimas, cuatro columnas bajas (tapan flechas) y vasijas (corazones entre oleadas). WaveSpawner cierra al entrar.\nOla 1: 4 esqueletos (_quenoa o _templo), calienta combo y giro. Ola 2: 2 esqueletos con escudo + 2 arqueros en las tarimas (revés/estocada contra el escudo; arco o columnas contra los arqueros). Ola 3: Ojo Vigía mini (con flechas) + 2 esqueletos; si no se quiere repetir la Combinada, Momia mini + 2 atoq.\nAl vencer: persianas abiertas y premio; flag ow_trial_waves.\nExiste: WaveSpawner, WaveSpawn, persianas, enemigos y variantes, sub-jefes mini, Chest, Pickup, HeartPiece. Nuevo: el nivel de una sala (como bush_cave), la entrada (chullpa hundida) y una tablilla opcional.\nPremio: a) pieza de corazón, b) bolsa de bombas grande (si no la da 11.27), c) otra botella vacía, d) 20 flechas y 10 bombas (pobre, no recomendado).",
   "order": 26,
   "priority": "low",
   "refs": [],
@@ -26,5 +26,5 @@
   ],
   "test": "Entrar, sobrevivir las 3 oleadas, la puerta abre y aparece la recompensa; no se repite al cargar.",
   "title": "Prueba de combate opcional",
-  "updated_at": "2026-10-20T01:57:54.896Z"
+  "updated_at": "2026-10-20T02:00:30.649Z"
 }

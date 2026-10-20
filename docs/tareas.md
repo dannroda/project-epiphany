@@ -2976,17 +2976,37 @@ Una sala de combate opcional: 3 oleadas mezclando enemigos con la puerta cerrada
 
 **Prueba:** Entrar, sobrevivir las 3 oleadas, la puerta abre y aparece la recompensa; no se repite al cargar.
 
+**Notas:** Propuesta de -72 (2026-10-19), solo diseño, falta que Daniel la apruebe.
+Ojo: el templo ya tiene sala de oleadas (la Combinada); esta es la versión del overworld, más temprana y chica.
+Dónde: Necrópolis (hub este, acto 2, con arco), "la Huaca de los guerreros", chullpa grande hundida con escalera. Alternativa: el Cardonal, detrás de un muro agrietado.
+Regla de ítems: en el acto 2 puede no haber gancho ni escudo espejo: nada de acorazados ni orbes que devolver.
+Sala de 16×12 m con persianas, dos tarimas, cuatro columnas bajas (tapan flechas) y vasijas (corazones entre oleadas). WaveSpawner cierra al entrar.
+Ola 1: 4 esqueletos (_quenoa o _templo), calienta combo y giro. Ola 2: 2 esqueletos con escudo + 2 arqueros en las tarimas (revés/estocada contra el escudo; arco o columnas contra los arqueros). Ola 3: Ojo Vigía mini (con flechas) + 2 esqueletos; si no se quiere repetir la Combinada, Momia mini + 2 atoq.
+Al vencer: persianas abiertas y premio; flag ow_trial_waves.
+Existe: WaveSpawner, WaveSpawn, persianas, enemigos y variantes, sub-jefes mini, Chest, Pickup, HeartPiece. Nuevo: el nivel de una sala (como bush_cave), la entrada (chullpa hundida) y una tablilla opcional.
+Premio: a) pieza de corazón, b) bolsa de bombas grande (si no la da 11.27), c) otra botella vacía, d) 20 flechas y 10 bombas (pobre, no recomendado).
+
 ### 11.27 Mini-santuario de reflejos · Pendiente
 
 **Prioridad:** baja · **Responsable:** project-epiphany-72 · **Etiquetas:** `mazmorra`, `puzzles`
 
 Un mini-santuario de 3–4 salas que se resuelven solo con el escudo espejo, cada una enseñando una variante del reflejo, con recompensa al final.
 
-- [ ] Diseñar 3–4 salas
+- [x] Diseñar 3–4 salas
   Todo con el escudo espejo: haces de luz, ojos-interruptor, espejos que giran.
 - [ ] Recompensa al final
 
 **Prueba:** Se completa solo con el escudo espejo; cada sala enseña una variante del reflejo.
+
+**Notas:** Propuesta de -72 (2026-10-19), solo diseño, falta que Daniel la apruebe.
+Dónde: Cumbre, junto al Intihuatana (región de D4, con gancho; el escudo sale de ahí: sin vuelta atrás). Boca tallada en el risco con reja; un sol en la cornisa de enfrente: el escudo baja el rayo a un cristal junto a la boca y abre la reja (flag ow_reflex_door). Alternativa: Explanada del templo, junto al sello (examen antes de la última mazmorra, pero mezcla dos puzzles de luz en la misma pantalla).
+Forma: nivel chico aparte (levels/reflejos.tscn), 4 salas de 14×12 m como en D4, en fila hacia el norte; sin llaves, mapa ni brújula; cada sala abre la siguiente; solo escudo espejo y espada.
+Sala 1, El ángulo: el escudo manda el rayo hacia donde mira el player, también en diagonal. Sol por el este; cristal 1 (norte, oeste de la puerta) parado en el rayo mirando en diagonal; cristal 2 (esquina NE) con rebote en un espejo fijo y después en el escudo. Los dos abren la reja. Sin enemigos.
+Sala 2, Orbes: el escudo también devuelve proyectiles. Dos torretas (revives) en cornisas oeste y este, abismo en el medio. Ojo 1 (pared norte, sobre piso firme) extiende un puente; ojo 2 (open_time 6 s, pared norte del otro lado) abre la reja 6 s: devolver y correr. Ojos solo en pared norte.
+Sala 3, Giros: el player es un eslabón. Sol tras una persiana que abre 8 s un espadazo en una placa; M1 y M2 giran de un espadazo; rayo → M1 → escudo → M2 → cristal. Hay que planificar antes de abrir. Un esqueleto con escudo de molestia.
+Sala 4, Corona: todo junto bajo presión. Dos arqueros en tarimas (sus flechas se devuelven con el escudo), una columna corta el rayo directo; girar un espejo y sostener el rayo con el escudo. Cristal (latch) → cofre grande. Flag ow_reflex_done.
+Existe: LightSource, LightMirror, RotatingMirror, LightReceiver, EyeSwitch (open_time), Turret, Gate como persiana, FloorSwitch, Bridge, Room, esqueletos con escudo y arqueros _cumbre. Nuevo: el nivel, la boca (heredar de cumbre_entrada) y quizás placa con temporizador. Opcional: un prisma que parte el rayo.
+Premio: a) pieza de corazón (si se va a 16, ver 11.124), b) bolsa de bombas grande (bomb_bag_big con _capacity_bonus), c) otra botella vacía. Recomienda a) si 16 piezas; si no b).
 
 ### 11.28 Atajos que se abren al volver · Hecho
 
@@ -4583,6 +4603,8 @@ Overworld 8 + Gruta, Santuario, Chullpa, Queñoa y templo = 13 piezas con PIECES
 
 **Notas:** Daniel (2026-10-13): de momento no importa; se revisa cuando se cierre el total de piezas.
 2026-10-15 (-43, 11.190): con la pieza del templo el total es 13 (8 overworld + 5 mazmorras): una de más sobre 12. Quitar una o agregar tres.
+
+Opciones de -72 (2026-10-19) con 11.27 y 11.26: hoy 13 piezas, 4 por contenedor. 1) Ir a 16: el santuario de reflejos y la prueba de combate dan una pieza cada uno (15) y falta una más (recomendada). 2) Ir a 12: ninguna da pieza (bolsa grande y botella) y se saca una de las que hay. 3) Mezcla: una da pieza (14) y faltan dos para 16, o se sacan dos.
 
 ### 11.125 Puzzle de bloques de la cota: probar empujando y ubicar región · Hecho
 
