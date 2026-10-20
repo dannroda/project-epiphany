@@ -1075,7 +1075,7 @@ def strip_of(x):
 def _split(piece, name, material, collection):
 	"""Una pieza por franja con las caras de la pieza cuyo centro cae en ella, y su colisión aparte. Las normales se
 	orientan en la pieza entera: por franja, un pedazo suelto puede quedar dado vuelta."""
-	_canonical(piece.bm)
+	_canonical(piece)
 	bmesh.ops.recalc_face_normals(piece.bm, faces=[f for f in piece.bm.faces if f not in piece.fixed])
 	objects = []
 	for k in range(STRIPS):
@@ -1099,7 +1099,7 @@ COLLISION_RATIO = 0.1
 def _triangulate(bm, faces):
 	"""Triángulos fijos: BEAUTY (y el exportador con n-gonos) desempata caras iguales según la memoria, y cada build salía
 	distinto."""
-	bmesh.ops.triangulate(bm, faces=faces, quad_method="FIXED", ngon_method="EAR_CLIP")
+	return bmesh.ops.triangulate(bm, faces=faces, quad_method="FIXED", ngon_method="EAR_CLIP")["face_map"]
 
 
 def _collision(visual, collection):
@@ -1136,20 +1136,29 @@ def _sort(seq, key):
 	seq.sort(key=rank.__getitem__)
 
 
-def _canonical(bm):
+def _canonical(piece):
 	"""Vértices, aristas y caras por dónde están: lo que recorre la malla en orden (normales, colisión, exportador) sale
-	igual aunque los cortes las hayan creado en otro orden."""
+	igual aunque los cortes las hayan creado en otro orden. Ordenar mueve los elementos en memoria y las referencias de
+	piece.fixed quedarían en otras caras: viajan en el tag de cada cara."""
+	bm = piece.bm
+	for f in bm.faces:
+		f.tag = f in piece.fixed
 	_sort(bm.verts, lambda v: (tuple(round(c, 4) for c in v.co), sorted(tuple(round(c, 4) for c in f.calc_center_median()) for f in v.link_faces)))
 	bm.verts.index_update()
 	_sort(bm.edges, lambda e: tuple(sorted(v.index for v in e.verts)))
 	_sort(bm.faces, lambda f: tuple(sorted(v.index for v in f.verts)))
+	piece.fixed = {f for f in bm.faces if f.tag}
+	for f in bm.faces:
+		f.tag = False
 
 
 def _build(piece, name, material, collection):
 	bmesh.ops.delete(piece.bm, geom=[v for v in piece.bm.verts if not v.link_faces], context="VERTS")
 	bmesh.ops.dissolve_degenerate(piece.bm, dist=1e-4, edges=piece.bm.edges[:])
-	_triangulate(piece.bm, piece.bm.faces[:])
-	_canonical(piece.bm)
+	for new, old in _triangulate(piece.bm, piece.bm.faces[:]).items():
+		if old in piece.fixed:
+			piece.fixed.add(new)
+	_canonical(piece)
 	obj = piece.build(name, collection)
 	if material:
 		obj["material"] = material
