@@ -7,7 +7,8 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 GODOT=${GODOT:-/opt/godot/versions/4.8-beta1/godot}
 PACKAGE=com.example.projectepiphany
-APK=debug/tmp/android/epiphany_bench.apk
+# debug/tmp es compartido entre worktrees: un APK por worktree para que una corrida no instale el build de otra.
+APK=debug/tmp/android/epiphany_bench_$(basename "$PWD").apk
 OUT=debug/tmp/bench
 mkdir -p "$OUT"
 stamp=$(date +%Y%m%d_%H%M)
