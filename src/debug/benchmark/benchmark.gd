@@ -333,6 +333,10 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 		RenderingServer.camera_attributes_set_dof_blur_quality(variant.dof_quality, ProjectSettings.get_setting("rendering/camera/depth_of_field/depth_of_field_use_jitter"))
 	if variant.dof_shape >= 0:
 		RenderingServer.camera_attributes_set_dof_blur_bokeh_shape(variant.dof_shape)
+	var priorities := {}
+	for material: Material in variant.priorities:
+		priorities[material] = material.render_priority
+		material.render_priority = variant.priorities[material]
 	if not variant.plant_shadows:
 		for node in scene.find_children("*", "", true, false):
 			if node.scene_file_path.begins_with("res://src/world/plants/") or node.name == &"Decor":
@@ -343,6 +347,8 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 		RenderingServer.camera_attributes_set_dof_blur_bokeh_shape(ProjectSettings.get_setting("rendering/camera/depth_of_field/depth_of_field_bokeh_shape"))
 		for effect: CompositorEffect in effects:
 			effect.enabled = true
+		for material: Material in priorities:
+			material.render_priority = priorities[material]
 		for entry: Array in undo:
 			if entry[0] is ShaderMaterial and entry[1] != &"shader":
 				entry[0].set_shader_parameter(entry[1], entry[2])

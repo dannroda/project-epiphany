@@ -55,3 +55,6 @@ extends Node
 ## Retiene los materiales de cada nivel cargado hasta el final de la corrida: sus shaders y texturas no se liberan ni se
 ## vuelven a crear al volver al nivel (15.27).
 @export var keep_materials := false
+## render_priority de estos materiales mientras corre (15.25): en Mobile el orden de lo opaco es prioridad, shader y
+## material, sin ordenar por profundidad.
+@export var priorities: Dictionary[Material, int] = {}
