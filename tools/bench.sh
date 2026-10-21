@@ -58,6 +58,14 @@ android)
 		echo "borré la caché de pipelines ($((cache_kb / 1024)) MB): la primera carga de cada nivel en esta corrida es en frío"
 	fi
 	adb -s "$serial" shell run-as "$PACKAGE" rm -f files/benchmark/latest.json
+	# Con la pantalla apagada Android pausa el juego y la corrida no avanza (15.27).
+	adb -s "$serial" shell input keyevent KEYCODE_WAKEUP
+	adb -s "$serial" shell wm dismiss-keyguard
+	sleep 1
+	if adb -s "$serial" shell dumpsys window | grep -q "isKeyguardShowing=true"; then
+		echo "$serial tiene la pantalla bloqueada: sin desbloquearlo el juego queda en pausa"
+		exit 1
+	fi
 	adb -s "$serial" logcat -c
 	adb -s "$serial" shell am start -n "$PACKAGE/com.godot.game.GodotAppLauncher" > /dev/null
 	model=$(adb -s "$serial" shell getprop ro.product.model | tr -d '\r' | tr ' ' '_')
