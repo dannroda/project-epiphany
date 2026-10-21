@@ -5,16 +5,16 @@
   "created_at": "2026-10-21T06:24:45.505Z",
   "description": "Seguimiento de 15.5, Daniel (2026-10-21): \"Comprimir\". Los *_la_kit.tres traen sus propias mallas sin comprimir (≈200 MB de .tres de texto) porque la_walls las arma con SurfaceTool.commit() sin flags. Pasar Mesh.ARRAY_FLAG_COMPRESS_ATTRIBUTES (sin tangentes, como en 15.5) al commit de las piezas, tapas (15.16) y LODs, y regenerar los kits. Si se puede, regenerar solo los kits sin refresh de niveles; si hace falta refresh: rebasear sobre main justo antes, respetar los guardados del editor de Daniel (memorias refresh-editor-saved-levels, refresh-drops-instance-overrides, level-rim-and-editor-navmesh) y avisar. Medir peso de los .tres, VRAM y carga de chullpa/templo a 1080p (antes VRAM 1133 MB, chullpa ≈2,4 s) y capturas antes/después en Forward+ y Mobile sin rendijas ni cambios de sombreado.",
   "milestone": "m15",
-  "notes": "",
+  "notes": "-88 (wt/design-fix 3dafe6cf → main 78dc0a87): la_walls guarda todas las mallas del kit con ARRAY_FLAG_COMPRESS_ATTRIBUTES (tools/la_compress.gd), sin tangentes y con los mismos buffers de índices de LOD; bake, refresh y caps ya escriben comprimido. El modo nuevo `compress` comprimió los 6 kits en el lugar sin refrescar ni tocar ningún nivel: mismos ids de ítem, materiales, parámetros de shader, índices y LODs; error máximo 0,11 mm en posiciones y 0,4° en normales.\n- *_la_kit.tres: 134,6 → 84,7 MB.\n- 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.",
   "order": 200,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "optimizacion"
   ],
-  "test": "",
+  "test": "Capturas antes/después en Forward+ y Mobile: solo cambian el polvo, las llamas de las antorchas y el fundido del título de la sala; sin huecos ni cambios de sombreado. Suite completa en main 773/773 (78dc0a87).",
   "title": "Comprimir las mallas de los kits de paredes LA",
-  "updated_at": "2026-10-21T06:24:45.505Z"
+  "updated_at": "2026-10-21T06:38:49.906Z"
 }

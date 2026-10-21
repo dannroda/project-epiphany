@@ -16,6 +16,7 @@
     {
       "alternatives": "Adoptarlo ya para tener dobles y el panel del editor; adoptarlo cuando haya CI que lea JUnit.",
       "at": "2026-10-21T06:24:56.644Z",
+      "review": "ok",
       "text": "No adoptar GUT por ahora; la prueba queda en la rama wt/gut-trial (eb15796d) por si más adelante hace falta",
       "why": "Con la condición de Daniel (\"si trae beneficios\"), no los trae hoy: la velocidad es la misma (252 contra 264 s con 2 procesos, dentro del ruido), nuestro runner sigue haciendo el trabajo pesado arriba (procesos, user:// por worker, --fixed-fps, timeout de colgados) y lo único nuevo sería lo que no usamos (dobles/spies, tests parametrizados, el panel de GUT en el editor, JUnit para CI). A cambio suma un addon de terceros que no lista 4.8 y una capa más que mantener."
     }
@@ -33,5 +34,5 @@
   ],
   "test": "Suite con GUT en wt/gut-trial: 773/0. Main sigue con el runner propio.",
   "title": "Probar GUT para los tests (con nuestro runner por procesos arriba)",
-  "updated_at": "2026-10-21T06:25:03.900Z"
+  "updated_at": "2026-10-21T06:31:32.693Z"
 }

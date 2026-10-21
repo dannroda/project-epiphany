@@ -6928,7 +6928,7 @@ Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8
   Por qué: 773/0 con GUT; mismo API de asserts; en paralelo como hoy (--jobs=2: 252 s contra 264 s del runner propio; 4 jobs 145 s). Suma addons/gut (plugin sin activar) y un aviso de versión inofensivo.
   Descartado: Seguir con el runner propio (tests/run_tests.gd), que ya anda igual de rápido.
   Respuesta: si GUT trae beneficios por sobre lo que ya tenemos, si.
-- ! No adoptar GUT por ahora; la prueba queda en la rama wt/gut-trial (eb15796d) por si más adelante hace falta · sin revisar
+- ✓ No adoptar GUT por ahora; la prueba queda en la rama wt/gut-trial (eb15796d) por si más adelante hace falta
   Por qué: Con la condición de Daniel ("si trae beneficios"), no los trae hoy: la velocidad es la misma (252 contra 264 s con 2 procesos, dentro del ruido), nuestro runner sigue haciendo el trabajo pesado arriba (procesos, user:// por worker, --fixed-fps, timeout de colgados) y lo único nuevo sería lo que no usamos (dobles/spies, tests parametrizados, el panel de GUT en el editor, JUnit para CI). A cambio suma un addon de terceros que no lista 4.8 y una capa más que mantener.
   Descartado: Adoptarlo ya para tener dobles y el panel del editor; adoptarlo cuando haya CI que lea JUnit.
 
@@ -7821,7 +7821,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (18/26, 18 en revisión)
+## M15 — Optimización  (19/26, 19 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8145,11 +8145,18 @@ Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equ
 - G23 (inicio/cardonal/bañado): Bajo ~33 ms de GPU pero ~22 fps, porque el process de CPU tarda 35–53 ms → 15.20. Escala 70 → ~42 ms de GPU; 100 → ~59 ms. Cualquier sombra del sol a 50 % (incluso ortogonal de 20 m, atlas 1024, sin plantas) cuesta 46–58 ms: Bajo va sin sol. El AO LA cuesta ~1 ms y queda en Bajo.
 - La calibración mide solo GPU; en el G23 el límite es la CPU.
 
-### 15.20 CPU por cuadro del overworld en el G23 · Pendiente
+### 15.20 CPU por cuadro del overworld en el G23 · En curso
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
 Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms pero el juego va a ~22 fps porque el proceso de CPU tarda 35–53 ms por cuadro. En el teléfono base los 30 fps no se alcanzan solo con calidad gráfica: el límite es la CPU. Perfilar qué se lleva el process en el overworld (scripts por cuadro, IA de los enemigos despiertos, partículas por CPU, física, animación, UI/HUD, señales) con el profiler de Godot o mediciones en el benchmark, y bajarlo sin cambiar el comportamiento. Medir en el G23 con tools/bench.sh android ZY22HH6Q99 (compartido con Asteroids; el Edge no se usa).
+
+**Notas:** Parte 1 (-88, wt/design-fix 3563683d → main fb8a31d8):
+- Causa: NavigationAgent3D.set_target_position siempre pide un camino nuevo aunque el punto sea el mismo. Deambular, buscar, huir, perseguir y la mordida de la jauría lo asignaban en cada tick del BT, así que cada enemigo que se movía recalculaba el camino completo sobre la navmesh del overworld en cada paso de física.
+- Arreglo: Enemy.path_to asigna el destino solo si se corrió más de 0,25 m (un destino fijo, una sola vez) o si el agente ya terminó; conserva el comportamiento de hoy en el último metro.
+- Benchmark: dos nodos BenchMarker (prioridad de process mínima y máxima) miden por cuadro los scripts de _process, los de _physics_process sumados sobre los pasos y la cantidad de pasos. El "process" de Performance incluye la sincronización y el dibujo del RenderingServer: los "35–53 ms de process" de la descripción no eran tiempo de scripts.
+- G23, perfil Bajo, A/B intercalado con contexto Vulkan vivo: scripts de física por paso 6,3–8,0 → 4,8–6,0 ms; inicio, cardonal y bañado llegan a 29–30 fps (antes ~22) cuando la GPU queda debajo de ~25 ms. PC headless en el inicio: ticks de BT de los 4 esqueletos que deambulan 0,59 → 0,19 ms.
+- Queda por paso en el G23: ~5 ms de scripts y ~8 ms del motor de física (Jolt; el overworld tiene 1434 Area3D). Sigue -88.
 
 ### 15.21 G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost) · Revisión
 
@@ -8182,11 +8189,17 @@ Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mo
 
 Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 315 ms de GPU (3,1 fps) y chullpa 327 ms (2,9 fps) contra antesala 146 ms (6,4 fps), con triángulos ya bajos (tapas bakeadas y LODs). La diferencia entre salas apunta a algo propio de esas salas: luces puntuales por sala, cutaway de paredes, niebla de pozos, sondas, efectos LA. Medir por sala con los toggles del benchmark (lights, probes, effects, gridmaps, flat_shaders) y bajar el costo por píxel en Mobile sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build.
 
-### 15.24 Comprimir las mallas de los kits de paredes LA · En curso
+### 15.24 Comprimir las mallas de los kits de paredes LA · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
 Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen sus propias mallas sin comprimir (≈200 MB de .tres de texto) porque la_walls las arma con SurfaceTool.commit() sin flags. Pasar Mesh.ARRAY_FLAG_COMPRESS_ATTRIBUTES (sin tangentes, como en 15.5) al commit de las piezas, tapas (15.16) y LODs, y regenerar los kits. Si se puede, regenerar solo los kits sin refresh de niveles; si hace falta refresh: rebasear sobre main justo antes, respetar los guardados del editor de Daniel (memorias refresh-editor-saved-levels, refresh-drops-instance-overrides, level-rim-and-editor-navmesh) y avisar. Medir peso de los .tres, VRAM y carga de chullpa/templo a 1080p (antes VRAM 1133 MB, chullpa ≈2,4 s) y capturas antes/después en Forward+ y Mobile sin rendijas ni cambios de sombreado.
+
+**Prueba:** Capturas antes/después en Forward+ y Mobile: solo cambian el polvo, las llamas de las antorchas y el fundido del título de la sala; sin huecos ni cambios de sombreado. Suite completa en main 773/773 (78dc0a87).
+
+**Notas:** -88 (wt/design-fix 3dafe6cf → main 78dc0a87): la_walls guarda todas las mallas del kit con ARRAY_FLAG_COMPRESS_ATTRIBUTES (tools/la_compress.gd), sin tangentes y con los mismos buffers de índices de LOD; bake, refresh y caps ya escriben comprimido. El modo nuevo `compress` comprimió los 6 kits en el lugar sin refrescar ni tocar ningún nivel: mismos ids de ítem, materiales, parámetros de shader, índices y LODs; error máximo 0,11 mm en posiciones y 0,4° en normales.
+- *_la_kit.tres: 134,6 → 84,7 MB.
+- 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.
 
 ## M17 — Después de la demo  (0/2)
 
