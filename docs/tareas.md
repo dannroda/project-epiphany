@@ -7229,11 +7229,18 @@ Auditoría con patrones de diseño (-72, 2026-10-19): menu_stack.gd:50/74/120 y 
 
 **Notas:** Hecho (-72): ya existía UiScreen (src/ui/ui_screen.gd) con las virtuales y la pila tipada; los has_method eran por la raíz y las pestañas. La pantalla de título pasa a extender UiScreen y MenuStack tipa _base/set_base/covered/uncovered/_focus como UiScreen, sin has_method. Las cuatro pestañas del menú de pausa extienden PausePage (src/ui/menus/pause_page.gd: focus_default con el primer control enfocable como antes, cancel false) y pause_menu las llama tipadas. No queda has_method en src/ui. test_ui_scenes › test_every_screen_on_the_stack_is_a_ui_screen: cada script que hace MenuStack.push está en PUSHED (si se agrega uno nuevo, falla hasta sumarlo), cada escena empujada y el título tienen UiScreen de raíz, y cada pestaña es PausePage.
 
-### 16.57 Cinco escenas de src/world sin uso · En curso
+### 16.57 Cinco escenas de src/world sin uso · Pausado
 
 **Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-8f · **Etiquetas:** `refactor`
 
 Al partir src/world (16.26) aparecieron cinco escenas que no usa ningún nivel ni script (solo copias viejas en debug/tmp.old): props/brazier.tscn, puzzles/gate_templo.tscn, puzzles/cracked_wall_risco.tscn, puzzles/cracked_wall_templo.tscn, overworld/zone_veil.tscn. Confirmar con un grep (incluyendo rutas armadas en runtime) y borrarlas, o dejarlas si Daniel las tiene pensadas para contenido futuro.
+
+**Decisiones:**
+- ? ¿Alguna de estas cinco escenas sin uso la tenés pensada para algo, o se pueden borrar? (1) brasero suelto del templo viejo; (2) compuerta dorada estilo templo; (3) pared rota con look de risco; (4) pared rota con look de portal del templo; (5) velo de tinta/niebla que tapaba una zona hasta entrar · pregunta abierta
+  Por qué: Ningún nivel, script ni herramienta las usa (grep por ruta y nombre; no tienen uid). (1) Lo ponía decorate_levels en el templo viejo; las antorchas de pared ya toman su brasero por la_walls. (2) Se hizo en 12.37 con las compuertas de Queñoa, Totora y Cumbre; el templo actual no tiene compuertas. (3) Era la boca de las cuevas en los riscos del overworld; desde el 2026-10-13 usan la pared rota base. (4) La usaban el templo viejo y el nicho de la Chullpa (sin paredes rotas en D1 desde 11.177). (5) La sacaste del overworld el 2026-10-12 ("delata que hay algo escondido; el velo queda para otros usos"); con ella se irían zone_veil.gd y zone_veil.gdshader. Sus mallas (reja_templo, muro_agrietado_templo/risco) solo las usa build_lugares.py.
+  Descartado: Borrar todas; dejar todas; borrar solo las que no son reusables (1, 3, 4) y dejar la compuerta y el velo.
+
+**Notas:** Grep de -8f por ruta y nombre en todo el repo (tools/la_walls, decorate_levels, build_*, tests): ninguna de las cinco se usa; no tienen uid, así que solo se cargan por ruta; ningún nombre se arma en runtime (los "brazier" de la_walls.gd son la clave de LOOKS que cambia la malla de wall_torch.tscn). Sus mallas (reja_templo, muro_agrietado_templo, muro_agrietado_risco) solo las usa tools/blender/build_lugares.py. Historia de cada una en la decisión. Nada borrado: espera la respuesta de Daniel.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/17)
 
