@@ -3,6 +3,16 @@
   "checklist": [],
   "code": "15.26",
   "created_at": "2026-10-21T16:34:12.730Z",
+  "decisions": [
+    {
+      "alternatives": "Dejarlas en todos los perfiles y buscar el margen en el piso; apagarlas solo en el renderer Mobile; dejar una sola luz por sala.",
+      "asked": true,
+      "at": "2026-10-21T18:27:03.420Z",
+      "session": "288582ff-f0fb-4cb5-a598-45cacf4a334e",
+      "text": "¿En el perfil Bajo apagamos las luces puntuales de las mazmorras (antorchas, brillo de pozos) y dejamos solo la luz de la sala?",
+      "why": "Con las paredes ya reordenadas (15.26), en el G23 ahorra 3–9 ms de GPU por cuadro: hub 43 → 39, chullpa 53 → 46, antesala 42 → 36, queñoa 44,5 → 40,5, totora 43 → 40, cumbre 50 → 43. Solo no alcanza 30 fps en ninguna (hace falta ~33 ms; lo mejor queda en 36). Cambia el look en Bajo: las salas quedan más parejas y azuladas, sin los círculos cálidos de las antorchas. (Reemplaza la pregunta de 15.23, cuyo −10 a −24 ms venía del orden viejo de las paredes.)"
+    }
+  ],
   "description": "Sigue de 15.23, que midió en Alta (templo hub ~103 ms, antesala ~109, chullpa ~145 ms de GPU en el G23 después de cutaway sin discard, cull_back y DOF solo cuando se ve). El jugador del G23 va a estar en Bajo (15.19: 50 %, sin sol, sin SSAO, 30 fps). Medir las tres mazmorras de referencia y el resto de los casos de mazmorra en Bajo, ver cuánto falta para 30 fps y qué domina (GridMap: paredes y piso LA ≈ 75 ms en Alta; luces puntuales; efectos LA) y bajarlo sin cambiar el look en Forward+. Lo que cambie el look (por ejemplo las luces puntuales, pregunta abierta en 15.23) va como pregunta a Daniel. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con -88 y -8f; el Edge no se usa).",
   "milestone": "m15",
   "notes": "Punto de partida en Bajo (G23, GPU p50, moto_g23_20261021_1336/1347): hub ~43, chullpa ~62, antesala ~43, queñoa ~54, totora ~52, cumbre ~70 ms. Sin GridMap 24–39 ms; sin luces puntuales −10 a −24 ms en chullpa, queñoa, totora y cumbre (pregunta abierta en 15.23); efectos LA y sondas ~0; LOD más agresivo (2–4 px) y octantes más chicos (2/4) no ganan nada.\nPaso 1 (-25, main 6a8bfac0, CUTAWAY_LA: posición y normal de mundo desde el fragmento, sin varyings): sin ganancia propia, revertido en el paso 2. Su \"ganancia\" medida con swap_shader era el efecto de orden de abajo.\nHallazgo: en el G23 cambiar cutaway_la por una copia idéntica en otro archivo bajaba ~20 ms con la misma imagen (capturas en el teléfono al nivel del ruido; los parámetros de los 19 uniforms iguales; contadores de pipelines iguales; asignada antes de cargar también rápida). Causa: Mobile no tiene prepaso de profundidad y ordena la lista opaca por prioridad → índice del RID del Shader → material, sin ordenar por profundidad (render_forward_mobile.h sort_key2; material_storage.cpp shader_id). Índices en el G23: piso_la 20, cutaway_la 23, niebla_foso 26, ventana_caida 28, la copia 38: la copia dibujaba las paredes después de todo lo opaco. Paredes primero (prioridad −1) es peor (+5 ms); piso −1 no cambia nada. El mecanismo exacto en Mali no está claro (FPK, vértices pesados: 1 M triángulos en cumbre).\nPaso 2 (-25, wt/art-hsm f80c45b0 → main b4efa43f): las 3 materiales de pared de los 6 kits LA con render_priority 1 (WALL_PRIORITY en la_walls.gd _glossy, así un refresh lo mantiene; los kits editados a mano, solo esa línea; ningún nivel tocado). Revierte CUTAWAY_LA. A/B plano en una corrida intercalada (variante que solo pone render_priority 0), Bajo, GPU p50 0 → 1: cumbre 71,9/72,8 → 52,0/51,9; queñoa 54,6/52,7 → 44,3/43,8; chullpa 62,6/64,6 → 55,8/55,5; totora 51,2/54,1 → 43,9/45,9; templo hub y antesala sin cambio. Lo que es depth_draw_never o con mezcla/alfa (silueta, luces de stencil, niebla de pozos, ventanas) va a la lista alfa después de todo lo opaco y no cambia. Medido con el teléfono degradado por memoria (15.27): vale en relativo.\nPara -88 (15.25/15.27): el orden de las superficies opacas pesadas en Mobile es una perilla real; medir las dos direcciones con render_priority en el overworld (terreno, terrazas).\nEl benchmark suma los casos Queñoa, Totora y Cumbre (spawn, radio 1,5).\nSiguiente: el piso procedural (piso_la) y las luces (decisión en 15.23), con preguntas a Daniel si cambia el look.",
@@ -16,5 +26,5 @@
   ],
   "test": "Paso 2: 60 salas en Forward+ y Mobile con prioridad 0 contra 1: 38 salas quietas ≤214 px, las 22 animadas (agua, jefes, enemigos) en su propio ruido A-A. Suite 773/773 en main después de --import (b4efa43f).",
   "title": "G23: las mazmorras en el perfil Bajo",
-  "updated_at": "2026-10-21T18:18:53.987Z"
+  "updated_at": "2026-10-21T18:27:03.420Z"
 }
