@@ -7827,7 +7827,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (21/28, 21 en revisión)
+## M15 — Optimización  (21/29, 21 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8239,7 +8239,7 @@ Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen s
 - *_la_kit.tres: 134,6 → 84,7 MB.
 - 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.
 
-### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · En curso
+### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · Pausado
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
@@ -8251,16 +8251,17 @@ Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps
   Descartado: Dejar el glow en todos los perfiles y buscar el margen en el agua y la geometría.
 
 **Notas:** Hallazgos parciales (-88, G23, perfil Bajo, corridas intercalando Base):
-- No es calor: el G23 tiene dos estados estables, bueno (cuadro 33 ms, GPU 22–24 ms) y malo (cuadro 45 ms, GPU 27–30 ms, también suben los scripts por paso). Después de 20 min la última Base estaba igual de bien que la primera.
+- No es calor: el G23 tiene dos estados estables, bueno (cuadro 33 ms, GPU 22–24 ms) y malo (cuadro 45 ms, GPU 27–30 ms, también suben los scripts por paso). Después de 20 min la última Base estaba igual de bien que la primera. Puede que esos dos estados sean presión de memoria (ver 15.27).
 - No es la física: con tope de 2 pasos por cuadro no cambia (29,1 contra 29,2 fps en 7 pares) y una corrida con tope cayó igual al estado malo. Lo dispara la GPU (el governor baja relojes cuando cae la tasa): hay que ganar margen de GPU.
 - Por pasada (--gpu-profile, Base, por cuadro): geometría opaca ~12–14 ms (Mali reparte mal los timestamps entre "Setup Sky" y "Render Opaque"); transparentes + efectos LA 4,5–6; canvas 2,3; glow 1,5; tonemap 1,4; partículas 0,4.
 - La resolución pesa poco (escala 25 baja ~3 ms); con la cámara sin ver nada (cull_mask 0, 255 triángulos) la GPU sigue en 13–16 ms: costo fijo de pipeline.
 - Válidos (variantes de propiedad o visibilidad): glow ~1,2 ms (glow_enabled = false); efectos LA juntos ~1,5–2 (nubes ~0,5–1, AO ~0,7, tono ~0,3; compositor null o effect.enabled); decor, FSR contra bilineal, GridMap, luces puntuales ocultas, radiancia/modo de proceso del cielo ~0.
-- NO VÁLIDOS hasta volver a medir (salían de flat_materials, que cambia materiales en tiempo de ejecución; en el G23 eso falsea la variante, ver 15.26): agua plana 1,3–3,7 ms, todo plano ~3–4 ms y el reparto fijo/post/geometría/materiales que usaba Plana. En el overworld el sesgo sería chico (ocultar las luces puntuales da ~0), pero se trata como no válido.
+- Por visibilidad (relativo, dentro de una corrida con el teléfono degradado): sin terreno −5 a −8 ms; sin agua −6 a −9 (a velocidad normal ~−3 a −4,5, confirma por un método válido lo que daba PlanaAgua); sin terrazas −2 a −4.
+- NO VÁLIDOS hasta volver a medir (salían de flat_materials, que cambia materiales en tiempo de ejecución; en el G23 eso mezcla un efecto de pipeline, ver 15.26): todo plano ~3–4 ms y el reparto fijo/post/geometría/materiales que usaba Plana.
 - 15.20 no se ve afectado (la máscara de zonas fue A/B por código; monitoring_off y enemies_off son propiedades).
-- Sigue: corrida con --gpu-profile por visibilidad (sin terreno, sin terrazas, sin agua; ocultar el agua es el techo válido de su costo) y después la variante Mobile del agua de 15.17 como A/B limpia con dos APK.
+- EN PAUSA: 2026-10-21 a la tarde el G23 quedó ~1,8× más lento en todas las pasadas por falta de memoria (kswapd al 97 %, swap; el juego usa ~1,5 GB). Los números absolutos contra los de la mañana y las A/B entre corridas separadas no valen hasta que se resuelva. -88 sigue con 15.27; después: la variante Mobile del agua de 15.17 como A/B limpia con dos APK.
 - Perillas nuevas del benchmark (sin commitear todavía): glow, fsr, hidden, camera_cull, max_physics_steps, sky_process_mode, sky_radiance y la columna slow (fracción de cuadros de más de 40 ms); la variante swap_shader del agua se sacó.
-- La cola del G23 se trabó dos veces porque el servidor adb heredaba el fd del lock de bench.sh; arreglado en main 41050f83 (-88). El daemon adb 1746874 que tenía el lock ya no existe; la cola anda.
+- La cola del G23 se trabó dos veces porque el servidor adb heredaba el fd del lock de bench.sh; arreglado en main 41050f83 (-88).
 
 ### 15.26 G23: las mazmorras en el perfil Bajo · En curso
 
@@ -8275,6 +8276,12 @@ HALLAZGO ABIERTO: en el G23, el mismo shader asignado en tiempo de ejecución cu
 Paso 1 (-25, wt/art a9fd318b → main 6a8bfac0): cutaway_la define CUTAWAY_LA (posición y normal de mundo desde el fragmento, sin varyings). Sin ganancia propia: las corridas planas con el cambio en el APK dan lo mismo que antes. -25 lo revierte en su próximo commit.
 El benchmark suma los casos Queñoa, Totora y Cumbre (spawn, radio 1,5).
 Siguiente: explicar el hallazgo de pipeline; después el piso procedural (piso_la) y lo que queda de las paredes, con corridas planas.
+
+### 15.27 G23: memoria del juego (1,5 GB con swap en un teléfono de 4 GB) · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+2026-10-21 a la tarde el G23 corre ~1,8× más lento que a la mañana en todas las pasadas (Base en Bajo GPU 36–44 contra 22–24 ms; canvas 4,3 contra 2,3; tonemap 2,7 contra 1,4) sin calor (thermal 0, GPU 45–53 °C). El teléfono está sin memoria: 55–113 MB libres de 3,8 GB, kswapd0 al 97 % de CPU, load average ~17. El mayor consumidor es el juego: com.example.projectepiphany 1,62 GB PSS, VmRSS 1,12 GB + 378 MB de swap durante una corrida de benchmark (Chullpa y Cumbre). Medir la memoria del juego en Mobile por caso (overworld, cada mazmorra, después de cambiar de nivel): Performance MEMORY_STATIC, RENDERING_INFO_VIDEO_MEM_USED/TEXTURE_MEM_USED/BUFFER_MEM_USED, y el PSS del proceso; ver si crece entre casos (algo que no se libera al cambiar de nivel) y qué domina (kits LA embebidos, texturas, mallas, audio). Bajarla para que el G23 no swapee sin cambiar el look en Forward+; lo que cambie el look va como pregunta a Daniel. Sumar la memoria como columna del benchmark. Las corridas con el teléfono degradado valen solo en relativo dentro de la misma corrida.
 
 ## M17 — Después de la demo  (0/2)
 

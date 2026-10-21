@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-88",
+  "checklist": [],
+  "code": "15.27",
+  "created_at": "2026-10-21T17:48:05.651Z",
+  "description": "2026-10-21 a la tarde el G23 corre ~1,8× más lento que a la mañana en todas las pasadas (Base en Bajo GPU 36–44 contra 22–24 ms; canvas 4,3 contra 2,3; tonemap 2,7 contra 1,4) sin calor (thermal 0, GPU 45–53 °C). El teléfono está sin memoria: 55–113 MB libres de 3,8 GB, kswapd0 al 97 % de CPU, load average ~17. El mayor consumidor es el juego: com.example.projectepiphany 1,62 GB PSS, VmRSS 1,12 GB + 378 MB de swap durante una corrida de benchmark (Chullpa y Cumbre). Medir la memoria del juego en Mobile por caso (overworld, cada mazmorra, después de cambiar de nivel): Performance MEMORY_STATIC, RENDERING_INFO_VIDEO_MEM_USED/TEXTURE_MEM_USED/BUFFER_MEM_USED, y el PSS del proceso; ver si crece entre casos (algo que no se libera al cambiar de nivel) y qué domina (kits LA embebidos, texturas, mallas, audio). Bajarla para que el G23 no swapee sin cambiar el look en Forward+; lo que cambie el look va como pregunta a Daniel. Sumar la memoria como columna del benchmark. Las corridas con el teléfono degradado valen solo en relativo dentro de la misma corrida.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 203,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "G23: memoria del juego (1,5 GB con swap en un teléfono de 4 GB)",
+  "updated_at": "2026-10-21T17:48:05.651Z"
+}
