@@ -57,7 +57,7 @@ _surfaces = [{
 size = Vector3(2, 0.5, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2jvbo"]
-render_priority = 0
+render_priority = 1
 shader = ExtResource("3_c73y3")
 shader_parameter/hole_radius = 1.4
 shader_parameter/hole_floor = 0.3
@@ -372,7 +372,7 @@ _surfaces = [{
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_waoqk"]
-render_priority = 0
+render_priority = 1
 shader = ExtResource("3_c73y3")
 shader_parameter/hole_radius = 1.4
 shader_parameter/hole_floor = 0.3
@@ -394,7 +394,7 @@ shader_parameter/grain_rect = Vector4(0.42, 0.455, 0, 0.25)
 shader_parameter/grain_spacing = 0.2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5y5ot"]
-render_priority = 0
+render_priority = 1
 shader = ExtResource("3_c73y3")
 shader_parameter/hole_radius = 1.4
 shader_parameter/hole_floor = 0.3

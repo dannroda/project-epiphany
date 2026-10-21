@@ -70,6 +70,8 @@ const SHAFT_SPACING := 6.0
 const GLOW_INTENSITY := 0.2
 const GLOSS_ROUGHNESS := 0.5
 const GLOSS_SPECULAR := 0.4
+## En Mobile no hay prepaso de profundidad: dibujar las paredes después del resto es más barato en el G23 (15.26).
+const WALL_PRIORITY := 1
 const EXPOSURE := 1.0
 const BRAZIER_SCALE := 0.55
 ## Colgados de la cara de la pared, como en LA: a este alto y esto por delante de la roca.
@@ -406,6 +408,7 @@ func _glossy(material: Material) -> Material:
 	if not _glossy_cache.has(material):
 		var copy := material.duplicate() as ShaderMaterial
 		copy.shader = CUTAWAY_LA
+		copy.render_priority = WALL_PRIORITY
 		copy.set_shader_parameter("roughness", GLOSS_ROUGHNESS)
 		copy.set_shader_parameter("specular", GLOSS_SPECULAR)
 		_glossy_cache[material] = copy
