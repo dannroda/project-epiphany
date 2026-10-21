@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Benchmark automático (15.14): corre src/debug/benchmark/benchmark.tscn sin input y guarda el JSON en debug/tmp/bench/.
 # En Android usa el preset "Android (benchmark)" (feature benchmark), que reemplaza al juego instalado.
-#   tools/bench.sh desktop              en ventana, en la pantalla 1 sin robar el foco
+#   tools/bench.sh desktop              sin ventana (tools/offscreen.sh), con la GPU de la máquina
 #   tools/bench.sh android <serial>     instala el APK de debug (lo exporta con --build o si falta) y lo corre en el teléfono
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -16,10 +16,8 @@ stamp=$(date +%Y%m%d_%H%M%S)
 
 case "${1:-}" in
 desktop)
-	printf '[display]\nwindow/size/no_focus=true\n' > override.cfg
-	trap 'rm -f override.cfg' EXIT
 	log="$OUT/desktop_$stamp.log"
-	bwrap --dev-bind / / --tmpfs /dev/input "$GODOT" --path . --display-driver x11 --screen 1 -- --benchmark > "$log" 2>&1 || true
+	GODOT="$GODOT" tools/offscreen.sh --path . -- --benchmark > "$log" 2>&1 || true
 	json=$(sed -n 's/^BENCH_DONE //p' "$log" | tail -1)
 	[ -n "$json" ] || { echo "no terminó, mirá $log"; exit 1; }
 	dest="$OUT/desktop_$(uname -n)_$stamp.json"
