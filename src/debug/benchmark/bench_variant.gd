@@ -20,5 +20,14 @@ extends Node
 ## Parámetros que pone en los materiales de parameters_shader mientras corre, y después los devuelve.
 @export var parameters_shader: Shader
 @export var parameters := {}
+## Con false, las plantas (escenas de src/world/plants y lo que cuelga de Decor) no proyectan sombra.
+@export var plant_shadows := true
+## Sombra del sol más barata: ortogonal (un solo split) en vez de PSSM, otra distancia máxima y otro tamaño de atlas
+## (0: lo del nivel y de Settings).
+@export var sun_orthogonal := false
+@export var sun_distance := 0.0
+@export var shadow_atlas := 0
+## Efectos del compositor que apaga mientras corre (por script), y después los vuelve a prender.
+@export var effects_off: Array[Script] = []
 ## Solo estos casos (vacío: todos).
 @export var cases: Array[StringName] = []

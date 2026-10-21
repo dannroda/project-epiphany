@@ -40,12 +40,17 @@ func _run() -> void:
 			var run := await _measure(bench, variant, viewport)
 			print("BENCH ", JSON.stringify(run))
 			runs.append(run)
+			_save(info, runs)
+	print("BENCH_DONE ", ProjectSettings.globalize_path(OUT))
+	get_tree().quit()
+
+
+## Después de cada corrida: si el teléfono pierde el dispositivo a mitad de camino, quedan las que terminaron.
+func _save(info: Dictionary, runs: Array) -> void:
 	DirAccess.make_dir_recursive_absolute(OUT.get_base_dir())
 	var file := FileAccess.open(OUT, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"info": info, "runs": runs}, "\t"))
 	file.close()
-	print("BENCH_DONE ", ProjectSettings.globalize_path(OUT))
-	get_tree().quit()
 
 
 func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Dictionary:
@@ -184,7 +189,8 @@ func _mesh_materials(mesh: Mesh) -> Array:
 	return out
 
 
-## Los parámetros de shader de la variante; devuelve cómo dejarlos como estaban.
+## Los parámetros de shader, los efectos apagados y las sombras de plantas de la variante; devuelve cómo dejar los recursos
+## compartidos como estaban.
 func _apply(variant: BenchVariant, scene: Node) -> Callable:
 	var undo := []
 	if variant.parameters_shader and not variant.parameters.is_empty():
@@ -202,7 +208,27 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 				for key: String in variant.parameters:
 					undo.append([m, key, m.get_shader_parameter(key)])
 					m.set_shader_parameter(key, variant.parameters[key])
+	var effects := []
+	for world: WorldEnvironment in scene.find_children("*", "WorldEnvironment", true, false):
+		for effect in world.compositor.compositor_effects if world.compositor else []:
+			if effect and effect.enabled and effect.get_script() in variant.effects_off:
+				effect.enabled = false
+				effects.append(effect)
+	for sun: DirectionalLight3D in scene.find_children("*", "DirectionalLight3D", true, false):
+		if variant.sun_orthogonal:
+			sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
+		if variant.sun_distance > 0.0:
+			sun.directional_shadow_max_distance = variant.sun_distance
+	if variant.shadow_atlas > 0:
+		RenderingServer.directional_shadow_atlas_set_size(variant.shadow_atlas, ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/16_bits"))
+	if not variant.plant_shadows:
+		for node in scene.find_children("*", "", true, false):
+			if node.scene_file_path.begins_with("res://src/world/plants/") or node.name == &"Decor":
+				for geometry: GeometryInstance3D in node.find_children("*", "GeometryInstance3D", true, false):
+					geometry.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return func() -> void:
+		for effect: CompositorEffect in effects:
+			effect.enabled = true
 		for entry: Array in undo:
 			entry[0].set_shader_parameter(entry[1], entry[2])
 
