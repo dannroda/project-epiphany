@@ -17,6 +17,9 @@ var _variant: BenchVariant
 func _ready() -> void:
 	if ARG in OS.get_cmdline_args() or ARG in OS.get_cmdline_user_args() or OS.has_feature("benchmark"):
 		_run.call_deferred()
+	else:
+		for marker: Node in [$FrameStart, $FrameEnd]:
+			marker.process_mode = PROCESS_MODE_DISABLED
 
 
 func _run() -> void:
@@ -78,7 +81,7 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		get_viewport().mesh_lod_threshold = 0.0
 	player.health.make_invulnerable(3600.0)
 	var origin := player.global_position if bench.use_spawn else bench.center
-	var columns := {"frame": [], "process": [], "physics": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
+	var columns := {"frame": [], "process": [], "physics": [], "scripts": [], "physics_scripts": [], "physics_steps": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
 	var elapsed := -warmup
 	var last := Time.get_ticks_usec()
 	while elapsed < bench.seconds:
@@ -88,8 +91,12 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		last = now
 		elapsed += delta
 		_walk(player, origin, bench, elapsed)
+		var scripts: Array = $FrameEnd.take()
 		if elapsed < 0.0:
 			continue
+		columns.scripts.append(scripts[0])
+		columns.physics_scripts.append(scripts[1])
+		columns.physics_steps.append(scripts[2])
 		columns.frame.append(delta * 1000.0)
 		columns.process.append(Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0)
 		columns.physics.append(Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0)

@@ -48,9 +48,8 @@ func _tick(delta: float) -> Status:
 	var flat: Vector3 = agent.global_position - _goal
 	flat.y = 0.0
 	if flat.length() > 0.4 and _left > 0.0:
-		agent.nav_agent.target_position = _goal
 		var speed: float = agent.config.move_speed if _step == Step.GO else agent.config.wander_speed
-		agent.move_toward_point(agent.nav_agent.get_next_path_position(), speed)
+		agent.move_toward_point(agent.path_to(_goal), speed)
 		return RUNNING
 	agent.stop_moving()
 	if _step == Step.BACK:

@@ -36,8 +36,7 @@ func _tick(_delta: float) -> Status:
 		agent.anim_player.play(run_animation, 0.15)
 	var map: RID = agent.nav_agent.get_navigation_map()
 	var goal := NavigationServer3D.map_get_closest_point(map, agent.global_position + away.normalized() * safe_distance)
-	agent.nav_agent.target_position = goal
-	agent.move_toward_point(agent.nav_agent.get_next_path_position(), agent.config.move_speed)
+	agent.move_toward_point(agent.path_to(goal), agent.config.move_speed)
 	return RUNNING
 
 

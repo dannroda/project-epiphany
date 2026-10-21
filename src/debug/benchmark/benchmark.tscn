@@ -6,9 +6,21 @@
 [ext_resource type="Shader" path="res://data/kits/shaders/epiphany_outdoor.gdshader" id="4_outdoor"]
 [ext_resource type="Shader" path="res://src/world/water/water_la.gdshader" id="5_water"]
 [ext_resource type="Shader" path="res://data/kits/shaders/epiphany_wall.gdshader" id="6_wall"]
+[ext_resource type="Script" path="res://src/debug/benchmark/bench_marker.gd" id="7_marker"]
 
 [node name="Benchmark" type="Node"]
 script = ExtResource("1_bench")
+
+[node name="FrameStart" type="Node" parent="."]
+process_priority = -1000000
+process_physics_priority = -1000000
+script = ExtResource("7_marker")
+
+[node name="FrameEnd" type="Node" parent="." node_paths=PackedStringArray("start")]
+process_priority = 1000000
+process_physics_priority = 1000000
+script = ExtResource("7_marker")
+start = NodePath("../FrameStart")
 
 [node name="Variants" type="Node" parent="."]
 

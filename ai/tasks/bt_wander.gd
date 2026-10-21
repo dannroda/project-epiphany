@@ -35,8 +35,7 @@ func _tick(delta: float) -> Status:
 		if flat.length() < 0.3 or _walk_left <= 0.0:
 			_stop()
 		else:
-			agent.nav_agent.target_position = _goal
-			agent.move_toward_point(agent.nav_agent.get_next_path_position(), agent.config.wander_speed)
+			agent.move_toward_point(agent.path_to(_goal), agent.config.wander_speed)
 			return RUNNING
 	_pause_left -= delta
 	return SUCCESS if _pause_left <= 0.0 else RUNNING

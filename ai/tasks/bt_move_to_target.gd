@@ -21,8 +21,7 @@ func _tick(_delta: float) -> Status:
 		return FAILURE
 	if agent.global_position.distance_to(target.global_position) <= agent.config.attack_range:
 		return SUCCESS
-	agent.nav_agent.target_position = target.global_position
-	agent.move_toward_point(agent.nav_agent.get_next_path_position(), agent.config.move_speed)
+	agent.move_toward_point(agent.path_to(target.global_position), agent.config.move_speed)
 	return RUNNING
 
 

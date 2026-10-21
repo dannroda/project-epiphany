@@ -10,6 +10,8 @@ const BB_IS_HIT := &"is_hit"
 const BB_IS_DEAD := &"is_dead"
 const BB_STUNNED := &"stunned"
 const BB_TARGET := &"target"
+## Cuánto se puede correr el destino antes de pedir otro camino (15.20).
+const REPATH_DISTANCE := 0.25
 
 signal defeated(enemy: Enemy)
 
@@ -44,6 +46,7 @@ var _recoil_left := 0.0
 var _airborne := false
 ## Donde deambula: donde empezó (o donde cayó), su sala y, en el overworld, las zonas de su región.
 var _home := Vector3.INF
+var _path_goal := Vector3.INF
 var _home_room: Room
 var _home_region: Array[AreaZone] = []
 ## Cuánto falta para el golpe que está avisando (INF si no avisa nada): lo lee el contraataque del player.
@@ -180,6 +183,15 @@ func home() -> Vector3:
 		if _home_room == null:
 			_home_region = AreaZone.region_at(get_tree(), _home)
 	return _home
+
+
+## El siguiente punto del camino a `point`. Asignar target_position recalcula el camino entero aunque no cambie, y con
+## cada enemigo que deambula pidiéndolo en cada tick era lo más caro del cuadro en el G23 (15.20).
+func path_to(point: Vector3) -> Vector3:
+	if _path_goal.distance_squared_to(point) > REPATH_DISTANCE * REPATH_DISTANCE or nav_agent.is_navigation_finished():
+		_path_goal = point
+		nav_agent.target_position = point
+	return nav_agent.get_next_path_position()
 
 
 func move_toward_point(point: Vector3, speed: float) -> void:

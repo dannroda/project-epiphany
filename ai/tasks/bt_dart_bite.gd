@@ -45,8 +45,7 @@ func _tick(delta: float) -> Status:
 			elif _phase_time > max_approach:
 				return FAILURE
 			else:
-				agent.nav_agent.target_position = _target.global_position
-				agent.move_toward_point(agent.nav_agent.get_next_path_position(), agent.config.move_speed)
+				agent.move_toward_point(agent.path_to(_target.global_position), agent.config.move_speed)
 		Phase.BITE:
 			if not _striking:
 				if _phase_time < _attack.windup_time:
