@@ -1134,9 +1134,24 @@ def _split(piece, name, material, collection):
 			if not part.bm.faces:
 				part.bm.free()
 				continue
-			part.fixed = set(part.bm.faces)
-			visual = _build(part, "%s_%d_%d" % (name, k, j), material, collection)
-			objects += [visual, _collision(visual, collection)]
+			block = "%s_%d_%d" % (name, k, j)
+			solid = epi.Piece()
+			solid.bm.free()
+			solid.bm = part.bm.copy()
+			solid.fixed = set(solid.bm.faces)
+			solid_obj = _build(solid, block + "_solid", None, collection)
+			collision = _collision(solid_obj, collection, block)
+			bpy.data.objects.remove(solid_obj)
+			unseen = part.bm.faces.layers.int.get(UNSEEN)
+			if unseen is not None:
+				bmesh.ops.delete(part.bm, geom=[f for f in part.bm.faces if f[unseen]], context="FACES_ONLY")
+				part.bm.faces.layers.int.remove(unseen)
+			if part.bm.faces:
+				part.fixed = set(part.bm.faces)
+				objects.append(_build(part, block, material, collection))
+			else:
+				part.bm.free()
+			objects.append(collision)
 		strip.free()
 	return objects
 
@@ -1153,7 +1168,7 @@ def _triangulate(bm, faces):
 	return bmesh.ops.triangulate(bm, faces=faces, quad_method="FIXED", ngon_method="EAR_CLIP")["face_map"]
 
 
-def _collision(visual, collection):
+def _collision(visual, collection, name):
 	mesh = visual.data.copy()
 	mesh.materials.clear()
 	bm = bmesh.new()
@@ -1164,7 +1179,7 @@ def _collision(visual, collection):
 	_triangulate(bm, bm.faces[:])
 	bm.to_mesh(mesh)
 	bm.free()
-	obj = bpy.data.objects.new(visual.name + "_col-colonly", mesh)
+	obj = bpy.data.objects.new(name + "_col-colonly", mesh)
 	collection.objects.link(obj)
 	if len(mesh.polygons) > target:
 		decimate = obj.modifiers.new("decimate", "DECIMATE")
@@ -1216,6 +1231,105 @@ def _build(piece, name, material, collection):
 	return obj
 
 
+## Lo que la cámara nunca ve (12.2): la cámara sigue al player (offset de TopDownCamera, FOV vertical 40) o se pone
+## cenital cuando una pared lo tapa. Un vértice se ve si desde el player parado en alguna celda caminable cae en el
+## cuadro (con margen, hasta 21:9) y el rayo hasta la cámara no choca con el terreno. Una cara se va si no tiene ningún
+## vértice visto ni toca una que sí.
+CAMERA_OFFSET = Vector((0.0, -10.0, 17.4))
+CAMERA_FOV = math.radians(40.0 + 8.0)
+CAMERA_ASPECT = 2.6
+PLAYER_HEIGHT = 0.9
+SEEN_REACH = (24.0, 16.0)
+WALK_CELLS = ".:wSv"
+## Las caras con algún lado más largo que SAMPLE_STEP (m) se prueban también por dentro: el fondo del agua tiene las
+## esquinas bajo el pasto y el medio a la vista.
+SAMPLE_STEP = 1.0
+## Las caras que no se ven quedan marcadas: salen de la malla, no de la colisión.
+UNSEEN = "unseen"
+
+
+def _eyes():
+	eyes = {}
+	for r in range(GH):
+		for c in range(GW):
+			if GRID[r][c] in WALK_CELLS and LEVELS[r][c] < MOUNTAIN:
+				at = cell_center(c, r)
+				eyes[(c, r)] = Vector((at.x, at.y, LEVELS[r][c] * TOP + PLAYER_HEIGHT))
+	return eyes
+
+
+def _views():
+	up = Vector((0.0, 0.0, 1.0))
+	views = []
+	for offset in (CAMERA_OFFSET, up * CAMERA_OFFSET.length):
+		forward = -offset.normalized()
+		right = forward.cross(up if abs(forward.z) < 0.99 else Vector((0.0, 1.0, 0.0))).normalized()
+		views.append((offset, forward, right, forward.cross(right).normalized() * -1.0))
+	return views
+
+
+def _seen(co, normal, eyes, views, tree):
+	slope = math.tan(CAMERA_FOV / 2)
+	c0, r0 = math.floor((co.x + CELL / 2) / CELL) - X0, math.floor((-co.y + CELL / 2) / CELL) - Z0
+	reach_x, reach_y = int(SEEN_REACH[0] / CELL), int(SEEN_REACH[1] / CELL)
+	start = co + normal * 0.05
+	for dr in sorted(range(-reach_y, reach_y + 1), key=abs):
+		for dc in sorted(range(-reach_x, reach_x + 1), key=abs):
+			eye = eyes.get((c0 + dc, r0 + dr))
+			if eye is None:
+				continue
+			for offset, forward, right, up in views:
+				camera = eye + offset
+				to = co - camera
+				depth = to.dot(forward)
+				if depth <= 0.0 or abs(to.dot(up)) > depth * slope or abs(to.dot(right)) > depth * slope * CAMERA_ASPECT:
+					continue
+				ray = camera - start
+				if tree.ray_cast(start, ray.normalized(), ray.length)[0] is None:
+					return True
+	return False
+
+
+def _face_seen(face, eyes, views, tree):
+	corners = [v.co for v in face.verts]
+	for i in range(1, len(corners) - 1):
+		a, b, c = corners[0], corners[i], corners[i + 1]
+		n = max(1, math.ceil(max((b - a).length, (c - b).length, (a - c).length) / SAMPLE_STEP))
+		for j in range(n + 1):
+			for k in range(n + 1 - j):
+				if _seen(a + (b - a) * (j / n) + (c - a) * (k / n), face.normal, eyes, views, tree):
+					return True
+	return False
+
+
+def hide_unseen(pieces):
+	from mathutils.bvhtree import BVHTree
+	verts, polys = [], []
+	for piece in pieces:
+		base = len(verts)
+		verts += [v.co.copy() for v in piece.bm.verts]
+		piece.bm.verts.index_update()
+		polys += [[base + v.index for v in f.verts] for f in piece.bm.faces]
+	tree = BVHTree.FromPolygons(verts, polys, all_triangles=False)
+	eyes, views = _eyes(), _views()
+	for piece in pieces:
+		bm = piece.bm
+		for f in bm.faces:
+			f.tag = f in piece.fixed
+		layer = bm.faces.layers.int.new(UNSEEN)
+		piece.fixed = {f for f in bm.faces if f.tag}
+		for f in bm.faces:
+			f.tag = False
+		bm.normal_update()
+		seen = {v for v in bm.verts if _seen(v.co, v.normal, eyes, views, tree)}
+		keep = {f for f in bm.faces if any(v in seen for v in f.verts) or (max(e.calc_length() for e in f.edges) > SAMPLE_STEP and _face_seen(f, eyes, views, tree))}
+		ring = {v for f in keep for v in f.verts}
+		gone = [f for f in bm.faces if f not in keep and not any(v in ring for v in f.verts)]
+		print("hide_unseen: %d de %d vértices vistos, %d de %d caras se van" % (len(seen), len(bm.verts), len(gone), len(bm.faces)))
+		for f in gone:
+			f[layer] = 1
+
+
 def main():
 	epi.start()
 	collection = bpy.data.collections.new("terreno")
@@ -1231,10 +1345,6 @@ def main():
 	rail = epi.Piece(40)
 	terrain, walls = cracked_walls(collection, holes, rail)
 	cave_mouths(terrain)
-	objects += _split(terrain, "riscos", "wall", collection)
-	guard = _build(rail, "baranda-colonly", None, collection)
-	guard["group"] = WALK_GUARD
-	objects.append(guard)
 	ground = epi.Piece(12)
 	outer = [Vector((BOUNDS[0].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[0].y)), Vector((BOUNDS[1].x, BOUNDS[1].y)), Vector((BOUNDS[0].x, BOUNDS[1].y))]
 	paint_role(ground, fill(ground, [outer] + holes[0], 0.0, ground_height), "ground")
@@ -1245,6 +1355,13 @@ def main():
 		for lp in waters[level]:
 			shallow(ground, lp)
 		paint_role(ground, fill(ground, [pt for pt, _f in paths[level]], z + (PATH_LIFT if level else 0.0), ground_height if level == 0 else None), "path", vary=0.015)
+	hide_unseen([terrain, ground])
+	if os.environ.get("CULL_DRY"):
+		return
+	objects += _split(terrain, "riscos", "wall", collection)
+	guard = _build(rail, "baranda-colonly", None, collection)
+	guard["group"] = WALK_GUARD
+	objects.append(guard)
 	objects += _split(ground, "suelo", "outdoor", collection)
 	objects += decor(load_meshes(), collection)
 	epi.publish("terreno_organico", objects=objects, part=_part)
