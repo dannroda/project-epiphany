@@ -73,7 +73,7 @@ func test_compass_marks_closed_chests() -> void:
 
 
 func test_overworld_shows_marker_over_the_image() -> void:
-	var setup: Array = await _open_map("", "res://levels/test.tscn")
+	var setup: Array = await _open_map("", "res://levels/test/test.tscn")
 	var tree: SceneTree = setup[0]
 	var page: Control = setup[3]
 	await tree.process_frame

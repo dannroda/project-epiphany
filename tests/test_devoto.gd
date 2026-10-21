@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## 11.115 paso 5: Devotos del Ojo. La IA del centinela (alerta con !, búsqueda y vuelta) y una estocada de lanza con
 ## aviso largo que se puede contraatacar.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const DEVOTO := preload("res://src/entities/devoto/devoto.tscn")
 
 

@@ -1,5 +1,5 @@
 # Prueba 12.14: la misma zona (MAP) armada con distintos bordes, para elegir cómo hacer el overworld menos cuadrado.
-# Publica assets/epiphany/prueba_terreno_<variante>.glb; levels/pruebas_terreno.tscn las pone una al lado de la otra.
+# Publica assets/epiphany/prueba_terreno_<variante>.glb; levels/test/pruebas_terreno.tscn las pone una al lado de la otra.
 # blender -b -P tools/blender/build_prueba_terreno.py [-- variante ...]
 import math
 import os

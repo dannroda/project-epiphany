@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## El gancho (11.30): sale cinco baldosas; en un poste o un cofre se clava y lleva al player por encima de un hueco;
 ## contra una pared rebota; trae vasijas y la vasija grande de a una celda; le arranca la coraza al acorazado.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const FAR := Vector3(200, 0, 0)
 const POST := preload("res://src/world/hook_post.tscn")
 const POT := preload("res://src/world/pot.tscn")
@@ -181,7 +181,7 @@ func test_the_sandbox_gap_is_crossed_with_the_hookshot() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state := tree.root.get_node(^"GameState")
 	state.reset()
-	tree.change_scene_to_file("res://levels/sandbox_items.tscn")
+	tree.change_scene_to_file("res://levels/test/sandbox_items.tscn")
 	await tree.scene_changed
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	for i in 300:

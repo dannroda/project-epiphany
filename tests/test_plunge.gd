@@ -3,7 +3,7 @@ extends "res://tests/test_case.gd"
 ## espada en el piso un rato; la onda pega ×2 en 1,2 m sin ser golpe fuerte: las placas STRIKE y lo que pide el martillo
 ## no la toman.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const FLOOR_SWITCH := preload("res://src/world/floor_switch.tscn")
 const WAVE := preload("res://src/combat/plunge_wave.tscn")
 

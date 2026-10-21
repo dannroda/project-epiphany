@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://cbd8lw0x1j7nv" path="res://player/states/idle.gd" id="16_e7oew"]
 [ext_resource type="Script" uid="uid://c1dqyr008pc70" path="res://player/states/moving.gd" id="17_c35mf"]
 [ext_resource type="Script" uid="uid://bubek4m3axgwv" path="res://player/states/attacking.gd" id="18_65viv"]
-[ext_resource type="PackedScene" uid="uid://8nnsjbshosby" path="res://src/tools/target_indicator.tscn" id="22_bjvpn"]
+[ext_resource type="PackedScene" uid="uid://8nnsjbshosby" path="res://src/camera/target_indicator.tscn" id="22_bjvpn"]
 [ext_resource type="Script" uid="uid://bvujfesyp7f87" path="res://player/states/hurt.gd" id="22_rptt4"]
 [ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="cfg_player"]
 [ext_resource type="Script" uid="uid://cava0l7vocpst" path="res://player/components/aim.gd" id="c_aim"]

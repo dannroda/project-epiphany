@@ -91,7 +91,7 @@ func test_loading_in_the_same_scene_shows_or_hides_the_piece() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state := _state()
 	state.reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	var piece: HeartPiece = load("res://src/world/heart_piece.tscn").instantiate()
 	piece.flag = &"ow_heart_piece_grotto"

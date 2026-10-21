@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 ## El atoq (11.196): jauría de zorros de la cumbre. Aúllan al verte, te rodean, muerden de a uno y huyen con poca vida.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const ATOQ := preload("res://src/entities/atoq/atoq.tscn")
 
 var tree: SceneTree

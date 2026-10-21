@@ -49,10 +49,10 @@ func test_a_fast_trip_skips_it() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var flow: Node = tree.root.get_node(^"SceneFlow")
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	var shown := false
-	flow.travel_to("res://levels/test.tscn", &"start")
+	flow.travel_to("res://levels/test/test.tscn", &"start")
 	while flow.traveling:
 		shown = shown or flow.loading_screen.visible
 		await tree.process_frame
@@ -64,9 +64,9 @@ func test_loading_a_save_of_the_same_scene_reloads_it() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	state.reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
-	state.spawn_scene = "res://levels/test.tscn"
+	state.spawn_scene = "res://levels/test/test.tscn"
 	state.player_position = Vector3(2, 0, 2)
 	assert_eq(saves.save_game(9), OK)
 	var before := tree.current_scene
@@ -86,9 +86,9 @@ func test_the_old_scene_is_gone_before_the_save_is_read() -> void:
 	var state: Node = tree.root.get_node(^"GameState")
 	var saves: Node = tree.root.get_node(^"SaveManager")
 	state.reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
-	state.spawn_scene = "res://levels/test.tscn"
+	state.spawn_scene = "res://levels/test/test.tscn"
 	state.player_position = Vector3(2, 0, 2)
 	state.set_flag(&"ow_test_cracked_wall", true)
 	assert_eq(saves.save_game(9), OK)
@@ -134,21 +134,21 @@ func test_transitions_do_not_overlap() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var flow: Node = tree.root.get_node(^"SceneFlow")
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	var changes := [0]
 	var on_changed := func() -> void: changes[0] += 1
 	tree.scene_changed.connect(on_changed)
-	flow.travel_to("res://levels/test.tscn", &"start")
+	flow.travel_to("res://levels/test/test.tscn", &"start")
 	await tree.process_frame
 	assert_true(flow.traveling and tree.paused, "viajando y en pausa")
-	flow.travel_to("res://levels/test_rooms.tscn", &"start")
+	flow.travel_to("res://levels/test/test_rooms.tscn", &"start")
 	flow.respawn()
 	while flow.traveling:
 		await tree.process_frame
 	tree.scene_changed.disconnect(on_changed)
 	assert_eq(changes[0], 1, "un solo cambio de escena")
-	assert_eq(tree.current_scene.scene_file_path, "res://levels/test.tscn", "el primer viaje gana")
+	assert_eq(tree.current_scene.scene_file_path, "res://levels/test/test.tscn", "el primer viaje gana")
 	flow.respawn()
 	await tree.process_frame
 	assert_true(flow.traveling and tree.paused, "reaparecer también pausa y cuenta como viaje")

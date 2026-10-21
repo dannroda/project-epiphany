@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## El player se siente igual que cuando su máquina de estados se actualizaba dos veces por cuadro: duraciones de cada
 ## estado (en cuadros de física, ±1) y distancias (±5 cm) medidas antes del arreglo.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const FAR := Vector3(200, 0, 0)
 const POST := preload("res://src/world/hook_post.tscn")
 const FRAMES := 1
@@ -499,7 +499,7 @@ func test_block_push() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
-	tree.change_scene_to_file("res://levels/test_rooms.tscn")
+	tree.change_scene_to_file("res://levels/test/test_rooms.tscn")
 	await tree.scene_changed
 	for i in 3:
 		await tree.physics_frame

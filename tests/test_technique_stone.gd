@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## 11.34 paso 6: piedras de técnica y muñeco de práctica. Leer la piedra enseña la técnica y muestra el cartel; el
 ## muñeco se fija, avisa golpes de mentira para el contraataque y aguanta lo que le peguen.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const STONE := preload("res://src/world/technique_stone.tscn")
 const DUMMY := preload("res://src/world/practice_dummy.tscn")
 const COUNTER := preload("res://data/techniques/counter.tres")

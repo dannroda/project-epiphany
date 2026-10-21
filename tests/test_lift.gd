@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const STONE := preload("res://src/world/stone.tscn")
 const FLOOR_SWITCH := preload("res://src/world/floor_switch.tscn")
 

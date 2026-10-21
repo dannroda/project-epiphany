@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://src/world/fire_ring/fire_ring.gd" id="1_ring"]
-[ext_resource type="Shader" path="res://src/world/look/anillo_fuego.gdshader" id="2_shader"]
+[ext_resource type="Shader" path="res://src/world/look/fire_ring.gdshader" id="2_shader"]
 
 [sub_resource type="CylinderMesh" id="RingMesh"]
 top_radius = 8.5

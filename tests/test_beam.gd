@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## 11.34 paso 5: rayo de espada. Con la vida llena y la técnica de la Cumbre, cada golpe tira un rayo de 6 m que hace 1
 ## de daño y solo le pega a enemigos: no prende ojos ni interruptores, ni rompe nada, y se deshace contra una pared.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const BEAM := preload("res://src/combat/sword_beam.tscn")
 const EYE := preload("res://src/world/eye_switch.tscn")
 const HIT_SWITCH := preload("res://src/world/hit_switch.tscn")

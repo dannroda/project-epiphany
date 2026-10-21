@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const GUARD := preload("res://src/entities/guard.tscn")
 
 

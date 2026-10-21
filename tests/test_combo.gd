@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 ## 11.34: combo de tres golpes (tajo, revés, estocada) y giro cargado.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 
 
 func _level() -> Array:

@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="40_66c0e"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="43_rqrax"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="44_d82md"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
+[ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="ArrayMesh" uid="uid://ca13kgi1ye6ai" path="res://assets/epiphany/meshes/objetos/brasero_quenoa.res" id="45_lvm7h"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="46_kifxg"]
 [ext_resource type="Resource" path="res://data/entities/watcher_eye_boss.tres" id="47_eyeboss"]
@@ -52,8 +52,8 @@
 [ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="persistent_flag"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
-[ext_resource type="Script" path="res://src/world/look/ambiente_zoom.gd" id="ambiente_zoom"]
-[ext_resource type="Resource" path="res://data/ambientes/grito_d2.tres" id="grito_d2"]
+[ext_resource type="Script" path="res://src/world/look/ambience_zoom.gd" id="ambiente_zoom"]
+[ext_resource type="Resource" path="res://data/ambiences/grito_d2.tres" id="grito_d2"]
 
 [sub_resource type="Environment" id="Environment_w3lyb"]
 ssao_enabled = true

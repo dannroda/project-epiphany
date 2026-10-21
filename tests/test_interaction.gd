@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 
 
 func _interactable(text: String, priority: int, at: Vector3, parent: Node) -> Interactable:

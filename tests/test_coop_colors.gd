@@ -16,7 +16,7 @@ func test_the_second_player_wears_their_own_colors() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var players: Node = tree.root.get_node(^"Players")
 	GameState.reset()
-	tree.change_scene_to_file("res://levels/test_rooms.tscn")
+	tree.change_scene_to_file("res://levels/test/test_rooms.tscn")
 	await tree.scene_changed
 	for i in 3:
 		await tree.physics_frame

@@ -22,7 +22,7 @@ func _load(level: String) -> Array:
 
 
 func test_registry_tracks_who_joins_and_leaves() -> void:
-	var setup: Array = await _load("res://levels/test.tscn")
+	var setup: Array = await _load("res://levels/test/test.tscn")
 	var players: Node = setup[1]
 	var first: PlayerCharacter = setup[2]
 	var second: PlayerCharacter = setup[3]
@@ -37,7 +37,7 @@ func test_registry_tracks_who_joins_and_leaves() -> void:
 
 
 func test_enemies_chase_the_nearest_player() -> void:
-	var setup: Array = await _load("res://levels/test.tscn")
+	var setup: Array = await _load("res://levels/test/test.tscn")
 	var tree: SceneTree = setup[0]
 	var first: PlayerCharacter = setup[2]
 	var second: PlayerCharacter = setup[3]
@@ -56,7 +56,7 @@ func test_enemies_chase_the_nearest_player() -> void:
 
 
 func test_spawn_places_everyone_side_by_side() -> void:
-	var setup: Array = await _load("res://levels/test.tscn")
+	var setup: Array = await _load("res://levels/test/test.tscn")
 	var first: PlayerCharacter = setup[2]
 	var second: PlayerCharacter = setup[3]
 	var save: Node = (Engine.get_main_loop() as SceneTree).root.get_node(^"SceneFlow")

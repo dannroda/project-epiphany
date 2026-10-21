@@ -94,7 +94,7 @@ func test_bombs_open_the_shrine_and_the_mirror_from_d4_lights_its_chest() -> voi
 
 	assert_eq(saves.save_game(SLOT), OK)
 	state.reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	assert_eq(await saves.load_game(SLOT), OK)
 	await _frames(tree, 2)

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/items/bomb/explosion.gd" id="1_explosion"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/explosion.res" id="2_fire"]
 [ext_resource type="Material" path="res://data/kits/materials/epiphany_fx.tres" id="3_fx"]
-[ext_resource type="Shader" path="res://src/world/vfx/anillo_fuego.gdshader" id="4_anillo"]
+[ext_resource type="Shader" path="res://src/world/vfx/explosion_ring.gdshader" id="4_anillo"]
 
 [sub_resource type="SphereShape3D" id="Blast"]
 radius = 2.2

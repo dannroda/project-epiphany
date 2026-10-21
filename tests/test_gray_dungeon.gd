@@ -74,13 +74,13 @@ func test_walk_the_three_rooms_and_reload() -> void:
 
 	assert_eq(saves.save_game(SLOT), OK)
 	state.reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	assert_eq(await saves.load_game(SLOT), OK)
 	await _wait(tree, 0.5)
 	level = tree.current_scene
 	camera = level.get_node(^"TopDownCamera")
-	assert_eq(level.scene_file_path, "res://levels/dungeon_test.tscn")
+	assert_eq(level.scene_file_path, "res://levels/test/dungeon_test.tscn")
 	assert_eq(camera.room, level.get_node(^"Camara"), "vuelve a la sala 3")
 	assert_eq((level.get_node(^"SwitchDoor") as Door).is_open, true, "puerta oeste abierta tras cargar")
 	assert_eq((level.get_node(^"LockedDoor") as Door).is_open, true, "puerta con llave abierta tras cargar")

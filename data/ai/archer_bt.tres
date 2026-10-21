@@ -1,0 +1,85 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://d2cdktwr0pq68"]
+
+[ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_caso1"]
+[ext_resource type="Script" uid="uid://dp1f7fgg0yk1l" path="res://ai/tasks/bt_in_attack_range.gd" id="2_0sm1c"]
+[ext_resource type="Script" uid="uid://dqux6584c6gxs" path="res://ai/tasks/bt_shoot_arrow.gd" id="4_sr5dr"]
+[ext_resource type="Script" uid="uid://dgotna37ipe2c" path="res://ai/tasks/bt_move_to_target.gd" id="5_orssr"]
+[ext_resource type="Script" uid="uid://flw2poka5d86" path="res://ai/tasks/bt_keep_away.gd" id="6_keep"]
+[ext_resource type="BehaviorTree" uid="uid://b7aisqsn6f7ku" path="res://data/ai/reactions_bt.tres" id="r_react"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_jgf0a"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_wd2dy"]
+
+[sub_resource type="BTSubtree" id="BTSubtree_react"]
+subtree = ExtResource("r_react")
+blackboard_plan = SubResource("BlackboardPlan_wd2dy")
+custom_name = "Reacciones"
+
+[sub_resource type="BTCondition" id="BTCondition_keepfind"]
+script = ExtResource("1_caso1")
+
+[sub_resource type="BTAction" id="BTAction_keep"]
+script = ExtResource("6_keep")
+
+[sub_resource type="BTSequence" id="BTSequence_keep"]
+custom_name = "Alejarse"
+children = [SubResource("BTCondition_keepfind"), SubResource("BTAction_keep")]
+
+[sub_resource type="BTCondition" id="BTCondition_a3mfv"]
+script = ExtResource("1_caso1")
+
+[sub_resource type="BTCondition" id="BTCondition_coi5c"]
+script = ExtResource("2_0sm1c")
+
+[sub_resource type="BTAction" id="BTAction_3q1qq"]
+script = ExtResource("4_sr5dr")
+
+[sub_resource type="BBNode" id="BBNode_6o2u5"]
+saved_value = NodePath("ModelController/AnimationPlayer")
+resource_name = "ModelController/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_t7kc2"]
+animation_player = SubResource("BBNode_6o2u5")
+animation_name = &"General/Idle_A"
+blend = 0.15
+
+[sub_resource type="BTWait" id="BTWait_r1gm3"]
+duration = 0.8
+
+[sub_resource type="BTSequence" id="BTSequence_0kvci"]
+custom_name = "Disparar"
+children = [SubResource("BTCondition_a3mfv"), SubResource("BTCondition_coi5c"), SubResource("BTAction_3q1qq"), SubResource("BTPlayAnimation_t7kc2"), SubResource("BTWait_r1gm3")]
+
+[sub_resource type="BTCondition" id="BTCondition_1uf30"]
+script = ExtResource("1_caso1")
+
+[sub_resource type="BTAction" id="BTAction_gfns8"]
+script = ExtResource("5_orssr")
+
+[sub_resource type="BTSequence" id="BTSequence_8062w"]
+custom_name = "Perseguir"
+children = [SubResource("BTCondition_1uf30"), SubResource("BTAction_gfns8")]
+
+[sub_resource type="BBNode" id="BBNode_7bplq"]
+saved_value = NodePath("ModelController/AnimationPlayer")
+resource_name = "ModelController/AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_tuwd0"]
+animation_player = SubResource("BBNode_7bplq")
+animation_name = &"General/Idle_A"
+blend = 0.15
+
+[sub_resource type="BTWait" id="BTWait_igf4x"]
+duration = 0.5
+
+[sub_resource type="BTSequence" id="BTSequence_wc2m8"]
+custom_name = "Quieto"
+children = [SubResource("BTPlayAnimation_tuwd0"), SubResource("BTWait_igf4x")]
+
+[sub_resource type="BTDynamicSelector" id="BTDynamicSelector_mitb3"]
+children = [SubResource("BTSubtree_react"), SubResource("BTSequence_keep"), SubResource("BTSequence_0kvci"), SubResource("BTSequence_8062w"), SubResource("BTSequence_wc2m8")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_jgf0a")
+root_task = SubResource("BTDynamicSelector_mitb3")

@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/archer_skeleton.tres" id="2_config"]
 [ext_resource type="PackedScene" path="res://assets/items/bow/bow.tscn" id="3_bow"]
-[ext_resource type="BehaviorTree" path="res://src/entities/archer_bt.tres" id="4_bt"]
+[ext_resource type="BehaviorTree" path="res://data/ai/archer_bt.tres" id="4_bt"]
 
 [node name="ArcherSkeleton" instance=ExtResource("1_enemy")]
 config = ExtResource("2_config")

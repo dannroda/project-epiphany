@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 
 
 func _setup(shield: StringName) -> Array:
@@ -87,7 +87,7 @@ func test_arrows_hurt_sword_does_not() -> void:
 func test_a_destroyed_turret_comes_back_when_you_leave_its_room() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test_rooms.tscn")
+	tree.change_scene_to_file("res://levels/test/test_rooms.tscn")
 	await tree.scene_changed
 	var level := tree.current_scene
 	level.get_node(^"Skeleton").free()

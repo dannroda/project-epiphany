@@ -78,7 +78,7 @@
 [ext_resource type="Resource" uid="uid://cooy3l0hm4jv0" path="res://data/entities/player.tres" id="65_ilu4u"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="66_2bu1c"]
 [ext_resource type="ArrayMesh" uid="uid://c133y6v4an5xu" path="res://assets/epiphany/meshes/paredes_la/puerta_jefe_cumbre_la.res" id="66_62nxm"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
+[ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="68_diwyx"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="68_j1npm"]
 [ext_resource type="Script" uid="uid://cpj0lhdoljshc" path="res://src/world/look/caida_la.gd" id="69_ckdpb"]

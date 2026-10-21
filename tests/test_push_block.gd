@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test_rooms.tscn"
+const LEVEL := "res://levels/test/test_rooms.tscn"
 
 
 func _setup() -> Array:
@@ -116,10 +116,7 @@ func _origin(node: Node, root: Node) -> Vector3:
 
 
 func test_solved_blocks_rest_on_their_switch() -> void:
-	for file in DirAccess.get_files_at("res://levels"):
-		if not file.ends_with(".tscn"):
-			continue
-		var path := "res://levels/" + file
+	for path in _level_files():
 		var level: Node = load(path).instantiate()
 		var switches := level.find_children("*", "FloorSwitch", true, false)
 		for block: PushBlock in level.find_children("*", "PushBlock", true, false):
@@ -161,3 +158,12 @@ func test_a_block_does_not_go_into_a_doorway() -> void:
 	assert_true(not block.can_move(direction), "no entra al hueco de una puerta, aunque esté abierta")
 	door.free()
 	setup[1].reset()
+
+
+func _level_files() -> Array[String]:
+	var files: Array[String] = []
+	for dir in ["res://levels/", "res://levels/test/"]:
+		for file in DirAccess.get_files_at(dir):
+			if file.ends_with(".tscn"):
+				files.append(dir + file)
+	return files

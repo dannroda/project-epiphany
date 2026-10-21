@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## 11.34 paso 3: contraataque. Con un enemigo fijado, en los últimos 0,35 s de su aviso atacar lo esquiva y le pega
 ## por la espalda (×2, aturde); el mundo va a media velocidad mientras dura la ventana, salvo con la opción apagada.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const SHIELD_SKELETON := "res://src/entities/shield_skeleton.tscn"
 
 

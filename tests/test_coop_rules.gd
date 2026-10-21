@@ -11,7 +11,7 @@ func _rooms() -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	var players: Node = tree.root.get_node(^"Players")
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test_rooms.tscn")
+	tree.change_scene_to_file("res://levels/test/test_rooms.tscn")
 	await tree.scene_changed
 	for i in 4:
 		await tree.physics_frame

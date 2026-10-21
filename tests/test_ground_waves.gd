@@ -11,7 +11,7 @@ var player: PlayerCharacter
 func _start() -> void:
 	tree = Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	await tree.create_timer(0.3).timeout
 	player = tree.get_first_node_in_group(&"player") as PlayerCharacter

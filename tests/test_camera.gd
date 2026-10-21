@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test_targeting.tscn"
+const LEVEL := "res://levels/test/test_targeting.tscn"
 
 
 func _load() -> Array:
@@ -81,19 +81,26 @@ func test_swinging_over_the_top_keeps_a_short_room_framed() -> void:
 ## 16.54: cada nivel instancia la escena de la cámara, con el acercamiento y la oclusión como hijos.
 func test_every_level_instances_the_camera_scene() -> void:
 	var checked := 0
-	for file in DirAccess.get_files_at("res://levels"):
-		if not file.ends_with(".tscn"):
-			continue
-		var state := (load("res://levels/" + file) as PackedScene).get_state()
+	for file in _level_files():
+		var state := (load(file) as PackedScene).get_state()
 		for i in state.get_node_count():
 			var instance := state.get_node_instance(i)
 			for p in state.get_node_property_count(i):
-				if state.get_node_property_name(i, p) == &"script" and (state.get_node_property_value(i, p) as Script).resource_path == "res://src/tools/top_down_camera.gd":
+				if state.get_node_property_name(i, p) == &"script" and (state.get_node_property_value(i, p) as Script).resource_path == "res://src/camera/top_down_camera.gd":
 					assert_true(false, "%s: %s tiene el script suelto" % [file, state.get_node_name(i)])
-			if instance and instance.resource_path == "res://src/tools/top_down_camera.tscn":
+			if instance and instance.resource_path == "res://src/camera/top_down_camera.tscn":
 				checked += 1
 	assert_true(checked >= 17, "revisó las cámaras de los niveles (%d)" % checked)
-	var camera := (load("res://src/tools/top_down_camera.tscn") as PackedScene).instantiate() as TopDownCamera
+	var camera := (load("res://src/camera/top_down_camera.tscn") as PackedScene).instantiate() as TopDownCamera
 	assert_true(camera.revealer != null and camera.occlusion != null, "con sus dos nodos")
 	assert_true(camera.revealer.camera == camera and camera.occlusion.camera == camera)
 	camera.free()
+
+
+func _level_files() -> Array[String]:
+	var files: Array[String] = []
+	for dir in ["res://levels/", "res://levels/test/"]:
+		for file in DirAccess.get_files_at(dir):
+			if file.ends_with(".tscn"):
+				files.append(dir + file)
+	return files

@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## Las sandalias (11.118): mantener toma impulso y corre recto hasta soltar o chocar; el choque golpea con `dash`; con la
 ## pluma en plena carrera, el salto largo cruza tres baldosas (6 m) y no cuatro (8 m), como pide el overworld (7.11).
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const FAR := Vector3(200, 0, 0)
 
 

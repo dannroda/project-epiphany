@@ -8,7 +8,7 @@ const PAD_2 := 1
 func _load() -> Array:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	for i in 5:
 		await tree.physics_frame
@@ -103,7 +103,7 @@ func test_guests_come_along_to_the_next_scene() -> void:
 	var tree: SceneTree = setup[0]
 	var players: Node = setup[1]
 	players.join(PAD_2)
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	for i in 5:
 		await tree.physics_frame

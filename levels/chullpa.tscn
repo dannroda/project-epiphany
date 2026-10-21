@@ -52,7 +52,7 @@
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_chullpa.tscn" id="80_308dp"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_chullpa.tscn" id="80_archer"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_chullpa.tscn" id="81_shield"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
+[ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/chullpa_navmesh.tres" id="nav_chullpa"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]

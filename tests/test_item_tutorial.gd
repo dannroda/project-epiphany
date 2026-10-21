@@ -3,7 +3,7 @@ extends "res://tests/test_case.gd"
 ## del HUD muestra la tarea hasta hacerla y, a los 30 s sin usar el ítem, marca el objetivo más cercano. Los controles
 ## básicos son solo el chip: moverse desde el arranque y atacar, fijar y rodar con el primer enemigo cerca.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const CATALOG := preload("res://data/tutorials/catalog.tres")
 const BASICS: Array[StringName] = [&"move", &"attack", &"lock", &"dodge"]
 

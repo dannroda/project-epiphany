@@ -8,7 +8,7 @@ const KINDS := ["skeleton", "shield_skeleton", "archer_skeleton", "armored_skele
 func test_every_variant_wears_its_dungeon() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	for kind: String in KINDS:
 		for dungeon: String in DUNGEONS:

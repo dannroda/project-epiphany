@@ -1,15 +1,15 @@
 @tool
 extends EditorPlugin
 
-const LogScript := preload("debug/runtime/log.gd")
+const LogScript := preload("res://src/debug/log.gd")
 const LogDebuggerPlugin := preload("debug/editor/log_debugger_plugin.gd")
 const SaveInspector := preload("save_inspector/save_inspector.gd")
 const SceneImport := preload("import/epi_scene_import.gd")
 const WallTopsScript := preload("res://src/world/nav/wall_tops.gd")
 
 const AutoLoads = {
-	"Log": "debug/runtime/log.gd",
-	"DebugOverlay": "debug/runtime/debug_overlay.tscn",
+	"Log": "res://src/debug/log.gd",
+	"DebugOverlay": "res://src/debug/debug_overlay.tscn",
 }
 
 var _log_debugger: LogDebuggerPlugin

@@ -12,7 +12,7 @@ func test_key_counter_in_dungeon() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
-	await _load(tree, "res://levels/test_rooms.tscn")
+	await _load(tree, "res://levels/test/test_rooms.tscn")
 	assert_eq(state.current_dungeon, &"test_rooms", "la escena de la mazmorra setea current_dungeon")
 	var hud: Node = tree.current_scene.get_node(^"HUD")
 	assert_eq(hud.keys.visible, true, "en mazmorra se ven las llaves")
@@ -27,7 +27,7 @@ func test_key_counter_in_dungeon() -> void:
 	state.give(Items.get_item(&"boss_key"))
 	assert_eq(hud.boss_key.modulate.a, 1.0, "con la llave del jefe, encendida")
 
-	await _load(tree, "res://levels/test.tscn")
+	await _load(tree, "res://levels/test/test.tscn")
 	assert_eq(state.current_dungeon, &"", "al salir de la mazmorra vuelve a vacío")
 	hud = tree.current_scene.get_node(^"HUD")
 	assert_eq(hud.keys.visible, false, "fuera de la mazmorra el contador no se ve")
@@ -38,7 +38,7 @@ func test_four_boss_key_pieces_make_the_boss_key() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
 	state.reset()
-	await _load(tree, "res://levels/test_rooms.tscn")
+	await _load(tree, "res://levels/test/test_rooms.tscn")
 	var hud: Node = tree.current_scene.get_node(^"HUD")
 	var piece := Items.get_item(&"boss_key_piece")
 	assert_true(not hud.boss_key_pieces.visible, "sin piezas no se ve el contador")

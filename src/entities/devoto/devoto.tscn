@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://src/entities/enemy.tscn" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/devoto.tres" id="2_config"]
-[ext_resource type="BehaviorTree" path="res://src/entities/guard_bt.tres" id="3_bt"]
+[ext_resource type="BehaviorTree" path="res://data/ai/guard_bt.tres" id="3_bt"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/equipo/lanza_devoto.res" id="4_lanza"]
 
 [node name="Devoto" instance=ExtResource("1_enemy")]

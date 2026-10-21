@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 ## La pluma (11.35): saltar con el ítem, cruzar un hueco de una baldosa, no pasar una pirca y esquivar la onda del jefe.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 ## Lejos de todo lo del nivel de prueba.
 const FAR := Vector3(200, 0, 0)
 

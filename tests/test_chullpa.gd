@@ -534,10 +534,10 @@ func test_a_room_can_set_its_own_camera_and_environment() -> void:
 	var level_offset := camera.offset
 	var level_fov := camera.fov
 	var world := level.find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment
-	var tone := AmbientePreset.tone_of(world)
+	var tone := AmbiencePreset.tone_of(world)
 	var level_energy := world.environment.ambient_light_energy
 	var level_frame: float = tone.frame
-	var preset := AmbientePreset.new()
+	var preset := AmbiencePreset.new()
 	preset.offset = Vector3(0, 26, 12)
 	preset.fov = 32.0
 	preset.frame = 0.2

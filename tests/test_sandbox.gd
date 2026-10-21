@@ -39,7 +39,7 @@ func test_solve_all_four_from_scenario() -> void:
 	for i in 3:
 		await tree.physics_frame
 	var level: Node = tree.current_scene
-	assert_eq(level.scene_file_path, "res://levels/sandbox_items.tscn", "el escenario entra al sandbox")
+	assert_eq(level.scene_file_path, "res://levels/test/sandbox_items.tscn", "el escenario entra al sandbox")
 	assert_eq(level.solved(), 0)
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.health.invulnerability_time = 0.0

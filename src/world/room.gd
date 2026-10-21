@@ -42,9 +42,9 @@ const LOCK_CHECK_TICKS := 6
 @export var camera_offset := Vector3.ZERO
 ## Campo de visión de la cámara en esta sala (0 = el del nivel).
 @export var camera_fov := 0.0
-## Cámara, viñeta y luz de la sala (pisa a camera_offset y camera_fov). Uno de data/ambientes/ sirve para todas las
+## Cámara, viñeta y luz de la sala (pisa a camera_offset y camera_fov). Uno de data/ambiences/ sirve para todas las
 ## salas de ese tamaño.
-@export var ambiente: AmbientePreset
+@export var ambiente: AmbiencePreset
 ## Pone el preset en la TopDownCamera y el WorldEnvironment del nivel y deja la cámara encuadrando esta sala (tildar
 ## Preview en la vista 3D): se ajusta ahí, en sus propias propiedades, y se guarda con el botón de abajo.
 @export_tool_button("Editar en la cámara y el entorno", "Camera3D") var _editar_ambiente := editar_ambiente
@@ -237,15 +237,15 @@ func editar_ambiente() -> void:
 		push_warning("%s: el nivel necesita una TopDownCamera y un WorldEnvironment" % name)
 		return
 	if ambiente == null:
-		ambiente = AmbientePreset.new()
+		ambiente = AmbiencePreset.new()
 		ambiente.capture(camera, world)
 	_stash = {camera: _read(camera, ["global_transform", "offset", "field_of_view", "fov"])}
-	var tone := AmbientePreset.tone_of(world)
+	var tone := AmbiencePreset.tone_of(world)
 	if tone:
-		_stash[tone] = _read(tone, AmbientePreset.TONE_PROPERTIES + ["frame_in_editor"])
+		_stash[tone] = _read(tone, AmbiencePreset.TONE_PROPERTIES + ["frame_in_editor"])
 		tone.frame_in_editor = true
 	if world.environment:
-		_stash[world.environment] = _read(world.environment, AmbientePreset.LIGHT_PROPERTIES)
+		_stash[world.environment] = _read(world.environment, AmbiencePreset.LIGHT_PROPERTIES)
 	if ambiente.usar_camara:
 		camera.set(&"offset", ambiente.offset)
 		camera.set(&"field_of_view", ambiente.fov)

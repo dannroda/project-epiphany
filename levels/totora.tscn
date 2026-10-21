@@ -51,7 +51,7 @@
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_quenoa.tscn" id="77_vrfs0"]
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="84_4rcne"]
 [ext_resource type="Resource" uid="uid://bd60rgriyt0r5" path="res://data/drops/pot_arrows.tres" id="arrows_pot"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
+[ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/totora_navmesh.tres" id="nav_totora"]
 
 [sub_resource type="Environment" id="Environment_dmyaj"]

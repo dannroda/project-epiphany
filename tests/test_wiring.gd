@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 ## Prueba de 6.5: una puerta que necesita dos interruptores.
 
-const LEVEL := "res://levels/test_rooms.tscn"
+const LEVEL := "res://levels/test/test_rooms.tscn"
 
 
 func test_door_needs_both_switches() -> void:

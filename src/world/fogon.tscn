@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/fogata.res" id="1_fogata"]
-[ext_resource type="Shader" path="res://src/world/look/anillo_fuego.gdshader" id="2_shader"]
+[ext_resource type="Shader" path="res://src/world/look/fire_ring.gdshader" id="2_shader"]
 [ext_resource type="PackedScene" path="res://src/feel/stencil_light/stencil_light.tscn" id="3_glow"]
 
 [sub_resource type="CylinderMesh" id="FlameMesh"]

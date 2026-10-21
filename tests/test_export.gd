@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const RELEASE_EXCLUDES := ["tests/*", "debug/*", "tools/*", "src/tools/build_*", "levels/test*", "levels/prueba_mc_godot*", "levels/pruebas_terreno*", "levels/ejemplo_ambiente*", "levels/sandbox_items*", "levels/dungeon_test*"]
+const RELEASE_EXCLUDES := ["tests/*", "debug/*", "tools/*", "levels/test/*"]
 
 
 func test_presets_keep_debug_content_out_of_release() -> void:
@@ -35,5 +35,5 @@ func test_no_game_file_needs_an_excluded_one() -> void:
 			var dep_path := dep.get_slice("::", 2) if dep.contains("::") else dep
 			if dep_path.begins_with("uid://"):
 				dep_path = ResourceUID.uid_to_path(dep_path)
-			for prefix in ["res://debug/", "res://tools/", "res://levels/test", "res://levels/sandbox_items"]:
+			for prefix in ["res://debug/", "res://tools/", "res://levels/test/"]:
 				assert_true(not dep_path.begins_with(prefix), "%s necesita %s, que no se exporta" % [path, dep_path])

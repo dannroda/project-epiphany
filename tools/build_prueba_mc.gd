@@ -1,11 +1,11 @@
 extends SceneTree
 ## Prueba 12.14: la variante 8 (marching cubes) hecha en Godot en vez de Blender, desde el mismo mapa
-## (tools/prueba_terreno_mapa.txt) y el mismo volumen. Arma levels/prueba_mc_godot.tscn: la malla con el shader
+## (tools/prueba_terreno_mapa.txt) y el mismo volumen. Arma levels/test/prueba_mc_godot.tscn: la malla con el shader
 ## terreno_mc (color por altura y pendiente), su colisión, la baranda del pozo y las plantas.
 ## godot --headless --path . --script res://tools/build_prueba_mc.gd
 
 const MAP := "res://tools/prueba_terreno_mapa.txt"
-const OUTPUT := "res://levels/prueba_mc_godot.tscn"
+const OUTPUT := "res://levels/test/prueba_mc_godot.tscn"
 const MESHES := "res://assets/epiphany/meshes/prueba_mc_godot/"
 const SHADER := preload("res://data/kits/shaders/terreno_mc.gdshader")
 const PALETTE := preload("res://assets/epiphany/palette.png")

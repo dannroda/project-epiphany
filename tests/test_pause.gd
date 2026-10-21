@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const PAUSE_MENU := preload("res://src/ui/menus/pause_menu.tscn")
 
 

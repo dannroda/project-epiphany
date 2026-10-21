@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## El martillo (11.191): un golpe al piso delante del player; lo que pega es golpe fuerte (DamageInfo.strong), lo único
 ## que rompe lo que tiene needs_strong y lo que baja escudos y corazas.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 
 var tree: SceneTree
 var state: Node

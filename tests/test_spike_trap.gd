@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 ## Pinchos de piso a ritmo (11.5).
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const TRAP := preload("res://src/world/spike_trap.tscn")
 
 

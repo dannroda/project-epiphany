@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_chullpa.tscn" id="23_b6vir"]
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="26_b18bf"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_chullpa.tscn" id="archer"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="camera"]
+[ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="camera"]
 [ext_resource type="PackedScene" path="res://src/world/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://src/entities/watcher_eye/warden_mini.tscn" id="eye"]
 [ext_resource type="PackedScene" path="res://src/world/heart_piece.tscn" id="heart_piece"]

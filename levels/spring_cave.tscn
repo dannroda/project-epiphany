@@ -6,7 +6,7 @@
 [ext_resource type="MeshLibrary" path="res://data/kits/cueva_la_kit.tres" id="3_fq7yj"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="3_player"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="4_spawn"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
+[ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="6_hud"]
 [ext_resource type="Script" uid="uid://vc4qe4pb8mub" path="res://src/world/water/water_pool.gd" id="7_fxjfy"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="7_portal"]

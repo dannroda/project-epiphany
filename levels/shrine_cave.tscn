@@ -30,7 +30,7 @@
 [ext_resource type="Script" uid="uid://nqxfiofg56dy" path="res://src/world/room.gd" id="c2_room"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="c3_player"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="c4_spawn"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
+[ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="c6_hud"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="c7_portal"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/shrine_cave_navmesh.tres" id="nav_cave"]

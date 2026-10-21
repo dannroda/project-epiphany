@@ -9,7 +9,7 @@ func test_buses_and_varied_samples() -> void:
 	for sound in [&"hit", &"hurt", &"block", &"break", &"deny", &"ui_move", &"ui_accept"]:
 		assert_true(feel.streams_of(sound).size() >= 3, "%s tiene varias muestras" % sound)
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	var streams := {}
 	var pitches := {}
@@ -149,7 +149,7 @@ func test_sounds_in_one_frame_are_capped() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var feel: Node = tree.root.get_node(^"Feel")
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	await tree.process_frame
 	var voices := func() -> int:

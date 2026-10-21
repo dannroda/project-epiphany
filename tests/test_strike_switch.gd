@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## La placa de golpe fuerte (11.193): FloorSwitch en STRIKE solo se activa con un golpe fuerte (el martillazo); ni la
 ## espada ni pisarla la aprietan. Queda resuelta.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const SWITCH := "res://src/world/floor_switch.tscn"
 
 var tree: SceneTree

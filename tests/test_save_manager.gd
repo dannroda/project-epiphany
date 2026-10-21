@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const SLOT := 99
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 
 
 func test_save_and_load_restore_player_and_state() -> void:

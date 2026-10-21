@@ -35,7 +35,7 @@ func test_every_option_persists_and_applies() -> void:
 	assert_eq(TranslationServer.get_locale(), "en", "idioma")
 
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	await tree.process_frame
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
@@ -71,7 +71,7 @@ func test_ssao_and_sun_shadow_follow_the_option() -> void:
 	settings.set_value(&"ssao", true)
 	settings.set_value(&"shadows", 1)
 	assert_true(env.ssao_enabled and sun.shadow_enabled, "vuelven al prenderlos")
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	assert_true(not (tree.current_scene.find_children("*", "WorldEnvironment", true, false)[0] as WorldEnvironment).environment.ssao_enabled, "un nivel sin SSAO no lo prende")
 	_restore(settings)
@@ -106,7 +106,7 @@ func test_options_from_title_and_pause() -> void:
 	assert_true(tree.root.gui_get_focus_owner() == title.get_node(^"%Options"), "con el foco donde estaba")
 
 	tree.root.get_node(^"GameState").reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	var menu: Control = load("res://src/ui/menus/pause_menu.tscn").instantiate()
 	stack.push(menu)

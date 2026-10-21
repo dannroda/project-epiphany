@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const LEVEL := "res://levels/test_rooms.tscn"
+const LEVEL := "res://levels/test/test_rooms.tscn"
 
 
 func _setup() -> Array:

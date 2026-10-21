@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://dlyah3gycoakq" path="res://src/camera/top_down_camera.gd" id="1_camera"]
+[ext_resource type="Script" uid="uid://c2cj5gptflsss" path="res://src/camera/camera_reveal.gd" id="2_reveal"]
+[ext_resource type="Script" uid="uid://ce1fgv7gjxyty" path="res://src/camera/camera_occlusion.gd" id="3_occlusion"]
+
+[node name="TopDownCamera" type="Camera3D" node_paths=PackedStringArray("revealer", "occlusion")]
+script = ExtResource("1_camera")
+revealer = NodePath("Reveal")
+occlusion = NodePath("Occlusion")
+
+[node name="Reveal" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("2_reveal")
+camera = NodePath("..")
+
+[node name="Occlusion" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("3_occlusion")
+camera = NodePath("..")

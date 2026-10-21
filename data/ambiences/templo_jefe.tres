@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AmbiencePreset" format=3]
+
+[ext_resource type="Script" path="res://src/world/look/ambience_preset.gd" id="1_preset"]
+
+[resource]
+script = ExtResource("1_preset")
+offset = Vector3(0, 34.439697, 16.059494)
+frame_softness = 1.305
+frame_sides = 0.075
+frame_top = 0.02
+frame_bottom = 0.02

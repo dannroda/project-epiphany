@@ -1,7 +1,7 @@
 @tool
 extends Node
 
-const LogSink := preload("../epiphany_tools/debug/runtime/log_sink.gd")
+const LogSink := preload("res://src/debug/log_sink.gd")
 const PORT := 4713
 const MAX_LOG := 500
 

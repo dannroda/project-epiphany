@@ -6,7 +6,7 @@ const WATER := preload("res://src/world/water/shallow_water.tscn")
 
 func test_crossing_into_the_next_water_keeps_wading() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	await tree.physics_frame
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter

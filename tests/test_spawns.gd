@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 ## 11.83: lo de runtime cuelga de un solo nodo (Spawns.root) y una oleada acepta cualquier cosa con `defeated`.
 
-const LEVEL := "res://levels/test.tscn"
+const LEVEL := "res://levels/test/test.tscn"
 const TURRET := preload("res://src/entities/turret/turret.tscn")
 const ORB := preload("res://src/entities/projectile.tscn")
 

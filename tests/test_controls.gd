@@ -42,7 +42,7 @@ func test_controls_screen_from_options() -> void:
 func test_system_tab_saves_over_the_loaded_game_and_loads() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	GameState.reset()
-	tree.change_scene_to_file("res://levels/test.tscn")
+	tree.change_scene_to_file("res://levels/test/test.tscn")
 	await tree.scene_changed
 	await tree.process_frame
 	SaveManager.current_slot = 2
