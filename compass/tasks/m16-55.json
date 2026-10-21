@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-8f",
+  "checklist": [],
+  "code": "16.57",
+  "created_at": "2026-10-21T21:29:34.036Z",
+  "description": "Al partir src/world (16.26) aparecieron cinco escenas que no usa ningún nivel ni script (solo copias viejas en debug/tmp.old): props/brazier.tscn, puzzles/gate_templo.tscn, puzzles/cracked_wall_risco.tscn, puzzles/cracked_wall_templo.tscn, overworld/zone_veil.tscn. Confirmar con un grep (incluyendo rutas armadas en runtime) y borrarlas, o dejarlas si Daniel las tiene pensadas para contenido futuro.",
+  "milestone": "m16",
+  "notes": "",
+  "order": 116,
+  "priority": "low",
+  "refs": [],
+  "size": "s",
+  "status": "doing",
+  "tags": [
+    "refactor"
+  ],
+  "test": "",
+  "title": "Cinco escenas de src/world sin uso",
+  "updated_at": "2026-10-21T21:30:05.092Z"
+}

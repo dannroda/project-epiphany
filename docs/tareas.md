@@ -6498,7 +6498,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
 
-## M16 — Salud del código  (56/56, 56 en revisión)
+## M16 — Salud del código  (56/57, 56 en revisión)
 
 Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
 
@@ -7228,6 +7228,12 @@ Auditoría con patrones de diseño (-72, 2026-10-19): menu_stack.gd:50/74/120 y 
 **Prueba:** tests/test_ui_scenes.gd
 
 **Notas:** Hecho (-72): ya existía UiScreen (src/ui/ui_screen.gd) con las virtuales y la pila tipada; los has_method eran por la raíz y las pestañas. La pantalla de título pasa a extender UiScreen y MenuStack tipa _base/set_base/covered/uncovered/_focus como UiScreen, sin has_method. Las cuatro pestañas del menú de pausa extienden PausePage (src/ui/menus/pause_page.gd: focus_default con el primer control enfocable como antes, cancel false) y pause_menu las llama tipadas. No queda has_method en src/ui. test_ui_scenes › test_every_screen_on_the_stack_is_a_ui_screen: cada script que hace MenuStack.push está en PUSHED (si se agrega uno nuevo, falla hasta sumarlo), cada escena empujada y el título tienen UiScreen de raíz, y cada pestaña es PausePage.
+
+### 16.57 Cinco escenas de src/world sin uso · En curso
+
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-8f · **Etiquetas:** `refactor`
+
+Al partir src/world (16.26) aparecieron cinco escenas que no usa ningún nivel ni script (solo copias viejas en debug/tmp.old): props/brazier.tscn, puzzles/gate_templo.tscn, puzzles/cracked_wall_risco.tscn, puzzles/cracked_wall_templo.tscn, overworld/zone_veil.tscn. Confirmar con un grep (incluyendo rutas armadas en runtime) y borrarlas, o dejarlas si Daniel las tiene pensadas para contenido futuro.
 
 ## M13 — Co-op local (estilo Four Swords)  (1/17)
 
@@ -8345,7 +8351,9 @@ Caché de pipelines (-88; benchmark con load_pipelines, pipelines y warmup_max_m
 En el G23 NO hay crecimiento por cambio de nivel (tanda limpia 17:43, tres vueltas overworld → chullpa → cumbre, PSS promedio por caso): overworld 1161 / 1211 / 1316, chullpa 1447 / 1457 / 1434, cumbre 1520 / 1521 / 1523 MB. El crecimiento de escritorio (~24 MB por cambio) es del driver AMD (Mesa/RADV), no del juego. keep_materials (main 28748b61) no cambia nada fuera del ruido en el G23 y cada caso recompila los mismos pipelines con y sin la perilla: no se propone caché de materiales (la perilla queda, no molesta).
 Lo que pesa: GL mtrack (memoria de GPU del driver Mali) tiene un piso de ~520–530 MB con un nivel cargado (260 MB con el juego recién abierto) y picos de 1000–1300 MB; en los picos el PSS llega a 1,8–1,9 GB y eso manda al teléfono a swap. Godot cuenta 170–330 MB de video.
 bench.sh (main 0cb0bdda, faecfd0e): borra la caché de pipelines del teléfono si pasa de PIPELINE_CACHE_MAX_MB (40) y avisa que esa corrida carga en frío; despierta el teléfono y saca un bloqueo por deslizamiento antes de lanzar el juego, y corta con mensaje si queda bloqueado con PIN (con la pantalla apagada Android pausa el juego: una corrida quedó 45 min parada).
-Siguiente: corrida con muestreo de GL mtrack a ~2/s y logcat completo, para ver qué dispara los picos (carga, foto del mapa, compilación o algo por cuadro).
+Picos de GL mtrack (muestreo ~4/s, 18:14–18:18): saltan varias veces por segundo entre el piso ~525 MB y 800–1250 MB en escalones de ~127 MB; en escritorio la VRAM del proceso queda fija cuadro a cuadro, así que Godot no reserva por cuadro. Chullpa: base mediana 825–935 MB, picos 1140–1220, GPU 87–112 ms; con la cámara sin dibujar nada 531–566 MB, GPU 16 ms. Es memoria de trabajo del driver al dibujar (probablemente el tiler heap) y escala con la geometría: overworld 0,14 M triángulos ~280 MB de oscilación, mazmorras 0,38–0,82 M ~700. Bajarla es dibujar menos (15.26, paredes).
+Estado lento (state_ab 18:22–18:25, overworld ×3 → chullpa → overworld ×2, dos lanzamientos, muestreo cada ~2 s de vmstat/meminfo/GL): ninguno arrancó en el estado bueno (~27 ms), los dos a ~40 ms sin presión de memoria, y el caso con más swap y reclaim fue el más rápido. El estado lento no viene de la memoria: encaja con dos estados de reloj o vsync (15.25); sin root no se lee la frecuencia de la GPU. Duda abierta: el estado bueno solo apareció en corridas sin muestreador o con muestreo cada 16 s; -88 mide 4 lanzamientos sin muestreador contra 4 con muestreo cada 2 s.
+Piso (~525 MB, 260 con el juego recién abierto): la foto del mapa (set_image de 4000×1920 RGBA8, 30,7 MB) pasa por un transfer worker que arma un búfer de next_pow2 = 32 MB y no lo suelta nunca (rendering_device.cpp _acquire_transfer_worker): +64 MB de GTT en escritorio al cargar el overworld, con cualquier staging_buffer/max_size_mb; no hay API para actualizar una región de una textura 2D. Si el G23 lo confirma (≥32 MB fijos), la foto pasa a capas (Texture2DArray de 4×4 o 16 texturas, una subida por cuadro al ritmo de los mosaicos de 15.22; la hace -8f). staging_buffer/max_size_mb=4 evita que una ráfaga de subidas chicas deje otro bloque: A/B en el G23 con 8 o 16 MB y feature .mobile (memoria y tiempos de carga).
 
 ## M17 — Después de la demo  (0/2)
 
