@@ -14,6 +14,7 @@ const SLOW_MS := 40.0
 
 var _flat := StandardMaterial3D.new()
 var _variant: BenchVariant
+var _kept_materials := {}
 
 
 func _ready() -> void:
@@ -75,6 +76,8 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		run["error"] = error_string(err) if err != OK else "no player"
 		return run
 	_strip(get_tree().current_scene, variant)
+	if variant.keep_materials:
+		_keep_materials(get_tree().current_scene)
 	_variant = variant
 	if variant.flat_materials:
 		_flatten(get_tree().current_scene)
@@ -145,6 +148,31 @@ static func _pipelines_compiled() -> int:
 			Performance.PIPELINE_COMPILATIONS_DRAW, Performance.PIPELINE_COMPILATIONS_SPECIALIZATION]:
 		total += int(Performance.get_monitor(monitor))
 	return total
+
+
+func _keep_materials(node: Node) -> void:
+	var meshes: Array[Mesh] = []
+	if node is GeometryInstance3D and node.material_override:
+		_kept_materials[node.material_override] = true
+	if node is MeshInstance3D and node.mesh:
+		meshes.append(node.mesh)
+		for i in node.get_surface_override_material_count():
+			if node.get_surface_override_material(i):
+				_kept_materials[node.get_surface_override_material(i)] = true
+	if node is MultiMeshInstance3D and node.multimesh and node.multimesh.mesh:
+		meshes.append(node.multimesh.mesh)
+	if node is GridMap and node.mesh_library:
+		for id in node.mesh_library.get_item_list():
+			if node.mesh_library.get_item_mesh(id):
+				meshes.append(node.mesh_library.get_item_mesh(id))
+	for mesh in meshes:
+		for i in mesh.get_surface_count():
+			var material := mesh.surface_get_material(i)
+			while material:
+				_kept_materials[material] = true
+				material = material.next_pass
+	for child in node.get_children():
+		_keep_materials(child)
 
 
 ## El PSS del proceso en MB (15.27): incluye lo que el motor no cuenta, como el driver de la GPU y las bibliotecas.

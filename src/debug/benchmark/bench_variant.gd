@@ -52,3 +52,6 @@ extends Node
 ## Modo de proceso y tamaño de radiancia del cielo mientras corre (-1: los del nivel).
 @export var sky_process_mode := -1
 @export var sky_radiance := -1
+## Retiene los materiales de cada nivel cargado hasta el final de la corrida: sus shaders y texturas no se liberan ni se
+## vuelven a crear al volver al nivel (15.27).
+@export var keep_materials := false
