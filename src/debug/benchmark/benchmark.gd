@@ -59,6 +59,7 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 	if err != OK or player == null:
 		run["error"] = error_string(err) if err != OK else "no player"
 		return run
+	_strip(get_tree().current_scene, variant)
 	if variant.flat_materials:
 		_flatten(get_tree().current_scene)
 		get_tree().node_added.connect(_flatten)
@@ -104,6 +105,22 @@ func _walk(player: PlayerCharacter, origin: Vector3, bench: BenchCase, elapsed: 
 	var hit := player.get_world_3d().direct_space_state.intersect_ray(query)
 	player.global_position = hit.position if hit else spot
 	player.velocity = Vector3.ZERO
+
+
+func _strip(scene: Node, variant: BenchVariant) -> void:
+	for light: Light3D in scene.find_children("*", "Light3D", true, false):
+		if not light is DirectionalLight3D and not variant.lights:
+			light.visible = false
+	for probe: ReflectionProbe in scene.find_children("*", "ReflectionProbe", true, false):
+		probe.visible = variant.probes
+	if not variant.effects:
+		for world: WorldEnvironment in scene.find_children("*", "WorldEnvironment", true, false):
+			world.compositor = null
+		var camera := get_viewport().get_camera_3d()
+		if camera:
+			camera.compositor = null
+	for grid: GridMap in scene.find_children("*", "GridMap", true, false):
+		grid.visible = variant.gridmaps
 
 
 func _flatten(node: Node) -> void:
