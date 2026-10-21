@@ -1065,34 +1065,75 @@ def cave_mouths(p):
 
 
 ## Franjas de X en que se parte el terreno: cada una sale en su terreno_organico.<k>.glb (ningún archivo pasa los 100 MB
-## de GitHub); assets/epiphany/terreno_organico.tscn las junta.
+## de GitHub); assets/epiphany/terreno_organico.tscn las junta. Cada franja va en BANDS bloques a lo largo (17.2): la
+## cámara ve unos 40 x 18 m y un bloque fuera de ella (o de la sombra) no se dibuja; con la franja entera, sí.
 STRIPS = 12
+BANDS = 8
+## Los cortes caen en n + SEAM_OFFSET m: un rayo vertical justo sobre la costura entre dos bloques pasa por la rendija y
+## lo que se apoya en coordenadas redondas (portales, cofres, spawns) quedaría colgado.
+SEAM_OFFSET = 0.37
+
+
+def _cuts(lo, hi, count):
+	return [math.floor(lo + (hi - lo) * k / count) + SEAM_OFFSET for k in range(1, count)]
+
+
+X_CUTS = _cuts(BOUNDS[0].x, BOUNDS[1].x, STRIPS)
+Y_CUTS = _cuts(BOUNDS[0].y, BOUNDS[1].y, BANDS)
 
 
 def strip_of(x):
-	width = (BOUNDS[1].x - BOUNDS[0].x) / STRIPS
-	return min(STRIPS - 1, max(0, math.floor((x - BOUNDS[0].x) / width)))
+	return bisect.bisect(X_CUTS, x)
+
+
+def band_of(y):
+	return bisect.bisect(Y_CUTS, y)
+
+
+def _cut_at(bm, axis, values):
+	"""Corta bm en esos valores del eje, solo las caras que los cruzan: una cara larga (el fondo de un abismo) no deja
+	un bloque del largo del mapa."""
+	for value in values:
+		cross = [f for f in bm.faces if min(v.co[axis] for v in f.verts) < value - 1e-4 < value + 1e-4 < max(v.co[axis] for v in f.verts)]
+		if not cross:
+			continue
+		co, no = Vector((0, 0, 0)), Vector((0, 0, 0))
+		co[axis], no[axis] = value, 1
+		bmesh.ops.bisect_plane(bm, geom=epi.uniq(v for f in cross for v in f.verts) + epi.uniq(e for f in cross for e in f.edges) + cross, plane_co=co, plane_no=no)
+
+
+def _keep_only(bm, outside):
+	bmesh.ops.delete(bm, geom=[f for f in bm.faces if outside(f.calc_center_median())], context="FACES")
 
 
 def _split(piece, name, material, collection):
-	"""Una pieza por franja con las caras de la pieza cuyo centro cae en ella, y su colisión aparte. Las normales se
-	orientan en la pieza entera: por franja, un pedazo suelto puede quedar dado vuelta."""
+	"""Una pieza por bloque con las caras de la pieza cuyo centro cae en él, y su colisión aparte. Las normales se
+	orientan en la pieza entera: por bloque, un pedazo suelto puede quedar dado vuelta."""
 	_canonical(piece)
 	bmesh.ops.recalc_face_normals(piece.bm, faces=[f for f in piece.bm.faces if f not in piece.fixed])
+	_cut_at(piece.bm, 0, X_CUTS)
+	_cut_at(piece.bm, 1, Y_CUTS)
 	objects = []
 	for k in range(STRIPS):
-		part = epi.Piece()
-		part.bm.free()
-		part.bm = piece.bm.copy()
-		part.uv = part.bm.loops.layers.uv.verify()
-		bmesh.ops.delete(part.bm, geom=[f for f in part.bm.faces if strip_of(f.calc_center_median().x) != k], context="FACES")
-		part.fixed = set(part.bm.faces)
-		visual = _build(part, "%s_%d" % (name, k), material, collection)
-		objects += [visual, _collision(visual, collection)]
+		strip = piece.bm.copy()
+		_keep_only(strip, lambda c, k=k: strip_of(c.x) != k)
+		for j in range(BANDS):
+			part = epi.Piece()
+			part.bm.free()
+			part.bm = strip.copy()
+			part.uv = part.bm.loops.layers.uv.verify()
+			_keep_only(part.bm, lambda c, j=j: band_of(c.y) != j)
+			if not part.bm.faces:
+				part.bm.free()
+				continue
+			part.fixed = set(part.bm.faces)
+			visual = _build(part, "%s_%d_%d" % (name, k, j), material, collection)
+			objects += [visual, _collision(visual, collection)]
+		strip.free()
 	return objects
 
 
-## La colisión de cada franja (-colonly) se queda con esta fracción de los triángulos de la malla: Jolt arma la colisión
+## La colisión de cada bloque (-colonly) se queda con esta fracción de los triángulos de la malla: Jolt arma la colisión
 ## en el hilo principal al entrar al overworld y con la malla entera tardaba 3,4 s. Antes se funden las caras coplanares
 ## (pisos y paredes no cambian) y después se simplifica el resto.
 COLLISION_RATIO = 0.1

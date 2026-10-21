@@ -9,8 +9,11 @@ func test_overworld_walls_cut_a_hole_but_not_at_the_edge_of_the_world() -> void:
 	var grid := overworld.get_node(^"GridMap") as GridMap
 	var library := grid.mesh_library
 	var terrain := overworld.get_node(^"Terreno")
-	assert_eq((terrain.get_node(^"Parte0/riscos_0") as MeshInstance3D).get_active_material(0), WALL, "la roca del terreno se recorta alrededor del player")
-	assert_eq((terrain.get_node(^"Parte0/suelo_0") as MeshInstance3D).get_active_material(0), PLAIN, "el piso no")
+	var rocks := terrain.find_children("riscos_*", "MeshInstance3D", true, false)
+	var floors := terrain.find_children("suelo_*", "MeshInstance3D", true, false)
+	assert_true(rocks.size() > 12 and floors.size() > 12, "el terreno va en bloques (%d riscos, %d suelos)" % [rocks.size(), floors.size()])
+	assert_true(rocks.all(func(m: MeshInstance3D) -> bool: return m.get_active_material(0) == WALL), "la roca del terreno se recorta alrededor del player")
+	assert_true(floors.all(func(m: MeshInstance3D) -> bool: return m.get_active_material(0) == PLAIN), "el piso no")
 	assert_true((overworld.get_node(^"OverworldMap") as OverworldMap).grid == grid)
 	OverworldMap.use_edge_walls(grid)
 	var edges := 0
@@ -66,7 +69,7 @@ func test_only_walls_turn_the_camera_overhead() -> void:
 		enemy.free()
 	var level := tree.current_scene
 	var camera := level.get_node(^"TopDownCamera") as TopDownCamera
-	var risco := level.get_node(^"Terreno/Parte0/riscos_0").find_children("*", "StaticBody3D", true, false)
+	var risco := level.get_node(^"Terreno/Parte0/riscos_0_3").find_children("*", "StaticBody3D", true, false)
 	assert_true(not risco.is_empty() and camera.occlusion.call(&"_is_wall", risco[0]), "la roca del terreno es pared")
 	var props := 0
 	for body in level.find_children("Body", "StaticBody3D", true, false):
