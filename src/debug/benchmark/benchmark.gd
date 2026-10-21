@@ -11,15 +11,19 @@ const SLOW_MS := 40.0
 
 ## Segundos caminando antes de empezar a anotar, para que asienten la carga y los shaders.
 @export var warmup := 2.0
+## Si tiene un escenario, en vez de los casos mide el arranque (15.28): hasta el título y de ahí "Continuar" a ese escenario.
+@export var startup_scenario := ""
 
 var _flat := StandardMaterial3D.new()
 var _variant: BenchVariant
 var _kept_materials := {}
+var _autoloads_ms := 0
 
 
 func _ready() -> void:
+	_autoloads_ms = Time.get_ticks_msec()
 	if ARG in OS.get_cmdline_args() or ARG in OS.get_cmdline_user_args() or OS.has_feature("benchmark"):
-		_run.call_deferred()
+		(_startup if startup_scenario else _run).call_deferred()
 	else:
 		for marker: Node in [$FrameStart, $FrameEnd]:
 			marker.process_mode = PROCESS_MODE_DISABLED
@@ -51,11 +55,65 @@ func _run() -> void:
 	get_tree().quit()
 
 
+## Los hitos en ms desde que arrancó el motor, con los pipelines creados hasta cada uno. Sin tocar ajustes: es el arranque real.
+func _startup() -> void:
+	var marks := {"autoloads_ms": _autoloads_ms}
+	var mark := func(key: String) -> void:
+		marks[key + "_ms"] = Time.get_ticks_msec()
+		marks[key + "_pipelines"] = _pipelines_compiled()
+		print("BENCH_MARK ", key, " ", marks[key + "_ms"])
+	await RenderingServer.frame_post_draw
+	mark.call("first_frame")
+	var title: Node = get_tree().current_scene
+	var flyover: TitleFlyover = title.get(&"flyover")
+	if not flyover.shown:
+		await flyover.ready_to_show
+	mark.call("flyover")
+	while SceneFlow.loading_screen.visible:
+		await get_tree().process_frame
+	mark.call("title")
+	marks["title_pss_mb"] = process_pss_mb()
+	await get_tree().create_timer(1.0).timeout
+	mark.call("continue")
+	title.call(&"_go", SaveManager.load_scenario.bind(startup_scenario))
+	while not SceneFlow.is_busy():
+		await get_tree().process_frame
+	while SceneFlow.is_busy() or Players.lead() == null:
+		await get_tree().process_frame
+	await RenderingServer.frame_post_draw
+	mark.call("playable")
+	marks["load"] = SceneFlow.last_load
+	var worst := 0.0
+	var last := Time.get_ticks_usec()
+	var until := last + 3000000
+	while last < until:
+		await get_tree().process_frame
+		worst = maxf(worst, (Time.get_ticks_usec() - last) / 1000.0)
+		last = Time.get_ticks_usec()
+	marks["after_max_ms"] = worst
+	marks["after_pipelines"] = _pipelines_compiled() - marks.playable_pipelines
+	marks["pss_mb"] = process_pss_mb()
+	marks["video_mb"] = Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576.0
+	marks["texture_mb"] = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0
+	marks["buffer_mb"] = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0
+	marks["objects"] = Performance.get_monitor(Performance.OBJECT_COUNT)
+	marks["resources"] = Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)
+	var info := {"device": OS.get_model_name(), "gpu": RenderingServer.get_video_adapter_name(),
+		"renderer": RenderingServer.get_current_rendering_method(), "date": Time.get_datetime_string_from_system()}
+	print("BENCH_STARTUP ", JSON.stringify(marks))
+	_save(info, [], marks)
+	print("BENCH_DONE ", ProjectSettings.globalize_path(OUT))
+	get_tree().quit()
+
+
 ## Después de cada corrida: si el teléfono pierde el dispositivo a mitad de camino, quedan las que terminaron.
-func _save(info: Dictionary, runs: Array) -> void:
+func _save(info: Dictionary, runs: Array, startup := {}) -> void:
 	DirAccess.make_dir_recursive_absolute(OUT.get_base_dir())
 	var file := FileAccess.open(OUT, FileAccess.WRITE)
-	file.store_string(JSON.stringify({"info": info, "runs": runs}, "\t"))
+	var data := {"info": info, "runs": runs}
+	if startup:
+		data["startup"] = startup
+	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
 
 

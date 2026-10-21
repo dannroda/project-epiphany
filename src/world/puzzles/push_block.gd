@@ -115,9 +115,10 @@ func try_push(direction: Vector3) -> bool:
 	return true
 
 
-## Al cargar una partida sin cambiar de escena: resuelto en su lugar final, si no en el de inicio.
+## Al cargar una partida sin cambiar de escena: resuelto en su lugar final, si no en el de inicio. Fuera del árbol es la
+## escena vieja que SceneFlow.enter_save ya sacó (el overworld del título al Continuar).
 func _on_loaded() -> void:
-	if moving:
+	if moving or not is_inside_tree():
 		return
 	global_position = solved_position if is_solved() else _start
 

@@ -111,6 +111,33 @@ func test_the_old_scene_is_gone_before_the_save_is_read() -> void:
 	state.reset()
 
 
+## 15.28: el overworld que cargó el fondo del título sirve para Continuar sin leerlo de nuevo, y se suelta al llegar.
+func test_a_kept_scene_is_reused_once_and_then_released() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var flow: Node = tree.root.get_node(^"SceneFlow")
+	tree.root.get_node(^"GameState").reset()
+	tree.change_scene_to_file("res://levels/test/test.tscn")
+	await tree.scene_changed
+	var same: PackedScene = load("res://levels/test/test.tscn")
+	flow.keep_loaded(same)
+	var same_ref: WeakRef = weakref(same)
+	same = null
+	assert_true(same_ref.get_ref() != null, "retenida hasta el cambio")
+	flow.travel_to("res://levels/test/test.tscn", &"start")
+	while flow.traveling:
+		await tree.process_frame
+	assert_eq(flow.last_load.read_ms, 0, "sin leerla de nuevo")
+	var other: PackedScene = load("res://levels/test/sandbox_items.tscn")
+	flow.keep_loaded(other)
+	var other_ref: WeakRef = weakref(other)
+	other = null
+	flow.travel_to("res://levels/test/test.tscn", &"start")
+	while flow.traveling:
+		await tree.process_frame
+	assert_true(other_ref.get_ref() == null, "otra escena se suelta")
+	assert_true(same_ref.get_ref() == null, "y la que se usó tampoco queda retenida")
+
+
 ## Recargar la misma mazmorra avisa current_dungeon una sola vez, o ninguna.
 func test_reloading_a_dungeon_announces_it_at_most_once() -> void:
 	var tree := Engine.get_main_loop() as SceneTree

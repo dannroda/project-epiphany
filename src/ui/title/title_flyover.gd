@@ -39,6 +39,7 @@ func _poll() -> void:
 			_loading = false
 			# Si SceneFlow ya está entrando al juego, el pedido es suyo: se usa sin sacárselo.
 			var packed: PackedScene = load(LEVEL) if SceneFlow.traveling else ResourceLoader.load_threaded_get(LEVEL)
+			SceneFlow.keep_loaded(packed)
 			var level := packed.instantiate()
 			for path in STRIP:
 				var node := level.get_node_or_null(path)

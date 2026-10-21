@@ -23,6 +23,9 @@ var traveling: bool:
 		return _transitions > 0
 
 var session := Session.new()
+## Cuánto tardó el último cambio de escena, por partes (lectura en el hilo, instanciar y agregar, calentar pipelines).
+var last_load := {}
+var _kept: PackedScene
 var _transitions := 0
 var _entering := false
 var _in_fade_action := false
@@ -51,6 +54,12 @@ func _fade(alpha: float, seconds: float) -> void:
 	_fade_tween = create_tween()
 	_fade_tween.tween_property(_rect, "color:a", alpha, seconds)
 	await Tweens.ended(_fade_tween)
+
+
+## Una escena ya cargada que se va a pedir enseguida (el overworld del fondo del título, antes de Continuar): la retiene
+## hasta el próximo cambio de escena para que no se vuelva a leer del disco. Si ese cambio va a otra escena, la suelta.
+func keep_loaded(packed: PackedScene) -> void:
+	_kept = packed
 
 
 ## Para lo que se mueve tapado sin cambiar de escena (escaleras): mientras dura, nada más arranca un viaje.
@@ -131,6 +140,8 @@ func _teleport_players(leaving: bool) -> void:
 ## Carga `scene_path` en un hilo (pedido antes o acá) y cambia de escena. Si tarda más de `show_loading_after`,
 ## aparece la pantalla de carga (el ojo y "Cargando…" en la esquina).
 func _change_scene(scene_path: String) -> bool:
+	var _cached := _kept if _kept and _kept.resource_path == scene_path else null
+	_kept = null
 	if ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 		ResourceLoader.load_threaded_request(scene_path)
 	var started := Time.get_ticks_msec()
@@ -144,6 +155,7 @@ func _change_scene(scene_path: String) -> bool:
 		shown_at = Time.get_ticks_msec()
 		show_loading()
 	var packed := ResourceLoader.load_threaded_get(scene_path) as PackedScene
+	var loaded_at := Time.get_ticks_msec()
 	if shown_at >= 0:
 		while Time.get_ticks_msec() - shown_at < loading_min_time * 1000.0:
 			await get_tree().process_frame
@@ -151,11 +163,16 @@ func _change_scene(scene_path: String) -> bool:
 		hide_loading()
 		Log.error(&"flow", "No se pudo cargar", scene_path)
 		return false
+	var instancing_at := Time.get_ticks_msec()
 	get_tree().change_scene_to_packed(packed)
 	await get_tree().scene_changed
+	var changed_at := Time.get_ticks_msec()
 	_sync_dungeon()
 	await _warm_up_pipelines()
 	hide_loading()
+	last_load = {"scene": scene_path, "read_ms": loaded_at - started, "instance_ms": changed_at - instancing_at,
+		"warmup_ms": Time.get_ticks_msec() - changed_at, "total_ms": Time.get_ticks_msec() - started}
+	Log.info(&"flow", "Carga", last_load)
 	return true
 
 
