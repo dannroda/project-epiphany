@@ -8191,6 +8191,14 @@ Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mo
 
 Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 315 ms de GPU (3,1 fps) y chullpa 327 ms (2,9 fps) contra antesala 146 ms (6,4 fps), con triángulos ya bajos (tapas bakeadas y LODs). La diferencia entre salas apunta a algo propio de esas salas: luces puntuales por sala, cutaway de paredes, niebla de pozos, sondas, efectos LA. Medir por sala con los toggles del benchmark (lights, probes, effects, gridmaps, flat_shaders) y bajar el costo por píxel en Mobile sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build.
 
+**Prueba:** Capturas Forward+ de los 3 casos intercambiando el shader en la misma corrida: paredes idénticas píxel a píxel (solo difieren el polvo y el idle del player, como dos capturas de la misma versión). Suite 773/773 en main después de --import (0a99ef0f).
+
+**Notas:** Paso 1 (-25, wt/art-hsm 07c90f8a → main 0a99ef0f): los seis kits LA usan cutaway_la.gdshader, el cutaway sin sus dos discard (el código común pasa a cutaway.gdshaderinc). En los niveles LA los discard nunca corrían: el corte de la pared sur de la cámara apunta a wall/column/epiphany_stone.tres y el kit tiene copias la_walls._glossy (cut_area queda en cero), y el agujero del player está cerrado desde 11.134. Pero en Mali un shader que PUEDE descartar pierde early-Z y forward pixel kill. la_walls._glossy asigna cutaway_la, así que un refresh lo mantiene; el kit gris y los materiales viejos conservan el corte. BenchVariant.swap_shader nuevo para A/B de un shader en la misma corrida.
+- G23, Alta, tres pares A/B intercalados en una corrida (se descarta la primera pasada de cada shader, que incluye compilar el pipeline), GPU p50: templo hub 136–142 → 116 ms (−17 %), chullpa 223–260 → 143–147 ms (−40 %, 3,4 → 5,1 fps), antesala 138–139 → 120–121 ms (−13 %).
+- Sin el valor atípico de la primera pasada, templo hub ≈ antesala: los 315 ms del hub eran el primer caso después de arrancar la app.
+- Lo que queda en las tres salas sigue siendo el GridMap: sin él ~46 ms; piso y resto de las paredes ≈ 75 ms.
+- Sigue: variante solo sombras, cull_back en las paredes LA para Mobile (con capturas), MSAA y sondas. ventana_caida, boca_oscura y water_la leen la textura de pantalla con mipmaps, pero en hub/antesala no aparece como costo.
+
 ### 15.24 Comprimir las mallas de los kits de paredes LA · Revisión
 
 **Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
