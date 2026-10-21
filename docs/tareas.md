@@ -8213,6 +8213,9 @@ Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 
 - ? ¿En el perfil Bajo apagamos las luces puntuales de las mazmorras (antorchas, brillo de pozos) y dejamos solo la luz de la sala? · pregunta abierta
   Por qué: En la antesala del G23 ahorra ~10 ms de GPU (116 → 107 ms en Alta); la sombra del sol ya está apagada en Bajo. Cambia el look: las salas quedan más parejas, sin los círculos de luz de las antorchas.
   Descartado: Dejarlas en todos los perfiles; apagarlas solo en el renderer Mobile; dejar una sola luz por sala.
+- ! La profundidad de campo de las mazmorras se prende solo durante los zooms de la cámara y con un jefe alto a la vista (enfoque_la), en todos los renderers · sin revisar
+  Por qué: En las salas normales no cambia nada en pantalla (el desenfoque lejano está apagado en los niveles LA y el cercano cae a ~29 m de la cámara, donde no hay nada), pero la pasada corre cada cuadro: 8–16 ms de GPU en el G23. Mismo look que hoy, el costo solo en esos momentos.
+  Descartado: Apagarla en Mobile o en el perfil Bajo (cambia los primeros planos y los jefes altos); la versión barata (bokeh calidad 0, forma caja) recupera solo la mitad.
 
 **Prueba:** Capturas Forward+ con el shader intercambiado en la misma corrida (paso 1) y sala por sala en pausa A-B-A (paso 2): sin cambios de pared. Suite 773/773 en main después de --import (105bc19c).
 

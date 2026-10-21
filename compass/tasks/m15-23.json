@@ -11,6 +11,12 @@
       "session": "288582ff-f0fb-4cb5-a598-45cacf4a334e",
       "text": "¿En el perfil Bajo apagamos las luces puntuales de las mazmorras (antorchas, brillo de pozos) y dejamos solo la luz de la sala?",
       "why": "En la antesala del G23 ahorra ~10 ms de GPU (116 → 107 ms en Alta); la sombra del sol ya está apagada en Bajo. Cambia el look: las salas quedan más parejas, sin los círculos de luz de las antorchas."
+    },
+    {
+      "alternatives": "Apagarla en Mobile o en el perfil Bajo (cambia los primeros planos y los jefes altos); la versión barata (bokeh calidad 0, forma caja) recupera solo la mitad.",
+      "at": "2026-10-21T16:09:00.587Z",
+      "text": "La profundidad de campo de las mazmorras se prende solo durante los zooms de la cámara y con un jefe alto a la vista (enfoque_la), en todos los renderers",
+      "why": "En las salas normales no cambia nada en pantalla (el desenfoque lejano está apagado en los niveles LA y el cercano cae a ~29 m de la cámara, donde no hay nada), pero la pasada corre cada cuadro: 8–16 ms de GPU en el G23. Mismo look que hoy, el costo solo en esos momentos."
     }
   ],
   "description": "Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 315 ms de GPU (3,1 fps) y chullpa 327 ms (2,9 fps) contra antesala 146 ms (6,4 fps), con triángulos ya bajos (tapas bakeadas y LODs). La diferencia entre salas apunta a algo propio de esas salas: luces puntuales por sala, cutaway de paredes, niebla de pozos, sondas, efectos LA. Medir por sala con los toggles del benchmark (lights, probes, effects, gridmaps, flat_shaders) y bajar el costo por píxel en Mobile sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build.",
@@ -26,5 +32,5 @@
   ],
   "test": "Capturas Forward+ con el shader intercambiado en la misma corrida (paso 1) y sala por sala en pausa A-B-A (paso 2): sin cambios de pared. Suite 773/773 en main después de --import (105bc19c).",
   "title": "G23: templo hub y chullpa a 3 fps (costo por píxel por sala)",
-  "updated_at": "2026-10-21T08:35:25.753Z"
+  "updated_at": "2026-10-21T16:09:00.587Z"
 }
