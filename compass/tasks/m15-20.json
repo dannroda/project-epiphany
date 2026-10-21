@@ -3,18 +3,26 @@
   "checklist": [],
   "code": "15.20",
   "created_at": "2026-10-21T05:22:31.256Z",
+  "decisions": [
+    {
+      "alternatives": "Seguir en 15.20 con FindPlayer por tick y el costo de LimboAI + move_and_slide de los enemigos.",
+      "at": "2026-10-21T08:15:21.727Z",
+      "text": "15.20 se cierra con el overworld a ~30 fps en Bajo; no se cachea FindPlayer y el resto pasa a la GPU (15.25)",
+      "why": "Con la CPU arreglada el límite que queda es la GPU cuando el teléfono se calienta (26–28 ms); cachear FindPlayer ahorra poco de los ~2 ms por paso de los enemigos."
+    }
+  ],
   "description": "Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms pero el juego va a ~22 fps porque el proceso de CPU tarda 35–53 ms por cuadro. En el teléfono base los 30 fps no se alcanzan solo con calidad gráfica: el límite es la CPU. Perfilar qué se lleva el process en el overworld (scripts por cuadro, IA de los enemigos despiertos, partículas por CPU, física, animación, UI/HUD, señales) con el profiler de Godot o mediciones en el benchmark, y bajarlo sin cambiar el comportamiento. Medir en el G23 con tools/bench.sh android ZY22HH6Q99 (compartido con Asteroids; el Edge no se usa).",
   "milestone": "m15",
-  "notes": "Parte 1 (-88, wt/design-fix 3563683d → main fb8a31d8):\n- Causa: NavigationAgent3D.set_target_position siempre pide un camino nuevo aunque el punto sea el mismo. Deambular, buscar, huir, perseguir y la mordida de la jauría lo asignaban en cada tick del BT, así que cada enemigo que se movía recalculaba el camino completo sobre la navmesh del overworld en cada paso de física.\n- Arreglo: Enemy.path_to asigna el destino solo si se corrió más de 0,25 m (un destino fijo, una sola vez) o si el agente ya terminó; conserva el comportamiento de hoy en el último metro.\n- Benchmark: dos nodos BenchMarker (prioridad de process mínima y máxima) miden por cuadro los scripts de _process, los de _physics_process sumados sobre los pasos y la cantidad de pasos. El \"process\" de Performance incluye la sincronización y el dibujo del RenderingServer: los \"35–53 ms de process\" de la descripción no eran tiempo de scripts.\n- G23, perfil Bajo, A/B intercalado con contexto Vulkan vivo: scripts de física por paso 6,3–8,0 → 4,8–6,0 ms; inicio, cardonal y bañado llegan a 29–30 fps (antes ~22) cuando la GPU queda debajo de ~25 ms. PC headless en el inicio: ticks de BT de los 4 esqueletos que deambulan 0,59 → 0,19 ms.\n- Queda por paso en el G23: ~5 ms de scripts y ~8 ms del motor de física (Jolt; el overworld tiene 1434 Area3D). Sigue -88.",
+  "notes": "Parte 1 (-88, wt/design-fix 3563683d → main fb8a31d8):\n- Causa: NavigationAgent3D.set_target_position siempre pide un camino nuevo aunque el punto sea el mismo. Deambular, buscar, huir, perseguir y la mordida de la jauría lo asignaban en cada tick del BT, así que cada enemigo que se movía recalculaba el camino completo sobre la navmesh del overworld en cada paso de física.\n- Arreglo: Enemy.path_to asigna el destino solo si se corrió más de 0,25 m (un destino fijo, una sola vez) o si el agente ya terminó; conserva el comportamiento de hoy en el último metro.\n- Benchmark: dos nodos BenchMarker miden por cuadro los scripts de _process, los de _physics_process sumados sobre los pasos y la cantidad de pasos. El \"process\" de Performance incluye la sincronización y el dibujo del RenderingServer: los \"35–53 ms de process\" de la descripción no eran tiempo de scripts.\n- G23, perfil Bajo: scripts de física por paso 6,3–8,0 → 4,8–6,0 ms; inicio, cardonal y bañado llegan a 29–30 fps (antes ~22) cuando la GPU queda debajo de ~25 ms.\nParte 2 (-88, 4583ab71 + f4c5b3c8 → main e1b97904 + 2b8073c5):\n- Diagnóstico en el G23 (Bajo, por paso): scripts 4,1–5,7 ms; motor (Jolt + flush, el hueco entre el fin de los scripts y el próximo paso) 2,6–3,1 ms; navegación ~0,05 ms. Sin monitoring de áreas el motor baja a ~1,4 ms; sin enemigos los scripts bajan a ~3,1 ms (los enemigos cuestan ~2 ms por paso: BT de LimboAI + move_and_slide). Los \"~8 ms de Jolt\" de antes eran el paso más largo del cuadro, no el promedio.\n- En escritorio las AreaZone eran ~60 % del costo del monitoring; los ~1250 hurtboxes de vegetación salen gratis (monitorables sin monitoring, máscara 0, estáticos).\n- Arreglo: el cuerpo del player también está en la capa PLAYER (collision_layer 3) y las AreaZone enmascaran solo PLAYER; con LEVEL en la máscara Jolt filtraba en cada paso los pares contra todos los estáticos bajo cada zona. Ninguna máscara tiene el bit 2 sin el 1 (revisado por -88 y -ae), así que nada deja de ver ni empieza a ver al player. ActiveZones precalcula sus listas de alcance y cachea la zona de cada enemigo.\n- A/B en el G23 (Nuevo/Viejo ×2, inicio/cardonal/bañado): motor por paso 2,05–2,42 contra 2,62–3,02 ms (−0,5 ms por paso, ~−1 ms por cuadro).\n- Estado: el overworld va a ~30 fps estables en Bajo; con el teléfono caliente (GPU 26–28 ms) entra un tercer paso de física y cae a ~22. El límite pasa a ser la GPU (→ 15.25).\n- Benchmark: columnas physics_engine y navigation, variantes de diagnóstico monitoring_off y enemies_off.\n- No hecho: cachear FindPlayer por tick (se evalúa 3 veces por tick en el BTDynamicSelector de guard_bt); ganancia chica.",
   "order": 196,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "optimizacion"
   ],
-  "test": "",
+  "test": "G23 con tools/bench.sh android ZY22HH6Q99 --build, perfil Bajo, A/B intercalado. Suite 773/773 en main después de --import (2b8073c5).",
   "title": "CPU por cuadro del overworld en el G23",
-  "updated_at": "2026-10-21T06:39:02.391Z"
+  "updated_at": "2026-10-21T08:15:21.727Z"
 }

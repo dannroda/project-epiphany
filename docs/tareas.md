@@ -7823,7 +7823,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (19/26, 19 en revisión)
+## M15 — Optimización  (20/27, 20 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8147,18 +8147,32 @@ Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equ
 - G23 (inicio/cardonal/bañado): Bajo ~33 ms de GPU pero ~22 fps, porque el process de CPU tarda 35–53 ms → 15.20. Escala 70 → ~42 ms de GPU; 100 → ~59 ms. Cualquier sombra del sol a 50 % (incluso ortogonal de 20 m, atlas 1024, sin plantas) cuesta 46–58 ms: Bajo va sin sol. El AO LA cuesta ~1 ms y queda en Bajo.
 - La calibración mide solo GPU; en el G23 el límite es la CPU.
 
-### 15.20 CPU por cuadro del overworld en el G23 · En curso
+### 15.20 CPU por cuadro del overworld en el G23 · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
 Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms pero el juego va a ~22 fps porque el proceso de CPU tarda 35–53 ms por cuadro. En el teléfono base los 30 fps no se alcanzan solo con calidad gráfica: el límite es la CPU. Perfilar qué se lleva el process en el overworld (scripts por cuadro, IA de los enemigos despiertos, partículas por CPU, física, animación, UI/HUD, señales) con el profiler de Godot o mediciones en el benchmark, y bajarlo sin cambiar el comportamiento. Medir en el G23 con tools/bench.sh android ZY22HH6Q99 (compartido con Asteroids; el Edge no se usa).
 
+**Decisiones:**
+- ! 15.20 se cierra con el overworld a ~30 fps en Bajo; no se cachea FindPlayer y el resto pasa a la GPU (15.25) · sin revisar
+  Por qué: Con la CPU arreglada el límite que queda es la GPU cuando el teléfono se calienta (26–28 ms); cachear FindPlayer ahorra poco de los ~2 ms por paso de los enemigos.
+  Descartado: Seguir en 15.20 con FindPlayer por tick y el costo de LimboAI + move_and_slide de los enemigos.
+
+**Prueba:** G23 con tools/bench.sh android ZY22HH6Q99 --build, perfil Bajo, A/B intercalado. Suite 773/773 en main después de --import (2b8073c5).
+
 **Notas:** Parte 1 (-88, wt/design-fix 3563683d → main fb8a31d8):
 - Causa: NavigationAgent3D.set_target_position siempre pide un camino nuevo aunque el punto sea el mismo. Deambular, buscar, huir, perseguir y la mordida de la jauría lo asignaban en cada tick del BT, así que cada enemigo que se movía recalculaba el camino completo sobre la navmesh del overworld en cada paso de física.
 - Arreglo: Enemy.path_to asigna el destino solo si se corrió más de 0,25 m (un destino fijo, una sola vez) o si el agente ya terminó; conserva el comportamiento de hoy en el último metro.
-- Benchmark: dos nodos BenchMarker (prioridad de process mínima y máxima) miden por cuadro los scripts de _process, los de _physics_process sumados sobre los pasos y la cantidad de pasos. El "process" de Performance incluye la sincronización y el dibujo del RenderingServer: los "35–53 ms de process" de la descripción no eran tiempo de scripts.
-- G23, perfil Bajo, A/B intercalado con contexto Vulkan vivo: scripts de física por paso 6,3–8,0 → 4,8–6,0 ms; inicio, cardonal y bañado llegan a 29–30 fps (antes ~22) cuando la GPU queda debajo de ~25 ms. PC headless en el inicio: ticks de BT de los 4 esqueletos que deambulan 0,59 → 0,19 ms.
-- Queda por paso en el G23: ~5 ms de scripts y ~8 ms del motor de física (Jolt; el overworld tiene 1434 Area3D). Sigue -88.
+- Benchmark: dos nodos BenchMarker miden por cuadro los scripts de _process, los de _physics_process sumados sobre los pasos y la cantidad de pasos. El "process" de Performance incluye la sincronización y el dibujo del RenderingServer: los "35–53 ms de process" de la descripción no eran tiempo de scripts.
+- G23, perfil Bajo: scripts de física por paso 6,3–8,0 → 4,8–6,0 ms; inicio, cardonal y bañado llegan a 29–30 fps (antes ~22) cuando la GPU queda debajo de ~25 ms.
+Parte 2 (-88, 4583ab71 + f4c5b3c8 → main e1b97904 + 2b8073c5):
+- Diagnóstico en el G23 (Bajo, por paso): scripts 4,1–5,7 ms; motor (Jolt + flush, el hueco entre el fin de los scripts y el próximo paso) 2,6–3,1 ms; navegación ~0,05 ms. Sin monitoring de áreas el motor baja a ~1,4 ms; sin enemigos los scripts bajan a ~3,1 ms (los enemigos cuestan ~2 ms por paso: BT de LimboAI + move_and_slide). Los "~8 ms de Jolt" de antes eran el paso más largo del cuadro, no el promedio.
+- En escritorio las AreaZone eran ~60 % del costo del monitoring; los ~1250 hurtboxes de vegetación salen gratis (monitorables sin monitoring, máscara 0, estáticos).
+- Arreglo: el cuerpo del player también está en la capa PLAYER (collision_layer 3) y las AreaZone enmascaran solo PLAYER; con LEVEL en la máscara Jolt filtraba en cada paso los pares contra todos los estáticos bajo cada zona. Ninguna máscara tiene el bit 2 sin el 1 (revisado por -88 y -ae), así que nada deja de ver ni empieza a ver al player. ActiveZones precalcula sus listas de alcance y cachea la zona de cada enemigo.
+- A/B en el G23 (Nuevo/Viejo ×2, inicio/cardonal/bañado): motor por paso 2,05–2,42 contra 2,62–3,02 ms (−0,5 ms por paso, ~−1 ms por cuadro).
+- Estado: el overworld va a ~30 fps estables en Bajo; con el teléfono caliente (GPU 26–28 ms) entra un tercer paso de física y cae a ~22. El límite pasa a ser la GPU (→ 15.25).
+- Benchmark: columnas physics_engine y navigation, variantes de diagnóstico monitoring_off y enemies_off.
+- No hecho: cachear FindPlayer por tick (se evalúa 3 veces por tick en el BTDynamicSelector de guard_bt); ganancia chica.
 
 ### 15.21 G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost) · Revisión
 
@@ -8210,6 +8224,12 @@ Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen s
 **Notas:** -88 (wt/design-fix 3dafe6cf → main 78dc0a87): la_walls guarda todas las mallas del kit con ARRAY_FLAG_COMPRESS_ATTRIBUTES (tools/la_compress.gd), sin tangentes y con los mismos buffers de índices de LOD; bake, refresh y caps ya escriben comprimido. El modo nuevo `compress` comprimió los 6 kits en el lugar sin refrescar ni tocar ningún nivel: mismos ids de ítem, materiales, parámetros de shader, índices y LODs; error máximo 0,11 mm en posiciones y 0,4° en normales.
 - *_la_kit.tres: 134,6 → 84,7 MB.
 - 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.
+
+### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps en Bajo, pero cuando el G23 se calienta la GPU sube a 26–28 ms, entra un tercer paso de física por cuadro y cae a ~22 fps. Bajar la GPU del overworld en el perfil Bajo (y en Mobile en general) a ~20 ms para que aguante caliente: medir qué queda por pasada (detalle bakeado del suelo de 15.17, agua, efectos LA, plantas, decor, sombras) con los toggles del benchmark en corridas largas que calienten el teléfono, y recortar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (APK por worktree desde bfaf4138; compartido con -8f y -25; el Edge no se usa).
 
 ## M17 — Después de la demo  (0/2)
 

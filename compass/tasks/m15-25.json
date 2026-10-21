@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-88",
+  "checklist": [],
+  "code": "15.25",
+  "created_at": "2026-10-21T08:15:11.705Z",
+  "description": "Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps en Bajo, pero cuando el G23 se calienta la GPU sube a 26–28 ms, entra un tercer paso de física por cuadro y cae a ~22 fps. Bajar la GPU del overworld en el perfil Bajo (y en Mobile en general) a ~20 ms para que aguante caliente: medir qué queda por pasada (detalle bakeado del suelo de 15.17, agua, efectos LA, plantas, decor, sombras) con los toggles del benchmark en corridas largas que calienten el teléfono, y recortar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (APK por worktree desde bfaf4138; compartido con -8f y -25; el Edge no se usa).",
+  "milestone": "m15",
+  "notes": "",
+  "order": 201,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente",
+  "updated_at": "2026-10-21T08:15:11.705Z"
+}
