@@ -5,6 +5,7 @@ const SCENE := preload("res://src/entities/boss/boss.tscn")
 
 
 func _spawn() -> Boss:
+	use_empty_scene()
 	var tree := Engine.get_main_loop() as SceneTree
 	if tree.current_scene == null:
 		var level := Node3D.new()
