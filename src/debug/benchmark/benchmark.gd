@@ -126,7 +126,25 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 	run["nodes"] = Performance.get_monitor(Performance.OBJECT_NODE_COUNT)
 	run["video_mb"] = Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576.0
 	run["static_mb"] = Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0
+	run["texture_mb"] = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0
+	run["buffer_mb"] = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0
+	run["pss_mb"] = process_pss_mb()
 	return run
+
+
+## El PSS del proceso en MB (15.27): incluye lo que el motor no cuenta, como el driver de la GPU y las bibliotecas.
+static func process_pss_mb() -> float:
+	if OS.get_name() == "Android":
+		var debug: Object = JavaClassWrapper.wrap("android.os.Debug")
+		return float(debug.call(&"getPss")) / 1024.0 if debug else 0.0
+	var file := FileAccess.open("/proc/self/smaps_rollup", FileAccess.READ)
+	if not file:
+		return 0.0
+	# Los archivos de /proc dicen medir 0 bytes, así que get_as_text viene vacío.
+	for line in file.get_buffer(1 << 12).get_string_from_utf8().split("\n", false):
+		if line.begins_with("Pss:"):
+			return float(line.split(" ", false)[1]) / 1024.0
+	return 0.0
 
 
 ## En círculo alrededor de `origin`, apoyado en el piso que haya debajo.
