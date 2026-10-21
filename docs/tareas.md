@@ -8205,13 +8205,19 @@ Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mo
 
 Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 315 ms de GPU (3,1 fps) y chullpa 327 ms (2,9 fps) contra antesala 146 ms (6,4 fps), con triángulos ya bajos (tapas bakeadas y LODs). La diferencia entre salas apunta a algo propio de esas salas: luces puntuales por sala, cutaway de paredes, niebla de pozos, sondas, efectos LA. Medir por sala con los toggles del benchmark (lights, probes, effects, gridmaps, flat_shaders) y bajar el costo por píxel en Mobile sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build.
 
-**Prueba:** Capturas Forward+ de los 3 casos intercambiando el shader en la misma corrida: paredes idénticas píxel a píxel (solo difieren el polvo y el idle del player, como dos capturas de la misma versión). Suite 773/773 en main después de --import (0a99ef0f).
+**Decisiones:**
+- ? ¿En el perfil Bajo apagamos las luces puntuales de las mazmorras (antorchas, brillo de pozos) y dejamos solo la luz de la sala? · pregunta abierta
+  Por qué: En la antesala del G23 ahorra ~10 ms de GPU (116 → 107 ms en Alta); la sombra del sol ya está apagada en Bajo. Cambia el look: las salas quedan más parejas, sin los círculos de luz de las antorchas.
+  Descartado: Dejarlas en todos los perfiles; apagarlas solo en el renderer Mobile; dejar una sola luz por sala.
+
+**Prueba:** Capturas Forward+ con el shader intercambiado en la misma corrida (paso 1) y sala por sala en pausa A-B-A (paso 2): sin cambios de pared. Suite 773/773 en main después de --import (105bc19c).
 
 **Notas:** Paso 1 (-25, wt/art-hsm 07c90f8a → main 0a99ef0f): los seis kits LA usan cutaway_la.gdshader, el cutaway sin sus dos discard (el código común pasa a cutaway.gdshaderinc). En los niveles LA los discard nunca corrían: el corte de la pared sur de la cámara apunta a wall/column/epiphany_stone.tres y el kit tiene copias la_walls._glossy (cut_area queda en cero), y el agujero del player está cerrado desde 11.134. Pero en Mali un shader que PUEDE descartar pierde early-Z y forward pixel kill. la_walls._glossy asigna cutaway_la, así que un refresh lo mantiene; el kit gris y los materiales viejos conservan el corte. BenchVariant.swap_shader nuevo para A/B de un shader en la misma corrida.
 - G23, Alta, tres pares A/B intercalados en una corrida (se descarta la primera pasada de cada shader, que incluye compilar el pipeline), GPU p50: templo hub 136–142 → 116 ms (−17 %), chullpa 223–260 → 143–147 ms (−40 %, 3,4 → 5,1 fps), antesala 138–139 → 120–121 ms (−13 %).
 - Sin el valor atípico de la primera pasada, templo hub ≈ antesala: los 315 ms del hub eran el primer caso después de arrancar la app.
 - Lo que queda en las tres salas sigue siendo el GridMap: sin él ~46 ms; piso y resto de las paredes ≈ 75 ms.
-- Sigue: variante solo sombras, cull_back en las paredes LA para Mobile (con capturas), MSAA y sondas. ventana_caida, boca_oscura y water_la leen la textura de pantalla con mipmaps, pero en hub/antesala no aparece como costo.
+Paso 2 (-25, wt/art 4547624f → main 105bc19c): las paredes LA cullean las caras traseras (cutaway_la, cull_disabled → cull_back) en los dos renderers; la cámara fija nunca las ve. G23 antesala 124–136 → 116 ms. Capturas sala por sala de templo, chullpa, queñoa, totora y cumbre con el juego en pausa, A-B-A: las diferencias A-B son del tamaño de A-A (animación), ninguna de pared.
+Opciones medidas en la antesala del G23 que SÍ cambian el look (no aplicadas, para Daniel): sin sombras 106 ms, sin luces puntuales 107 ms, sombras bajas 120 ms, sin sondas ~130 ms (no gana). MSAA ya está apagado. El perfil Bajo ya va sin sombra del sol; la que queda abierta es apagar las luces puntuales (antorchas) en Mobile o en Bajo.
 
 ### 15.24 Comprimir las mallas de los kits de paredes LA · Revisión
 
