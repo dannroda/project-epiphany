@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://src/world/mobile_particles.gd" id="1_mobile"]
+
 [sub_resource type="Curve" id="Curve_fade"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(0.75, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
@@ -36,6 +38,7 @@ material = SubResource("StandardMaterial3D_dust")
 size = Vector2(0.09, 0.09)
 
 [node name="DustMotes" type="GPUParticles3D" unique_id=1372404700]
+script = ExtResource("1_mobile")
 cast_shadow = 0
 amount = 40
 lifetime = 7.0

@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://src/world/mobile_particles.gd" id="1_mobile"]
+
 [sub_resource type="Gradient" id="Gradient_leaf"]
 colors = PackedColorArray(0.8, 0.9, 0.8, 1, 1, 0.95, 0.6, 1)
 
@@ -46,6 +48,7 @@ material = SubResource("StandardMaterial3D_leaf")
 size = Vector2(0.13, 0.085)
 
 [node name="FallingLeaves" type="GPUParticles3D" unique_id=1718780056]
+script = ExtResource("1_mobile")
 amount = 4
 lifetime = 3.2
 preprocess = 3.0

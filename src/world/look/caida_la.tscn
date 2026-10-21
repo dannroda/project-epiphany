@@ -1,5 +1,6 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://src/world/mobile_particles.gd" id="2_mobile"]
 [ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="1_caida"]
 
 [sub_resource type="Curve" id="Curve_fade"]
@@ -52,6 +53,7 @@ spot_angle = 26.0
 spot_angle_attenuation = 0.5
 
 [node name="Polvo" type="GPUParticles3D" parent="."]
+script = ExtResource("2_mobile")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
 cast_shadow = 0
 amount = 20
