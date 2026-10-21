@@ -56,6 +56,14 @@
   ],
   "code": "16.26",
   "created_at": "2026-10-12T00:20:04.390Z",
+  "decisions": [
+    {
+      "alternatives": "BT de enemigos en carpetas por entidad (archer_skeleton no tiene carpeta propia y tres BT son compartidos).",
+      "at": "2026-10-21T06:21:06.139Z",
+      "text": "Mapa de carpetas: cámara a src/camera/, BT del jefe junto al jefe y los de enemigos en data/ai/, Log y DebugOverlay a src/debug/, escenas de prueba a levels/test/; new_animation_node_state_machine.tres borrado en vez de renombrado",
+      "why": "Plan de -25 aprobado por -ae; el .tres de la máquina de estados no lo usaba nada desde el primer commit. Partir src/world queda para cuando -88 y -8f no tengan cambios ahí."
+    }
+  ],
   "description": "La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).",
   "files": [
     "export_presets.cfg",
@@ -68,17 +76,17 @@
     }
   ],
   "milestone": "m16",
-  "notes": "ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel. Lo que es mover archivos (levels/test/, cámara, BT, debug runtime, src/world, el .tres por defecto) queda para hacerlo desde el editor.\n2026-10-21: el editor no tiene API para mover archivos (el puente no puede). Daniel eligió hacer ahora los movimientos chicos en disco con el editor cerrado (script headless que reescribe rutas; uids y .uid/.import viajan con su archivo): escenas de prueba a levels/test/, cámara a src/camera/, scripts de build a tools/, BT junto a su entidad o en data/ai/, debug runtime a src/debug/, el .tres con nombre por defecto. Partir src/world queda para cuando -88 y -8f no tengan cambios pendientes ahí. Encargado a -25.",
+  "notes": "ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel.\nMovimientos (-25, bfe4a974 → main 8de3d784, con 16.25), en disco con el editor cerrado porque el editor no tiene API para mover: los .uid viajan con su archivo, las líneas uid= quedan, todas las rutas res:// reescritas (escenas, recursos, scripts, shaders, project.godot, export_presets, tests, tools, debug/scenarios, gdd.md).\n- levels/test/: test*, test_rooms, test_shinobi, test_targeting, prueba_mc_godot, pruebas_terreno, ejemplo_ambiente, sandbox_items, dungeon_test. Exclusión release: tests/*, *.md, debug/*, tools/*, levels/test/*.\n- src/camera/: top_down_camera, camera_reveal, camera_occlusion, room_mask, target_indicator.\n- tools/: build_gray_kit, profile_scenes, render_feel_sfx, render_music y resource_converter (EditorScript).\n- BT: boss_phase1-3_bt a src/entities/boss/; enemy, reactions, guard y archer a data/ai/.\n- src/debug/: Log, log_sink, debug_overlay (lo del editor queda en el addon).\n- new_animation_node_state_machine.tres y su _playback borrados (sin uso).\n- 5 escenarios re-firmados (dungeon_test, full_inventory, gancho, test_flags, test_rooms).\n- Partir src/world: pendiente, cuando -88 y -8f no tengan cambios ahí.\n- El primer arranque después del merge loguea errores de la caché de uids de .godot; -ae corrió --import dos veces en main y el segundo sale limpio.",
   "order": 86,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "refactor",
     "build"
   ],
-  "test": "El export no incluye escenas de prueba; tests verdes tras mover.",
+  "test": "--import y suite completa en main: 773/773 (8de3d784). test_export (exclusiones nuevas), test_save_codec (escenarios re-firmados). grep de rutas viejas en todo el árbol: solo historia en compass/docs.",
   "title": "Orden de carpetas y lo que entra en la build release",
-  "updated_at": "2026-10-21T06:06:14.164Z"
+  "updated_at": "2026-10-21T06:21:19.973Z"
 }

@@ -32,7 +32,7 @@ La web del tablero tiene un chat (botón *Chat*, solo en el mismo equipo) con el
 - Lo que haya que editar o correr, decilo para hacerlo en la terminal.
 - Las reglas de esta guía valen igual: registrá las decisiones, pasá a `review` lo que termines.
 
-Las conversaciones son sesiones de Claude Code (se pueden seguir con `claude --resume <id>`); el hub solo guarda la lista y una copia para mostrarlas, fuera de `compass/`.
+Las conversaciones son sesiones de Claude Code (se pueden seguir con `claude --resume <id>`, con el mismo perfil); el hub solo guarda la lista y una copia para mostrarlas, fuera de `compass/`. Cada conversación usa un perfil de Claude Code (`~/.claude` o una carpeta de `~/.claude-profiles/`, que se lanza con `CLAUDE_CONFIG_DIR`), y el panel muestra su cuenta, el uso de sus límites y los tokens de cada respuesta.
 
 ## Modelo
 

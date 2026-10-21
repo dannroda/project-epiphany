@@ -3,6 +3,14 @@
   "checklist": [],
   "code": "15.21",
   "created_at": "2026-10-21T05:49:46.615Z",
+  "decisions": [
+    {
+      "alternatives": "Repartir la simulación inicial en varios cuadros (más complejo); menos emisores de hojas.",
+      "at": "2026-10-21T06:21:03.806Z",
+      "text": "En celulares las partículas de ambiente (hojas, polvo, polvo de los pozos) arrancan vacías y se llenan en los primeros segundos",
+      "why": "Simular varios segundos de golpe en el primer cuadro colgaba la GPU del G23 (device lost); en PC siguen arrancando llenas."
+    }
+  ],
   "description": "Hallado por -8f bisecando 15.16 en el Moto G23 (Mali-G52): el VK_ERROR_DEVICE_LOST no es del templo, es de la primera carga del overworld. Unos segundos después de cargar start.cfg (OverworldInicio) una entrega a la GPU pasa el timeout de 3 s del fence del driver Mali y el driver resetea la GPU (\"Fence: waitForever ... fence didn't signal in 3000 ms\", QUEUE_BUFFER_TIMEOUT, luego \"Couldn't wait for Vulkan fence (VkResult error -4)\" cada ~0,5 s). La app sigue y termina el benchmark, pero todo lo medido después corre en un contexto perdido, y en un jugador real es un cuelgue. Sospechas sin probar: la primera actualización de las ReflectionProbe (6 caras × escena entera) o el primer cuadro del overworld con todo visible (~2 M triángulos). Bisecar arrancando la corrida en un caso de mazmorra y con las sondas en update_mode always/apagadas en Mobile; arreglar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids; el Edge no se usa).",
   "milestone": "m15",
   "notes": "Causa (-8f): el preprocess de los GPUParticles3D en el primer cuadro después de una carga. El overworld tiene ~200 emisores falling_leaves en los árboles con preprocess de 3 s (sin fixed_fps son 90 pasos de cómputo cada uno), más dust_motes (7 s) y el polvo de los pozos de caida_la (9 s): miles de dispatches en una sola entrega.\nArreglo (6bf8a8da, mergeado por -ae): src/world/mobile_particles.gd pone preprocess = 0 en _enter_tree solo en el renderer Mobile; va en falling_leaves.tscn, dust_motes.tscn y el Polvo de caida_la.tscn. En el teléfono las hojas y el polvo se llenan en los primeros segundos. Forward+ conserva el preprocess y se ve igual.\nPC, renderer Mobile, 1600×720, GPU del primer cuadro tras la carga: overworld 26,6 → 6,1 ms (mediana 1,9), chullpa 28,9 → sin pico, templo 23,1 → sin pico.\nG23 (main + 6bf8a8da, solo Alta, 8 casos desde OverworldInicio; debug/tmp/ow2/draw/g23_verify_15-21_3e.json): 0 VkResult -4 (antes cada ~0,5 s después de la primera carga). Primeros números del G23 con el contexto vivo, GPU: inicio 75 ms (11,5 fps), arboleda 86, cardonal 75, bañado 90, cumbre 105 (8,2 fps), templo hub 315 (3,1 fps), chullpa 327 (2,9 fps), antesala 146 (6,4 fps). Primera carga del overworld 36,5 s.\nQueda (→ 15.22): durante la primera carga del overworld una entrega sigue pasando los 3 s del fence de Mali; esta vez el driver no reseteó.",
@@ -16,5 +24,5 @@
   ],
   "test": "G23: tools/bench.sh android ZY22HH6Q99 --build con solo Alta desde OverworldInicio; logcat sin \"Couldn't wait for Vulkan fence (VkResult error -4)\". PC Mobile: GPU del primer cuadro tras la carga sin pico. Suite 773/773 en main.",
   "title": "G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost)",
-  "updated_at": "2026-10-21T06:10:26.172Z"
+  "updated_at": "2026-10-21T06:21:03.806Z"
 }

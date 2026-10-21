@@ -3,6 +3,16 @@
   "checklist": [],
   "code": "16.27",
   "created_at": "2026-10-15T01:59:19.461Z",
+  "decisions": [
+    {
+      "alternatives": "Seguir con el runner propio (tests/run_tests.gd), que ya anda igual de rápido.",
+      "asked": true,
+      "at": "2026-10-21T06:21:01.772Z",
+      "session": "288582ff-f0fb-4cb5-a598-45cacf4a334e",
+      "text": "¿Pasamos los tests a GUT 9.7.1 (prueba de -25 en wt/gut-trial, eb15796d)?",
+      "why": "773/0 con GUT; mismo API de asserts; en paralelo como hoy (--jobs=2: 252 s contra 264 s del runner propio; 4 jobs 145 s). Suma addons/gut (plugin sin activar) y un aviso de versión inofensivo."
+    }
+  ],
   "description": "Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).",
   "milestone": "m16",
   "notes": "Point 3 done (9d94ec88): run_tests.gd kills a worker that goes 300 s without finishing a test and counts it as a failure, naming the last test. GUT (points 1–2) still waits for 'another day', per Daniel.",
@@ -16,5 +26,5 @@
   ],
   "test": "",
   "title": "Probar GUT para los tests (con nuestro runner por procesos arriba)",
-  "updated_at": "2026-10-21T05:33:15.853Z"
+  "updated_at": "2026-10-21T06:21:01.772Z"
 }
