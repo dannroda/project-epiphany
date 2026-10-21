@@ -1,0 +1,106 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/props/technique_stone.gd" id="1_stone"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/estela.res" id="3_estela"]
+
+[sub_resource type="BoxShape3D" id="BodyShape"]
+size = Vector3(1.1, 1.3, 0.45)
+
+[sub_resource type="BoxShape3D" id="InteractShape"]
+size = Vector3(1.4, 1.2, 1.2)
+
+[sub_resource type="Animation" id="Reset"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Glyph:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Glyph:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Idle"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Glyph:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Glyph:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.0, 2.0),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.6, 1.8, 0.6]
+}
+
+[sub_resource type="AnimationLibrary" id="Lib"]
+_data = {
+&"RESET": SubResource("Reset"),
+&"idle": SubResource("Idle")
+}
+
+[node name="TechniqueStone" type="StaticBody3D"]
+script = ExtResource("1_stone")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_estela")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+shape = SubResource("BodyShape")
+
+[node name="Glyph" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0.45)
+visible = false
+light_color = Color(0.62, 0.85, 1, 1)
+light_energy = 0.0
+omni_range = 2.5
+
+[node name="Interactable" type="Area3D" parent="."]
+script = ExtResource("2_interactable")
+prompt = "PROMPT_READ"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.45)
+shape = SubResource("InteractShape")
+
+[node name="Glow" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+deterministic = false
+libraries = {
+&"": SubResource("Lib")
+}

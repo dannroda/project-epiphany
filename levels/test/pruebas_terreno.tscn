@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bs6ggwyw5mp2m" path="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png" id="2_sky"]
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://src/camera/top_down_camera.tscn" id="cam_scene"]
-[ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="5_dust"]
+[ext_resource type="PackedScene" path="res://src/world/vfx/dust_motes.tscn" id="5_dust"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="6_hud"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_cuadrado.glb" id="v0"]
 [ext_resource type="PackedScene" path="res://assets/epiphany/prueba_terreno_diagonal.glb" id="v1"]

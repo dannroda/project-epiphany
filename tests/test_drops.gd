@@ -50,7 +50,7 @@ func test_pickup_heals_and_gives() -> void:
 	var player := tree.get_first_node_in_group(&"player") as PlayerCharacter
 	player.health.invulnerability_time = 0.0
 	player.health.damage(5)
-	var heart := preload("res://src/world/pickup.tscn").instantiate() as Pickup
+	var heart := preload("res://src/world/props/pickup.tscn").instantiate() as Pickup
 	heart.heal = 4
 	tree.current_scene.add_child(heart)
 	heart.global_position = player.global_position
@@ -59,7 +59,7 @@ func test_pickup_heals_and_gives() -> void:
 	assert_eq(is_instance_valid(heart), false, "desaparece al agarrarlo")
 	state.give(Items.get_item(&"bomb_bag"))
 	state.inventory.remove(&"bomb", state.inventory.count(&"bomb"))
-	var bombs := preload("res://src/world/pickup.tscn").instantiate() as Pickup
+	var bombs := preload("res://src/world/props/pickup.tscn").instantiate() as Pickup
 	bombs.item = Items.get_item(&"bomb")
 	bombs.amount = 3
 	tree.current_scene.add_child(bombs)

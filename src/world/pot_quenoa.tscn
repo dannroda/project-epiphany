@@ -1,9 +1,0 @@
-[gd_scene format=3]
-
-[ext_resource type="PackedScene" path="res://src/world/pot.tscn" id="1_pot"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/mate.res" id="2_mate"]
-
-[node name="Pot" instance=ExtResource("1_pot")]
-
-[node name="Model" parent="Body" index="0"]
-mesh = ExtResource("2_mate")

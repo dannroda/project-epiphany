@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ddus8poxow2jq"]
 
-[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="1_breakable"]
+[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/props/breakable.gd" id="1_breakable"]
 [ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
 [ext_resource type="Resource" uid="uid://l17tbpx80uhw" path="res://data/drops/grass.tres" id="3_drops"]
 [ext_resource type="ArrayMesh" uid="uid://bqengt04yt7wx" path="res://assets/epiphany/meshes/naturaleza/quenoa_grande.res" id="4_mesh"]
-[ext_resource type="PackedScene" path="res://src/world/falling_leaves.tscn" id="5_leaves"]
+[ext_resource type="PackedScene" path="res://src/world/vfx/falling_leaves.tscn" id="5_leaves"]
 [ext_resource type="ArrayMesh" uid="uid://tadpcbmrmfih" path="res://assets/epiphany/meshes/naturaleza/tocon.res" id="9_stump"]
 
 [sub_resource type="BoxShape3D" id="Body"]

@@ -51,7 +51,7 @@ func test_only_bombs_break_it_and_it_stays_broken() -> void:
 
 
 func test_warns_about_bad_flag() -> void:
-	var wall: CrackedWall = preload("res://src/world/cracked_wall.tscn").instantiate()
+	var wall: CrackedWall = preload("res://src/world/puzzles/cracked_wall.tscn").instantiate()
 	wall.flag = &"ow_test_craked_wall"
 	assert_eq(wall._get_configuration_warnings().size(), 1, "flag mal escrito")
 	wall.flag = &""
@@ -102,7 +102,7 @@ func _room_rect(room: Room) -> Rect2:
 ## Un dash contra la pared o el piso agrietado los sacude (los dos usan cracked_wall.gd y su %Shake).
 func test_a_dash_shakes_walls_and_floors() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
-	for path in ["res://src/world/cracked_wall.tscn", "res://src/world/cracked_floor.tscn"]:
+	for path in ["res://src/world/puzzles/cracked_wall.tscn", "res://src/world/puzzles/cracked_floor.tscn"]:
 		var wall := (load(path) as PackedScene).instantiate() as CrackedWall
 		tree.root.add_child(wall)
 		var info := DamageInfo.make(1, 0.0, null)

@@ -2,7 +2,7 @@ extends "res://tests/test_case.gd"
 ## Co-op (13.4): inventario compartido con X/Y de cada uno, el caído queda como espíritu hasta que lo reviven,
 ## game over solo si caen los dos, y el corazón es del que lo toca.
 
-const PICKUP := preload("res://src/world/pickup.tscn")
+const PICKUP := preload("res://src/world/props/pickup.tscn")
 const PAD_1 := 0
 const PAD_2 := 1
 

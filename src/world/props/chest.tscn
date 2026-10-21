@@ -1,0 +1,68 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/props/chest.gd" id="1_chest"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/cofre.res" id="3_base"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/cofre_tapa.res" id="4_lid"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
+
+[sub_resource type="BoxShape3D" id="BodyShape"]
+size = Vector3(1, 0.8, 0.7)
+
+[sub_resource type="BoxShape3D" id="InteractShape"]
+size = Vector3(1.4, 1, 1.2)
+
+[sub_resource type="Animation" id="ChestOpen"]
+resource_name = "open"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Lid:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.24, 0.35),
+"transitions": PackedFloat32Array(0.5, -2, 1),
+"update": 0,
+"values": [0.0, -2.0735, -1.9199]
+}
+
+[sub_resource type="AnimationLibrary" id="ChestLib"]
+_data = {
+&"open": SubResource("ChestOpen")
+}
+
+[node name="Chest" type="StaticBody3D"]
+script = ExtResource("1_chest")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("BodyShape")
+
+[node name="Interactable" type="Area3D" parent="."]
+script = ExtResource("2_interactable")
+prompt_priority = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.2)
+shape = SubResource("InteractShape")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Base" type="MeshInstance3D" parent="Model"]
+mesh = ExtResource("3_base")
+
+[node name="Lid" type="MeshInstance3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.35)
+mesh = ExtResource("4_lid")
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")
+
+[node name="LidAnim" type="AnimationPlayer" parent="."]
+deterministic = false
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("ChestLib")
+}

@@ -3,7 +3,7 @@ extends "res://tests/test_case.gd"
 ## espada ni pisarla la aprietan. Queda resuelta.
 
 const LEVEL := "res://levels/test/test.tscn"
-const SWITCH := "res://src/world/floor_switch.tscn"
+const SWITCH := "res://src/world/puzzles/floor_switch.tscn"
 
 var tree: SceneTree
 var state: Node

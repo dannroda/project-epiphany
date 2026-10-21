@@ -4,7 +4,7 @@ extends "res://tests/test_case.gd"
 ## no la toman.
 
 const LEVEL := "res://levels/test/test.tscn"
-const FLOOR_SWITCH := preload("res://src/world/floor_switch.tscn")
+const FLOOR_SWITCH := preload("res://src/world/puzzles/floor_switch.tscn")
 const WAVE := preload("res://src/combat/plunge_wave.tscn")
 
 

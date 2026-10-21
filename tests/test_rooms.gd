@@ -137,7 +137,7 @@ func test_only_rooms_with_a_player_run() -> void:
 	var skeleton := level.get_node(^"Skeleton") as Node3D
 	var home: Room = rooms[0] if rooms[0].contains(skeleton.global_position) else rooms[1]
 	var away: Room = rooms[1] if home == rooms[0] else rooms[0]
-	var spikes: Node3D = load("res://src/world/spike_trap.tscn").instantiate()
+	var spikes: Node3D = load("res://src/world/dungeon/spike_trap.tscn").instantiate()
 	level.add_child(spikes)
 	var center := home.bounds().get_center()
 	spikes.global_position = Vector3(center.x, home.floor_y(), center.y)

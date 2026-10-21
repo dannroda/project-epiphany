@@ -178,7 +178,7 @@ func test_nothing_grows_on_the_travel_portals() -> void:
 	tree.change_scene_to_file(LEVEL)
 	await tree.scene_changed
 	var level := tree.current_scene
-	var portals := level.find_children("*", "", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == "res://src/world/travel_portal.tscn")
+	var portals := level.find_children("*", "", true, false).filter(func(n: Node) -> bool: return n.scene_file_path == "res://src/world/overworld/travel_portal.tscn")
 	assert_eq(portals.size(), 6, "seis portales")
 	var crowded := []
 	for decor: Node in level.find_children("Decor", "", true, false):

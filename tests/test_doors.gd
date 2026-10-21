@@ -1,7 +1,7 @@
 extends "res://tests/test_case.gd"
 
 const LEVEL := "res://levels/test/test_rooms.tscn"
-const DOOR := preload("res://src/world/door.tscn")
+const DOOR := preload("res://src/world/dungeon/door.tscn")
 const SLOT := 9
 
 

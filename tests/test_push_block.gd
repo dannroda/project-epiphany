@@ -150,7 +150,7 @@ func test_a_block_does_not_go_into_a_doorway() -> void:
 	var directions := [Vector3.FORWARD, Vector3.BACK, Vector3.LEFT, Vector3.RIGHT].filter(block.can_move)
 	assert_true(not directions.is_empty())
 	var direction: Vector3 = directions[0]
-	var door: Door = preload("res://src/world/door.tscn").instantiate()
+	var door: Door = preload("res://src/world/dungeon/door.tscn").instantiate()
 	level.add_child(door)
 	door.global_position = block.global_position + direction * PushBlock.CELL
 	door.open(false)

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://src/world/props/pickup.tscn" id="1_pickup"]
+[ext_resource type="Script" path="res://src/world/props/heart_piece.gd" id="2_piece"]
+[ext_resource type="Resource" path="res://data/items/heart_piece.tres" id="3_item"]
+
+[node name="HeartPiece" instance=ExtResource("1_pickup")]
+script = ExtResource("2_piece")
+item = ExtResource("3_item")
+heal = 4
+lifetime = 0.0
+item_get = true
+magnet_radius = 0.0
+world_size = 1.0

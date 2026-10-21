@@ -1,0 +1,34 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/overworld/overworld_map.gd" id="1_map"]
+
+[sub_resource type="Environment" id="MapEnvironment"]
+background_mode = 1
+background_color = Color(0.043, 0.051, 0.063, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.8
+ssao_enabled = true
+ssao_radius = 2.0
+ssao_intensity = 4.0
+ssao_power = 2.0
+adjustment_enabled = true
+adjustment_brightness = 1.2
+adjustment_contrast = 1.05
+adjustment_saturation = 1.4
+
+[node name="OverworldMap" type="Node"]
+script = ExtResource("1_map")
+
+[node name="Snapshot" type="SubViewport" parent="."]
+size = Vector2i(800, 800)
+render_target_update_mode = 0
+
+[node name="Camera" type="Camera3D" parent="Snapshot"]
+cull_mask = 524288
+environment = SubResource("MapEnvironment")
+projection = 1
+size = 40.0
+
+[node name="GridCopy" type="Node3D" parent="."]
+unique_name_in_owner = true

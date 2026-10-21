@@ -37,7 +37,7 @@ const PUSHED := {
 	"res://src/ui/menus/options_screen.gd": "res://src/ui/menus/options_screen.tscn",
 	"res://src/ui/menus/confirm_dialog.gd": "res://src/ui/menus/confirm_dialog.tscn",
 	"res://player/states/item_get.gd": "res://src/ui/item_get/item_get.tscn",
-	"res://src/world/technique_stone.gd": "res://src/ui/item_get/technique_learned.tscn",
+	"res://src/world/props/technique_stone.gd": "res://src/ui/item_get/technique_learned.tscn",
 	"res://src/ui/menus/menu_stack.gd": "res://src/ui/menus/pause_menu.tscn",
 }
 

@@ -1,6 +1,6 @@
 extends "res://tests/test_case.gd"
 
-const PICKUP := preload("res://src/world/pickup.tscn")
+const PICKUP := preload("res://src/world/props/pickup.tscn")
 
 
 func _shown(item: ItemData) -> Node3D:

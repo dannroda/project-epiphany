@@ -327,7 +327,7 @@ func test_jumping_over_raised_spikes_is_safe_but_landing_on_them_hurts() -> void
 	_give_feather(setup[2])
 	player.health.invulnerability_time = 0.0
 	_box(tree, FAR + Vector3(0, -0.5, 0), Vector3(30, 1, 10))
-	var trap := (load("res://src/world/spike_trap.tscn") as PackedScene).instantiate() as SpikeTrap
+	var trap := (load("res://src/world/dungeon/spike_trap.tscn") as PackedScene).instantiate() as SpikeTrap
 	trap.period = 0.0
 	tree.current_scene.add_child(trap)
 	trap.global_position = FAR + Vector3(1.7, 0, 0)

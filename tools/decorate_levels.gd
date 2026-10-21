@@ -19,7 +19,7 @@ const PLANT_CELLS := {
 	"Cardón brazos": "res://src/world/plants/cardon_brazos.tscn",
 }
 const PLANTS := {
-	"ichu_mata": "res://src/world/grass.tscn",
+	"ichu_mata": "res://src/world/props/grass.tscn",
 	"flores": "res://src/world/plants/flores.tscn",
 	"tola": "res://src/world/plants/tola.tscn",
 	"hongos": "res://src/world/plants/hongos.tscn",
@@ -34,9 +34,9 @@ const PLANTS := {
 const NO_SHADOW := ["ichu_cortado"]
 const SCATTERED := "res://tools/plantas_overworld.json"
 ## Ni plantas ni nada encima de los portales de viaje, con margen para que no asomen sobre el borde.
-const PORTAL_SCENE := "res://src/world/travel_portal.tscn"
+const PORTAL_SCENE := "res://src/world/overworld/travel_portal.tscn"
 const PORTAL_CLEAR := 2.0
-const ARENA_SCRIPT := "res://src/world/arena_area.gd"
+const ARENA_SCRIPT := "res://src/world/overworld/arena_area.gd"
 const CELL := 2.0
 ## Lo jugable más cerca que esto (m) no deja decorar.
 const CLEARANCE := 1.8

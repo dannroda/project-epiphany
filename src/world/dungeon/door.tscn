@@ -1,0 +1,92 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/dungeon/door.gd" id="1_door"]
+[ext_resource type="Script" path="res://src/components/interactable.gd" id="2_interactable"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/puerta_madera.res" id="3_leaf"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
+[ext_resource type="Texture2D" path="res://assets/ui/lock.svg" id="4_lock"]
+[ext_resource type="Material" path="res://src/world/look/marca_visible.tres" id="5_mark"]
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(2.0, 2.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="InteractShape"]
+size = Vector3(2.0, 1.6, 2.6)
+
+[sub_resource type="Animation" id="DoorReset"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:openness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="DoorOpen"]
+resource_name = "open"
+length = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:openness")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="DoorLib"]
+_data = {
+&"RESET": SubResource("DoorReset"),
+&"open": SubResource("DoorOpen")
+}
+
+[node name="Door" type="StaticBody3D"]
+script = ExtResource("1_door")
+
+[node name="Leaf" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="LeafMesh" type="MeshInstance3D" parent="Leaf"]
+unique_name_in_owner = true
+material_overlay = ExtResource("5_mark")
+mesh = ExtResource("3_leaf")
+
+[node name="SouthMark" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.03, -1.8)
+visible = false
+pixel_size = 0.009
+shaded = true
+texture = ExtResource("4_lock")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("Shape")
+
+[node name="Interactable" type="Area3D" parent="."]
+script = ExtResource("2_interactable")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("InteractShape")
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")
+
+[node name="Swing" type="AnimationPlayer" parent="."]
+deterministic = false
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("DoorLib")
+}

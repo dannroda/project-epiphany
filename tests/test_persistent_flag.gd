@@ -31,7 +31,7 @@ func test_warnings_for_bad_flags() -> void:
 	dungeon.id = &"ch"
 	level.add_child(dungeon)
 	dungeon.owner = level
-	var inside: Chest = preload("res://src/world/chest.tscn").instantiate()
+	var inside: Chest = preload("res://src/world/props/chest.tscn").instantiate()
 	level.add_child(inside)
 	inside.owner = level
 	inside.flag = &"ow_test_chest"
@@ -40,7 +40,7 @@ func test_warnings_for_bad_flags() -> void:
 	assert_eq(inside._get_configuration_warnings().size(), 0, "ch_ sí")
 	level.free()
 	assert_eq(PersistentFlag.warnings_for(&"", true).size(), 0, "opcional y vacío: sin advertencia")
-	var chest: Chest = preload("res://src/world/chest.tscn").instantiate()
+	var chest: Chest = preload("res://src/world/props/chest.tscn").instantiate()
 	chest.flag = &"ow_test_chets"
 	assert_eq(chest._get_configuration_warnings().size(), 1, "el cofre muestra la advertencia")
 	chest.free()

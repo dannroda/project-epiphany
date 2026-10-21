@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://src/world/mobile_particles.gd" id="2_mobile"]
+[ext_resource type="Script" path="res://src/world/vfx/mobile_particles.gd" id="2_mobile"]
 [ext_resource type="Script" path="res://src/world/look/caida_la.gd" id="1_caida"]
 
 [sub_resource type="Curve" id="Curve_fade"]

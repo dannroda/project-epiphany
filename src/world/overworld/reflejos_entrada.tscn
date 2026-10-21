@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://gjixa4b2q624"]
+
+[ext_resource type="PackedScene" path="res://src/world/overworld/cumbre_entrada.tscn" id="1_base"]
+
+[node name="ReflejosEntrada" instance=ExtResource("1_base")]

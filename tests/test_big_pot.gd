@@ -1,8 +1,8 @@
 extends "res://tests/test_case.gd"
 
 const LEVEL := "res://levels/test/test.tscn"
-const BIG_POT := preload("res://src/world/big_pot.tscn")
-const FLOOR_SWITCH := preload("res://src/world/floor_switch.tscn")
+const BIG_POT := preload("res://src/world/props/big_pot.tscn")
+const FLOOR_SWITCH := preload("res://src/world/puzzles/floor_switch.tscn")
 const SPOT := Vector3(6, 0.25, 6)
 
 

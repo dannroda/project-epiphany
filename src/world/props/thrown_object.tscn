@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/props/thrown_object.gd" id="1_thrown"]
+
+[sub_resource type="SphereShape3D" id="Body"]
+resource_local_to_scene = true
+radius = 0.3
+
+[node name="ThrownObject" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 9
+angular_damp = 4.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_thrown")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("Body")

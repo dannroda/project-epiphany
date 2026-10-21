@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/props/big_pot.gd" id="1_bigpot"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
+[ext_resource type="Script" path="res://src/world/props/liftable.gd" id="3_liftable"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/vasija.res" id="m0_vasija"]
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(1.2, 1.0, 1.2)
+
+[sub_resource type="CylinderShape3D" id="HurtShape"]
+height = 1.2
+radius = 0.75
+
+[sub_resource type="SphereShape3D" id="LiftShape"]
+radius = 1.1
+
+[node name="BigPot" type="AnimatableBody3D"]
+collision_layer = 9
+collision_mask = 0
+script = ExtResource("1_bigpot")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.1, 0, 0, 0, 1.5, 0, 0, 0, 2.1, 0, 0, 0)
+mesh = ExtResource("m0_vasija")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("Shape")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_hurtbox")
+surface = "none"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("HurtShape")
+
+[node name="Liftable" type="Area3D" parent="."]
+script = ExtResource("3_liftable")
+sets_down = true
+damage = 4
+body_radius = 0.55
+body_height = 0.55
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Liftable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("LiftShape")

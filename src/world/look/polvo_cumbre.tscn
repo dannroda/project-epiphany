@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://src/world/dust_motes.tscn" id="1_dust"]
+[ext_resource type="PackedScene" path="res://src/world/vfx/dust_motes.tscn" id="1_dust"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nieve"]
 transparency = 1

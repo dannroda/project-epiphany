@@ -4,10 +4,10 @@ extends "res://tests/test_case.gd"
 
 const LEVEL := "res://levels/test/test.tscn"
 const FAR := Vector3(200, 0, 0)
-const POST := preload("res://src/world/hook_post.tscn")
-const POT := preload("res://src/world/pot.tscn")
-const BIG_POT := preload("res://src/world/big_pot.tscn")
-const CHEST := preload("res://src/world/chest.tscn")
+const POST := preload("res://src/world/puzzles/hook_post.tscn")
+const POT := preload("res://src/world/props/pot.tscn")
+const BIG_POT := preload("res://src/world/props/big_pot.tscn")
+const CHEST := preload("res://src/world/props/chest.tscn")
 const ARMORED_SKELETON := preload("res://src/entities/armored_skeleton.tscn")
 
 

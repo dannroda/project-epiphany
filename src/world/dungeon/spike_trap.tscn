@@ -1,0 +1,93 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/dungeon/spike_trap.gd" id="1_trap"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/pinchos_base.res" id="2_base"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/templo/pinchos.res" id="3_spikes"]
+[ext_resource type="Script" path="res://src/components/hitbox.gd" id="4_hitbox"]
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(1.7, 0.8, 1.7)
+
+[sub_resource type="Animation" id="SpikePeek"]
+resource_name = "peek"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spikes:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.78, -0.6]
+}
+
+[sub_resource type="Animation" id="SpikeRise"]
+resource_name = "rise"
+length = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spikes:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.6, 0.0]
+}
+
+[sub_resource type="Animation" id="SpikeFall"]
+resource_name = "fall"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spikes:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.78]
+}
+
+[sub_resource type="AnimationLibrary" id="SpikeLib"]
+_data = {
+&"peek": SubResource("SpikePeek"),
+&"rise": SubResource("SpikeRise"),
+&"fall": SubResource("SpikeFall")
+}
+
+[node name="SpikeTrap" type="Node3D" groups=["room_sleepers"]]
+script = ExtResource("1_trap")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_base")
+
+[node name="Spikes" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.78, 0)
+mesh = ExtResource("3_spikes")
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("4_hitbox")
+ground_only = true
+hits_on_landing = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("Shape")
+
+[node name="Motion" type="AnimationPlayer" parent="."]
+deterministic = false
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("SpikeLib")
+}

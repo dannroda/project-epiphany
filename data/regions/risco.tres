@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ZoneRegion" format=3 uid="uid://duv1mo30xrp5q"]
 
-[ext_resource type="Script" uid="uid://b7fl0shbmykd0" path="res://src/world/zone_region.gd" id="1_mkqgk"]
+[ext_resource type="Script" uid="uid://b7fl0shbmykd0" path="res://src/world/overworld/zone_region.gd" id="1_mkqgk"]
 
 [resource]
 script = ExtResource("1_mkqgk")

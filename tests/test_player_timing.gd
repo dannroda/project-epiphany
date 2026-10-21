@@ -4,7 +4,7 @@ extends "res://tests/test_case.gd"
 
 const LEVEL := "res://levels/test/test.tscn"
 const FAR := Vector3(200, 0, 0)
-const POST := preload("res://src/world/hook_post.tscn")
+const POST := preload("res://src/world/puzzles/hook_post.tscn")
 const FRAMES := 1
 const METERS := 0.05
 const EXPECTED := {

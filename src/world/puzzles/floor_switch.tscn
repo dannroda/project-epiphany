@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/world/puzzles/floor_switch.gd" id="1_switch"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_marco.res" id="m0_interruptor_marco"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_placa.res" id="3_plate"]
+[ext_resource type="Script" path="res://src/components/persistent_flag.gd" id="pf_persistent_flag"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_bloque_marco.res" id="4_block_frame"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_bloque_placa.res" id="5_block_plate"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_golpe_marco.res" id="6_strike_frame"]
+[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/objetos/interruptor_golpe_placa.res" id="7_strike_plate"]
+[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="8_hurtbox"]
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(1.2, 0.6, 1.2)
+
+[sub_resource type="BoxShape3D" id="StrikeShape"]
+size = Vector3(1.4, 0.5, 1.4)
+
+[node name="FloorSwitch" type="Area3D"]
+script = ExtResource("1_switch")
+block_frame = ExtResource("4_block_frame")
+block_plate = ExtResource("5_block_plate")
+strike_frame = ExtResource("6_strike_frame")
+strike_plate = ExtResource("7_strike_plate")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("m0_interruptor_marco")
+
+[node name="Plate" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("3_plate")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("Shape")
+
+[node name="PersistentFlag" type="Node" parent="."]
+script = ExtResource("pf_persistent_flag")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+script = ExtResource("8_hurtbox")
+surface = "stone"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("StrikeShape")

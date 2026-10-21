@@ -4,8 +4,8 @@ extends "res://tests/test_case.gd"
 
 const LEVEL := "res://levels/test/test.tscn"
 const BEAM := preload("res://src/combat/sword_beam.tscn")
-const EYE := preload("res://src/world/eye_switch.tscn")
-const HIT_SWITCH := preload("res://src/world/hit_switch.tscn")
+const EYE := preload("res://src/world/puzzles/eye_switch.tscn")
+const HIT_SWITCH := preload("res://src/world/puzzles/hit_switch.tscn")
 const AWAY := Vector3(1, 0, 0)
 
 

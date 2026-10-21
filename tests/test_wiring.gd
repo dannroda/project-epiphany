@@ -57,7 +57,7 @@ func test_block_mode_only_a_block_solves_it() -> void:
 		await tree.physics_frame
 	assert_eq(switch.active, false, "el player no lo aprieta: solo un bloque")
 	player.global_position = switch.global_position + Vector3(0, 0, 6)
-	var stone: RigidBody3D = load("res://src/world/physics_box.tscn").instantiate()
+	var stone: RigidBody3D = load("res://src/world/props/physics_box.tscn").instantiate()
 	stone.freeze = true
 	level.add_child(stone)
 	stone.global_position = switch.global_position + Vector3.UP * 0.5

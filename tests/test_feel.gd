@@ -38,7 +38,7 @@ func test_camera_trauma_decays_and_flash_is_attached() -> void:
 
 func test_stencil_lights_draw_before_the_player_silhouette() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
-	var torch: Node3D = load("res://src/world/wall_torch.tscn").instantiate()
+	var torch: Node3D = load("res://src/world/props/wall_torch.tscn").instantiate()
 	var other: StencilLight = load("res://src/feel/stencil_light/stencil_light.tscn").instantiate()
 	tree.root.add_child(torch)
 	tree.root.add_child(other)
@@ -79,10 +79,10 @@ func test_sword_hits_sound_by_surface() -> void:
 	for surface in ["flesh", "metal", "stone"]:
 		assert_true(not feel.streams_of(StringName("hit_" + surface)).is_empty(), "hay sonido para %s" % surface)
 	var expected := {
-		"res://src/world/grass.tscn": "none",
-		"res://src/world/pot.tscn": "none",
-		"res://src/world/cracked_wall.tscn": "none",
-		"res://src/world/eye_switch.tscn": "stone",
+		"res://src/world/props/grass.tscn": "none",
+		"res://src/world/props/pot.tscn": "none",
+		"res://src/world/puzzles/cracked_wall.tscn": "none",
+		"res://src/world/puzzles/eye_switch.tscn": "stone",
 		"res://src/entities/turret/turret.tscn": "stone",
 		"res://src/entities/enemy.tscn": "flesh",
 	}

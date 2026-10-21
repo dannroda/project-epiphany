@@ -173,7 +173,7 @@ func test_autosave_on_big_chests_and_the_antechamber() -> void:
 	(level.get_node(^"Planta/Antesala") as Room).mark_entered()
 	await tree.process_frame
 	assert_eq(count[0], 1, "entrar a la antesala guarda")
-	var chest: Chest = load("res://src/world/chest.tscn").instantiate()
+	var chest: Chest = load("res://src/world/props/chest.tscn").instantiate()
 	chest.item = Items.get_item(&"compass")
 	chest.big = true
 	level.add_child(chest)

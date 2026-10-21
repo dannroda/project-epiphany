@@ -1,10 +1,10 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="1_breakable"]
+[ext_resource type="Script" path="res://src/world/props/breakable.gd" id="1_breakable"]
 [ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
 [ext_resource type="Resource" path="res://data/drops/grass.tres" id="3_drops"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/quenoa_chica.res" id="4_mesh"]
-[ext_resource type="PackedScene" path="res://src/world/falling_leaves.tscn" id="5_leaves"]
+[ext_resource type="PackedScene" path="res://src/world/vfx/falling_leaves.tscn" id="5_leaves"]
 [ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/tocon.res" id="9_stump"]
 
 [sub_resource type="CylinderShape3D" id="Hurt"]
