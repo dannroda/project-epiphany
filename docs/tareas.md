@@ -8241,6 +8241,21 @@ Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen s
 
 Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps en Bajo, pero cuando el G23 se calienta la GPU sube a 26–28 ms, entra un tercer paso de física por cuadro y cae a ~22 fps. Bajar la GPU del overworld en el perfil Bajo (y en Mobile en general) a ~20 ms para que aguante caliente: medir qué queda por pasada (detalle bakeado del suelo de 15.17, agua, efectos LA, plantas, decor, sombras) con los toggles del benchmark en corridas largas que calienten el teléfono, y recortar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (APK por worktree desde bfaf4138; compartido con -8f y -25; el Edge no se usa).
 
+**Decisiones:**
+- ? ¿El perfil Bajo puede apagar el glow (brillo alrededor de luces y zonas claras)? · pregunta abierta
+  Por qué: En el G23 ahorra ~1,2 ms de GPU por cuadro, parte del margen que falta para que el overworld no caiga al estado lento (cuadro 45 ms). Cambia el look solo en Bajo; Medio, Alto y Forward+ quedan igual.
+  Descartado: Dejar el glow en todos los perfiles y buscar el margen en el agua y la geometría.
+
+**Notas:** Hallazgos parciales (-88, G23, perfil Bajo, corridas intercalando Base):
+- No es calor: el G23 tiene dos estados estables, bueno (cuadro 33 ms, GPU 22–24 ms) y malo (cuadro 45 ms, GPU 27–30 ms, también suben los scripts por paso). Después de 20 min la última Base estaba igual de bien que la primera.
+- No es la física: con tope de 2 pasos por cuadro no cambia (29,1 contra 29,2 fps en 7 pares) y una corrida con tope cayó igual al estado malo. Lo dispara la GPU (el governor baja relojes cuando cae la tasa): hay que ganar margen de GPU.
+- Por pasada (--gpu-profile, Base, por cuadro): geometría opaca ~12–14 ms (Mali reparte mal los timestamps entre "Setup Sky" y "Render Opaque"); transparentes + efectos LA 4,5–6; canvas 2,3; glow 1,5; tonemap 1,4; partículas 0,4.
+- La resolución pesa poco (escala 25 baja ~3 ms); con la cámara sin ver nada (255 triángulos) la GPU sigue en 13–16 ms: costo fijo de pipeline.
+- Ahorro por variante: glow ~1,2 ms; efectos LA juntos ~1,5–2 (nubes ~0,5–1, AO ~0,7, tono ~0,3); agua plana 1,3–3,7 (saca la pasada transparente y las copias de pantalla/profundidad); todo plano ~3–4; decor, FSR contra bilineal, GridMap, luces, radiancia/modo de proceso del cielo ~0.
+- Sigue: qué domina la geometría (terreno, terrazas y agua ocultos) y la variante Mobile del agua de 15.17 (sin mipmaps de la copia de pantalla, una lectura de profundidad, capturas iguales) medida por pasada.
+- Perillas nuevas del benchmark (sin commitear todavía): glow, fsr, hidden, camera_cull, max_physics_steps, sky_process_mode, sky_radiance y la columna slow (fracción de cuadros de más de 40 ms).
+- La cola del G23 se trabó dos veces porque el servidor adb heredaba el fd del lock de bench.sh; arreglado en main 41050f83 (-88). El lock actual lo tiene el daemon adb 1746874: liberarlo pide reiniciar el servidor adb compartido (decisión de Daniel).
+
 ## M17 — Después de la demo  (0/2)
 
 Lo que sale de M11 para después de la demo: rejugabilidad y extras.
