@@ -273,3 +273,28 @@ func test_plant_shadows_and_look_effects_follow_the_options() -> void:
 	plant.free()
 	env.free()
 	_restore(settings)
+
+
+func test_the_profile_row_sets_the_graphics_rows() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var settings := _settings()
+	settings.apply_profile("alto")
+	var panel: Control = load("res://src/ui/menus/options_panel.tscn").instantiate()
+	tree.root.add_child(panel)
+	var quality := panel.find_child("quality", true, false) as OptionButton
+	assert_eq(quality.selected, 2, "muestra Alto")
+	quality.select(0)
+	quality.item_selected.emit(0)
+	assert_eq(settings.get_value(&"quality"), "bajo", "elegir Bajo pone el perfil")
+	var render_scale := panel.find_child("render_scale", true, false) as OptionButton
+	var shadows := panel.find_child("shadows", true, false) as OptionButton
+	assert_eq(render_scale.get_selected_id(), settings.PROFILES["bajo"].render_scale, "la fila de resolución lo sigue")
+	assert_eq(shadows.get_selected_id(), settings.PROFILES["bajo"].shadows, "y la de sombras")
+	assert_eq((panel.find_child("ssao", true, false) as CheckBox).button_pressed, settings.PROFILES["bajo"].ssao, "y la del AO")
+	shadows.select(shadows.get_item_index(1))
+	shadows.item_selected.emit(shadows.get_item_index(1))
+	assert_eq(quality.selected, 3, "una opción suelta muestra Personalizado")
+	assert_eq(settings.get_value(&"shadows"), 1, "con el ajuste del jugador")
+	assert_true(quality.is_item_disabled(3), "Personalizado no se elige")
+	panel.free()
+	_restore(settings)

@@ -1162,6 +1162,21 @@ msgstr "Se pierde lo que pasó desde ese punto."
 msgid "SYSTEM_TITLE_QUESTION"
 msgstr "¿Volver al título? Se pierde lo que no guardaste."
 
+msgid "OPTIONS_QUALITY"
+msgstr "Perfil"
+
+msgid "OPTIONS_QUALITY_LOW"
+msgstr "Bajo"
+
+msgid "OPTIONS_QUALITY_MEDIUM"
+msgstr "Medio"
+
+msgid "OPTIONS_QUALITY_HIGH"
+msgstr "Alto"
+
+msgid "OPTIONS_QUALITY_CUSTOM"
+msgstr "Personalizado"
+
 msgid "OPTIONS_MAX_FPS"
 msgstr "Tope de cuadros por segundo"
 

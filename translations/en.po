@@ -1345,6 +1345,21 @@ msgstr "Anything since that point is lost."
 msgid "SYSTEM_TITLE_QUESTION"
 msgstr "Back to the title? Anything unsaved is lost."
 
+msgid "OPTIONS_QUALITY"
+msgstr "Profile"
+
+msgid "OPTIONS_QUALITY_LOW"
+msgstr "Low"
+
+msgid "OPTIONS_QUALITY_MEDIUM"
+msgstr "Medium"
+
+msgid "OPTIONS_QUALITY_HIGH"
+msgstr "High"
+
+msgid "OPTIONS_QUALITY_CUSTOM"
+msgstr "Custom"
+
 msgid "OPTIONS_MAX_FPS"
 msgstr "Frame rate cap"
 

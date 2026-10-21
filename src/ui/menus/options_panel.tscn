@@ -366,6 +366,31 @@ theme_type_variation = &"SectionTitle"
 text = "OPTIONS_GRAPHICS"
 vertical_alignment = 2
 
+[node name="Quality" type="HBoxContainer" parent="Pages/Video/Graphics"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Video/Graphics/Quality"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"OptionLabel"
+text = "OPTIONS_QUALITY"
+
+[node name="quality" type="OptionButton" parent="Pages/Video/Graphics/Quality"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 2
+item_count = 4
+popup/item_0/text = "OPTIONS_QUALITY_LOW"
+popup/item_0/id = 0
+popup/item_1/text = "OPTIONS_QUALITY_MEDIUM"
+popup/item_1/id = 1
+popup/item_2/text = "OPTIONS_QUALITY_HIGH"
+popup/item_2/id = 2
+popup/item_3/text = "OPTIONS_QUALITY_CUSTOM"
+popup/item_3/id = 3
+popup/item_3/disabled = true
+
 [node name="MaxFps" type="HBoxContainer" parent="Pages/Video/Graphics"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2

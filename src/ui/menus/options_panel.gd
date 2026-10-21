@@ -6,6 +6,7 @@ extends VBoxContainer
 
 const TOGGLES: Array[StringName] = [&"mouse_aim", &"flick", &"vibration", &"fullscreen", &"shake", &"minimap", &"counter_slow", &"ssao"]
 const SLIDERS: Array[StringName] = [&"stick_sensitivity", &"music", &"sfx", &"ambience"]
+const PICKERS: Array[StringName] = [&"ui_scale", &"max_fps", &"shadows", &"render_scale"]
 
 @onready var pages: TabContainer = %Pages
 @onready var tabs: TabBar = %Tabs
@@ -38,16 +39,36 @@ func _ready() -> void:
 		radio.toggled.connect(func(on: bool) -> void:
 			if on:
 				Settings.set_value(&"language", language))
-	for key: StringName in [&"ui_scale", &"max_fps", &"shadows", &"render_scale"]:
+	for key in PICKERS:
 		var picker := get_node("%" + key) as OptionButton
 		picker.select(picker.get_item_index(Settings.get_value(key)))
 		picker.item_selected.connect(func(index: int) -> void: Settings.set_value(key, picker.get_item_id(index)))
+	_show_quality()
+	%quality.item_selected.connect(func(index: int) -> void: Settings.apply_profile(Settings.PROFILE_ORDER[index]))
+	Settings.changed.connect(_on_setting_changed)
 	%ShowControls.pressed.connect(ControlsScreen.open)
 	tabs.tab_changed.connect(func(tab: int) -> void:
 		if tab != current:
 			show_page(tab))
 	InputDevice.input_device_changed.connect(func(_d: int) -> void: _update_keys())
 	_update_keys()
+
+
+## Un perfil cambia varias opciones a la vez; Personalizado se muestra pero no se elige.
+func _on_setting_changed(key: StringName) -> void:
+	if key in PICKERS:
+		var picker := get_node("%" + key) as OptionButton
+		picker.select(picker.get_item_index(Settings.get_value(key)))
+	elif key == &"ssao":
+		(%ssao as CheckBox).set_pressed_no_signal(Settings.get_value(key))
+	if key == &"quality" or key in Settings.GRAPHICS:
+		_show_quality()
+
+
+func _show_quality() -> void:
+	var quality: String = Settings.matching_profile() if Settings.needs_calibration() else Settings.get_value(&"quality")
+	var at := Settings.PROFILE_ORDER.find(quality)
+	%quality.select(at if at >= 0 else Settings.PROFILE_ORDER.size())
 
 
 func show_page(index: int) -> void:
