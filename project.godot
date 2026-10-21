@@ -924,3 +924,11 @@ player_hole={
 "type": "vec4",
 "value": Vector4(0, 0, 0, 0)
 }
+outdoor_detail_a={
+"type": "sampler2D",
+"value": "res://assets/epiphany/outdoor_detail_a.png"
+}
+outdoor_detail_b={
+"type": "sampler2D",
+"value": "res://assets/epiphany/outdoor_detail_b.png"
+}

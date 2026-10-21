@@ -14,6 +14,14 @@ uniform float emission_energy = 1.5;
 uniform float detail = 1.0;
 uniform float floor_earth = 0.6;
 
+#if CURRENT_RENDERER == RENDERER_MOBILE
+// En Mobile el detalle sale de texturas bakeadas (tools/bake_outdoor_detail.gd) en lugar de calcularse por píxel.
+global uniform sampler2D outdoor_detail_a : filter_linear_mipmap, repeat_enable;
+global uniform sampler2D outdoor_detail_b : filter_linear_mipmap, repeat_enable;
+const float DETAIL_PERIOD = 28.0;
+const float DETAIL_EDGE_RANGE = 0.2;
+#endif
+
 
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -85,6 +93,34 @@ void fragment() {
 	float swatch = floor(UV.x * COLS) + floor(UV.y * ROWS) * COLS;
 	vec2 p = world_pos.xz;
 	vec3 color = base;
+#if CURRENT_RENDERER == RENDERER_MOBILE
+	if (world_normal.y > 0.8 && detail > 0.0) {
+		vec2 uv = p / DETAIL_PERIOD;
+		if (swatch == 5.0 || swatch == 6.0 || swatch == 15.0) {
+			vec4 a = texture(outdoor_detail_a, uv);
+			bool dirt = a.a < floor_earth;
+			float edge = a.g * DETAIL_EDGE_RANGE;
+			float tone = dirt ? 0.64 : 1.0 + (a.b - 0.5) * 0.3;
+			float grout = dirt ? 0.0 : 1.0 - smoothstep(0.025, 0.05, edge);
+			color = base * tone * (0.88 + 0.24 * a.r);
+			color = mix(color, base * 0.45, grout);
+			if (!dirt) {
+				float t = clamp((edge - 0.05) / 0.09, 0.0, 1.0);
+				vec2 texel = 1.0 / vec2(textureSize(outdoor_detail_a, 0));
+				vec2 grad = vec2(texture(outdoor_detail_a, uv + vec2(texel.x, 0.0)).g, texture(outdoor_detail_a, uv + vec2(0.0, texel.y)).g) - a.g;
+				vec2 slope = (dot(grad, grad) > 0.0 ? normalize(grad) : vec2(0.0)) * 6.0 * t * (1.0 - t) / 0.09;
+				vec3 n = normalize(vec3(-slope.x * 0.6 * 0.09, 1.0, -slope.y * 0.6 * 0.09));
+				NORMAL = normalize((VIEW_MATRIX * vec4(n, 0.0)).xyz);
+			}
+			rough = dirt ? 1.0 : mix(rough, 1.0, grout);
+		} else if (swatch == 2.0 || swatch == 3.0) {
+			color = base * texture(outdoor_detail_b, uv).r * 1.5;
+		} else if (swatch == 0.0 || swatch == 7.0) {
+			vec4 b = texture(outdoor_detail_b, uv);
+			color = mix(base * b.g * 1.5, base * vec3(1.2, 1.25, 1.05), b.b * 0.7);
+		}
+	}
+#else
 	if (world_normal.y > 0.8 && detail > 0.0) {
 		float spots = value_noise(p * 0.35) * 0.55 + value_noise(p * 1.9) * 0.3 + value_noise(p * 7.0) * 0.15;
 		if (swatch == 5.0 || swatch == 6.0 || swatch == 15.0) {
@@ -136,6 +172,7 @@ void fragment() {
 			color = mix(color, base * vec3(1.2, 1.25, 1.05), tufts * 0.7);
 		}
 	}
+#endif
 	ALBEDO = color;
 	METALLIC = surface.r;
 	ROUGHNESS = rough;
