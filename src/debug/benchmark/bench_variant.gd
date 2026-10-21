@@ -12,6 +12,11 @@ extends Node
 @export var lights := true
 @export var probes := true
 @export var effects := true
+## Con false, la cámara queda sin CameraAttributes (el DOF de las mazmorras LA).
+@export var dof := true
+## DOF más barato: calidad del bokeh (0 muy baja … 3 alta) y forma (0 caja, 1 hexágono, 2 círculo); -1: lo del proyecto.
+@export var dof_quality := -1
+@export var dof_shape := -1
 @export var gridmaps := true
 @export var lods := true
 ## Con flat_materials, solo la geometría con algún material de estos shaders (con flat_except, toda menos esa).

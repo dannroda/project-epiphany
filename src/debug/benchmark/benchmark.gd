@@ -145,6 +145,12 @@ func _strip(scene: Node, variant: BenchVariant) -> void:
 		var camera := get_viewport().get_camera_3d()
 		if camera:
 			camera.compositor = null
+	if not variant.dof:
+		for world: WorldEnvironment in scene.find_children("*", "WorldEnvironment", true, false):
+			world.camera_attributes = null
+		var camera := get_viewport().get_camera_3d()
+		if camera:
+			camera.attributes = null
 	for grid: GridMap in scene.find_children("*", "GridMap", true, false):
 		if not variant.gridmaps:
 			grid.visible = false
@@ -240,12 +246,18 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 	if variant.enemies_off:
 		for enemy in get_tree().get_nodes_in_group(Enemy.GROUP):
 			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+	if variant.dof_quality >= 0:
+		RenderingServer.camera_attributes_set_dof_blur_quality(variant.dof_quality, ProjectSettings.get_setting("rendering/camera/depth_of_field/depth_of_field_use_jitter"))
+	if variant.dof_shape >= 0:
+		RenderingServer.camera_attributes_set_dof_blur_bokeh_shape(variant.dof_shape)
 	if not variant.plant_shadows:
 		for node in scene.find_children("*", "", true, false):
 			if node.scene_file_path.begins_with("res://src/world/plants/") or node.name == &"Decor":
 				for geometry: GeometryInstance3D in node.find_children("*", "GeometryInstance3D", true, false):
 					geometry.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	return func() -> void:
+		RenderingServer.camera_attributes_set_dof_blur_quality(ProjectSettings.get_setting("rendering/camera/depth_of_field/depth_of_field_bokeh_quality"), ProjectSettings.get_setting("rendering/camera/depth_of_field/depth_of_field_use_jitter"))
+		RenderingServer.camera_attributes_set_dof_blur_bokeh_shape(ProjectSettings.get_setting("rendering/camera/depth_of_field/depth_of_field_bokeh_shape"))
 		for effect: CompositorEffect in effects:
 			effect.enabled = true
 		for entry: Array in undo:
