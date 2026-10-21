@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="QualityProfile" format=3]
+
+[ext_resource type="Script" path="res://src/settings/quality_profile.gd" id="1_quality"]
+
+[resource]
+script = ExtResource("1_quality")
+id = &"alto"
+render_scale = 100
+shadows = 2
+plant_shadows = true
+ssao = true
+look_effects = 2
+max_fps = 60

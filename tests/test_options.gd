@@ -198,3 +198,78 @@ func test_lb_rb_switch_tabs_and_focus_the_first_control() -> void:
 	while stack.is_open():
 		stack.pop()
 	_restore(settings)
+
+
+## 15.19: un perfil pone todas las opciones gráficas; tocar una suelta lo deja en Personalizado.
+func test_quality_profiles() -> void:
+	var settings := _settings()
+	assert_eq(settings.get_value(&"quality"), "", "la primera vez queda sin decidir hasta calibrar")
+	var platform: QualityProfile = settings.PROFILES[settings.platform_profile()]
+	for key in settings.GRAPHICS:
+		assert_eq(settings.get_value(key), platform.get(key), "%s del perfil de la plataforma" % key)
+	settings.apply_profile("bajo")
+	settings.load_settings()
+	assert_eq(settings.get_value(&"quality"), "bajo", "el perfil se guarda")
+	for key in settings.GRAPHICS:
+		assert_eq(settings.get_value(key), settings.PROFILES["bajo"].get(key), "%s de Bajo" % key)
+	settings.set_value(&"ssao", true)
+	assert_eq(settings.get_value(&"quality"), settings.CUSTOM, "una opción suelta: Personalizado")
+	assert_eq(settings.get_value(&"ssao"), true, "con el ajuste del jugador")
+	settings.set_value(&"ssao", false)
+	assert_eq(settings.get_value(&"quality"), "bajo", "si vuelve a coincidir, es otra vez Bajo")
+	_restore(settings)
+
+
+func test_settings_from_before_profiles_keep_their_values() -> void:
+	var settings := _settings()
+	var cfg := ConfigFile.new()
+	cfg.set_value("options", "sfx", 30)
+	cfg.save(settings_path)
+	settings.load_settings()
+	assert_eq(settings.get_value(&"quality"), "alto", "los gráficos de fábrica son Alto, sin calibrar")
+	cfg.set_value("options", "shadows", 1)
+	cfg.save(settings_path)
+	settings.load_settings()
+	assert_eq(settings.get_value(&"quality"), settings.CUSTOM, "otros: Personalizado")
+	assert_eq(settings.get_value(&"shadows"), 1, "y se respetan")
+	_restore(settings)
+
+
+func test_calibration_drops_one_step_when_slow() -> void:
+	assert_eq(QualityCalibration.decide("medio", 50.0, 30.0), "bajo", "Medio a 50 ms con objetivo 30 fps: Bajo")
+	assert_eq(QualityCalibration.decide("medio", 35.0, 30.0), "medio", "dentro del margen se queda")
+	assert_eq(QualityCalibration.decide("alto", 25.0, 60.0), "medio", "Alto a 25 ms con objetivo 60 fps: Medio")
+	assert_eq(QualityCalibration.decide("bajo", 90.0, 30.0), "bajo", "Bajo no baja más")
+	assert_eq(QualityCalibration.median([3.0, 1.0, 2.0] as Array[float]), 2.0)
+
+
+func test_plant_shadows_and_look_effects_follow_the_options() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var settings := _settings()
+	var plant: Node3D = load("res://src/world/plants/tola.tscn").instantiate()
+	var env := WorldEnvironment.new()
+	env.environment = Environment.new()
+	env.compositor = Compositor.new()
+	var ao := CompositorEffect.new()
+	ao.set_script(settings.AO)
+	var clouds := CompositorEffect.new()
+	clouds.set_script(settings.CLOUDS)
+	env.compositor.compositor_effects = [ao, clouds]
+	tree.root.add_child(plant)
+	tree.root.add_child(env)
+	var meshes := plant.find_children("*", "GeometryInstance3D", true, false)
+	assert_true(not meshes.is_empty(), "la tola tiene mallas")
+	var casting: Array = meshes.map(func(m: GeometryInstance3D) -> int: return m.cast_shadow)
+	settings.set_value(&"plant_shadows", false)
+	assert_true(meshes.all(func(m: GeometryInstance3D) -> bool: return m.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF), "sin sombra de plantas")
+	settings.set_value(&"plant_shadows", true)
+	assert_eq(meshes.map(func(m: GeometryInstance3D) -> int: return m.cast_shadow), casting, "vuelve la de la escena")
+	settings.set_value(&"look_effects", 1)
+	assert_true(ao.enabled and not clouds.enabled, "1: sin nubes, con AO")
+	settings.set_value(&"look_effects", 0)
+	assert_true(not ao.enabled and not clouds.enabled, "0: tampoco AO")
+	settings.set_value(&"look_effects", 2)
+	assert_true(ao.enabled and clouds.enabled, "2: todos")
+	plant.free()
+	env.free()
+	_restore(settings)

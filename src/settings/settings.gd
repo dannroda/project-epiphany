@@ -29,14 +29,36 @@ const DEFAULTS := {
 	&"ssao": true,
 	## Escala de la resolución 3D en % (15.7): por debajo de 100 escala con FSR; la UI sigue a resolución completa.
 	&"render_scale": 100,
+	## Sombras de las plantas (15.19).
+	&"plant_shadows": true,
+	## Efectos LA (15.19): 2 todos; 1 sin las sombras de nubes; 0 tampoco el AO.
+	&"look_effects": 2,
+	## Perfil de calidad (15.19): uno de PROFILES, CUSTOM si el jugador tocó una opción gráfica suelta, vacío si todavía no
+	## se calibró (la primera vez que arranca).
+	&"quality": "",
 	&"language": "",
 	## Co-op, a prueba (13.9): "ring" = cada uno elige con su anillo; "shared" = el menú de pausa con un cursor por player.
 	&"coop_item_menu": "ring",
 }
+## Los gráficos de los defaults son los de Alto; en Mobile, la primera vez, Medio hasta que calibra (QualityCalibration).
+const PROFILES := {
+	"bajo": preload("res://data/quality/bajo.tres"),
+	"medio": preload("res://data/quality/medio.tres"),
+	"alto": preload("res://data/quality/alto.tres"),
+}
+const PROFILE_ORDER: Array[String] = ["bajo", "medio", "alto"]
+const CUSTOM := "custom"
+## Las opciones que pone un perfil (propiedades de QualityProfile con el mismo nombre).
+const GRAPHICS: Array[StringName] = [&"render_scale", &"shadows", &"plant_shadows", &"ssao", &"look_effects", &"max_fps"]
+const PLANTS := "res://src/world/plants/"
+const DECOR := "res://levels/decor/"
+const AO := preload("res://src/world/look/sombra_la.gd")
+const CLOUDS := preload("res://src/world/look/nubes_la.gd")
 ## Idiomas con traducción en translations/<código>.po. Vacío en `language` = todavía no se eligió.
 const LANGUAGES: Array[String] = ["es", "en"]
 
 var values := DEFAULTS.duplicate()
+var _setting_profile := false
 ## Los tests la cambian para no tocar las opciones reales.
 var path := PATH
 
@@ -54,9 +76,39 @@ func get_value(key: StringName) -> Variant:
 func set_value(key: StringName, value: Variant, persist := true) -> void:
 	values[key] = value
 	_apply(key)
+	if key in GRAPHICS and not _setting_profile and values[&"quality"] != "":
+		values[&"quality"] = matching_profile()
+		changed.emit(&"quality")
 	if persist:
 		save_settings()
 	changed.emit(key)
+
+
+## Pone todas las opciones gráficas del perfil.
+func apply_profile(id: String, persist := true) -> void:
+	var profile: QualityProfile = PROFILES[id]
+	_setting_profile = true
+	for key in GRAPHICS:
+		set_value(key, profile.get(key), false)
+	_setting_profile = false
+	set_value(&"quality", id, persist)
+
+
+## El perfil que coincide con las opciones gráficas de ahora, o CUSTOM.
+func matching_profile() -> String:
+	for id: String in PROFILE_ORDER:
+		if GRAPHICS.all(func(key: StringName) -> bool: return get_value(key) == PROFILES[id].get(key)):
+			return id
+	return CUSTOM
+
+
+## El perfil con el que arranca la calibración: Medio en Mobile, Alto en PC.
+func platform_profile() -> String:
+	return "medio" if RenderingServer.get_current_rendering_method() == "mobile" else "alto"
+
+
+func needs_calibration() -> bool:
+	return get_value(&"quality") == ""
 
 
 func load_settings() -> void:
@@ -66,6 +118,12 @@ func load_settings() -> void:
 	if FileAccess.file_exists(from) and cfg.load(from) == OK:
 		for key in DEFAULTS:
 			values[key] = SaveCodec.typed(cfg, "options", key, DEFAULTS[key])
+		if not cfg.has_section_key("options", "quality"):
+			values[&"quality"] = matching_profile()
+	else:
+		var profile: QualityProfile = PROFILES[platform_profile()]
+		for key in GRAPHICS:
+			values[key] = profile.get(key)
 	_apply()
 
 
@@ -121,8 +179,11 @@ func _apply(key := &"") -> void:
 		var scale: int = get_value(&"render_scale")
 		get_tree().root.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR if scale < 100 else Viewport.SCALING_3D_MODE_BILINEAR
 		get_tree().root.scaling_3d_scale = scale / 100.0
-	if all or key == &"ssao" or key == &"shadows":
+	if all or key == &"ssao" or key == &"shadows" or key == &"look_effects":
 		for node in get_tree().root.find_children("*", "WorldEnvironment", true, false) + get_tree().root.find_children("*", "DirectionalLight3D", true, false):
+			_scene_look(node)
+	if all or key == &"plant_shadows":
+		for node in get_tree().root.find_children("*", "GeometryInstance3D", true, false):
 			_scene_look(node)
 	if DisplayServer.get_name() == "headless":
 		return
@@ -147,10 +208,32 @@ func _scene_look(node: Node) -> void:
 		if not env.has_meta(&"level_ssao"):
 			env.set_meta(&"level_ssao", env.ssao_enabled)
 		env.ssao_enabled = env.get_meta(&"level_ssao") and get_value(&"ssao")
+		var compositor := (node as WorldEnvironment).compositor
+		for effect in compositor.compositor_effects if compositor else []:
+			var needs := 1 if effect and effect.get_script() == AO else 2 if effect and effect.get_script() == CLOUDS else 0
+			if needs:
+				if not effect.has_meta(&"level_enabled"):
+					effect.set_meta(&"level_enabled", effect.enabled)
+				effect.enabled = effect.get_meta(&"level_enabled") and get_value(&"look_effects") >= needs
 	elif node is DirectionalLight3D:
 		if not node.has_meta(&"level_shadow"):
 			node.set_meta(&"level_shadow", (node as DirectionalLight3D).shadow_enabled)
 		(node as DirectionalLight3D).shadow_enabled = node.get_meta(&"level_shadow") and get_value(&"shadows") > 0
+	elif node is GeometryInstance3D and _is_plant(node):
+		var geometry := node as GeometryInstance3D
+		if not geometry.has_meta(&"level_cast_shadow"):
+			geometry.set_meta(&"level_cast_shadow", geometry.cast_shadow)
+		geometry.cast_shadow = geometry.get_meta(&"level_cast_shadow") if get_value(&"plant_shadows") else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+
+## Una malla de una planta o de la decoración del overworld (dentro de una escena instanciada de esas carpetas).
+func _is_plant(node: Node) -> bool:
+	var scene := node.owner
+	while scene:
+		if scene.scene_file_path.begins_with(PLANTS) or scene.scene_file_path.begins_with(DECOR):
+			return true
+		scene = scene.owner
+	return false
 
 
 func _volume(bus: StringName, percent: int) -> void:

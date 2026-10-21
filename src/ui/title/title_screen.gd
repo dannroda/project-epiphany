@@ -39,6 +39,8 @@ func _start() -> void:
 		process_mode = PROCESS_MODE_DISABLED
 		SceneFlow.show_loading()
 		await flyover.ready_to_show
+		if Settings.needs_calibration() and DisplayServer.get_name() != "headless":
+			await QualityCalibration.run($Flyover)
 		SceneFlow.hide_loading()
 		process_mode = PROCESS_MODE_INHERIT
 	if not Settings.has_language():
