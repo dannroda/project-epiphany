@@ -394,6 +394,17 @@ func _reachable_zones(tree: SceneTree) -> Array[String]:
 	return reached
 
 
+## El mapa de navegación se rearma en otro hilo: le da hasta 60 frames para llegar a `expected`.
+func _reachable_when(tree: SceneTree, expected: Array[String]) -> Array[String]:
+	var reached := _reachable_zones(tree)
+	for i in 60:
+		if reached == expected:
+			break
+		await tree.physics_frame
+		reached = _reachable_zones(tree)
+	return reached
+
+
 func test_every_region_is_reachable_except_the_item_gated() -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	var state: Node = tree.root.get_node(^"GameState")
@@ -403,14 +414,14 @@ func test_every_region_is_reachable_except_the_item_gated() -> void:
 	for i in 10:
 		await tree.physics_frame
 	var west: Array[String] = ["Zone_cerros", "Zone_cerros_2", "Zone_cerros_3", "Zone_laguna", "Zone_pradera", "Zone_pradera_10", "Zone_pradera_11", "Zone_pradera_12", "Zone_pradera_13", "Zone_pradera_2", "Zone_pradera_3", "Zone_pradera_4", "Zone_pradera_5", "Zone_pradera_6", "Zone_pradera_7", "Zone_pradera_8", "Zone_start", "Zone_start_2", "Zone_templo", "Zone_vertiente"]
-	assert_eq(_reachable_zones(tree), west, "sin el puente, solo el oeste de la quebrada, sin la Arboleda (pluma)")
+	assert_eq(await _reachable_when(tree, west), west, "sin el puente, solo el oeste de la quebrada, sin la Arboleda (pluma)")
 	(tree.current_scene.get_node(^"RavineBridge") as Bridge).raise(false)
 	for i in 4:
 		await tree.physics_frame
 	var all := west.duplicate()
 	all.append_array(["Zone_banado", "Zone_cardonal", "Zone_mirador", "Zone_mirador_2", "Zone_mirador_3", "Zone_mirador_4", "Zone_mirador_5", "Zone_necropolis", "Zone_necropolis_2", "Zone_pradera_9", "Zone_risco"])
 	all.sort()
-	assert_eq(_reachable_zones(tree), all, "con el puente, todo menos la Arboleda (pluma) y la Cumbre (gancho o escalera)")
+	assert_eq(await _reachable_when(tree, all), all, "con el puente, todo menos la Arboleda (pluma) y la Cumbre (gancho o escalera)")
 	state.reset()
 
 

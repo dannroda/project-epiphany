@@ -124,6 +124,7 @@
 [ext_resource type="PackedScene" path="res://src/world/fogon.tscn" id="camp_fogon"]
 [ext_resource type="PackedScene" path="res://src/world/estandarte.tscn" id="camp_estandarte"]
 [ext_resource type="PackedScene" path="res://src/entities/devoto/devoto.tscn" id="camp_devoto"]
+[ext_resource type="Script" uid="uid://bib6qaeg6jby3" path="res://src/world/active_zones.gd" id="active_zones"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -2212,6 +2213,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.5, 0, 37.5)
 
 [node name="DevotoBanado2" parent="." instance=ExtResource("camp_devoto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.5, 0, 40.5)
+
+[node name="ActiveZones" type="Node" parent="." node_paths=PackedStringArray("scenery")]
+script = ExtResource("active_zones")
+scenery = NodePath("../Decor")
 
 [editable path="SecretHillsWall"]
 [editable path="SecretCactusWall"]
