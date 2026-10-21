@@ -7843,7 +7843,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (22/29, 22 en revisión)
+## M15 — Optimización  (23/30, 23 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8267,7 +8267,7 @@ Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen s
 - *_la_kit.tres: 134,6 → 84,7 MB.
 - 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.
 
-### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · Pausado
+### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · En curso
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
 
@@ -8322,7 +8322,7 @@ El benchmark suma los casos Queñoa, Totora y Cumbre (spawn, radio 1,5).
 Geometría de paredes (-25, escritorio): con el signo de las caras corregido (Godot usa horario para el frente; 99,9 % de acuerdo con ARRAY_NORMAL) solo 5–11 % de los triángulos de pared miran para atrás en todo el frustum (pitch 65°, fov 28°, aspecto hasta 3,6): build_paredes_la ya saca casi todo lo oculto. Cumbre y Queñoa no generan LODs con ningún parámetro (sus piedras no tienen bisel, que es lo que saca el LOD en la chullpa). Nada gratis ahí. La corrida BajaSinEspaldas (18:27, cumbre 52 → 42–45) no vale: sacaba las caras visibles.
 Pista: la RoomMask (6 BoxMesh negros alrededor de la sala) tapa las salas vecinas pero sus paredes se dibujan igual detrás. Con occlusion_culling y un BoxOccluder3D por caja de la máscara, en escritorio con el renderer Mobile en la sala del spawn: chullpa 253 k → 166 k primitivas (−34 %), cumbre 571 k → 471 k (−18 %), templo 148 k → 132 k (−11 %); capturas iguales salvo el player animado y la nieve. Siguiente: A/B en el G23 con GPU, CPU (el culling rasteriza en CPU con Embree), triángulos y GL mtrack; transiciones entre salas cuadro a cuadro; costo de use_occlusion_culling (global) en Forward+ y en el overworld.
 
-### 15.27 G23: memoria del juego (1,5 GB con swap en un teléfono de 4 GB) · En curso
+### 15.27 G23: memoria del juego (1,5 GB con swap en un teléfono de 4 GB) · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
@@ -8333,7 +8333,7 @@ Pista: la RoomMask (6 BoxMesh negros alrededor de la sala) tapa las salas vecina
   Por qué: Godot guarda la caché de shaders compilados sin podarla nunca y la tiene entera en memoria toda la sesión (dos copias). En el G23 había 91 MB, de los que solo 11 eran del build actual; borrarla bajó ~170 MB de swap (PSS 1510 → 1296–1405 MB). Un jugador real junta ~10–30 MB de basura por actualización, así que pasaría cada varias actualizaciones. El costo: esa sesión (y en el peor caso la siguiente) compila todo de nuevo: la primera carga del overworld 32 s en vez de 11, chullpa 12,5 en vez de 2, cumbre 4,3 en vez de 1,7; las visitas siguientes salen normales. No hay forma de hacerlo sin perder al menos un arranque: Godot carga la caché antes que nuestro código y la reescribe al salir.
   Descartado: Limpiarla en cada actualización (más seguido, la misma sesión lenta cada vez); no limpiarla nunca (crece sin tope); apagar la caché (cada carga recompila todo en el Mali, mucho peor).
 
-**Prueba:** Suite 775/775 en main después de --import (d39eeeae). A/B de dos APK en el G23 (memoria de video); tanda de caché vieja/fría/tibia bajo un lock (16:30–16:35).
+**Prueba:** Suite 775/775 en main (decd7489). A/B de dos APK en el G23: memoria de video (paso 1), caché vieja/fría/tibia, muestreador sí/no, staging_ab2.
 
 **Notas:** Paso 1 (-88, wt/design-fix → main 8c243d4e, ba06b251, 05d26a63; medido en escritorio con el renderer Mobile y confirmado en el G23 con A/B limpia de dos APK, antes del reinicio):
 - La SubViewport de la foto del mapa quedaba a 4000×1920 todo el tiempo (~200 MB de video con sus búferes 3D): ahora renderiza a ese tamaño solo para la foto, la copia a una ImageTexture que persiste y queda estacionada en 2×2. La foto queda igual salvo la animación.
@@ -8361,7 +8361,17 @@ Lo que pesa: GL mtrack (memoria de GPU del driver Mali) tiene un piso de ~520–
 bench.sh (main 0cb0bdda, faecfd0e): borra la caché de pipelines del teléfono si pasa de PIPELINE_CACHE_MAX_MB (40) y avisa que esa corrida carga en frío; despierta el teléfono y saca un bloqueo por deslizamiento antes de lanzar el juego, y corta con mensaje si queda bloqueado con PIN (con la pantalla apagada Android pausa el juego: una corrida quedó 45 min parada).
 Picos de GL mtrack (muestreo ~4/s, 18:14–18:18): saltan varias veces por segundo entre el piso ~525 MB y 800–1250 MB en escalones de ~127 MB; en escritorio la VRAM del proceso queda fija cuadro a cuadro, así que Godot no reserva por cuadro. Chullpa: base mediana 825–935 MB, picos 1140–1220, GPU 87–112 ms; con la cámara sin dibujar nada 531–566 MB, GPU 16 ms. Es memoria de trabajo del driver al dibujar (probablemente el tiler heap) y escala con la geometría: overworld 0,14 M triángulos ~280 MB de oscilación, mazmorras 0,38–0,82 M ~700. Bajarla es dibujar menos (15.26, paredes).
 Estado lento (state_ab 18:22–18:25, overworld ×3 → chullpa → overworld ×2, dos lanzamientos, muestreo cada ~2 s de vmstat/meminfo/GL): ninguno arrancó en el estado bueno (~27 ms), los dos a ~40 ms sin presión de memoria, y el caso con más swap y reclaim fue el más rápido. El estado lento no viene de la memoria: encaja con dos estados de reloj o vsync (15.25); sin root no se lee la frecuencia de la GPU. Duda abierta: el estado bueno solo apareció en corridas sin muestreador o con muestreo cada 16 s; -88 mide 4 lanzamientos sin muestreador contra 4 con muestreo cada 2 s.
-Piso (~525 MB, 260 con el juego recién abierto): la foto del mapa (set_image de 4000×1920 RGBA8, 30,7 MB) pasa por un transfer worker que arma un búfer de next_pow2 = 32 MB y no lo suelta nunca (rendering_device.cpp _acquire_transfer_worker): +64 MB de GTT en escritorio al cargar el overworld, con cualquier staging_buffer/max_size_mb; no hay API para actualizar una región de una textura 2D. Si el G23 lo confirma (≥32 MB fijos), la foto pasa a capas (Texture2DArray de 4×4 o 16 texturas, una subida por cuadro al ritmo de los mosaicos de 15.22; la hace -8f). staging_buffer/max_size_mb=4 evita que una ráfaga de subidas chicas deje otro bloque: A/B en el G23 con 8 o 16 MB y feature .mobile (memoria y tiempos de carga).
+Muestreador sí o no (18:36–18:41, 6 lanzamientos válidos intercalados): GPU del primer caso sin muestreador 39,2 / 40,8 / 40,1 ms, con muestreo cada 2 s 38,4 / 41,1 / 41,5: no es el muestreador; esa tarde el teléfono no mostró el estado bueno en ninguno (lmkd matando procesos del sistema a las 18:43). El muestreador rápido (~4/s) provocaba un GC explícito cada 0,23 s en el juego: descartado.
+Staging y foto (staging_ab2 19:40–19:46, A = default, B = staging_buffer/max_size_mb.mobile=8, A B A B, chullpa → overworld → chullpa): cargas en caliente iguales (chullpa 3,1–3,7 / overworld 2,1–2,4 / chullpa 1,9–2,2 s) y el piso de GL igual (overworld 522–526, chullpa después del overworld 526 MB) en A y B. max_size_mb=8 no cambia nada: no se aplica. La subida de la foto de 4000×1920 no se ve en el piso del Mali (diferencia <~10 MB; en escritorio sí deja +64 MB de GTT): la foto en capas no se hace.
+El piso de ~525 MB es el mismo en el overworld (Godot cuenta 328 MB de video) y en chullpa (172): no sigue a nuestros recursos; parece una reserva del driver (~525 con un nivel cargado, 260 recién abierto). Nada nuestro configurable ahí.
+Un cuelgue al cargar el overworld después de chullpa (A2 de la primera tanda, con el muestreador rápido) no se repitió en 4 lanzamientos sin él.
+Resumen: hecho en main la foto del mapa estacionada (overworld 502 → 342 MB de video) y el atlas de reflejos en 16 (después de mazmorras 628 → 388), más las herramientas de bench.sh (columna de memoria, borrado de la caché de pipelines por umbral, despertar la pantalla, stamp con segundos, reintento de instalación). Pendiente de Daniel: la poda de la caché de pipelines en el juego (decisión 1), lo único que baja memoria sostenida (~170 MB de swap con una caché de 91 MB). Los picos de GL (500–700 MB por cuadro) escalan con la geometría dibujada: siguen en 15.25 y 15.26. El estado lento de la GPU no es memoria.
+
+### 15.28 G23: arranque hasta el título y primera carga del overworld · En curso
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+En el G23 la primera carga del overworld tardaba 36,5 s (15.22) y con la caché de pipelines tibia ~11 s (15.27; 32 s en frío); en Linux el arranque hasta el título es ~2,25 s (15.6). Nadie midió el arranque en el teléfono. Medir en el G23, en frío (caché de pipelines borrada) y tibio: tiempo hasta el primer cuadro, hasta el título y hasta el primer cuadro jugable del overworld desde Continuar; repartir el tiempo entre arranque del renderer, autoloads, carga de recursos (ResourceLoader, threads), instanciado y compilación de pipelines/warm-up. Bajar lo que no haga falta o se pueda diferir/paralelizar sin cambiar el look ni lo que se ve en la pantalla de carga; lo que cambie la experiencia (por ejemplo pantalla de carga más larga pero sin tirones) va como pregunta a Daniel. Medir con tools/bench.sh android ZY22HH6Q99 (corridas intercaladas; el teléfono se degrada con las horas, ver 15.27).
 
 ## M17 — Después de la demo  (0/2)
 

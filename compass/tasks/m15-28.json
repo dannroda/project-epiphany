@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-88",
+  "checklist": [],
+  "code": "15.28",
+  "created_at": "2026-10-21T22:47:19.950Z",
+  "description": "En el G23 la primera carga del overworld tardaba 36,5 s (15.22) y con la caché de pipelines tibia ~11 s (15.27; 32 s en frío); en Linux el arranque hasta el título es ~2,25 s (15.6). Nadie midió el arranque en el teléfono. Medir en el G23, en frío (caché de pipelines borrada) y tibio: tiempo hasta el primer cuadro, hasta el título y hasta el primer cuadro jugable del overworld desde Continuar; repartir el tiempo entre arranque del renderer, autoloads, carga de recursos (ResourceLoader, threads), instanciado y compilación de pipelines/warm-up. Bajar lo que no haga falta o se pueda diferir/paralelizar sin cambiar el look ni lo que se ve en la pantalla de carga; lo que cambie la experiencia (por ejemplo pantalla de carga más larga pero sin tirones) va como pregunta a Daniel. Medir con tools/bench.sh android ZY22HH6Q99 (corridas intercaladas; el teléfono se degrada con las horas, ver 15.27).",
+  "milestone": "m15",
+  "notes": "",
+  "order": 204,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "G23: arranque hasta el título y primera carga del overworld",
+  "updated_at": "2026-10-21T22:47:19.950Z"
+}

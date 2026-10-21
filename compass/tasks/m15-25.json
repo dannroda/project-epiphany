@@ -20,11 +20,11 @@
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "paused",
+  "status": "doing",
   "tags": [
     "optimizacion"
   ],
   "test": "",
   "title": "G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente",
-  "updated_at": "2026-10-21T21:19:41.796Z"
+  "updated_at": "2026-10-21T22:47:33.456Z"
 }
