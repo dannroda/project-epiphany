@@ -23,8 +23,10 @@ uniform float grain_amount : hint_range(0.0, 1.0) = 0.0;
 uniform vec4 grain_rect = vec4(0.0);
 uniform float grain_spacing = 0.2;
 
+#ifndef CUTAWAY_LA
 varying vec3 world_pos;
 varying vec3 world_normal;
+#endif
 
 float grain_hash(vec2 p) {
 	return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453);
@@ -46,13 +48,21 @@ float grain(vec3 pos, vec3 n) {
 	return clamp(fiber + knot, 0.0, 1.0);
 }
 
+#ifndef CUTAWAY_LA
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	world_normal = abs(normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz));
 }
+#endif
 
 void fragment() {
+#ifdef CUTAWAY_LA
+	vec3 world_pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	vec3 world_normal = abs(normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz));
+	bool in_cut = false;
+#else
 	bool in_cut = world_pos.x > cut_area.x && world_pos.x < cut_area.y && world_pos.z > cut_area.z && world_pos.z < cut_area.w;
+#endif
 #ifdef CUTAWAY_DISCARD
 	if (in_cut && (world_pos.y > cut_height || world_pos.z > cut_lip)) {
 		discard;

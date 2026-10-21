@@ -122,3 +122,21 @@ script = ExtResource("3_case")
 scenario = "pre_boss"
 radius = 1.5
 speed = 2.0
+
+[node name="Quenoa" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+scenario = "quenoa"
+radius = 1.5
+speed = 2.0
+
+[node name="Totora" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+scenario = "totora"
+radius = 1.5
+speed = 2.0
+
+[node name="Cumbre" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+scenario = "cumbre"
+radius = 1.5
+speed = 2.0
