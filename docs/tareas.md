@@ -6909,9 +6909,9 @@ Se mezclan español e inglés en identificadores y archivos: AmbientePreset/Ambi
 
 **Notas:** 40e4d76d: la regla está en gdd.md §11.1 y player/player.tres se borró. Falta renombrar desde el editor (con el puente) para que sigan uids y rutas; el autoload Items sigue por uid.
 
-### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · Pendiente
+### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · En curso
 
-**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `tests`
+**Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `tests`
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
