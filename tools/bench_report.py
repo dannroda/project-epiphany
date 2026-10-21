@@ -29,6 +29,16 @@ def main():
         if old and "error" not in old and "error" not in run:
             line += f"  ({run['fps'] - old['fps']:+.1f} fps)"
         print(line)
+    if "startup" in data:
+        print(startup(data["startup"]))
+
+
+def startup(marks):
+    load = marks.get("load", {})
+    return (f"arranque  primer cuadro {marks['first_frame_ms'] / 1000:4.1f}s  título {marks['title_ms'] / 1000:4.1f}s"
+            f"  continuar→jugable {(marks['playable_ms'] - marks['continue_ms']) / 1000:4.1f}s"
+            f" (lectura {load.get('read_ms', 0) / 1000:4.1f} instancia {load.get('instance_ms', 0) / 1000:4.1f} warmup {load.get('warmup_ms', 0) / 1000:4.1f})"
+            f"  pipelines {marks['playable_pipelines']}  después max {marks['after_max_ms']:4.0f}ms  pss {marks['pss_mb']:4.0f}MB")
 
 
 main()

@@ -35,12 +35,7 @@ func _run() -> void:
 	RenderingServer.viewport_set_measure_render_time(viewport, true)
 	Settings.set_value(&"max_fps", 0, false)
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	var info := {
-		"device": OS.get_model_name(), "os": OS.get_name(), "gpu": RenderingServer.get_video_adapter_name(),
-		"renderer": RenderingServer.get_current_rendering_method(), "screen": get_viewport().get_visible_rect().size,
-		"debug": OS.is_debug_build(), "date": Time.get_datetime_string_from_system(),
-		"vsync": DisplayServer.window_get_vsync_mode(),
-	}
+	var info := _info()
 	print("BENCH_INFO ", JSON.stringify(info))
 	var runs := []
 	for variant: BenchVariant in $Variants.get_children():
@@ -98,12 +93,19 @@ func _startup() -> void:
 	marks["buffer_mb"] = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0
 	marks["objects"] = Performance.get_monitor(Performance.OBJECT_COUNT)
 	marks["resources"] = Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT)
-	var info := {"device": OS.get_model_name(), "gpu": RenderingServer.get_video_adapter_name(),
-		"renderer": RenderingServer.get_current_rendering_method(), "date": Time.get_datetime_string_from_system()}
 	print("BENCH_STARTUP ", JSON.stringify(marks))
-	_save(info, [], marks)
+	_save(_info(), [], marks)
 	print("BENCH_DONE ", ProjectSettings.globalize_path(OUT))
 	get_tree().quit()
+
+
+func _info() -> Dictionary:
+	return {
+		"device": OS.get_model_name(), "os": OS.get_name(), "gpu": RenderingServer.get_video_adapter_name(),
+		"renderer": RenderingServer.get_current_rendering_method(), "screen": get_viewport().get_visible_rect().size,
+		"debug": OS.is_debug_build(), "date": Time.get_datetime_string_from_system(),
+		"vsync": DisplayServer.window_get_vsync_mode(),
+	}
 
 
 ## Después de cada corrida: si el teléfono pierde el dispositivo a mitad de camino, quedan las que terminaron.
