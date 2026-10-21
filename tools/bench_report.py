@@ -14,7 +14,8 @@ def row(run):
     return (f"{run['case']:<18} {run['variant']:<6} {run['fps']:5.1f} fps  frame p50 {run['frame']['p50']:5.1f} p95 {run['frame']['p95']:5.1f}"
             f"  process {run['process']['avg']:5.1f}  physics {run['physics']['avg']:5.1f}  gpu {run['render_gpu']['avg']:5.1f}"
             f"  cpu-render {run['render_cpu']['avg']:4.1f}  draws {run['draws']['avg']:5.0f}  tris {run['triangles']['avg'] / 1e6:4.2f}M"
-            f"  vram {run['video_mb']:4.0f}MB  pss {run.get('pss_mb', 0):5.0f}MB  load {run['load_ms'] / 1000:4.1f}s")
+            f"  vram {run['video_mb']:4.0f}MB  pss {run.get('pss_mb', 0):5.0f}MB  load {run['load_ms'] / 1000:4.1f}s"
+            f"  warmup max {run.get('warmup_max_ms', 0):5.0f}ms")
 
 
 def main():

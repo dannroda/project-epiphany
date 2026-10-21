@@ -39,8 +39,11 @@ android)
 	fi
 	# Sin el fd del lock: si un adb de acá arranca el servidor, el servidor lo heredaba y dejaba el teléfono trabado.
 	adb() { command adb "$@" 9>&-; }
-	exec 9> "${XDG_RUNTIME_DIR:-/tmp}/epiphany_bench_$serial.lock"
-	flock -n 9 || { echo "otra corrida usa $serial, espero mi turno"; flock 9; }
+	# BENCH_LOCK_HELD: quien llama ya tiene el lock en el fd 9 (varias corridas seguidas sin soltar el teléfono).
+	if [ -z "${BENCH_LOCK_HELD:-}" ]; then
+		exec 9> "${XDG_RUNTIME_DIR:-/tmp}/epiphany_bench_$serial.lock"
+		flock -n 9 || { echo "otra corrida usa $serial, espero mi turno"; flock 9; }
+	fi
 	if adb -s "$serial" shell dumpsys user | grep -q RUNNING_LOCKED; then
 		echo "$serial se reinició y nadie lo desbloqueó: sin eso el juego no tiene dónde escribir"
 		exit 1

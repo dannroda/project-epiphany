@@ -64,10 +64,12 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 	Settings.set_value(&"shadows", variant.shadows, false)
 	Settings.set_value(&"ssao", variant.ssao, false)
 	var loaded_at := Time.get_ticks_msec()
+	var compiled := _pipelines_compiled()
 	var err: Error = await SaveManager.load_scenario(bench.scenario)
 	while SceneFlow.is_busy():
 		await get_tree().process_frame
 	run["load_ms"] = Time.get_ticks_msec() - loaded_at
+	run["load_pipelines"] = _pipelines_compiled() - compiled
 	var player := Players.lead()
 	if err != OK or player == null:
 		run["error"] = error_string(err) if err != OK else "no player"
@@ -89,6 +91,7 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 	var columns := {"frame": [], "process": [], "physics": [], "scripts": [], "physics_scripts": [], "physics_steps": [], "physics_engine": [], "navigation": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
 	var elapsed := -warmup
 	var last := Time.get_ticks_usec()
+	var warmup_max := 0.0
 	while elapsed < bench.seconds:
 		await get_tree().process_frame
 		var now := Time.get_ticks_usec()
@@ -98,6 +101,7 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		_walk(player, origin, bench, elapsed)
 		var scripts: Array = $FrameEnd.take()
 		if elapsed < 0.0:
+			warmup_max = maxf(warmup_max, delta * 1000.0)
 			continue
 		columns.scripts.append(scripts[0])
 		columns.physics_scripts.append(scripts[1])
@@ -120,6 +124,8 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 	Engine.max_physics_steps_per_frame = max_steps
 	var frames: Array = columns.frame
 	run["fps"] = 1000.0 * frames.size() / maxf(_sum(frames), 0.001)
+	run["warmup_max_ms"] = warmup_max
+	run["pipelines"] = _pipelines_compiled() - compiled
 	run["slow"] = frames.filter(func(ms: float) -> bool: return ms > SLOW_MS).size() / maxf(frames.size(), 1.0)
 	for key: String in columns:
 		run[key] = _summary(columns[key])
@@ -130,6 +136,15 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 	run["buffer_mb"] = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_BUFFER_MEM_USED) / 1048576.0
 	run["pss_mb"] = process_pss_mb()
 	return run
+
+
+## Los pipelines que creó el renderer hasta ahora, los saque de la caché de pipelines o no.
+static func _pipelines_compiled() -> int:
+	var total := 0
+	for monitor in [Performance.PIPELINE_COMPILATIONS_CANVAS, Performance.PIPELINE_COMPILATIONS_MESH, Performance.PIPELINE_COMPILATIONS_SURFACE,
+			Performance.PIPELINE_COMPILATIONS_DRAW, Performance.PIPELINE_COMPILATIONS_SPECIALIZATION]:
+		total += int(Performance.get_monitor(monitor))
+	return total
 
 
 ## El PSS del proceso en MB (15.27): incluye lo que el motor no cuenta, como el driver de la GPU y las bibliotecas.
