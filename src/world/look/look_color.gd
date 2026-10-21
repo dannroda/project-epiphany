@@ -2,7 +2,8 @@
 extends RefCounted
 ## El color de la escena como imagen rgba16f para los compute de los efectos LA. En Forward+ es la capa de color misma.
 ## En Mobile esa capa no tiene STORAGE ni copia (RGB10A2 con el HDR dividido por LUMINANCE), así que begin() la pasa a
-## una textura propia con un compute y end() la devuelve con un triángulo a pantalla completa.
+## una textura compartida con un compute y end() la devuelve con un triángulo a pantalla completa. Un efecto la deja
+## en la textura para el siguiente solo si en el cuadro anterior, en el mismo lugar, le siguió otro sobre la misma capa.
 
 const LUMINANCE := 2.0
 
@@ -45,65 +46,93 @@ void main() {
 }
 """
 
+static var _users := 0
+static var _in_shader: RID
+static var _in_pipeline: RID
+static var _out_shader: RID
+static var _out_pipelines := {}
+static var _sampler: RID
+static var _textures := {}
+static var _held: RID
+static var _held_texture: RID
+static var _frame := -1
+static var _order := []
+static var _last_order := []
+
 var rd: RenderingDevice
-var _in_shader: RID
-var _in_pipeline: RID
-var _out_shader: RID
-var _out_pipelines := {}
-var _sampler: RID
-var _texture: RID
-var _size := Vector2i.ZERO
-var _color: RID
 
 
 func _init(device: RenderingDevice) -> void:
 	rd = device
+	_users += 1
 
 
 func free_rids() -> void:
-	for r in [_texture, _in_shader, _out_shader, _sampler]:
+	_users -= 1
+	if _users > 0:
+		return
+	for r in _textures.values() + [_in_shader, _out_shader, _sampler]:
 		if r.is_valid():
 			rd.free_rid(r)
+	_textures.clear()
+	_out_pipelines.clear()
+	_in_pipeline = RID()
+	_held = RID()
 
 
 func begin(buffers: RenderSceneBuffersRD, view: int) -> RID:
+	var frame := Engine.get_frames_drawn()
+	if frame != _frame:
+		_frame = frame
+		_last_order = _order
+		_order = []
+		_held = RID()
 	var color := buffers.get_color_layer(view)
-	_color = RID()
+	_order.append([self, color])
 	if rd.texture_get_format(color).usage_bits & RenderingDevice.TEXTURE_USAGE_STORAGE_BIT:
 		return color
+	if color == _held:
+		return _held_texture
+	if _held.is_valid():
+		_flush()
 	if not _in_pipeline.is_valid() and not _compile():
 		return RID()
 	var size := buffers.get_internal_size()
-	if size != _size or not _texture.is_valid():
-		if _texture.is_valid():
-			rd.free_rid(_texture)
+	if not _textures.has(size):
 		var f := RDTextureFormat.new()
 		f.width = size.x
 		f.height = size.y
 		f.format = RenderingDevice.DATA_FORMAT_R16G16B16A16_SFLOAT
 		f.usage_bits = RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT
-		_texture = rd.texture_create(f, RDTextureView.new())
-		_size = size
-	var src := _sampler_uniform(color)
+		_textures[size] = rd.texture_create(f, RDTextureView.new())
+	var texture: RID = _textures[size]
 	var dst := RDUniform.new()
 	dst.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
 	dst.binding = 1
-	dst.add_id(_texture)
+	dst.add_id(texture)
 	var push := PackedFloat32Array([size.x, size.y, LUMINANCE, 0.0]).to_byte_array()
 	var list := rd.compute_list_begin()
 	rd.compute_list_bind_compute_pipeline(list, _in_pipeline)
-	rd.compute_list_bind_uniform_set(list, UniformSetCacheRD.get_cache(_in_shader, 0, [src, dst]), 0)
+	rd.compute_list_bind_uniform_set(list, UniformSetCacheRD.get_cache(_in_shader, 0, [_sampler_uniform(color), dst]), 0)
 	rd.compute_list_set_push_constant(list, push, push.size())
 	rd.compute_list_dispatch(list, (size.x + 7) / 8, (size.y + 7) / 8, 1)
 	rd.compute_list_end()
-	_color = color
-	return _texture
+	_held = color
+	_held_texture = texture
+	return texture
 
 
 func end() -> void:
-	if not _color.is_valid():
+	if not _held.is_valid():
 		return
-	var framebuffer := FramebufferCacheRD.get_cache_multipass([_color], [], 1)
+	var at := _order.size() - 1
+	if at + 1 < _last_order.size() and _last_order[at] == _order[at] and _last_order[at + 1][1] == _held:
+		return
+	_flush()
+
+
+func _flush() -> void:
+	var framebuffer := FramebufferCacheRD.get_cache_multipass([_held], [], 1)
 	var format := rd.framebuffer_get_format(framebuffer)
 	if not _out_pipelines.has(format):
 		var blend := RDPipelineColorBlendState.new()
@@ -114,11 +143,11 @@ func end() -> void:
 	var push := PackedFloat32Array([LUMINANCE, 0.0, 0.0, 0.0]).to_byte_array()
 	var list := rd.draw_list_begin(framebuffer)
 	rd.draw_list_bind_render_pipeline(list, _out_pipelines[format])
-	rd.draw_list_bind_uniform_set(list, UniformSetCacheRD.get_cache(_out_shader, 0, [_sampler_uniform(_texture)]), 0)
+	rd.draw_list_bind_uniform_set(list, UniformSetCacheRD.get_cache(_out_shader, 0, [_sampler_uniform(_held_texture)]), 0)
 	rd.draw_list_set_push_constant(list, push, push.size())
 	rd.draw_list_draw(list, false, 1, 3)
 	rd.draw_list_end()
-	_color = RID()
+	_held = RID()
 
 
 func _sampler_uniform(texture: RID) -> RDUniform:
