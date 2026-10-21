@@ -8251,7 +8251,7 @@ Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen s
 - *_la_kit.tres: 134,6 → 84,7 MB.
 - 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.
 
-### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · En curso
+### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · Pausado
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
 
@@ -8271,9 +8271,15 @@ Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps
 - Por visibilidad (relativo, dentro de una corrida con el teléfono degradado): sin terreno −5 a −8 ms; sin agua −6 a −9 (a velocidad normal ~−3 a −4,5, confirma por un método válido lo que daba PlanaAgua); sin terrazas −2 a −4.
 - NO VÁLIDOS hasta volver a medir (salían de flat_materials, que cambia materiales en tiempo de ejecución; en el G23 eso mezcla un efecto de pipeline, ver 15.26): todo plano ~3–4 ms y el reparto fijo/post/geometría/materiales que usaba Plana.
 - 15.20 no se ve afectado (la máscara de zonas fue A/B por código; monitoring_off y enemies_off son propiedades).
-- EN PAUSA: 2026-10-21 a la tarde el G23 quedó ~1,8× más lento en todas las pasadas por falta de memoria (kswapd al 97 %, swap; el juego usa ~1,5 GB). Los números absolutos contra los de la mañana y las A/B entre corridas separadas no valen hasta que se resuelva. -88 sigue con 15.27; después: la variante Mobile del agua de 15.17 como A/B limpia con dos APK.
+- EN PAUSA: 2026-10-21 a la tarde el G23 quedó ~1,8× más lento en todas las pasadas por falta de memoria (kswapd al 97 %, swap; el juego usa ~1,5 GB). Los números absolutos contra los de la mañana y las A/B entre corridas separadas no valen hasta que se resuelva. -88 sigue con 15.27.
 - Perillas nuevas del benchmark (sin commitear todavía): glow, fsr, hidden, camera_cull, max_physics_steps, sky_process_mode, sky_radiance y la columna slow (fracción de cuadros de más de 40 ms); la variante swap_shader del agua se sacó.
 - La cola del G23 se trabó dos veces porque el servidor adb heredaba el fd del lock de bench.sh; arreglado en main 41050f83 (-88).
+
+-8f, 2026-10-21 tarde (G23 con ~2 h encendido, load 16, 500 MB de swap: solo valen deltas intercalados):
+- Orden de lo opaco: NO IMPORTA en el overworld. Perilla nueva priorities (Dictionary[Material,int], solo render_priority, se restaura; wt/overworld e338c1a6). Variantes outdoor ±1, pared +1, viento ±1 contra tres Base intercaladas: la Base sola varía hasta 12 ms entre pasadas (Bañado 35,6–47,6) y todas las variantes caen dentro de ese rango, sin dirección consistente. JSON moto_g23_20261021_1646.
+- Agua Mobile de 15.17 (water_la_mobile de -88) como A/B limpia: dos APK, A B A B A B, tres pasadas Bajo por corrida (9 muestras por APK y caso). GPU p50 mediana [rango] A → B: Inicio 42,0 [39,5–43,5] → 42,5 [38,4–44,3]; Arboleda 37,2 [36,4–41,4] → 38,2 [35,7–39,8]; Cardonal 44,1 [42,0–48,6] → 45,2 [40,5–47,7]; Bañado 44,1 [42,3–47,9] → 43,8 [41,0–49,2]; Cumbre 45,4 [41,7–49,0] → 47,4 [42,8–49,4]. Deltas B−A por par de -5,2 a +4,4 sin signo consistente salvo Cumbre (+2 los tres pares). NO GANA: no se aplica. JSONs moto_g23_20261021_1747/1752/1756/1801/1805/1810.
+- Dato para 15.27: en tres de las seis corridas el primer caso (Calentar Inicio, recién abierta la app) dio GPU 27 ms y cuadro 33 ms, y el mismo caso en las pasadas siguientes 40–44 ms. El estado bueno aparece al empezar cada corrida y se pierde enseguida. No es la memoria del juego creciendo por cambio de nivel (-88: en el G23 la PSS no crece, Cumbre 1520/1521/1523 MB en tres vueltas); puede ser lo mismo que los picos de GL mtrack del Mali (~520 → 1300 MB) que mandan el teléfono a swap. -88 lo cruza con una corrida que muestrea GL mtrack.
+- Queda: glow en Bajo (pregunta para Daniel, no aplicado). Medir de nuevo lo de arriba en absoluto cuando entre 15.27.
 
 ### 15.26 G23: las mazmorras en el perfil Bajo · En curso
 
