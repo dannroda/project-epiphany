@@ -22,7 +22,7 @@ def piece(name, seed, fn):
 	p.build(name, kit, smooth=SMOOTH)
 
 
-def crown(p, center, radius, squash=0.8, bumps=12, flat_bottom=None):
+def crown(p, center, radius, squash=0.8, bumps=12, flat_bottom=None, bump_subdiv=2):
 	"""Copa a lo LA: un domo liso cubierto de bultos redondos a medio hundir."""
 	c = Vector(center)
 	faces = p.blob(c, radius, squash=(1.0, 1.0, squash), subdiv=2, rough=0.06, flat_bottom=flat_bottom)
@@ -30,11 +30,11 @@ def crown(p, center, radius, squash=0.8, bumps=12, flat_bottom=None):
 		up = 0.1 + 0.8 * (i + 0.5) / bumps
 		a = i * 2.39996 + p.rng.random() * 0.4
 		d = Vector((math.cos(a) * math.sqrt(1 - up * up), math.sin(a) * math.sqrt(1 - up * up), up * squash))
-		faces += p.blob(c + d * radius * 0.85, radius * (0.38 + p.rng.random() * 0.1), squash=(1.0, 1.0, 0.85), subdiv=2, rough=0.04, flat_bottom=flat_bottom)
+		faces += p.blob(c + d * radius * 0.85, radius * (0.38 + p.rng.random() * 0.1), squash=(1.0, 1.0, 0.85), subdiv=bump_subdiv, rough=0.04, flat_bottom=flat_bottom)
 	return faces
 
 
-def branch(p, start, direction, length, r0, r1, segments=3, bend=0.35):
+def branch(p, start, direction, length, r0, r1, segments=3, bend=0.35, sides=10):
 	"""Rama torcida: tramos de cilindro que van cambiando de dirección. Devuelve las caras y la punta."""
 	faces = []
 	pos = Vector(start)
@@ -43,7 +43,7 @@ def branch(p, start, direction, length, r0, r1, segments=3, bend=0.35):
 		seg = length / segments
 		ra = r0 + (r1 - r0) * i / segments
 		rb = r0 + (r1 - r0) * (i + 1) / segments
-		c = p.cylinder(ra, 0.0, seg + rb * 0.5, sides=10, radius_top=rb, cap_bottom=(i == 0), phase=p.rng.random())
+		c = p.cylinder(ra, 0.0, seg + rb * 0.5, sides=sides, radius_top=rb, cap_bottom=(i == 0), phase=p.rng.random())
 		rot = d.to_track_quat("Z", "Y").to_matrix().to_4x4()
 		p.transform(c, Matrix.Translation(pos) @ rot)
 		faces += c
@@ -53,22 +53,23 @@ def branch(p, start, direction, length, r0, r1, segments=3, bend=0.35):
 
 
 def quenoa(p, height, spread, trunks, clusters):
-	"""Queñoa: varios troncos retorcidos de corteza rojiza y copas chatas de hojas oscuras en las puntas."""
+	"""Queñoa: varios troncos retorcidos de corteza rojiza y copas chatas de hojas oscuras en las puntas. Liviana (17.2):
+	troncos de 8 lados y bultos de la copa con una subdivisión, unos 1800 triángulos en lugar de 4600."""
 	bark, leaves = [], []
 	tips = []
 	for t in range(trunks):
 		a = 2 * math.pi * t / trunks + p.rng.random()
 		direction = Vector((math.cos(a) * 0.35, math.sin(a) * 0.35, 1.0))
-		f, tip = branch(p, (math.cos(a) * 0.08, math.sin(a) * 0.08, -0.05), direction, height * 0.62, 0.16, 0.07, segments=4)
+		f, tip = branch(p, (math.cos(a) * 0.08, math.sin(a) * 0.08, -0.05), direction, height * 0.62, 0.16, 0.07, segments=4, sides=8)
 		bark += f
 		tips.append(tip)
 		for _ in range(2):
-			f2, tip2 = branch(p, tip - direction.normalized() * 0.3, Vector((math.cos(a + p.rng.uniform(-1, 1)), math.sin(a + p.rng.uniform(-1, 1)), 0.6)), height * 0.3, 0.07, 0.03, segments=2)
+			f2, tip2 = branch(p, tip - direction.normalized() * 0.3, Vector((math.cos(a + p.rng.uniform(-1, 1)), math.sin(a + p.rng.uniform(-1, 1)), 0.6)), height * 0.3, 0.07, 0.03, segments=2, sides=8)
 			bark += f2
 			tips.append(tip2)
 	for tip in tips[:clusters:3]:
-		leaves += crown(p, tip + Vector((0, 0, spread * 0.15)), spread * 0.5, squash=0.7, bumps=10)
-	leaves += crown(p, (0, 0, height * 0.82), spread * 0.62, squash=0.75, bumps=14)
+		leaves += crown(p, tip + Vector((0, 0, spread * 0.15)), spread * 0.5, squash=0.7, bumps=10, bump_subdiv=1)
+	leaves += crown(p, (0, 0, height * 0.82), spread * 0.62, squash=0.75, bumps=14, bump_subdiv=1)
 	p.paint(bark, "madera_oscura", z_range=(0, height * 0.7), vary=0.1)
 	zs = [v.co.z for f in leaves for v in f.verts]
 	z0, z1 = min(zs), max(zs)

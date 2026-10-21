@@ -4,7 +4,8 @@ extends EditorScenePostImportPlugin
 ## material de Blender, cada malla guardada en assets/epiphany/meshes/<archivo>/<pieza>.res (las partes <archivo>.<parte>.glb
 ## también ahí) y las custom properties:
 ## col=box|sphere|capsule|convex en una malla → StaticBody3D; socket en un empty → Marker3D; spring en un hueso → cadena
-## de SpringBoneSimulator3D desde ese hueso (el valor es la rigidez); group en cualquier objeto (también -colonly) → ese grupo.
+## de SpringBoneSimulator3D desde ese hueso (el valor es la rigidez); group en cualquier objeto (también -colonly) → ese grupo;
+## shadow=off en una malla → no proyecta sombra.
 ## Una malla <pieza>_col-colonly es la colisión simplificada de <pieza>: su cuerpo va adentro de la malla, como con -col.
 
 const ROOT := "res://assets/epiphany/"
@@ -34,6 +35,8 @@ func _post_process(scene: Node) -> void:
 		if not saved.has(node.mesh):
 			saved[node.mesh] = true
 			_save_mesh(node, mesh_dir)
+		if _extras(node).get("shadow", "") == "off":
+			node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		var col: String = _extras(node).get("col", "")
 		if not col.is_empty():
 			_add_collision(node, col)

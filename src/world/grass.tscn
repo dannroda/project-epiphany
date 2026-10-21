@@ -20,6 +20,7 @@ break_style = 1
 [node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = ExtResource("m0_ichu_mata")
+cast_shadow = 0
 
 [node name="Hurtbox" type="Area3D" parent="."]
 collision_layer = 16

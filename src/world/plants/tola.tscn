@@ -18,6 +18,7 @@ break_style = 1
 
 [node name="Model" type="MeshInstance3D" parent="."]
 mesh = ExtResource("4_mesh")
+cast_shadow = 0
 
 [node name="Hurtbox" type="Area3D" parent="."]
 collision_layer = 16

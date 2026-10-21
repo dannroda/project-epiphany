@@ -724,8 +724,13 @@ def _in_fire_line(xy):
 	return False
 
 
+## Lo más bajo que esto (m) va sin sombra (17.2): en el celular la sombra del pasto costaba más que el pasto.
+SHADOW_HEIGHT = 1.0
+
+
 def decor(meshes, collection):
-	"""Las plantas y piedras juntadas en una malla por pedazo de CHUNK m y por material, para pocas llamadas de dibujo."""
+	"""Las plantas y piedras juntadas en una malla por pedazo de CHUNK m, por material y por alto (los árboles con sombra,
+	lo bajo sin), para pocas llamadas de dibujo."""
 	bpy.context.view_layer.update()
 	depsgraph = bpy.context.evaluated_depsgraph_get()
 	groups = {}
@@ -738,10 +743,11 @@ def decor(meshes, collection):
 		if kind in CUTTABLE and place in WALKABLE:
 			cuttable.append({"kind": kind, "at": [round(location.x, 3), round(location.z, 3), round(-location.y, 3)], "yaw": round(angle, 4)})
 			continue
-		key = ("wind" if kind in WINDY else "outdoor", math.floor(spot.x / CHUNK), math.floor(spot.y / CHUNK))
+		tall = max(v.co.z for v in meshes[kind].vertices) > SHADOW_HEIGHT
+		key = ("arboles" if tall else "plantas", "wind" if kind in WINDY else "outdoor", math.floor(spot.x / CHUNK), math.floor(spot.y / CHUNK))
 		groups.setdefault(key, []).append((kind, location, angle))
 	objects = []
-	for (material, gx, gy), items in sorted(groups.items()):
+	for (prefix, material, gx, gy), items in sorted(groups.items()):
 		bm = bmesh.new()
 		for kind, location, angle in items:
 			part = bmesh.new()
@@ -753,12 +759,14 @@ def decor(meshes, collection):
 			part.free()
 			bm.from_mesh(mesh)
 			bpy.data.meshes.remove(mesh)
-		mesh = bpy.data.meshes.new("plantas_%s_%d_%d" % (material, gx, gy))
+		mesh = bpy.data.meshes.new("%s_%s_%d_%d" % (prefix, material, gx, gy))
 		bm.to_mesh(mesh)
 		bm.free()
 		mesh.materials.append(epi.palette.palette_material())
 		obj = bpy.data.objects.new(mesh.name, mesh)
 		obj["material"] = material
+		if prefix == "plantas":
+			obj["shadow"] = "off"
 		collection.objects.link(obj)
 		objects.append(obj)
 	with open(PLANTS_OUT, "w") as f:

@@ -30,6 +30,8 @@ const PLANTS := {
 	"quenoa_grande": "res://src/world/plants/arbol.tscn",
 	"quenoa_chica": "res://src/world/plants/quenoa_chica.tscn",
 }
+## Pasto que va sin sombra (17.2), como las escenas de PLANTS bajas.
+const NO_SHADOW := ["ichu_cortado"]
 const SCATTERED := "res://tools/plantas_overworld.json"
 ## Ni plantas ni nada encima de los portales de viaje, con margen para que no asomen sobre el borde.
 const PORTAL_SCENE := "res://src/world/travel_portal.tscn"
@@ -441,6 +443,8 @@ func _mesh(group: Node3D, mesh_name: String, at: Vector3, yaw: float, solid := t
 	var instance := MeshInstance3D.new()
 	instance.name = mesh_name.get_file().to_pascal_case()
 	instance.mesh = mesh
+	if mesh_name.get_file() in NO_SHADOW:
+		instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var box := mesh.get_aabb()
 	if solid and box.size.y > SOLID_HEIGHT:
 		var body := StaticBody3D.new()

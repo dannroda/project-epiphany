@@ -108,14 +108,17 @@ shape = SubResource("BoxShape3D_r2mxq")
 
 [node name="IchuCortado" type="MeshInstance3D" parent="Zone_arboleda" unique_id=959013075]
 transform = Transform3D(0.112541005, 0, 0.9936471, 0, 1, 0, -0.9936471, 0, 0.112541005, -35.81209, 2.6, 23.297152)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="IchuCortado2" type="MeshInstance3D" parent="Zone_arboleda" unique_id=1025309163]
 transform = Transform3D(-0.9652911, 0, -0.26117653, 0, 1, 0, 0.26117653, 0, -0.9652911, -39.525566, 2.6, 16.005276)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="IchuCortado3" type="MeshInstance3D" parent="Zone_arboleda" unique_id=1507380563]
 transform = Transform3D(0.9074872, 0, 0.42007968, 0, 1, 0, -0.42007968, 0, 0.9074872, -19.990105, 2.6, 17.647743)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="Tocon" type="StaticBody3D" parent="Zone_arboleda" unique_id=431490632]
@@ -182,18 +185,22 @@ mesh = ExtResource("2_x8t01")
 
 [node name="IchuCortado" type="MeshInstance3D" parent="Zone_start" unique_id=1593078263]
 transform = Transform3D(-0.31147295, 0, 0.95025504, 0, 1, 0, -0.95025504, 0, -0.31147295, -69.9216, 0, 10.136496)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="IchuCortado2" type="MeshInstance3D" parent="Zone_start" unique_id=729887700]
 transform = Transform3D(0.030986669, 0, 0.9995198, 0, 1, 0, -0.9995198, 0, 0.030986669, -68.205956, 0, 13.736017)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="IchuCortado3" type="MeshInstance3D" parent="Zone_start" unique_id=196632338]
 transform = Transform3D(0.79036534, 0, 0.6126358, 0, 1, 0, -0.6126358, 0, 0.79036534, -91.9363, 2.6, 16.311556)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="IchuCortado4" type="MeshInstance3D" parent="Zone_start" unique_id=1603414768]
 transform = Transform3D(-0.23389326, 0, 0.97226226, 0, 1, 0, -0.97226226, 0, -0.23389326, -46.07488, 0, 10.238352)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="Flores" parent="Zone_start" unique_id=1703012403 instance=ExtResource("4_o1qjm")]
@@ -266,14 +273,17 @@ transform = Transform3D(0.99370384, 0, 0.11203898, 0, 1, 0, -0.11203898, 0, 0.99
 
 [node name="IchuCortado" type="MeshInstance3D" parent="Zone_pradera" unique_id=516373698]
 transform = Transform3D(0.20489599, 0, 0.9787837, 0, 1, 0, -0.9787837, 0, 0.20489599, -54.252403, 0, -13.896488)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="IchuCortado2" type="MeshInstance3D" parent="Zone_pradera" unique_id=137185614]
 transform = Transform3D(0.9055402, 0, -0.4242604, 0, 1, 0, 0.4242604, 0, 0.9055402, -51.536232, 0, -1.8315089)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="IchuCortado3" type="MeshInstance3D" parent="Zone_pradera" unique_id=126001355]
 transform = Transform3D(-0.60953975, 0, -0.7927555, 0, 1, 0, 0.7927555, 0, -0.60953975, -29.945333, 0, -12.519415)
+cast_shadow = 0
 mesh = ExtResource("3_3ogdt")
 
 [node name="Zone_pradera_2" type="Node3D" parent="." unique_id=1691431745]
