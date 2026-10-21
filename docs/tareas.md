@@ -8297,9 +8297,17 @@ Siguiente (en escritorio, headless/xvfb): ver si las mallas del kit tienen LODs 
 - reflection_count.mobile = 16: el atlas de reflejos de 64 lugares quedaba reservado toda la sesión desde la primera mazmorra con sondas (~110 MB). El máximo por nivel es 14 (templo); test_render_budget falla si un nivel pasa los lugares del atlas.
 - Memoria de video en el G23: overworld 502 → 342 MB; overworld después de mazmorras 628 → 388; mazmorras 237 → 177.
 - Benchmark: columnas texture_mb, buffer_mb y pss_mb (Debug.getPss en Android, smaps_rollup en Linux); bench_report imprime pss. Entraron también las perillas de 15.25 (glow, fsr, hidden, camera_cull, max_physics_steps, cielo, columna slow).
-- PSS de ~1,5–2,0 GB (dumpsys meminfo, teléfono ya presionado): Native Heap ~170–300 MB (coincide con MEMORY_STATIC); Code ~60; Graphics (GL mtrack del Mali) 530–1300, lo que domina y bastante más de lo que Godot cuenta como video; System ~450, casi todo SwapPss. GL mtrack oscila ~500 MB entre muestras de 16 s del mismo caso: posible pool de páginas del driver kbase que el shrinker libera bajo presión; si es así el uso real es el piso, ~530–800 MB.
 - 15.22 (-8f) agrega encima el teselado 4×4 de la foto en Mobile (el pico >3 s) y saca de snapshot() el cero del global player_hole.
-Siguiente: corrida base con el teléfono recién reiniciado (main + estos arreglos, columna pss y muestreo de meminfo solo con el lock propio).
+- bench.sh (main 98a107f7, -88): si el teléfono se reinició y nadie lo desbloqueó (dumpsys user RUNNING_LOCKED, sin almacenamiento de apps) corta con un mensaje claro.
+Referencia con el teléfono recién reiniciado (G23 reiniciado 15:47 con el OK de Daniel, 2,75 GB disponibles; corrida 15:55, main 98a107f7, Bajo, moto_g23_20261021_1555.json). Video / texturas / búferes / estático / PSS en MB:
+- Overworld 338 / 144 / 149 / 306 / 1549
+- Chullpa 173 / 86 / 32 / 259 / 1625
+- Cumbre 171 / 86 / 30 / 259 / 1822
+- Overworld de nuevo 384 / 172 / 158 / 312 / 1573
+- Chullpa de nuevo 173 / 86 / 32 / 264 / 1896
+dumpsys meminfo cada 16 s: a los 17 s de arrancar el juego ya tiene 430 MB en swap con el teléfono limpio (el swap lo provoca nuestra carga); Graphics (GL mtrack del Mali) 785–1137 MB, oscila ~350 MB entre muestras; Native Heap 183–246 MB. El PSS sube de caso en caso (Chullpa 1625 → 1896 la segunda vez) con video y estático iguales: lo que crece es memoria del driver.
+Conclusión: lo que Godot cuenta como video bajó, pero domina la memoria del driver (2–3× el video que reporta Godot).
+Siguiente (escritorio con el renderer Mobile, después A/B en el G23): qué parte de la memoria del driver es nuestra y configurable: el staging buffer de RenderingDevice (staging_buffer/max_size_mb, 128 MB por defecto), la caché de pipelines y las variantes de shaders compiladas (¿crecen con cada nivel y nunca se liberan?), los cuadros en vuelo (frame_queue_size, swapchain_image_count).
 
 ## M17 — Después de la demo  (0/2)
 
