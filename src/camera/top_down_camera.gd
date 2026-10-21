@@ -275,6 +275,7 @@ func _mask_around(area: Rect2) -> void:
 		var part := _mask.get_child(i) as MeshInstance3D
 		var strip_top := floor_y + 0.05 if i == 4 else floor_y - SOUTH_UNDER_DEPTH if i == 5 else top
 		(part.mesh as BoxMesh).size = Vector3(strip.size.x, strip_top - bottom, strip.size.y)
+		((part.get_child(0) as OccluderInstance3D).occluder as BoxOccluder3D).size = (part.mesh as BoxMesh).size
 		part.global_position = Vector3(strip.get_center().x, (strip_top + bottom) / 2.0, strip.get_center().y)
 	_mask.show()
 

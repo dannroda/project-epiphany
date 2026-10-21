@@ -28,6 +28,24 @@ material = SubResource("Black")
 resource_local_to_scene = true
 material = SubResource("Black")
 
+[sub_resource type="BoxOccluder3D" id="NorthOccluder"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxOccluder3D" id="SouthOccluder"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxOccluder3D" id="WestOccluder"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxOccluder3D" id="EastOccluder"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxOccluder3D" id="SouthLipOccluder"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxOccluder3D" id="SouthUnderOccluder"]
+resource_local_to_scene = true
+
 [node name="RoomMask" type="Node3D"]
 top_level = true
 visible = false
@@ -36,22 +54,40 @@ visible = false
 cast_shadow = 0
 mesh = SubResource("North")
 
+[node name="Occluder" type="OccluderInstance3D" parent="North"]
+occluder = SubResource("NorthOccluder")
+
 [node name="South" type="MeshInstance3D" parent="."]
 cast_shadow = 0
 mesh = SubResource("South")
+
+[node name="Occluder" type="OccluderInstance3D" parent="South"]
+occluder = SubResource("SouthOccluder")
 
 [node name="West" type="MeshInstance3D" parent="."]
 cast_shadow = 0
 mesh = SubResource("West")
 
+[node name="Occluder" type="OccluderInstance3D" parent="West"]
+occluder = SubResource("WestOccluder")
+
 [node name="East" type="MeshInstance3D" parent="."]
 cast_shadow = 0
 mesh = SubResource("East")
+
+[node name="Occluder" type="OccluderInstance3D" parent="East"]
+occluder = SubResource("EastOccluder")
 
 [node name="SouthLip" type="MeshInstance3D" parent="."]
 cast_shadow = 0
 mesh = SubResource("SouthLip")
 
+[node name="Occluder" type="OccluderInstance3D" parent="SouthLip"]
+occluder = SubResource("SouthLipOccluder")
+
 [node name="SouthUnder" type="MeshInstance3D" parent="."]
 cast_shadow = 0
 mesh = SubResource("SouthUnder")
+
+[node name="Occluder" type="OccluderInstance3D" parent="SouthUnder"]
+occluder = SubResource("SouthUnderOccluder")

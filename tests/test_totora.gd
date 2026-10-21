@@ -278,4 +278,7 @@ func test_the_water_channel_under_the_south_wall_is_not_masked() -> void:
 	var water := (level.get_node(^"PisoBajo/Agua") as Node3D).global_position.y
 	assert_true(top < water, "la tira de abajo (%.2f) no tapa el agua (%.2f)" % [top, water])
 	assert_true(top > camera.room.floor_y() - DungeonFloor.HEIGHT + camera.wall_height, "pero sí el piso de abajo")
+	for part: MeshInstance3D in under.get_parent().get_children():
+		var occluder := (part.get_child(0) as OccluderInstance3D).occluder as BoxOccluder3D
+		assert_eq(occluder.size, (part.mesh as BoxMesh).size, "%s tapa por occlusion culling lo mismo que se ve (15.26)" % part.name)
 	tree.root.get_node(^"GameState").reset()

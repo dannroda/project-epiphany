@@ -918,6 +918,7 @@ textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/contact_shadow/enabled=true
 lights_and_shadows/multi_bounce_occlusion/enabled=true
 reflections/reflection_atlas/reflection_count.mobile=16
+occlusion_culling/use_occlusion_culling=true
 
 [shader_globals]
 
