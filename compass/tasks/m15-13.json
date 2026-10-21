@@ -5,13 +5,13 @@
   "created_at": "2026-10-21T01:27:43.526Z",
   "description": "Medido en el Moto Edge 30 Fusion (17.3, 2026-10-20): el overworld entero corre siempre: 9040 nodos, 1406 Area3D con monitoring (573 hurtboxes de pasto, 239 de flores, 127 de árboles, 94 tolas, 63 queñoas, 60 cardones…), 456 StaticBody3D, 199 partículas emitiendo (127 árboles, 63 queñoas) y 22 enemigos con BT y física estén donde estén. Physics ≈15 ms y process 12–25 ms por cuadro en el teléfono. Daniel: debería ir por chunks. Que solo la zona del player y sus vecinas tengan física, IA, animación y partículas activas (usar las Zone_* que ya existen o VisibleOnScreenEnabler3D), y que las hurtboxes de vegetación no monitoreen. Medir con el benchmark (15.14). Encargado a -3e.",
   "milestone": "m15",
-  "notes": "",
+  "notes": "Nodo ActiveZones en overworld.tscn (src/world/active_zones.gd): una zona despierta cuando cualquier player de Players.all está a menos de reach = 22 m; los enemigos de zonas dormidas quedan en process_mode DISABLED (sin cuerpo, IA ni animación) y solo se despiertan los que durmió ActiveZones. Las hojas (GPUParticles3D de Decor) van en chunks de 16 m y dejan de emitir lejos de todo player. Las hurtboxes de vegetación ya eran solo monitorables (78 monitorean, 1333 no). PC headless, en el inicio: physics 5.1–5.8 → 2.3–2.7 ms, process 1.2–1.6 → 0.6–0.9 ms, BTPlayers activos 22 → 4, partículas 199 → 67. Arreglo aparte: test_every_region_is_reachable_except_the_item_gated espera hasta 60 cuadros al mapa de navegación en vez de 10 fijos. Mergeado en main dfda1275 (-ae); la resave de Daniel de overworld.tscn se mantuvo con el nodo agregado. Falta la medición en el teléfono (15.14).",
   "order": 189,
   "priority": "high",
   "refs": [],
   "size": "l",
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "test_active_zones (los enemigos lejanos duermen y despiertan, las hojas lejanas paran, un 2.º player mantiene despierta su zona). Suite completa 768/768 en main (dfda1275). En el teléfono: tools/bench.sh android <serial> --build y comparar con python3 tools/bench_report.py nuevo.json debug/tmp/bench/motorola_edge_30_fusion_20261020_2300.json.",
   "title": "Overworld activo por zona",
-  "updated_at": "2026-10-21T01:27:43.526Z"
+  "updated_at": "2026-10-21T02:15:56.483Z"
 }

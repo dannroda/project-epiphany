@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-88",
+  "checklist": [],
+  "code": "15.17",
+  "created_at": "2026-10-21T02:24:40.501Z",
+  "description": "Daniel sospecha que pesa que todo sea shader en vez de texturas. Benchmark 15.14 en el Edge 30 Fusion: en el overworld la variante Plana (StandardMaterial3D en toda la geometría) baja la GPU de 30–41 ms a 20–27 ms, o sea ~30 % es costo de material; en el G23 el overworld va a ~4 fps con GPU 88–136 ms. Medir qué materiales pesan (terreno, pasto/plantas con viento, agua, riscos, decor: aplanar de a uno en el benchmark o con un BenchVariant nuevo) y darles una variante barata en el renderer Mobile (menos muestras, sin ruido procedural por píxel, bakear a textura lo que hoy se calcula) sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22GLQFZW --build. No toca las paredes LA (15.16) ni LOD/terreno en bloques (17.2).",
+  "milestone": "m15",
+  "notes": "",
+  "order": 193,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "Overworld: costo de los shaders en mobile",
+  "updated_at": "2026-10-21T02:24:40.501Z"
+}

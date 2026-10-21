@@ -7784,7 +7784,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (10/17, 10 en revisión)
+## M15 — Optimización  (12/19, 12 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -7982,17 +7982,29 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 
 **Notas:** Hecho por -3e (4869886c): la foto del mapa se rehace solo con flags del trazado (scenery y sus interruptores, como el ojo del puente), no con cofres ni corazones.
 
-### 15.13 Overworld activo por zona · En curso
+### 15.13 Overworld activo por zona · Revisión
 
 **Prioridad:** alta · **Tamaño:** L · **Responsable:** project-epiphany-3e
 
 Medido en el Moto Edge 30 Fusion (17.3, 2026-10-20): el overworld entero corre siempre: 9040 nodos, 1406 Area3D con monitoring (573 hurtboxes de pasto, 239 de flores, 127 de árboles, 94 tolas, 63 queñoas, 60 cardones…), 456 StaticBody3D, 199 partículas emitiendo (127 árboles, 63 queñoas) y 22 enemigos con BT y física estén donde estén. Physics ≈15 ms y process 12–25 ms por cuadro en el teléfono. Daniel: debería ir por chunks. Que solo la zona del player y sus vecinas tengan física, IA, animación y partículas activas (usar las Zone_* que ya existen o VisibleOnScreenEnabler3D), y que las hurtboxes de vegetación no monitoreen. Medir con el benchmark (15.14). Encargado a -3e.
 
-### 15.14 Escena benchmark automática (PC y Android) · En curso
+**Prueba:** test_active_zones (los enemigos lejanos duermen y despiertan, las hojas lejanas paran, un 2.º player mantiene despierta su zona). Suite completa 768/768 en main (dfda1275). En el teléfono: tools/bench.sh android <serial> --build y comparar con python3 tools/bench_report.py nuevo.json debug/tmp/bench/motorola_edge_30_fusion_20261020_2300.json.
+
+**Notas:** Nodo ActiveZones en overworld.tscn (src/world/active_zones.gd): una zona despierta cuando cualquier player de Players.all está a menos de reach = 22 m; los enemigos de zonas dormidas quedan en process_mode DISABLED (sin cuerpo, IA ni animación) y solo se despiertan los que durmió ActiveZones. Las hojas (GPUParticles3D de Decor) van en chunks de 16 m y dejan de emitir lejos de todo player. Las hurtboxes de vegetación ya eran solo monitorables (78 monitorean, 1333 no). PC headless, en el inicio: physics 5.1–5.8 → 2.3–2.7 ms, process 1.2–1.6 → 0.6–0.9 ms, BTPlayers activos 22 → 4, partículas 199 → 67. Arreglo aparte: test_every_region_is_reachable_except_the_item_gated espera hasta 60 cuadros al mapa de navegación en vez de 10 fijos. Mergeado en main dfda1275 (-ae); la resave de Daniel de overworld.tscn se mantuvo con el nodo agregado. Falta la medición en el teléfono (15.14).
+
+### 15.14 Escena benchmark automática (PC y Android) · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-e0
 
 Daniel (2026-10-20): una escena benchmark que mida sola, sin input. Recorre casos fijos (overworld en varias zonas, una mazmorra, el jefe) moviendo al player por un camino, en variantes de calidad (100 % con sombras, 50 % sin sombras, materiales planos para ver cuánto cuestan los shaders) y anota por cuadro frame, process, physics, render CPU y GPU, draw calls, triángulos, objetos y memoria de video: promedio, p50, p95, peor. Sale como JSON y líneas BENCH en el log. Un script lo exporta, instala y corre en un teléfono por adb (o en PC en ventana) y junta el resultado. Encargado a -e0.
+
+**Prueba:** PC: tools/bench.sh desktop (ventana en la pantalla 1, sin foco). Teléfono: tools/bench.sh android <serial> --build (exporta el preset "Android (benchmark)", instala, corre y baja el JSON a debug/tmp/bench/). Comparar dos corridas: python3 tools/bench_report.py nuevo.json viejo.json. Corrió entero en el Edge 30 Fusion (24 corridas, ~6 min).
+
+**Notas:** Mergeado en main 6b0232cc. Autoload Benchmark (src/debug/benchmark/benchmark.tscn): inerte salvo --benchmark o el feature "benchmark". Casos (BenchCase, hijos de Cases): overworld inicio, arboleda, cardonal, bañado, cumbre, templo hub, chullpa, antesala; el player camina en círculo apoyado en el piso, invulnerable. Variantes (BenchVariant): Alta; Baja = 50 %, sin sombras ni SSAO; Plana = StandardMaterial3D en toda la geometría. Vsync y tope de fps apagados. En Android hizo falta: import_etc2_astc (se reimportan las texturas), las libs Android de LimboAI 1.8.1 y el preset "Android (benchmark)" con features benchmark,plain_saves e include_filter de debug/scenarios/*.cfg (los intent extras no pasan args). bench.sh no corre si dev.asteroids.game está abierto (el G23 es compartido).
+
+Primeras corridas (debug, antes de 15.13):
+- Edge 30 Fusion (Adreno 660, 1600×720): overworld 20–30 fps (GPU 30–41 ms, process 22–46, physics 11–13); Baja 24–31; Plana 27–38. Templo hub 7 fps (GPU 135 ms), Chullpa 13 (GPU 74, 2,44 M tris), Antesala 14; en mazmorras Plana empeora → 15.16.
+- Moto G23 (Mali-G52): overworld ~4 fps (GPU 88–136 ms, physics 28–41); en el templo hub un cuadro de 11,8 s y Vulkan pierde el device (fence -4), el juego se cierra.
 
 ### 15.15 Efectos LA en el renderer Mobile · Revisión
 
@@ -8003,6 +8015,18 @@ En Android (renderer Mobile) los CompositorEffect de src/world/look (tono_la, nu
 **Prueba:** Con --rendering-method mobile en overworld y chullpa: 0 errores STORAGE_BIT (antes 369 y 244 por corrida). Forward+ antes/después: 0,01–0,02 % de píxeles distintos (animación). Mobile después contra Forward+: 0,2–0,5 %. Capturas en epiphany-wt/design/debug/tmp/design/mobile_look_overworld.png y mobile_look_chullpa.png. test_player_hole, test_overworld_run.
 
 **Notas:** -88 (wt/design-fix a0b333df, main a95d293f): en Mobile la capa de color es RGB10A2 con usage 515 (sampling, color e input attachment): sin STORAGE ni CAN_COPY, así que texture_copy tampoco sirve; en Forward+ es 523 (con STORAGE). Helper nuevo src/world/look/look_color.gd: cada efecto pide look.begin(buffers, view) y llama look.end(). Con STORAGE devuelve la capa misma (camino de siempre); sin STORAGE un compute la samplea ×2 (el luminance multiplier de Mobile) a una rgba16f propia, el efecto corre ahí y un triángulo fullscreen la devuelve ÷2. Decide por el bit de STORAGE, no por el nombre del renderer. brillo, caida y enfoque no son CompositorEffect. Sin MSAA en el proyecto; con MSAA no está probado. En el teléfono suma una copia de entrada y una de salida por efecto (tres en el overworld): medir en el G23 con el benchmark (15.14).
+
+### 15.16 Mazmorras: costo de GPU en mobile · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`
+
+Benchmark 15.14 en el Moto Edge 30 Fusion (debug/tmp/bench/motorola_edge_30_fusion_20261020_2300.json, en wt/bugs): las mazmorras cuestan más GPU que el overworld. Templo hub 7 fps (GPU 135 ms), Chullpa 13 fps (GPU 74 ms, 2.44 M tris), Antesala 14 fps (GPU 69 ms); el overworld va a 20–30 fps. Con materiales planos (variante Plana) las mazmorras empeoran (6–9 fps), así que no son los shaders de material: sospechosos son las luces (antorchas/omni por sala), los efectos LA de pantalla (TonoLA, SombraLA, NubesLA, viñeta borrosa) o que las salas ocultas sigan llegando a la GPU (2.4 M tris con una sola sala a la vista). Medir qué es (PC con el benchmark y Godot profiler/RenderDoc, luego tools/bench.sh android ZY22GLQFZW) y bajar el costo sin cambiar el look en Forward+.
+
+### 15.17 Overworld: costo de los shaders en mobile · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+Daniel sospecha que pesa que todo sea shader en vez de texturas. Benchmark 15.14 en el Edge 30 Fusion: en el overworld la variante Plana (StandardMaterial3D en toda la geometría) baja la GPU de 30–41 ms a 20–27 ms, o sea ~30 % es costo de material; en el G23 el overworld va a ~4 fps con GPU 88–136 ms. Medir qué materiales pesan (terreno, pasto/plantas con viento, agua, riscos, decor: aplanar de a uno en el benchmark o con un BenchVariant nuevo) y darles una variante barata en el renderer Mobile (menos muestras, sin ruido procedural por píxel, bakear a textura lo que hoy se calcula) sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22GLQFZW --build. No toca las paredes LA (15.16) ni LOD/terreno en bloques (17.2).
 
 ## M17 — Después de la demo  (0/2)
 

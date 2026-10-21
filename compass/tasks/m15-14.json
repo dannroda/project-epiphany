@@ -5,13 +5,13 @@
   "created_at": "2026-10-21T01:27:43.613Z",
   "description": "Daniel (2026-10-20): una escena benchmark que mida sola, sin input. Recorre casos fijos (overworld en varias zonas, una mazmorra, el jefe) moviendo al player por un camino, en variantes de calidad (100 % con sombras, 50 % sin sombras, materiales planos para ver cuánto cuestan los shaders) y anota por cuadro frame, process, physics, render CPU y GPU, draw calls, triángulos, objetos y memoria de video: promedio, p50, p95, peor. Sale como JSON y líneas BENCH en el log. Un script lo exporta, instala y corre en un teléfono por adb (o en PC en ventana) y junta el resultado. Encargado a -e0.",
   "milestone": "m15",
-  "notes": "",
+  "notes": "Mergeado en main 6b0232cc. Autoload Benchmark (src/debug/benchmark/benchmark.tscn): inerte salvo --benchmark o el feature \"benchmark\". Casos (BenchCase, hijos de Cases): overworld inicio, arboleda, cardonal, bañado, cumbre, templo hub, chullpa, antesala; el player camina en círculo apoyado en el piso, invulnerable. Variantes (BenchVariant): Alta; Baja = 50 %, sin sombras ni SSAO; Plana = StandardMaterial3D en toda la geometría. Vsync y tope de fps apagados. En Android hizo falta: import_etc2_astc (se reimportan las texturas), las libs Android de LimboAI 1.8.1 y el preset \"Android (benchmark)\" con features benchmark,plain_saves e include_filter de debug/scenarios/*.cfg (los intent extras no pasan args). bench.sh no corre si dev.asteroids.game está abierto (el G23 es compartido).\n\nPrimeras corridas (debug, antes de 15.13):\n- Edge 30 Fusion (Adreno 660, 1600×720): overworld 20–30 fps (GPU 30–41 ms, process 22–46, physics 11–13); Baja 24–31; Plana 27–38. Templo hub 7 fps (GPU 135 ms), Chullpa 13 (GPU 74, 2,44 M tris), Antesala 14; en mazmorras Plana empeora → 15.16.\n- Moto G23 (Mali-G52): overworld ~4 fps (GPU 88–136 ms, physics 28–41); en el templo hub un cuadro de 11,8 s y Vulkan pierde el device (fence -4), el juego se cierra.",
   "order": 190,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
-  "test": "",
+  "status": "review",
+  "test": "PC: tools/bench.sh desktop (ventana en la pantalla 1, sin foco). Teléfono: tools/bench.sh android <serial> --build (exporta el preset \"Android (benchmark)\", instala, corre y baja el JSON a debug/tmp/bench/). Comparar dos corridas: python3 tools/bench_report.py nuevo.json viejo.json. Corrió entero en el Edge 30 Fusion (24 corridas, ~6 min).",
   "title": "Escena benchmark automática (PC y Android)",
-  "updated_at": "2026-10-21T01:27:43.613Z"
+  "updated_at": "2026-10-21T02:24:40.006Z"
 }
