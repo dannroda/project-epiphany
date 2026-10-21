@@ -109,7 +109,7 @@
     }
   ],
   "milestone": "m12",
-  "notes": "2026-10-21: Daniel pide retomar el pendiente del playtest (sacar las mallas que el player nunca ve, como el piso del terreno apilado donde no se puede llegar). Encargado a -25 (hizo los bloques del terreno en 17.2), en paralelo con 15.23 mientras espera el G23.",
+  "notes": "2026-10-21: Daniel pidió retomar el pendiente del playtest (sacar las mallas que el player nunca ve, como el piso del terreno apilado donde no se puede llegar). Hecho por -25 (wt/art 50395f49 → main a3925d15):\n- build_terreno_organico.py saca de la malla visual toda cara que la cámara no puede ver nunca. Prueba por vértice: el player parado en cada celda caminable, con la cámara que sigue y la cenital, raycast contra el terreno. Las caras con un borde de más de 1 m se muestrean también por dentro (si no, desaparecía el lecho del río, que tiene las esquinas bajo el pasto y el medio visible a través del agua).\n- La colisión se arma del bloque entero: hash de la geometría de colisión idéntico antes y después. El layout no cambia; decorate_levels sin diff; SEAM_OFFSET igual.\n- Caras visuales 2,64 M → 2,03 M (−23 %). Triángulos en cuadro por zona (escritorio, cuadro en pausa) −1 a −12 %; casos del benchmark: inicio −2,7 %, arboleda −1,6 %, cardonal −1 %, bañado −9 %, cumbre −11 %. Draws casi igual.\n- El build del terreno ahora tarda ~29 min (antes unos pocos).",
   "order": 2,
   "playtest": {
     "note": "Anda, pero hay meshes que el player no ve. Por lo que no deberían estar. Un ejemplo es en el terreno apilado, tienen piso cuando es innacesible. El diseño y layout del overworld está bien, solo falta eliminar esas partes que no se ven nunca",
@@ -122,11 +122,11 @@
       "section": "overworld-layout"
     }
   ],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "arte"
   ],
-  "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
+  "test": "Capturas antes/después desde la cámara del juego en 12 zonas, con nubes congeladas y en pausa: solo difieren el viento del pasto, un enemigo que camina y un corrimiento de 1 px de la cámara en una zona (el primer intento perdía el lecho del río y dejaba líneas finas sobre el agua; arreglado). Suite 773/773 en main después de --import, test_map y test_player_hole incluidos (a3925d15).",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-21T07:37:35.497Z"
+  "updated_at": "2026-10-21T09:37:47.016Z"
 }

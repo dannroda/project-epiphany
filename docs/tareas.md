@@ -5821,7 +5821,7 @@ Daniel (2026-10-20): en el combo, la animación del segundo ataque tiene que arr
 
 **Notas:** -88 (wt/design-fix 6641f184, main 23d408c3): Slice_Diagonal y Slice_Horizontal de KayKit barren los dos de izquierda a derecha, así que el revés volvía a cargar a la izquierda y la espada pasaba de golpe por la guardia. Clips nuevos en player/animation/libs/Combo.res, armados por tools/build_combo_library.gd sampleando CombatMelee: Combo/Backhand arranca en la pose del tajo en su cancel_from (0,55, espada abajo a la derecha), sube por ese lado y barre de derecha a izquierda, pasa sobre el hombro izquierdo y vuelve a la guardia; Combo/Thrust arranca en el revés encadenado (0,45, espada arriba a la izquierda) y entra en la carga de Stab. Mismas duraciones que los de KayKit: no cambian las ventanas de AttackData ni de cancelación. sword_thrust usa una entrada nueva "Thrust" en AttackType; Stab queda para la estocada de escudo.
 
-## M12 — Assets propios (Blender)  (33/39, 6 en revisión)
+## M12 — Assets propios (Blender)  (34/39, 7 en revisión)
 
 Rehacer en Blender todos los assets con un mismo estilo, empezando por el overworld, que hoy sigue con el kit gris.
 
@@ -5851,7 +5851,7 @@ Fijar la guía de estilo de los assets propios antes de modelar: una textura de 
 
 **Bloquea a:** 12.2 Terreno del overworld; 12.3 Lugares del overworld; 12.4 Vegetación y props del overworld; 12.5 Interactivos y pickups; 12.6 Equipo y objetos del inventario; 12.7 Kit del templo propio; 12.8 Personajes propios; 12.9 Efectos con malla
 
-### 12.2 Terreno del overworld · En curso
+### 12.2 Terreno del overworld · Revisión
 
 **Prioridad:** alta · **Responsable:** project-epiphany-25 · **Etiquetas:** `arte`
 
@@ -5893,9 +5893,13 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
 - [x] Polvo en el aire
   Hecho: dust_motes.tscn (GPUParticles3D, 40 motas aditivas que flotan) colgado de TopDownCamera en overworld.tscn, delante de la cámara a la altura del player.
 
-**Prueba:** El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.
+**Prueba:** Capturas antes/después desde la cámara del juego en 12 zonas, con nubes congeladas y en pausa: solo difieren el viento del pasto, un enemigo que camina y un corrimiento de 1 px de la cámara en una zona (el primer intento perdía el lecho del río y dejaba líneas finas sobre el agua; arreglado). Suite 773/773 en main después de --import, test_map y test_player_hole incluidos (a3925d15).
 
-**Notas:** 2026-10-21: Daniel pide retomar el pendiente del playtest (sacar las mallas que el player nunca ve, como el piso del terreno apilado donde no se puede llegar). Encargado a -25 (hizo los bloques del terreno en 17.2), en paralelo con 15.23 mientras espera el G23.
+**Notas:** 2026-10-21: Daniel pidió retomar el pendiente del playtest (sacar las mallas que el player nunca ve, como el piso del terreno apilado donde no se puede llegar). Hecho por -25 (wt/art 50395f49 → main a3925d15):
+- build_terreno_organico.py saca de la malla visual toda cara que la cámara no puede ver nunca. Prueba por vértice: el player parado en cada celda caminable, con la cámara que sigue y la cenital, raycast contra el terreno. Las caras con un borde de más de 1 m se muestrean también por dentro (si no, desaparecía el lecho del río, que tiene las esquinas bajo el pasto y el medio visible a través del agua).
+- La colisión se arma del bloque entero: hash de la geometría de colisión idéntico antes y después. El layout no cambia; decorate_levels sin diff; SEAM_OFFSET igual.
+- Caras visuales 2,64 M → 2,03 M (−23 %). Triángulos en cuadro por zona (escritorio, cuadro en pausa) −1 a −12 %; casos del benchmark: inicio −2,7 %, arboleda −1,6 %, cardonal −1 %, bañado −9 %, cumbre −11 %. Draws casi igual.
+- El build del terreno ahora tarda ~29 min (antes unos pocos).
 
 **Referencias:** `gdd.md#overworld-layout`
 
@@ -8389,7 +8393,7 @@ Daniel (2026-10-20): algo para testear después. Ver qué pide que el juego corr
 8. [x] 11.131 Pozo junto a la Chullpa: caer sin bombas deja softlock · Hecho · anda
 9. [x] 11.171 Mapa del overworld: el cursor vuelve al player al moverlo hacia un lado · Hecho · anda
 10. [x] 11.172 Viaje rápido: el foco no va al botón y A abre la pregunta una y otra vez · Hecho · anda
-11. [x] 12.2 Terreno del overworld · En curso · anda — Anda, pero hay meshes que el player no ve. Por lo que no deberían estar. Un ejemplo es en el terreno apilado, tienen piso cuando es innacesible. El diseño y layout del overworld está bien, solo falta eliminar esas partes que no se ven nunca
+11. [x] 12.2 Terreno del overworld · Revisión · anda — Anda, pero hay meshes que el player no ve. Por lo que no deberían estar. Un ejemplo es en el terreno apilado, tienen piso cuando es innacesible. El diseño y layout del overworld está bien, solo falta eliminar esas partes que no se ven nunca
 12. [x] 11.133 Vasija chica cargada no se ve con el x-ray · Hecho · anda — Mejor, pero no tiene que haber x-ray cuando se levanta algo
 13. [x] 11.170 Atajos: animación del player subiendo y bajando en vez del fundido · Hecho · anda
 14. [x] 11.88 Niveles referenciados por ruta: saves y portales frágiles · Hecho · anda
