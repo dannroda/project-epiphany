@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-20
+> Generado: 2026-10-21
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -7784,7 +7784,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (12/19, 12 en revisión)
+## M15 — Optimización  (12/20, 12 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8022,11 +8022,27 @@ En Android (renderer Mobile) los CompositorEffect de src/world/look (tono_la, nu
 
 Benchmark 15.14 en el Moto Edge 30 Fusion (debug/tmp/bench/motorola_edge_30_fusion_20261020_2300.json, en wt/bugs): las mazmorras cuestan más GPU que el overworld. Templo hub 7 fps (GPU 135 ms), Chullpa 13 fps (GPU 74 ms, 2.44 M tris), Antesala 14 fps (GPU 69 ms); el overworld va a 20–30 fps. Con materiales planos (variante Plana) las mazmorras empeoran (6–9 fps), así que no son los shaders de material: sospechosos son las luces (antorchas/omni por sala), los efectos LA de pantalla (TonoLA, SombraLA, NubesLA, viñeta borrosa) o que las salas ocultas sigan llegando a la GPU (2.4 M tris con una sola sala a la vista). Medir qué es (PC con el benchmark y Godot profiler/RenderDoc, luego tools/bench.sh android ZY22GLQFZW) y bajar el costo sin cambiar el look en Forward+.
 
-### 15.17 Overworld: costo de los shaders en mobile · Pendiente
+### 15.17 Overworld: costo de los shaders en mobile · En curso
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
 Daniel sospecha que pesa que todo sea shader en vez de texturas. Benchmark 15.14 en el Edge 30 Fusion: en el overworld la variante Plana (StandardMaterial3D en toda la geometría) baja la GPU de 30–41 ms a 20–27 ms, o sea ~30 % es costo de material; en el G23 el overworld va a ~4 fps con GPU 88–136 ms. Medir qué materiales pesan (terreno, pasto/plantas con viento, agua, riscos, decor: aplanar de a uno en el benchmark o con un BenchVariant nuevo) y darles una variante barata en el renderer Mobile (menos muestras, sin ruido procedural por píxel, bakear a textura lo que hoy se calcula) sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22GLQFZW --build. No toca las paredes LA (15.16) ni LOD/terreno en bloques (17.2).
+
+**Prueba:** Capturas Mobile antes/después (inicio, cardonal, explanada del templo) iguales de estilo; Forward+ compila el código de antes (capturas iguales salvo ~0,01 % de píxeles por animación). Teléfono: tools/bench.sh android ZY22GLQFZW --build, variantes SinDetalle, SinViento, PlanaOutdoor, PlanaAgua, PlanaRiscos y SinLook intercalando Alta. Suite 768/768 en main.
+
+**Notas:** Edge 30 Fusion, overworld (5 casos), GPU por cuadro; corridas con Alta intercalada porque el teléfono se calienta (Alta sube de ~30 a ~42 ms en 10 min).
+- 15.13 (inicio de corrida fría): 36,3 → 29,5 ms de GPU (~20 → ~30 fps) contra la base de las 23:00.
+- Detalle del suelo bakeado en Mobile (38b2312a): epiphany_outdoor lee dos texturas de mundo que se repiten cada 28 m (assets/epiphany/outdoor_detail_a/b.png, uniforms globales en project.godot; se rehacen con tools/bake_outdoor_detail.gd en ventana) en lugar del Voronoi y los ruidos por píxel. Ahorra 7–12 ms (A/B en la misma build). Forward+ sin cambios (#if CURRENT_RENDERER == RENDERER_MOBILE).
+- Queda: efectos LA ~14 ms (→ 15.18), riscos ~2 ms, agua 1–4 ms, viento ~0.
+- La variante Plana de 15.14 no aplanaba los GridMap (6270 celdas): arreglado en a7ae7797 (copia plana de la MeshLibrary). Nuevas variantes en a7ae7797: flat_shaders/flat_except, parameters, cases.
+- Pendiente: variante Mobile del agua (sin mipmaps de pantalla, una lectura de profundidad, sin refracción en lo bajo), en la cola del Edge; capturas Mobile iguales (0,02 % de píxeles).
+Mergeado en main por -ae.
+
+### 15.18 Efectos LA en Mobile: menos pasadas de pantalla · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+Medido por -88 en el Edge 30 Fusion (15.17, variante SinLook): en el overworld los efectos LA cuestan ~14 ms de GPU por cuadro (26,4 ms sin ellos contra ~40 con ellos), más que cualquier material. En Mobile cada efecto (TonoLA, NubesLA, SombraLA) copia el color a una textura rgba16f y lo vuelve a escribir (look_color.gd, 15.15): 6 pasadas de pantalla completa extra más las del AO, nubes y tono. Compartir una sola copia entre los tres (entra una vez, sale una vez) y, si se puede, juntar tono y nubes en una pasada. Forward+ sin cambios. Medir con tools/bench.sh android ZY22GLQFZW --build intercalando Alta entre variantes (el Edge se calienta en corridas largas).
 
 ## M17 — Después de la demo  (0/2)
 

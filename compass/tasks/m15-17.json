@@ -5,16 +5,16 @@
   "created_at": "2026-10-21T02:24:40.501Z",
   "description": "Daniel sospecha que pesa que todo sea shader en vez de texturas. Benchmark 15.14 en el Edge 30 Fusion: en el overworld la variante Plana (StandardMaterial3D en toda la geometría) baja la GPU de 30–41 ms a 20–27 ms, o sea ~30 % es costo de material; en el G23 el overworld va a ~4 fps con GPU 88–136 ms. Medir qué materiales pesan (terreno, pasto/plantas con viento, agua, riscos, decor: aplanar de a uno en el benchmark o con un BenchVariant nuevo) y darles una variante barata en el renderer Mobile (menos muestras, sin ruido procedural por píxel, bakear a textura lo que hoy se calcula) sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22GLQFZW --build. No toca las paredes LA (15.16) ni LOD/terreno en bloques (17.2).",
   "milestone": "m15",
-  "notes": "",
+  "notes": "Edge 30 Fusion, overworld (5 casos), GPU por cuadro; corridas con Alta intercalada porque el teléfono se calienta (Alta sube de ~30 a ~42 ms en 10 min).\n- 15.13 (inicio de corrida fría): 36,3 → 29,5 ms de GPU (~20 → ~30 fps) contra la base de las 23:00.\n- Detalle del suelo bakeado en Mobile (38b2312a): epiphany_outdoor lee dos texturas de mundo que se repiten cada 28 m (assets/epiphany/outdoor_detail_a/b.png, uniforms globales en project.godot; se rehacen con tools/bake_outdoor_detail.gd en ventana) en lugar del Voronoi y los ruidos por píxel. Ahorra 7–12 ms (A/B en la misma build). Forward+ sin cambios (#if CURRENT_RENDERER == RENDERER_MOBILE).\n- Queda: efectos LA ~14 ms (→ 15.18), riscos ~2 ms, agua 1–4 ms, viento ~0.\n- La variante Plana de 15.14 no aplanaba los GridMap (6270 celdas): arreglado en a7ae7797 (copia plana de la MeshLibrary). Nuevas variantes en a7ae7797: flat_shaders/flat_except, parameters, cases.\n- Pendiente: variante Mobile del agua (sin mipmaps de pantalla, una lectura de profundidad, sin refracción en lo bajo), en la cola del Edge; capturas Mobile iguales (0,02 % de píxeles).\nMergeado en main por -ae.",
   "order": 193,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "optimizacion"
   ],
-  "test": "",
+  "test": "Capturas Mobile antes/después (inicio, cardonal, explanada del templo) iguales de estilo; Forward+ compila el código de antes (capturas iguales salvo ~0,01 % de píxeles por animación). Teléfono: tools/bench.sh android ZY22GLQFZW --build, variantes SinDetalle, SinViento, PlanaOutdoor, PlanaAgua, PlanaRiscos y SinLook intercalando Alta. Suite 768/768 en main.",
   "title": "Overworld: costo de los shaders en mobile",
-  "updated_at": "2026-10-21T02:24:40.501Z"
+  "updated_at": "2026-10-21T03:28:43.095Z"
 }
