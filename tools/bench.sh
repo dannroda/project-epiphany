@@ -36,6 +36,8 @@ android)
 		"$GODOT" --headless --path . --import > /dev/null 2>&1 || true
 		"$GODOT" --headless --path . --export-debug "Android (benchmark)" "$APK" > "$OUT/export_$stamp.log" 2>&1
 	fi
+	exec 9> "${XDG_RUNTIME_DIR:-/tmp}/epiphany_bench_$serial.lock"
+	flock -n 9 || { echo "otra corrida usa $serial, espero mi turno"; flock 9; }
 	adb -s "$serial" install -r "$APK" > /dev/null
 	adb -s "$serial" shell am force-stop "$PACKAGE"
 	adb -s "$serial" logcat -c
