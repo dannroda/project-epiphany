@@ -7827,7 +7827,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (21/29, 21 en revisión)
+## M15 — Optimización  (22/29, 22 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8197,7 +8197,7 @@ PC, renderer Mobile, 1600×720, GPU del primer cuadro tras la carga: overworld 2
 G23 (main + 6bf8a8da, solo Alta, 8 casos desde OverworldInicio; debug/tmp/ow2/draw/g23_verify_15-21_3e.json): 0 VkResult -4 (antes cada ~0,5 s después de la primera carga). Primeros números del G23 con el contexto vivo, GPU: inicio 75 ms (11,5 fps), arboleda 86, cardonal 75, bañado 90, cumbre 105 (8,2 fps), templo hub 315 (3,1 fps), chullpa 327 (2,9 fps), antesala 146 (6,4 fps). Primera carga del overworld 36,5 s.
 Queda (→ 15.22): durante la primera carga del overworld una entrega sigue pasando los 3 s del fence de Mali; esta vez el driver no reseteó.
 
-### 15.22 G23: la primera carga del overworld todavía traba la GPU más de 3 s · En curso
+### 15.22 G23: la primera carga del overworld todavía traba la GPU más de 3 s · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
 
@@ -8208,6 +8208,15 @@ Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mo
   Por qué: En Mobile la foto sale en 16 mosaicos para no trabar la GPU más de 3 s; los efectos de pantalla salían en cada mosaico como manchas oscuras en las esquinas. Sacarlos en los dos renderers deja el mismo mapa en PC y teléfono; en PC el mapa queda más claro en los bordes que antes. Antes y después en debug/tmp/ow2/draw/photo_before_after.png.
   Descartado: Sacar los efectos solo en Mobile (PC queda como antes, mapas distintos); dejar los efectos y teselar solo en Mobile con las manchas.
   Respuesta: Sin efectos en los dos (Daniel a -8f, viendo photo_before_after.png): mismo mapa en PC y teléfono.
+
+**Prueba:** G23 después del reinicio, misma corrida: mosaicos 4×4 0 fence3000, peor cuadro de mosaico 340–580 ms (incluye los get_image); una sola vez 1 fence3000 y un hueco de 3,6–4,4 s. VRAM del overworld 373 contra 398 MB. Shaders compilan en overworld, chullpa, templo hub y antesala. Forward+ en Xvfb (RX 580): sin viñeta ni oscurecido de AO, el resto igual (debug/tmp/ow2/draw/fp_before_after.png). Suite 775/775 en main después de --import (d2dd298e).
+
+**Notas:** Causa (-8f, bisección por tipo de nodo en el G23, solo visibilidad/propiedades): hide_mesh saca la traba; ni multimesh, gridmap, decals, warmup, partículas, sombras, cielo ni compositor. Cada corrida tenía un cuadro de ~3,0 M primitivas y ~2340 draws justo después de instanciar: el minimapa llama a OverworldMap.snapshot() al vincular la escena, y la foto del mapa se renderizaba en su SubViewport aparte (ortográfica, todo `scenery` más una copia MultiMesh del GridMap, 20 px/m × Rect2(200, 96) = 4000×1920 px) en el mismo cuadro que el primero del overworld. Al ser otra viewport no aparecía en los timestamps de la principal. Confirmado: no_mapphoto 0 fence3000, sin el cuadro de 3,0 M ni el hueco de 3,9 s.
+Arreglo (-8f, wt/overworld f26ccbcf → main d2dd298e, encima del de memoria de 15.27 ba06b251): en Mobile la foto sale en 4×4 mosaicos, uno por cuadro (1000×480 px + 16 px de margen que se descarta), leídos con get_image a una Image y de ahí a la ImageTexture; la SubViewport queda del tamaño de un mosaico y después se estaciona. En Forward+ sigue de una vez. No se puede bakear: la foto depende de la partida (se vuelve a sacar con flags de layout: puente, paredes secretas).
+- El agujero del player ya no se apaga con el global durante la foto (en 16 cuadros cerraría el agujero de la vista principal): player_hole.gdshaderinc no recorta si la cámara está a más de 45 m sobre el player (la del mapa está a 60 m, la del juego llega a ~38 m); 3 llamadas pasan CAMERA_POSITION_WORLD (cutaway.gdshaderinc, que incluyen cutaway y cutaway_la; epiphany_wall; terreno_mc). Saca también el parpadeo de un cuadro del agujero en Forward+.
+- La cámara de la foto tiene su propio compositor en los dos renderers: los efectos del nivel sin viñeta ni marco (tono_la) ni el AO de pantalla (sombra_la), y las nubes quietas mientras se saca (decisión de Daniel: mismo mapa en PC y teléfono; en PC el mapa queda más claro en los bordes).
+- Diferencia conocida en Mobile: la caída radial del tono por profundidad de water_la va por mosaico; 1,7 % de píxeles cambian más de 16 (693 en las juntas): en el bañado las manchas de luz se corren un poco, sin costuras.
+- Si el nivel sale de escena entre mosaicos, snapshot() corta sin tocar nada (test nuevo).
 
 ### 15.23 G23: templo hub y chullpa a 3 fps (costo por píxel por sala) · Revisión
 
@@ -8296,7 +8305,12 @@ Siguiente (en escritorio, headless/xvfb): ver si las mallas del kit tienen LODs 
 
 2026-10-21 a la tarde el G23 corre ~1,8× más lento que a la mañana en todas las pasadas (Base en Bajo GPU 36–44 contra 22–24 ms; canvas 4,3 contra 2,3; tonemap 2,7 contra 1,4) sin calor (thermal 0, GPU 45–53 °C). El teléfono está sin memoria: 55–113 MB libres de 3,8 GB, kswapd0 al 97 % de CPU, load average ~17. El mayor consumidor es el juego: com.example.projectepiphany 1,62 GB PSS, VmRSS 1,12 GB + 378 MB de swap durante una corrida de benchmark (Chullpa y Cumbre). Medir la memoria del juego en Mobile por caso (overworld, cada mazmorra, después de cambiar de nivel): Performance MEMORY_STATIC, RENDERING_INFO_VIDEO_MEM_USED/TEXTURE_MEM_USED/BUFFER_MEM_USED, y el PSS del proceso; ver si crece entre casos (algo que no se libera al cambiar de nivel) y qué domina (kits LA embebidos, texturas, mallas, audio). Bajarla para que el G23 no swapee sin cambiar el look en Forward+; lo que cambie el look va como pregunta a Daniel. Sumar la memoria como columna del benchmark. Las corridas con el teléfono degradado valen solo en relativo dentro de la misma corrida.
 
-**Prueba:** Suite 774/774 en main después de --import (05d26a63). A/B de dos APK en el G23 (memoria de video arriba); foto del mapa igual salvo animación.
+**Decisiones:**
+- ? ¿Dejamos que el juego limpie su caché de shaders cuando pasa de ~40 MB, a cambio de que esa vez una sesión cargue lento (como recién instalado)? · pregunta abierta
+  Por qué: Godot guarda la caché de shaders compilados sin podarla nunca y la tiene entera en memoria toda la sesión (dos copias). En el G23 había 91 MB, de los que solo 11 eran del build actual; borrarla bajó ~170 MB de swap (PSS 1510 → 1296–1405 MB). Un jugador real junta ~10–30 MB de basura por actualización, así que pasaría cada varias actualizaciones. El costo: esa sesión (y en el peor caso la siguiente) compila todo de nuevo: la primera carga del overworld 32 s en vez de 11, chullpa 12,5 en vez de 2, cumbre 4,3 en vez de 1,7; las visitas siguientes salen normales. No hay forma de hacerlo sin perder al menos un arranque: Godot carga la caché antes que nuestro código y la reescribe al salir.
+  Descartado: Limpiarla en cada actualización (más seguido, la misma sesión lenta cada vez); no limpiarla nunca (crece sin tope); apagar la caché (cada carga recompila todo en el Mali, mucho peor).
+
+**Prueba:** Suite 775/775 en main después de --import (d39eeeae). A/B de dos APK en el G23 (memoria de video); tanda de caché vieja/fría/tibia bajo un lock (16:30–16:35).
 
 **Notas:** Paso 1 (-88, wt/design-fix → main 8c243d4e, ba06b251, 05d26a63; medido en escritorio con el renderer Mobile y confirmado en el G23 con A/B limpia de dos APK, antes del reinicio):
 - La SubViewport de la foto del mapa quedaba a 4000×1920 todo el tiempo (~200 MB de video con sus búferes 3D): ahora renderiza a ese tamaño solo para la foto, la copia a una ImageTexture que persiste y queda estacionada en 2×2. La foto queda igual salvo la animación.
@@ -8313,7 +8327,14 @@ Referencia con el teléfono recién reiniciado (G23 reiniciado 15:47 con el OK d
 - Chullpa de nuevo 173 / 86 / 32 / 264 / 1896
 dumpsys meminfo cada 16 s: a los 17 s de arrancar el juego ya tiene 430 MB en swap con el teléfono limpio (el swap lo provoca nuestra carga); Graphics (GL mtrack del Mali) 785–1137 MB, oscila ~350 MB entre muestras; Native Heap 183–246 MB. El PSS sube de caso en caso (Chullpa 1625 → 1896 la segunda vez) con video y estático iguales: lo que crece es memoria del driver.
 Conclusión: lo que Godot cuenta como video bajó, pero domina la memoria del driver (2–3× el video que reporta Godot).
-Siguiente (escritorio con el renderer Mobile, después A/B en el G23): qué parte de la memoria del driver es nuestra y configurable: el staging buffer de RenderingDevice (staging_buffer/max_size_mb, 128 MB por defecto), la caché de pipelines y las variantes de shaders compiladas (¿crecen con cada nivel y nunca se liberan?), los cuadros en vuelo (frame_queue_size, swapchain_image_count).
+Caché de pipelines (-88; benchmark con load_pipelines, pipelines y warmup_max_ms, bench.sh con BENCH_LOCK_HELD para varias corridas bajo un lock: main d39eeeae). Tanda en el G23 con un solo lock (16:30–16:35, mismo APK, Bajo, overworld → chullpa → cumbre → overworld → chullpa): caché vieja → borrar → fría → tibia.
+- files/vulkan/pipelines.mobile.mali-g52_mc2.cache medía 91 MB; una nueva de este build después del recorrido, 11,4 MB: ~80 MB eran pipelines de builds viejos (install -r conserva los datos; junta los de todas las sesiones).
+- Promedio de dumpsys meminfo por corrida (una lectura sola varía ±200 MB): PSS vieja 1510 / fría 1296 / tibia 1405 MB; swap 291 / 156 / 124; GL mtrack 777 / 666 / 821. El ahorro es casi todo swap (~170 MB): dos copias frías de la caché (el búfer de Godot y el VkPipelineCache del driver).
+- Rearmarla cuesta solo la primera carga de cada nivel: overworld 32,2 contra 10,9 s, chullpa 12,5 contra 2,0, cumbre 4,3 contra 1,7; la segunda visita sale normal; los cuadros del calentamiento no empeoran. fence3000 0 en fría y tibia.
+- Godot (master): ruta fija user://vulkan/pipelines.<renderer>.<gpu>.cache, RenderingDevice::initialize la carga antes que cualquier script, guarda cada 3 MB de crecimiento y al salir todo lo que tiene (viejo incluido); "FIXME: We're letting the cache grow unboundedly". Solo existe pipeline_cache/enable. Borrar el archivo desde el juego no poda (la misma sesión lo reescribe al salir): hace falta una sesión que no lo cargue. Única vía previa a RD: application/config/project_settings_override en user:// con pipeline_cache/enable=false para la sesión siguiente (solo con feature .android; verificar que el editor no lo escriba en project.godot).
+- Pregunta a Daniel (decisión 1): limpiarla al pasar ~40 MB a cambio de una sesión lenta esa vez.
+Crecimiento por cambio de nivel: no es la caché (con la caché apagada crece igual, +23–25 MB por paso en escritorio). En escritorio todo en mapeos anónimos (+96 MB en 5 cambios; [heap] +6 MB); las compilaciones de pipelines suben en cada visita al mismo nivel (Godot libera los shaders con la escena y los recompila al volver). En el G23 ~135 MB por cambio.
+Siguiente: separar memoria del driver de malloc (smaps por mapeo) en el crecimiento por cambio de nivel.
 
 ## M17 — Después de la demo  (0/2)
 
