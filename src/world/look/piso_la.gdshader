@@ -99,6 +99,60 @@ vec3 cells(vec2 p) {
 	return vec3(s.x * tile_size, s.yz);
 }
 
+#if CURRENT_RENDERER == RENDERER_MOBILE
+// En el teléfono, una sola pasada: el borde, la losa y hacia dónde crece la distancia al borde (el bisel sale de ahí, sin
+// volver a calcular las losas al lado), con la segunda vuelta del Voronoi en las 3x3 de la losa más cercana.
+vec3 cells_mobile(vec2 p, out vec2 grad) {
+	if (plank_width > 0.0) {
+		float row = floor(p.y / plank_width);
+		float x = p.x + mod(row, 2.0) * 0.5 * plank_length;
+		float k = floor(x / plank_length);
+		float fx = x - k * plank_length;
+		float fy = p.y - row * plank_width;
+		vec4 d = vec4(fx, plank_length - fx, fy, plank_width - fy);
+		float m = min(min(d.x, d.y), min(d.z, d.w));
+		grad = m == d.x ? vec2(1.0, 0.0) : m == d.y ? vec2(-1.0, 0.0) : m == d.z ? vec2(0.0, 1.0) : vec2(0.0, -1.0);
+		return vec3(m, k, row);
+	}
+	vec2 q = p / tile_size;
+	vec2 n = floor(q);
+	vec2 f = fract(q);
+	vec2 best_g = vec2(0.0);
+	vec2 best_r = vec2(0.0);
+	float d1 = 8.0;
+	for (int j = -1; j <= 1; j++) {
+		for (int i = -1; i <= 1; i++) {
+			vec2 g = vec2(float(i), float(j));
+			vec2 r = g + 0.5 + (hash2(n + g) - 0.5) * 2.0 * jitter - f;
+			float d = dot(r, r);
+			if (d < d1) {
+				d1 = d;
+				best_r = r;
+				best_g = g;
+			}
+		}
+	}
+	float edge = 8.0;
+	grad = vec2(0.0);
+	for (int j = -1; j <= 1; j++) {
+		for (int i = -1; i <= 1; i++) {
+			vec2 g = best_g + vec2(float(i), float(j));
+			vec2 r = g + 0.5 + (hash2(n + g) - 0.5) * 2.0 * jitter - f;
+			vec2 diff = r - best_r;
+			if (dot(diff, diff) > 0.0001) {
+				vec2 dir = normalize(diff);
+				float e = dot(0.5 * (best_r + r), dir);
+				if (e < edge) {
+					edge = e;
+					grad = -dir;
+				}
+			}
+		}
+	}
+	return vec3(edge * tile_size, n + best_g);
+}
+#endif
+
 bool is_earth(vec2 id) {
 	return hash1(id + 11.0) < earth;
 }
@@ -128,7 +182,12 @@ void fragment() {
 		ROUGHNESS = 1.0;
 	} else {
 		vec2 p = world_pos.xz;
+#if CURRENT_RENDERER == RENDERER_MOBILE
+		vec2 grad;
+		vec3 s = cells_mobile(p, grad);
+#else
 		vec3 s = cells(p);
+#endif
 		float edge = s.x;
 		bool dirt = is_earth(s.yz);
 		float tone = dirt ? earth_shade : 1.0 + (hash1(s.yz) - 0.5) * 2.0 * tone_spread;
@@ -161,9 +220,14 @@ void fragment() {
 			spec = mix(spec, 0.2, cover);
 		}
 		ALBEDO = color;
+#if CURRENT_RENDERER == RENDERER_MOBILE
+		float t = clamp((edge - grout_width) / bevel, 0.0, 1.0);
+		vec2 slope = dirt ? vec2(0.0) : grad * 6.0 * t * (1.0 - t) / bevel;
+#else
 		float e = 0.02;
 		float h = stone_height(p);
 		vec2 slope = vec2(stone_height(p + vec2(e, 0.0)) - h, stone_height(p + vec2(0.0, e)) - h) / e;
+#endif
 		vec3 n = normalize(vec3(-slope.x * normal_strength * bevel, 1.0, -slope.y * normal_strength * bevel));
 		NORMAL = normalize((VIEW_MATRIX * vec4(n, 0.0)).xyz);
 		ROUGHNESS = rough;
