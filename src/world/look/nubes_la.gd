@@ -20,7 +20,10 @@ extends CompositorEffect
 ## Para capturas: un tiempo fijo en lugar del reloj (negativo = el reloj).
 var time_override := -1.0
 
+const LookColor := preload("res://src/world/look/look_color.gd")
+
 var rd: RenderingDevice
+var look: LookColor
 var shader: RID
 var pipeline: RID
 var sampler: RID
@@ -71,6 +74,7 @@ void main() {
 func _init() -> void:
 	effect_callback_type = EFFECT_CALLBACK_TYPE_POST_TRANSPARENT
 	rd = RenderingServer.get_rendering_device()
+	look = LookColor.new(rd)
 	RenderingServer.call_on_render_thread(_init_shader)
 
 
@@ -79,6 +83,7 @@ func _notification(what: int) -> void:
 		for r in [shader, sampler]:
 			if r.is_valid():
 				rd.free_rid(r)
+		look.free_rids()
 
 
 func _init_shader() -> void:
@@ -117,10 +122,13 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 		var shadow := Vector3(tint.r, tint.g, tint.b) * (1.0 - strength) / maxf(tint.get_luminance(), 0.01)
 		push.append_array([shadow.x, shadow.y, shadow.z, strength, size, time, drift.x, drift.y, edge.x, edge.y, lit.x, lit.y,
 				slant.x, slant.y, 1.0 if debug_view else 0.0, 0.0])
+		var target := look.begin(buffers, view)
+		if not target.is_valid():
+			continue
 		var color := RDUniform.new()
 		color.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
 		color.binding = 0
-		color.add_id(buffers.get_color_layer(view))
+		color.add_id(target)
 		var depth := RDUniform.new()
 		depth.uniform_type = RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE
 		depth.binding = 1
@@ -134,3 +142,4 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 		rd.compute_list_set_push_constant(list, bytes, bytes.size())
 		rd.compute_list_dispatch(list, (screen.x + 7) / 8, (screen.y + 7) / 8, 1)
 		rd.compute_list_end()
+		look.end()

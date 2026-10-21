@@ -17,7 +17,10 @@ extends CompositorEffect
 ## En el editor el marco no se dibuja (molesta para editar el nivel), salvo que se tilde esto.
 @export var frame_in_editor := false
 
+const LookColor := preload("res://src/world/look/look_color.gd")
+
 var rd: RenderingDevice
+var look: LookColor
 var shader: RID
 var pipeline: RID
 
@@ -69,12 +72,14 @@ void main() {
 func _init() -> void:
 	effect_callback_type = EFFECT_CALLBACK_TYPE_POST_TRANSPARENT
 	rd = RenderingServer.get_rendering_device()
+	look = LookColor.new(rd)
 	RenderingServer.call_on_render_thread(_init_shader)
 
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and shader.is_valid():
 		rd.free_rid(shader)
+		look.free_rids()
 
 
 func _init_shader() -> void:
@@ -102,10 +107,13 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 		return
 	var push := PackedFloat32Array([size.x, size.y, exposure, vignette, frame if frame_in_editor or not Engine.is_editor_hint() else 0.0, frame_softness, frame_slant, frame_sides, frame_top, frame_bottom, 0.0]).to_byte_array()
 	for view in buffers.get_view_count():
+		var color := look.begin(buffers, view)
+		if not color.is_valid():
+			continue
 		var u := RDUniform.new()
 		u.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
 		u.binding = 0
-		u.add_id(buffers.get_color_layer(view))
+		u.add_id(color)
 		var set := UniformSetCacheRD.get_cache(shader, 0, [u])
 		var list := rd.compute_list_begin()
 		rd.compute_list_bind_compute_pipeline(list, pipeline)
@@ -113,3 +121,4 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 		rd.compute_list_set_push_constant(list, push, push.size())
 		rd.compute_list_dispatch(list, (size.x + 7) / 8, (size.y + 7) / 8, 1)
 		rd.compute_list_end()
+		look.end()

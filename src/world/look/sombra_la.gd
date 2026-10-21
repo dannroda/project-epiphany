@@ -9,7 +9,10 @@ extends CompositorEffect
 @export var reach := 5.0
 @export var debug_view := false   # output the AO instead of the scene
 
+const LookColor := preload("res://src/world/look/look_color.gd")
+
 var rd: RenderingDevice
+var look: LookColor
 var sh_ao: RID
 var sh_blur: RID
 var sh_mul: RID
@@ -140,6 +143,7 @@ void main() {
 func _init() -> void:
 	effect_callback_type = EFFECT_CALLBACK_TYPE_POST_TRANSPARENT
 	rd = RenderingServer.get_rendering_device()
+	look = LookColor.new(rd)
 	RenderingServer.call_on_render_thread(_init_shaders)
 
 
@@ -147,6 +151,7 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and rd:
 		for r in tex.values() + [sh_ao, sh_blur, sh_mul, sh_box, sampler_nearest, sampler_linear]:
 			if r.is_valid(): rd.free_rid(r)
+		look.free_rids()
 
 
 func _compile(src: String) -> RID:
@@ -266,6 +271,10 @@ func _render_callback(_type: int, render_data: RenderData) -> void:
 		_blur(tex["qa"], tex["q"], q, v1, v2)
 		_blur(tex["q"], tex["ea"], e, h1, h2)
 		_blur(tex["ea"], tex["e"], e, v1, v2)
+		var color := look.begin(buffers, view)
+		if not color.is_valid():
+			continue
 		var push := PackedFloat32Array([size.x, size.y, strength, 1.0 if debug_view else 0.0]).to_byte_array()
-		_dispatch(p_mul, sh_mul, [_image_uniform(0, buffers.get_color_layer(view)),
+		_dispatch(p_mul, sh_mul, [_image_uniform(0, color),
 				_sampler_uniform(1, sampler_linear, tex["q"]), _sampler_uniform(2, sampler_linear, tex["e"])], push, size)
+		look.end()
