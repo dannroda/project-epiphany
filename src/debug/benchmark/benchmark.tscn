@@ -3,6 +3,9 @@
 [ext_resource type="Script" path="res://src/debug/benchmark/benchmark.gd" id="1_bench"]
 [ext_resource type="Script" path="res://src/debug/benchmark/bench_variant.gd" id="2_variant"]
 [ext_resource type="Script" path="res://src/debug/benchmark/bench_case.gd" id="3_case"]
+[ext_resource type="Shader" path="res://data/kits/shaders/epiphany_outdoor.gdshader" id="4_outdoor"]
+[ext_resource type="Shader" path="res://src/world/water/water_la.gdshader" id="5_water"]
+[ext_resource type="Shader" path="res://data/kits/shaders/epiphany_wall.gdshader" id="6_wall"]
 
 [node name="Benchmark" type="Node"]
 script = ExtResource("1_bench")
@@ -21,6 +24,45 @@ ssao = false
 [node name="Plana" type="Node" parent="Variants"]
 script = ExtResource("2_variant")
 flat_materials = true
+
+[node name="SinDetalle" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+parameters_shader = ExtResource("4_outdoor")
+parameters = {
+"detail": 0.0
+}
+cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+
+[node name="SinViento" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+parameters_shader = ExtResource("4_outdoor")
+parameters = {
+"wind_strength": 0.0
+}
+cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+
+[node name="PlanaOutdoor" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+flat_materials = true
+flat_shaders = Array[Shader]([ExtResource("4_outdoor")])
+cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+
+[node name="PlanaAgua" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+flat_materials = true
+flat_shaders = Array[Shader]([ExtResource("5_water")])
+cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+
+[node name="PlanaRiscos" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+flat_materials = true
+flat_shaders = Array[Shader]([ExtResource("6_wall")])
+cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+
+[node name="SinLook" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+effects = false
+cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
 
 [node name="Cases" type="Node" parent="."]
 

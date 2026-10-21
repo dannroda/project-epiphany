@@ -12,3 +12,11 @@ extends Node
 @export var probes := true
 @export var effects := true
 @export var gridmaps := true
+## Con flat_materials, solo la geometría con algún material de estos shaders (con flat_except, toda menos esa).
+@export var flat_shaders: Array[Shader] = []
+@export var flat_except := false
+## Parámetros que pone en los materiales de parameters_shader mientras corre, y después los devuelve.
+@export var parameters_shader: Shader
+@export var parameters := {}
+## Solo estos casos (vacío: todos).
+@export var cases: PackedStringArray = []

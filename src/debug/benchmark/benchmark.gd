@@ -11,6 +11,7 @@ const OUT := "user://benchmark/latest.json"
 @export var warmup := 2.0
 
 var _flat := StandardMaterial3D.new()
+var _variant: BenchVariant
 
 
 func _ready() -> void:
@@ -34,6 +35,8 @@ func _run() -> void:
 	var runs := []
 	for variant: BenchVariant in $Variants.get_children():
 		for bench: BenchCase in $Cases.get_children():
+			if not variant.cases.is_empty() and bench.name not in variant.cases:
+				continue
 			var run := await _measure(bench, variant, viewport)
 			print("BENCH ", JSON.stringify(run))
 			runs.append(run)
@@ -60,9 +63,11 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		run["error"] = error_string(err) if err != OK else "no player"
 		return run
 	_strip(get_tree().current_scene, variant)
+	_variant = variant
 	if variant.flat_materials:
 		_flatten(get_tree().current_scene)
 		get_tree().node_added.connect(_flatten)
+	var restore := _apply(variant, get_tree().current_scene)
 	player.health.make_invulnerable(3600.0)
 	var origin := player.global_position if bench.use_spawn else bench.center
 	var columns := {"frame": [], "process": [], "physics": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
@@ -87,6 +92,7 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		columns.objects.append(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
 	if get_tree().node_added.is_connected(_flatten):
 		get_tree().node_added.disconnect(_flatten)
+	restore.call()
 	var frames: Array = columns.frame
 	run["fps"] = 1000.0 * frames.size() / maxf(_sum(frames), 0.001)
 	for key: String in columns:
@@ -127,7 +133,74 @@ func _strip(scene: Node, variant: BenchVariant) -> void:
 
 func _flatten(node: Node) -> void:
 	for geometry: GeometryInstance3D in node.find_children("*", "GeometryInstance3D", true, false) + ([node] if node is GeometryInstance3D else []):
-		geometry.material_override = _flat
+		if _flattens(_materials(geometry)):
+			geometry.material_override = _flat
+	for grid: GridMap in node.find_children("*", "GridMap", true, false) + ([node] if node is GridMap else []):
+		if grid.mesh_library == null:
+			continue
+		var library: MeshLibrary = grid.mesh_library.duplicate()
+		for item in library.get_item_list():
+			var mesh := library.get_item_mesh(item)
+			if mesh == null or not _flattens(_mesh_materials(mesh)):
+				continue
+			mesh = mesh.duplicate()
+			for surface in mesh.get_surface_count():
+				mesh.surface_set_material(surface, _flat)
+			library.set_item_mesh(item, mesh)
+		grid.mesh_library = library
+
+
+func _flattens(materials: Array) -> bool:
+	if _variant.flat_shaders.is_empty():
+		return true
+	var hit := materials.any(func(m: Material) -> bool: return m is ShaderMaterial and m.shader in _variant.flat_shaders)
+	return hit != _variant.flat_except
+
+
+func _materials(geometry: GeometryInstance3D) -> Array:
+	var out := [geometry.material_override] if geometry.material_override else []
+	var mesh: Mesh = geometry.get(&"mesh") if geometry is MeshInstance3D else null
+	if geometry is MultiMeshInstance3D and geometry.multimesh:
+		mesh = geometry.multimesh.mesh
+	if mesh:
+		for surface in mesh.get_surface_count():
+			var m: Material = geometry.get_surface_override_material(surface) if geometry is MeshInstance3D else null
+			if m == null:
+				m = mesh.surface_get_material(surface)
+			if m:
+				out.append(m)
+	return out
+
+
+func _mesh_materials(mesh: Mesh) -> Array:
+	var out := []
+	for surface in mesh.get_surface_count():
+		if mesh.surface_get_material(surface):
+			out.append(mesh.surface_get_material(surface))
+	return out
+
+
+## Los parámetros de shader de la variante; devuelve cómo dejarlos como estaban.
+func _apply(variant: BenchVariant, scene: Node) -> Callable:
+	var undo := []
+	if variant.parameters_shader and not variant.parameters.is_empty():
+		var seen := {}
+		var found := []
+		for geometry: GeometryInstance3D in scene.find_children("*", "GeometryInstance3D", true, false):
+			found.append_array(_materials(geometry))
+		for grid: GridMap in scene.find_children("*", "GridMap", true, false):
+			for item in grid.mesh_library.get_item_list() if grid.mesh_library else []:
+				if grid.mesh_library.get_item_mesh(item):
+					found.append_array(_mesh_materials(grid.mesh_library.get_item_mesh(item)))
+		for m: Material in found:
+			if m is ShaderMaterial and m.shader == variant.parameters_shader and not seen.has(m):
+				seen[m] = true
+				for key: String in variant.parameters:
+					undo.append([m, key, m.get_shader_parameter(key)])
+					m.set_shader_parameter(key, variant.parameters[key])
+	return func() -> void:
+		for entry: Array in undo:
+			entry[0].set_shader_parameter(entry[1], entry[2])
 
 
 func _summary(values: Array) -> Dictionary:
