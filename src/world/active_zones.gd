@@ -12,10 +12,15 @@ extends Node
 @export var chunk_size := 16.0
 
 var _zones: Array[Rect2] = []
+## Las zonas y los chunks agrandados a `reach`, calculados una vez (15.20).
+var _reach_zones: Array[Rect2] = []
+var _reach_chunks: Dictionary[Vector2i, Rect2] = {}
 var _awake: Array[bool] = []
 var _leaves: Dictionary[Vector2i, Array] = {}
 var _lit: Dictionary[Vector2i, bool] = {}
 var _asleep: Dictionary[Node, bool] = {}
+## Enemigo → [posición, zona]: el que no se movió (los dormidos) no vuelve a buscar su zona.
+var _zone_at: Dictionary[Node, Array] = {}
 
 
 func _ready() -> void:
@@ -27,6 +32,7 @@ func _collect() -> void:
 		return
 	for zone: AreaZone in get_tree().get_nodes_in_group(AreaZone.GROUP):
 		_zones.append(zone.bounds())
+		_reach_zones.append(zone.bounds().grow(reach))
 		_awake.append(true)
 	if scenery == null:
 		return
@@ -36,25 +42,34 @@ func _collect() -> void:
 			if not _leaves.has(chunk):
 				_leaves[chunk] = []
 				_lit[chunk] = true
+				_reach_chunks[chunk] = Rect2(Vector2(chunk) * chunk_size, Vector2.ONE * chunk_size).grow(reach)
 			_leaves[chunk].append(particles)
 
 
 func _physics_process(_delta: float) -> void:
-	var players := Players.all.filter(func(player: PlayerCharacter) -> bool: return player.is_inside_tree())
+	var players := PackedVector2Array()
+	for player: PlayerCharacter in Players.all:
+		if player.is_inside_tree():
+			players.append(Vector2(player.global_position.x, player.global_position.z))
 	for zone in _zones.size():
-		_awake[zone] = players.is_empty() or _near(_zones[zone].grow(reach), players)
+		_awake[zone] = players.is_empty() or _near(_reach_zones[zone], players)
 	for chunk in _leaves:
-		var lit := players.is_empty() or _near(Rect2(Vector2(chunk) * chunk_size, Vector2.ONE * chunk_size).grow(reach), players)
+		var lit := players.is_empty() or _near(_reach_chunks[chunk], players)
 		if lit != _lit[chunk]:
 			_lit[chunk] = lit
 			_emit(_leaves[chunk], lit)
 	for enemy in get_tree().get_nodes_in_group(Enemy.GROUP):
 		if enemy is Node3D:
-			_wake(enemy, players.is_empty() or _awake_at((enemy as Node3D).global_position, players))
+			_wake(enemy, players.is_empty() or _awake_at(enemy, players))
 
 
-func _awake_at(point: Vector3, players: Array) -> bool:
-	var zone := _zone_of(point)
+func _awake_at(enemy: Node3D, players: PackedVector2Array) -> bool:
+	var point := enemy.global_position
+	var cached: Array = _zone_at.get(enemy, [])
+	if cached.is_empty() or cached[0] != point:
+		cached = [point, _zone_of(point)]
+		_zone_at[enemy] = cached
+	var zone: int = cached[1]
 	if zone >= 0:
 		return _awake[zone]
 	return _near(Rect2(point.x, point.z, 0.0, 0.0).grow(reach), players)
@@ -67,9 +82,9 @@ func _zone_of(point: Vector3) -> int:
 	return -1
 
 
-func _near(area: Rect2, players: Array) -> bool:
-	for player: PlayerCharacter in players:
-		if area.has_point(Vector2(player.global_position.x, player.global_position.z)):
+func _near(area: Rect2, players: PackedVector2Array) -> bool:
+	for player in players:
+		if area.has_point(player):
 			return true
 	return false
 

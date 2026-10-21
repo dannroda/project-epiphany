@@ -843,6 +843,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody3D" unique_id=1694148988]
+collision_layer = 3
 script = ExtResource("1_2lfai")
 config = ExtResource("cfg_player")
 

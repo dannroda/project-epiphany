@@ -18,7 +18,8 @@ func _ready() -> void:
 	tree_exiting.connect(func() -> void:
 		if _current == self:
 			_current = null)
-	PhysicsLayers.sensor(self)
+	# Solo el player (capa PLAYER): con el nivel en la máscara, Jolt revisaba en cada paso los estáticos bajo cada zona (15.20).
+	PhysicsLayers.sensor(self, PhysicsLayers.PLAYER)
 	body_entered.connect(func(body: Node3D) -> void:
 		if body is PlayerCharacter:
 			GameState.visit_zone(key())
