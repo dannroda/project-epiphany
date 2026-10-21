@@ -8,8 +8,9 @@ extends SceneTree
 ## spread: duplica las paredes entre salas de un nivel ya hecho sin duplicar (y lo guarda; después export y refresh).
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
 ## caps: pasa a quads las tapas de las paredes en los kits ya hechos (tools/la_caps.gd) y les agrega LODs (tools/la_lods.gd), sin tocar los niveles.
+## compress: comprime las mallas de los kits ya hechos (tools/la_compress.gd), sin tocar los niveles; bake, refresh y caps ya los guardan así.
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel> | spread <nivel>
-## godot --path . --script res://tools/la_walls.gd -- caps
+## godot --path . --script res://tools/la_walls.gd -- caps | compress
 
 const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn", "totora": "res://levels/totora.tscn", "cumbre": "res://levels/cumbre.tscn",
 	"bomb_cave": "res://levels/bomb_cave.tscn", "bush_cave": "res://levels/bush_cave.tscn", "grotto_cave": "res://levels/grotto_cave.tscn",
@@ -60,6 +61,7 @@ const PIT_FOG_INSET := 0.03
 const DROP_LOOK := preload("res://src/world/look/caida_la.tscn")
 const CAPS := preload("res://tools/la_caps.gd")
 const LODS := preload("res://tools/la_lods.gd")
+const COMPRESS := preload("res://tools/la_compress.gd")
 const CELL := 2.0
 ## Un haz cada tantos metros de hueco.
 const SHAFT_SPACING := 6.0
@@ -188,9 +190,9 @@ func _initialize() -> void:
 		print(SHAPES, ": ", out)
 		quit()
 		return
-	if mode == "caps":
+	if mode in ["caps", "compress"]:
 		if DisplayServer.get_name() == "headless":
-			push_error("caps necesita el renderer (sin --headless): headless los shaders embebidos se guardan sin parámetros")
+			push_error("caps y compress necesitan el renderer (sin --headless): headless los shaders embebidos se guardan sin parámetros")
 			quit(1)
 			return
 		var kits := {}
@@ -198,8 +200,9 @@ func _initialize() -> void:
 			kits[look.kit] = true
 		for kit_path: String in kits:
 			var kit: MeshLibrary = load(kit_path)
-			CAPS.apply(kit, _wall_prefixes(), _caps_path(kit_path))
-			LODS.apply(kit, _wall_prefixes())
+			if mode == "caps":
+				CAPS.apply(kit, _wall_prefixes(), _caps_path(kit_path))
+				LODS.apply(kit, _wall_prefixes())
 			_save_kit(kit, kit_path)
 		quit()
 		return
@@ -1001,6 +1004,7 @@ func _kit() -> MeshLibrary:
 
 
 func _save_kit(kit: MeshLibrary, path: String) -> void:
+	COMPRESS.apply(kit)
 	var uid := ResourceLoader.get_resource_uid(path) if ResourceLoader.exists(path) else ResourceUID.INVALID_ID
 	ResourceSaver.save(kit, path)
 	ResourceSaver.set_uid(path, uid if uid != ResourceUID.INVALID_ID else ResourceUID.create_id())
