@@ -49,6 +49,10 @@ android)
 	done_json() { adb -s "$serial" shell run-as "$PACKAGE" ls files/benchmark/latest.json > /dev/null 2>&1; }
 	for _ in $(seq 1 540); do
 		sleep 5
+		if ! adb -s "$serial" get-state > /dev/null 2>&1; then
+			timeout 120 adb -s "$serial" wait-for-device || true
+			continue
+		fi
 		adb -s "$serial" logcat -d -s godot:V > "$log.new" 2>/dev/null && [ -s "$log.new" ] && mv "$log.new" "$log"
 		grep -q "BENCH_DONE" "$log" && break
 		if ! adb -s "$serial" shell pidof "$PACKAGE" > /dev/null 2>&1 && { sleep 5; ! adb -s "$serial" shell pidof "$PACKAGE" > /dev/null 2>&1; }; then
