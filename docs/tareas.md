@@ -8254,11 +8254,13 @@ Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps
 - No es calor: el G23 tiene dos estados estables, bueno (cuadro 33 ms, GPU 22–24 ms) y malo (cuadro 45 ms, GPU 27–30 ms, también suben los scripts por paso). Después de 20 min la última Base estaba igual de bien que la primera.
 - No es la física: con tope de 2 pasos por cuadro no cambia (29,1 contra 29,2 fps en 7 pares) y una corrida con tope cayó igual al estado malo. Lo dispara la GPU (el governor baja relojes cuando cae la tasa): hay que ganar margen de GPU.
 - Por pasada (--gpu-profile, Base, por cuadro): geometría opaca ~12–14 ms (Mali reparte mal los timestamps entre "Setup Sky" y "Render Opaque"); transparentes + efectos LA 4,5–6; canvas 2,3; glow 1,5; tonemap 1,4; partículas 0,4.
-- La resolución pesa poco (escala 25 baja ~3 ms); con la cámara sin ver nada (255 triángulos) la GPU sigue en 13–16 ms: costo fijo de pipeline.
-- Ahorro por variante: glow ~1,2 ms; efectos LA juntos ~1,5–2 (nubes ~0,5–1, AO ~0,7, tono ~0,3); agua plana 1,3–3,7 (saca la pasada transparente y las copias de pantalla/profundidad); todo plano ~3–4; decor, FSR contra bilineal, GridMap, luces, radiancia/modo de proceso del cielo ~0.
-- Sigue: qué domina la geometría (terreno, terrazas y agua ocultos) y la variante Mobile del agua de 15.17 (sin mipmaps de la copia de pantalla, una lectura de profundidad, capturas iguales) medida por pasada.
-- Perillas nuevas del benchmark (sin commitear todavía): glow, fsr, hidden, camera_cull, max_physics_steps, sky_process_mode, sky_radiance y la columna slow (fracción de cuadros de más de 40 ms).
-- La cola del G23 se trabó dos veces porque el servidor adb heredaba el fd del lock de bench.sh; arreglado en main 41050f83 (-88). El lock actual lo tiene el daemon adb 1746874: liberarlo pide reiniciar el servidor adb compartido (decisión de Daniel).
+- La resolución pesa poco (escala 25 baja ~3 ms); con la cámara sin ver nada (cull_mask 0, 255 triángulos) la GPU sigue en 13–16 ms: costo fijo de pipeline.
+- Válidos (variantes de propiedad o visibilidad): glow ~1,2 ms (glow_enabled = false); efectos LA juntos ~1,5–2 (nubes ~0,5–1, AO ~0,7, tono ~0,3; compositor null o effect.enabled); decor, FSR contra bilineal, GridMap, luces puntuales ocultas, radiancia/modo de proceso del cielo ~0.
+- NO VÁLIDOS hasta volver a medir (salían de flat_materials, que cambia materiales en tiempo de ejecución; en el G23 eso falsea la variante, ver 15.26): agua plana 1,3–3,7 ms, todo plano ~3–4 ms y el reparto fijo/post/geometría/materiales que usaba Plana. En el overworld el sesgo sería chico (ocultar las luces puntuales da ~0), pero se trata como no válido.
+- 15.20 no se ve afectado (la máscara de zonas fue A/B por código; monitoring_off y enemies_off son propiedades).
+- Sigue: corrida con --gpu-profile por visibilidad (sin terreno, sin terrazas, sin agua; ocultar el agua es el techo válido de su costo) y después la variante Mobile del agua de 15.17 como A/B limpia con dos APK.
+- Perillas nuevas del benchmark (sin commitear todavía): glow, fsr, hidden, camera_cull, max_physics_steps, sky_process_mode, sky_radiance y la columna slow (fracción de cuadros de más de 40 ms); la variante swap_shader del agua se sacó.
+- La cola del G23 se trabó dos veces porque el servidor adb heredaba el fd del lock de bench.sh; arreglado en main 41050f83 (-88). El daemon adb 1746874 que tenía el lock ya no existe; la cola anda.
 
 ### 15.26 G23: las mazmorras en el perfil Bajo · En curso
 
