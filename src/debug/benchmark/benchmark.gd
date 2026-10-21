@@ -6,6 +6,8 @@ extends Node
 
 const ARG := "--benchmark"
 const OUT := "user://benchmark/latest.json"
+## Un cuadro más lento que esto ya se perdió el vsync de 30 fps (cuenta para `slow`).
+const SLOW_MS := 40.0
 
 ## Segundos caminando antes de empezar a anotar, para que asienten la carga y los shaders.
 @export var warmup := 2.0
@@ -77,6 +79,9 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		get_tree().node_added.connect(_flatten)
 	var restore := _apply(variant, get_tree().current_scene)
 	var lod_threshold := get_viewport().mesh_lod_threshold
+	var max_steps := Engine.max_physics_steps_per_frame
+	if variant.max_physics_steps > 0:
+		Engine.max_physics_steps_per_frame = variant.max_physics_steps
 	if not variant.lods:
 		get_viewport().mesh_lod_threshold = 0.0
 	player.health.make_invulnerable(3600.0)
@@ -112,8 +117,10 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		get_tree().node_added.disconnect(_flatten)
 	restore.call()
 	get_viewport().mesh_lod_threshold = lod_threshold
+	Engine.max_physics_steps_per_frame = max_steps
 	var frames: Array = columns.frame
 	run["fps"] = 1000.0 * frames.size() / maxf(_sum(frames), 0.001)
+	run["slow"] = frames.filter(func(ms: float) -> bool: return ms > SLOW_MS).size() / maxf(frames.size(), 1.0)
 	for key: String in columns:
 		run[key] = _summary(columns[key])
 	run["nodes"] = Performance.get_monitor(Performance.OBJECT_NODE_COUNT)
@@ -154,6 +161,13 @@ func _strip(scene: Node, variant: BenchVariant) -> void:
 	for grid: GridMap in scene.find_children("*", "GridMap", true, false):
 		if not variant.gridmaps:
 			grid.visible = false
+	for node in scene.find_children("*", "", true, false) if not variant.hidden.is_empty() else []:
+		if (node is Node3D or node is CanvasItem or node is CanvasLayer) and variant.hidden.any(func(hide: String) -> bool: return node.name == hide or (node.scene_file_path != "" and node.scene_file_path.begins_with(hide))):
+			node.visible = false
+	if not variant.camera_cull and get_viewport().get_camera_3d():
+		get_viewport().get_camera_3d().cull_mask = 0
+	if not variant.fsr and variant.render_scale < 100:
+		get_tree().root.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
 
 
 func _flatten(node: Node) -> void:
@@ -233,6 +247,14 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 			if effect and effect.enabled and effect.get_script() in variant.effects_off:
 				effect.enabled = false
 				effects.append(effect)
+		var sky := world.environment.sky if world.environment else null
+		for setting: Array in [[&"process_mode", variant.sky_process_mode], [&"radiance_size", variant.sky_radiance]]:
+			if sky and setting[1] >= 0:
+				undo.append([sky, setting[0], sky.get(setting[0])])
+				sky.set(setting[0], setting[1])
+		if not variant.glow and world.environment and world.environment.glow_enabled:
+			world.environment.glow_enabled = false
+			undo.append([world.environment, &"glow_enabled", true])
 	for sun: DirectionalLight3D in scene.find_children("*", "DirectionalLight3D", true, false):
 		if variant.sun_orthogonal:
 			sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
@@ -261,10 +283,10 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 		for effect: CompositorEffect in effects:
 			effect.enabled = true
 		for entry: Array in undo:
-			if entry[1] == &"shader":
-				entry[0].shader = entry[2]
-			else:
+			if entry[0] is ShaderMaterial and entry[1] != &"shader":
 				entry[0].set_shader_parameter(entry[1], entry[2])
+			else:
+				entry[0].set(entry[1], entry[2])
 
 
 func _summary(values: Array) -> Dictionary:

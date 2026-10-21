@@ -41,3 +41,14 @@ extends Node
 ## Diagnóstico (15.20): ningún Area3D monitorea, o todos los enemigos quietos. El juego no anda igual; solo para medir.
 @export var monitoring_off := false
 @export var enemies_off := false
+## 15.25: sin el glow del entorno; escalado bilineal en vez de FSR (con render_scale < 100); ocultos los nodos (3D, 2D o
+## CanvasLayer) cuya escena empieza con alguno de estos caminos o que se llaman así; la cámara sin ver ninguna capa.
+@export var glow := true
+@export var fsr := true
+@export var hidden: Array[String] = []
+@export var camera_cull := true
+## Tope de pasos de física por cuadro mientras corre (0: el del proyecto).
+@export var max_physics_steps := 0
+## Modo de proceso y tamaño de radiancia del cielo mientras corre (-1: los del nivel).
+@export var sky_process_mode := -1
+@export var sky_radiance := -1
