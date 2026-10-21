@@ -8251,9 +8251,9 @@ Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen s
 - *_la_kit.tres: 134,6 → 84,7 MB.
 - 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.
 
-### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · Pausado
+### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · En curso
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
 
 Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps en Bajo, pero cuando el G23 se calienta la GPU sube a 26–28 ms, entra un tercer paso de física por cuadro y cae a ~22 fps. Bajar la GPU del overworld en el perfil Bajo (y en Mobile en general) a ~20 ms para que aguante caliente: medir qué queda por pasada (detalle bakeado del suelo de 15.17, agua, efectos LA, plantas, decor, sombras) con los toggles del benchmark en corridas largas que calienten el teléfono, y recortar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (APK por worktree desde bfaf4138; compartido con -8f y -25; el Edge no se usa).
 
