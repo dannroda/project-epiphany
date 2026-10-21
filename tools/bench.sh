@@ -37,6 +37,8 @@ android)
 		"$GODOT" --headless --path . --import > /dev/null 2>&1 || true
 		"$GODOT" --headless --path . --export-debug "Android (benchmark)" "$APK" > "$OUT/export_$stamp.log" 2>&1
 	fi
+	# Sin el fd del lock: si un adb de acá arranca el servidor, el servidor lo heredaba y dejaba el teléfono trabado.
+	adb() { command adb "$@" 9>&-; }
 	exec 9> "${XDG_RUNTIME_DIR:-/tmp}/epiphany_bench_$serial.lock"
 	flock -n 9 || { echo "otra corrida usa $serial, espero mi turno"; flock 9; }
 	adb -s "$serial" install -r "$APK" > /dev/null
@@ -51,7 +53,7 @@ android)
 	for _ in $(seq 1 540); do
 		sleep 5
 		if ! adb -s "$serial" get-state > /dev/null 2>&1; then
-			timeout 120 adb -s "$serial" wait-for-device || true
+			timeout 120 adb -s "$serial" wait-for-device 9>&- || true
 			continue
 		fi
 		adb -s "$serial" logcat -d -s godot:V > "$log.new" 2>/dev/null && [ -s "$log.new" ] && mv "$log.new" "$log"
