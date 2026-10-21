@@ -8016,11 +8016,18 @@ En Android (renderer Mobile) los CompositorEffect de src/world/look (tono_la, nu
 
 **Notas:** -88 (wt/design-fix a0b333df, main a95d293f): en Mobile la capa de color es RGB10A2 con usage 515 (sampling, color e input attachment): sin STORAGE ni CAN_COPY, así que texture_copy tampoco sirve; en Forward+ es 523 (con STORAGE). Helper nuevo src/world/look/look_color.gd: cada efecto pide look.begin(buffers, view) y llama look.end(). Con STORAGE devuelve la capa misma (camino de siempre); sin STORAGE un compute la samplea ×2 (el luminance multiplier de Mobile) a una rgba16f propia, el efecto corre ahí y un triángulo fullscreen la devuelve ÷2. Decide por el bit de STORAGE, no por el nombre del renderer. brillo, caida y enfoque no son CompositorEffect. Sin MSAA en el proyecto; con MSAA no está probado. En el teléfono suma una copia de entrada y una de salida por efecto (tres en el overworld): medir en el G23 con el benchmark (15.14).
 
-### 15.16 Mazmorras: costo de GPU en mobile · Pendiente
+### 15.16 Mazmorras: costo de GPU en mobile · En curso
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`
 
 Benchmark 15.14 en el Moto Edge 30 Fusion (debug/tmp/bench/motorola_edge_30_fusion_20261020_2300.json, en wt/bugs): las mazmorras cuestan más GPU que el overworld. Templo hub 7 fps (GPU 135 ms), Chullpa 13 fps (GPU 74 ms, 2.44 M tris), Antesala 14 fps (GPU 69 ms); el overworld va a 20–30 fps. Con materiales planos (variante Plana) las mazmorras empeoran (6–9 fps), así que no son los shaders de material: sospechosos son las luces (antorchas/omni por sala), los efectos LA de pantalla (TonoLA, SombraLA, NubesLA, viñeta borrosa) o que las salas ocultas sigan llegando a la GPU (2.4 M tris con una sola sala a la vista). Medir qué es (PC con el benchmark y Godot profiler/RenderDoc, luego tools/bench.sh android ZY22GLQFZW) y bajar el costo sin cambiar el look en Forward+.
+
+**Notas:** Atribución en el Edge (GPU ms, templo hub / chullpa / antesala): Alta 57/64/66; sin GridMaps 17/19/18 (paredes LA + piso ≈ 40 ms); sin luces puntuales −10–15; sin efectos LA −5; sin sondas −3. Al 50 % de resolución también baja a la mitad: triángulos de 5–7 k por celda de 2 m que además gastan fragmentos (quads 2×2).
+- Tapas bakeadas a textura (37af5104): la tapa de cada pieza de pared (mosaico plano de 40×40 a y=3) pasa a un quad de 2 triángulos con textura nearest (tools/la_caps.gd, la_walls caps). Triángulos en el Edge: templo 1,33 M → 0,71 M, chullpa 2,68 M → 1,13 M, antesala 1,47 M → 0,75 M. GPU contra la corrida de las 23:00: Baja 59→33 / 42→30 / 36→26 ms, Plana 92→48 / 106→47 / 104→53 ms. Capturas Forward+ iguales (solo píxeles sueltos en bordes del mosaico del rim). Las caras traseras de la pared n quedan: el cutaway las dibuja como tapa en el corte.
+- LODs de paredes (3bea4d28, tools/la_lods.gd): templo 0,72 M → 0,15 M triángulos, pero 0–3 ms de GPU: las mazmorras ya no están limitadas por triángulos. Toggle lods en BenchVariant (7db2e6c5).
+- Esconder los pisos de abajo: descartado por ahora, por los huecos se ve la sala de abajo; volver con occluders.
+- Las kits regeneradas mantienen los parámetros snow/ice de Daniel en templo_la_kit.
+- Sigue: camino Mobile de piso_la.gdshader (un solo cells(), normal del bisel analítica, Forward+ igual byte a byte), a medir en el G23 (el Edge es el teléfono de Daniel, ya no se usa).
 
 ### 15.17 Overworld: costo de los shaders en mobile · En curso
 
