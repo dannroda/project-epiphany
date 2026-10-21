@@ -5,16 +5,16 @@
   "created_at": "2026-10-21T03:22:36.023Z",
   "description": "Medido por -88 en el Edge 30 Fusion (15.17, variante SinLook): en el overworld los efectos LA cuestan ~14 ms de GPU por cuadro (26,4 ms sin ellos contra ~40 con ellos), más que cualquier material. En Mobile cada efecto (TonoLA, NubesLA, SombraLA) copia el color a una textura rgba16f y lo vuelve a escribir (look_color.gd, 15.15): 6 pasadas de pantalla completa extra más las del AO, nubes y tono. Compartir una sola copia entre los tres (entra una vez, sale una vez) y, si se puede, juntar tono y nubes en una pasada. Forward+ sin cambios. Medir con tools/bench.sh android ZY22GLQFZW --build intercalando Alta entre variantes (el Edge se calienta en corridas largas).",
   "milestone": "m15",
-  "notes": "",
+  "notes": "look_color.gd (a56e3151, -88): los tres efectos LA comparten una sola copia del color en Mobile por cuadro: el color entra una vez (sombra) y sale una vez (tono), 2 pasadas de pantalla completa en vez de 6 en el overworld y 2 en vez de 4 en mazmorras. Un efecto deja el color en la textura compartida solo si en el cuadro anterior otro efecto lo siguió en el mismo punto y capa; si llega otra capa mientras hay una retenida, la vuelca primero. Lo peor que puede pasar es un cuadro sin efectos al cambiar el compositor; nunca pasa un color viejo.\nMoto G23, intercalado (inicio/cardonal/bañado), GPU ms: copias compartidas 123,7 / 120,8 contra vecinos 129,4 / 126,5 / 115,5 / 124,2: sin diferencia medible en el G23 (ruido ±10–15 ms, limitado por otra cosa). Se mergea igual: son 4 pasadas de pantalla menos y el look es idéntico. Juntar tono y nubes en una pasada: no, ahorraría otra pasada y eso no se nota en el G23. El Edge no se usa más (teléfono de Daniel).",
   "order": 194,
   "priority": "high",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "optimizacion"
   ],
-  "test": "",
+  "test": "Capturas Mobile y Forward+ iguales a la versión anterior (0,01–0,02 % de píxeles, animación). Contador temporal: 1 copia de entrada (sombra) + 1 de salida (tono) por cuadro. test_player_hole, test_overworld_run y suite completa en main.",
   "title": "Efectos LA en Mobile: menos pasadas de pantalla",
-  "updated_at": "2026-10-21T03:28:43.869Z"
+  "updated_at": "2026-10-21T04:37:05.504Z"
 }

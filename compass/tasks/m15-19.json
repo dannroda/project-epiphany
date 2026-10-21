@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-88",
+  "checklist": [],
+  "code": "15.19",
+  "created_at": "2026-10-21T04:36:38.878Z",
+  "description": "El Moto G23 (Mali-G52) quedó limitado por relleno: con el terreno en bloques (17.2) el cardonal dibuja 0,29 M triángulos y sigue en 82 ms de GPU; el overworld va a 7,6–11,6 fps en Alta. Los ajustes actuales (resolución, sombras, SSAO, efectos LA, agua con screen/depth texture) son los de PC. Medir en el G23 con variantes del benchmark qué combinación llega a ~30 fps (render_scale 50–70 %, sombras direccionales más baratas o sin sombras de plantas, sin SSAO, efectos LA reducidos) y dejarla como default cuando el renderer es Mobile (en Settings, sin tocar los defaults de PC; el jugador puede subirla). La variante de agua sin screen_texture/depth_texture cambia el look (sin fundido en la orilla ni refracción): queda para que decida Daniel, no entra acá.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 195,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "Calidad por defecto en mobile",
+  "updated_at": "2026-10-21T04:36:38.878Z"
+}

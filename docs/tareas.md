@@ -7784,7 +7784,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (12/20, 12 en revisión)
+## M15 — Optimización  (14/21, 14 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -7915,9 +7915,13 @@ Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir rele
 Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los assets: con el arreglo del shader el overworld va a 6–7,7 ms de GPU y esto ganaría como mucho 1 ms (resto: iluminación/sombras del suelo 1–3,4 ms, decor ~1,1, riscos <1, plantas ~0,1).
 
 - [ ] Rangos de visibilidad/LOD en decor y plantas
-- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
+- [x] Terreno en bloques más chicos que se descarten fuera de cámara
 
 **Notas:** 2026-10-20: pasa a M15 por lo medido en teléfonos (17.3). En el Moto G23 (Mali-G52) el overworld dibuja 2,2 M de triángulos y 599 draw calls con sombras, 158 ms de GPU por cuadro, 7,5 FPS, y Vulkan llega a perder el device (fence error -4). En el Edge 30 Fusion, 0,8 M de triángulos sin sombras y 18 ms de GPU al 50 %. Los bloques de terreno_organico son enormes y sin LOD. Encargado a -25; medir con el benchmark (15.14).
+
+2026-10-21, paso 2 (todavía no en main): cada franja X del terreno son 8 bloques de ~19×14 m (riscos_k_j / suelo_k_j, cada uno con su colisión); los cortes también parten las astillas de 112 m del fondo de los abismos. Mismos 12 glb (máx. 72 MB). Triángulos por cuadro (PC, Mobile 1600×720): inicio 2,14 → 0,61 M, arboleda 1,97 → 0,75, cardonal 1,55 → 0,28, bañado 1,21 → 0,51, cumbre 1,62 → 0,65; +10 draw calls. G23 (Alta, solo overworld, moto_g23_20261021_0119.json): GPU 96/110/82/101/120 ms, 7,6–11,6 fps (antes 158 ms). El G23 ya está limitado por relleno, no por triángulos: el cardonal con 0,29 M sigue en 82 ms (→ 15.19).
+Primer intento (214708cc) devuelto por -ae: test_map › test_travel_portals_light_up_and_the_map_travels fallaba siempre porque PortalNecropolis (32, 2.6, -2) cae justo en la costura z = -2 entre suelo_7_3 y suelo_7_4: un rayo vertical exactamente sobre la arista compartida atraviesa las dos tapas (con z ± 0,0001 pega bien). Como muchas cosas se colocan en coordenadas redondas, -25 mueve los cortes a floor(...) + 0,37 m (SEAM_OFFSET en build_terreno_organico.py) y reconstruye.
+Paso 1 (decor/plantas), hallazgos: con la cámara cenital todo está a 15–35 m y los LOD automáticos casi no actúan (lod_bias 0,1 ahorra 1–8 %); los rangos de visibilidad no ayudan con cámara fija. Lo que pesa: las queñoas de 4,6 k triángulos (250–400 k en la arboleda) y las sombras de los chunks de plantas sobre las montañas (bañado −35 % de triángulos sin ellas, pero se pierden las sombras grandes de los árboles). -25 le propone opciones a Daniel antes de tocarlo.
 
 ### 15.9 Overworld: optimizar el dibujado (después de los assets) · Revisión
 
@@ -8029,7 +8033,7 @@ Benchmark 15.14 en el Moto Edge 30 Fusion (debug/tmp/bench/motorola_edge_30_fusi
 - Las kits regeneradas mantienen los parámetros snow/ice de Daniel en templo_la_kit.
 - Sigue: camino Mobile de piso_la.gdshader (un solo cells(), normal del bisel analítica, Forward+ igual byte a byte), a medir en el G23 (el Edge es el teléfono de Daniel, ya no se usa).
 
-### 15.17 Overworld: costo de los shaders en mobile · En curso
+### 15.17 Overworld: costo de los shaders en mobile · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
@@ -8041,15 +8045,26 @@ Daniel sospecha que pesa que todo sea shader en vez de texturas. Benchmark 15.14
 - 15.13 (inicio de corrida fría): 36,3 → 29,5 ms de GPU (~20 → ~30 fps) contra la base de las 23:00.
 - Detalle del suelo bakeado en Mobile (38b2312a): epiphany_outdoor lee dos texturas de mundo que se repiten cada 28 m (assets/epiphany/outdoor_detail_a/b.png, uniforms globales en project.godot; se rehacen con tools/bake_outdoor_detail.gd en ventana) en lugar del Voronoi y los ruidos por píxel. Ahorra 7–12 ms (A/B en la misma build). Forward+ sin cambios (#if CURRENT_RENDERER == RENDERER_MOBILE).
 - Queda: efectos LA ~14 ms (→ 15.18), riscos ~2 ms, agua 1–4 ms, viento ~0.
-- La variante Plana de 15.14 no aplanaba los GridMap (6270 celdas): arreglado en a7ae7797 (copia plana de la MeshLibrary). Nuevas variantes en a7ae7797: flat_shaders/flat_except, parameters, cases.
-- Pendiente: variante Mobile del agua (sin mipmaps de pantalla, una lectura de profundidad, sin refracción en lo bajo), en la cola del Edge; capturas Mobile iguales (0,02 % de píxeles).
+- La variante Plana de 15.14 no aplanaba los GridMap (6270 celdas): arreglado en a7ae7797 (copia plana de la MeshLibrary). Nuevas variantes en a7ae7797: flat_shaders/flat_except, parameters, cases. El export de Android perdía BenchVariant.cases (PackedStringArray): pasa a Array[StringName] en 3ccd7c4f.
+- Variante Mobile del agua (sin mipmaps de pantalla, 1 lectura de profundidad): capturas iguales; no se commitea porque no se mostró el ahorro ≥ 1 ms. En el G23 el agua cuesta ~15 ms en el bañado aun con ella; el costo es la copia de pantalla/profundidad en sí. Una variante sin screen_texture/depth_texture (sin fundido en la orilla ni refracción, reemplazo por vertex color) cambia el look: decide Daniel.
 Mergeado en main por -ae.
 
-### 15.18 Efectos LA en Mobile: menos pasadas de pantalla · En curso
+### 15.18 Efectos LA en Mobile: menos pasadas de pantalla · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
 Medido por -88 en el Edge 30 Fusion (15.17, variante SinLook): en el overworld los efectos LA cuestan ~14 ms de GPU por cuadro (26,4 ms sin ellos contra ~40 con ellos), más que cualquier material. En Mobile cada efecto (TonoLA, NubesLA, SombraLA) copia el color a una textura rgba16f y lo vuelve a escribir (look_color.gd, 15.15): 6 pasadas de pantalla completa extra más las del AO, nubes y tono. Compartir una sola copia entre los tres (entra una vez, sale una vez) y, si se puede, juntar tono y nubes en una pasada. Forward+ sin cambios. Medir con tools/bench.sh android ZY22GLQFZW --build intercalando Alta entre variantes (el Edge se calienta en corridas largas).
+
+**Prueba:** Capturas Mobile y Forward+ iguales a la versión anterior (0,01–0,02 % de píxeles, animación). Contador temporal: 1 copia de entrada (sombra) + 1 de salida (tono) por cuadro. test_player_hole, test_overworld_run y suite completa en main.
+
+**Notas:** look_color.gd (a56e3151, -88): los tres efectos LA comparten una sola copia del color en Mobile por cuadro: el color entra una vez (sombra) y sale una vez (tono), 2 pasadas de pantalla completa en vez de 6 en el overworld y 2 en vez de 4 en mazmorras. Un efecto deja el color en la textura compartida solo si en el cuadro anterior otro efecto lo siguió en el mismo punto y capa; si llega otra capa mientras hay una retenida, la vuelca primero. Lo peor que puede pasar es un cuadro sin efectos al cambiar el compositor; nunca pasa un color viejo.
+Moto G23, intercalado (inicio/cardonal/bañado), GPU ms: copias compartidas 123,7 / 120,8 contra vecinos 129,4 / 126,5 / 115,5 / 124,2: sin diferencia medible en el G23 (ruido ±10–15 ms, limitado por otra cosa). Se mergea igual: son 4 pasadas de pantalla menos y el look es idéntico. Juntar tono y nubes en una pasada: no, ahorraría otra pasada y eso no se nota en el G23. El Edge no se usa más (teléfono de Daniel).
+
+### 15.19 Calidad por defecto en mobile · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+El Moto G23 (Mali-G52) quedó limitado por relleno: con el terreno en bloques (17.2) el cardonal dibuja 0,29 M triángulos y sigue en 82 ms de GPU; el overworld va a 7,6–11,6 fps en Alta. Los ajustes actuales (resolución, sombras, SSAO, efectos LA, agua con screen/depth texture) son los de PC. Medir en el G23 con variantes del benchmark qué combinación llega a ~30 fps (render_scale 50–70 %, sombras direccionales más baratas o sin sombras de plantas, sin SSAO, efectos LA reducidos) y dejarla como default cuando el renderer es Mobile (en Settings, sin tocar los defaults de PC; el jugador puede subirla). La variante de agua sin screen_texture/depth_texture cambia el look (sin fundido en la orilla ni refracción): queda para que decida Daniel, no entra acá.
 
 ## M17 — Después de la demo  (0/2)
 
