@@ -40,21 +40,24 @@ android)
 	flock -n 9 || { echo "otra corrida usa $serial, espero mi turno"; flock 9; }
 	adb -s "$serial" install -r "$APK" > /dev/null
 	adb -s "$serial" shell am force-stop "$PACKAGE"
+	adb -s "$serial" shell run-as "$PACKAGE" rm -f files/benchmark/latest.json
 	adb -s "$serial" logcat -c
 	adb -s "$serial" shell am start -n "$PACKAGE/com.godot.game.GodotAppLauncher" > /dev/null
 	model=$(adb -s "$serial" shell getprop ro.product.model | tr -d '\r' | tr ' ' '_')
 	log="$OUT/${model}_$stamp.log"
 	: > "$log"
-	for _ in $(seq 1 180); do
+	done_json() { adb -s "$serial" shell run-as "$PACKAGE" ls files/benchmark/latest.json > /dev/null 2>&1; }
+	for _ in $(seq 1 540); do
 		sleep 5
 		adb -s "$serial" logcat -d -s godot:V > "$log.new" 2>/dev/null && [ -s "$log.new" ] && mv "$log.new" "$log"
 		grep -q "BENCH_DONE" "$log" && break
 		if ! adb -s "$serial" shell pidof "$PACKAGE" > /dev/null 2>&1 && { sleep 5; ! adb -s "$serial" shell pidof "$PACKAGE" > /dev/null 2>&1; }; then
+			done_json && break
 			echo "el juego se cerró antes de terminar, mirá $log"
 			exit 1
 		fi
 	done
-	grep -q "BENCH_DONE" "$log" || { echo "no terminó en 15 min, mirá $log"; exit 1; }
+	grep -q "BENCH_DONE" "$log" || done_json || { echo "no terminó en 45 min, mirá $log"; exit 1; }
 	dest="$OUT/${model}_$stamp.json"
 	adb -s "$serial" exec-out run-as "$PACKAGE" cat files/benchmark/latest.json > "$dest"
 	;;
