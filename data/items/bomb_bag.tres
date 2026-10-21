@@ -17,11 +17,11 @@ hold_time = 0.125
 [resource]
 script = ExtResource("3_kgno8")
 id = &"bomb_bag"
-show_in_slot_summary = true
 display_name = "ITEM_BOMB_BAG_NAME"
 description = "ITEM_BOMB_BAG_DESC"
 icon = ExtResource("2_kgno8")
 category = 3
 behavior = SubResource("Resource_fouaw")
+show_in_slot_summary = true
 bundled = ExtResource("4_ammo")
 bundled_amount = 10

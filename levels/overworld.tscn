@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="13_gd0nv"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="14_5vrew"]
 [ext_resource type="PackedScene" path="res://src/world/chest.tscn" id="15_3hrjb"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="17_lc5as"]
 [ext_resource type="PackedScene" path="res://src/world/tablet.tscn" id="18_gsck2"]
 [ext_resource type="Resource" uid="uid://b353kh0linjkb" path="res://data/dialogue/overworld.dialogue" id="20_gd0nv"]
@@ -43,15 +42,19 @@
 [ext_resource type="PackedScene" path="res://src/world/water/shallow_water.tscn" id="102_shallow"]
 [ext_resource type="Material" path="res://src/world/water/water_la.tres" id="103_water_la"]
 [ext_resource type="PackedScene" path="res://src/world/travel_portal.tscn" id="110_travel"]
+[ext_resource type="Script" uid="uid://bib6qaeg6jby3" path="res://src/world/active_zones.gd" id="active_zones"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_templo.tscn" id="archer_skeleton_templo"]
 [ext_resource type="PackedScene" path="res://src/entities/atoq/atoq.tscn" id="atoq"]
 [ext_resource type="PackedScene" path="res://src/world/boca_cueva.tscn" id="boca_cueva"]
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="brillo_la"]
+[ext_resource type="PackedScene" path="res://src/entities/devoto/devoto.tscn" id="camp_devoto"]
+[ext_resource type="PackedScene" path="res://src/world/estandarte.tscn" id="camp_estandarte"]
+[ext_resource type="PackedScene" path="res://src/world/fogon.tscn" id="camp_fogon"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/world/chullpa_entrada.tscn" id="ent_chullpa"]
 [ext_resource type="PackedScene" path="res://src/world/cumbre_entrada.tscn" id="ent_cumbre"]
-[ext_resource type="PackedScene" path="res://src/world/reflejos_entrada.tscn" id="ent_reflejos"]
-[ext_resource type="PackedScene" path="res://src/world/huaca_hundida.tscn" id="huaca_mouth"]
 [ext_resource type="PackedScene" path="res://src/world/quenoa_entrada.tscn" id="ent_quenoa"]
+[ext_resource type="PackedScene" uid="uid://gjixa4b2q624" path="res://src/world/reflejos_entrada.tscn" id="ent_reflejos"]
 [ext_resource type="PackedScene" path="res://src/world/totora_entrada.tscn" id="ent_totora"]
 [ext_resource type="Script" uid="uid://cnuecr7682x4j" path="res://src/world/arena_area.gd" id="hm_area"]
 [ext_resource type="PackedScene" path="res://src/entities/centinela/centinela.tscn" id="hm_centinela"]
@@ -63,6 +66,7 @@
 [ext_resource type="ArrayMesh" uid="uid://du5bkew73nw6v" path="res://assets/epiphany/meshes/objetos/pedestal_martillo.res" id="hm_pedestal"]
 [ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="hm_pflag"]
 [ext_resource type="PackedScene" path="res://src/world/pickup.tscn" id="hm_pickup"]
+[ext_resource type="PackedScene" uid="uid://cq8huacahund1" path="res://src/world/huaca_hundida.tscn" id="huaca_mouth"]
 [ext_resource type="ArrayMesh" uid="uid://cqhfp51o6vhgm" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretCactusWall.res" id="lid_SecretCactusWall"]
 [ext_resource type="ArrayMesh" uid="uid://bfwtwbxjas50o" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretHillsWall.res" id="lid_SecretHillsWall"]
 [ext_resource type="ArrayMesh" uid="uid://cldky48h2hcrt" path="res://assets/epiphany/meshes/muros_organicos/tapa_SecretLookoutWall.res" id="lid_SecretLookoutWall"]
@@ -82,26 +86,6 @@
 [ext_resource type="Resource" uid="uid://dfbkawgboncax" path="res://data/items/sandals.tres" id="ow_sandals"]
 [ext_resource type="PackedScene" path="res://src/world/plants/quenoa_secreta.tscn" id="ow_secret_tree"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="ow_switch_weight"]
-[ext_resource type="PackedScene" path="res://src/world/sello_cima.tscn" id="sello_cima"]
-[ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_templo.tscn" id="shield_skeleton_templo"]
-[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_quenoa.tscn" id="skeleton_quenoa"]
-[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_templo.tscn" id="skeleton_templo"]
-[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
-[ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="summit_stairs"]
-[ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="summit_stairs_down"]
-[ext_resource type="Script" uid="uid://bn7tmn35xdtk3" path="res://src/world/terrain_style_area.gd" id="terrain_style_area"]
-[ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_e.tscn" id="terr_escalinata_e"]
-[ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_medio.tscn" id="terr_escalinata_medio"]
-[ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_o.tscn" id="terr_escalinata_o"]
-[ext_resource type="PackedScene" path="res://src/world/terrazas/salto_e.tscn" id="terr_salto_e"]
-[ext_resource type="PackedScene" path="res://src/world/terrazas/salto_medio.tscn" id="terr_salto_medio"]
-[ext_resource type="PackedScene" path="res://src/world/terrazas/salto_o.tscn" id="terr_salto_o"]
-[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
-[ext_resource type="ArrayMesh" uid="uid://d2m2rd5seqmyb" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretCactusWall.res" id="wall_SecretCactusWall"]
-[ext_resource type="ArrayMesh" uid="uid://cdwosyllgav43" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretHillsWall.res" id="wall_SecretHillsWall"]
-[ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
-[ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
-[ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
 [ext_resource type="Resource" uid="uid://lvfh3etiwgxs" path="res://data/regions/arboleda.tres" id="region_arboleda"]
 [ext_resource type="Resource" uid="uid://tapjwxixj310" path="res://data/regions/banado.tres" id="region_banado"]
 [ext_resource type="Resource" uid="uid://c6nupal1gawt6" path="res://data/regions/cardonal.tres" id="region_cardonal"]
@@ -115,16 +99,32 @@
 [ext_resource type="Resource" uid="uid://duv1mo30xrp5q" path="res://data/regions/risco.tres" id="region_risco"]
 [ext_resource type="Resource" uid="uid://d274mfm7ywr42" path="res://data/regions/templo.tres" id="region_templo"]
 [ext_resource type="Resource" uid="uid://cp7ifbahttsk8" path="res://data/regions/vertiente.tres" id="region_vertiente"]
-[ext_resource type="PackedScene" path="res://src/world/technique_stone.tscn" id="tech_stone"]
-[ext_resource type="PackedScene" path="res://src/world/practice_dummy.tscn" id="tech_dummy"]
-[ext_resource type="Resource" path="res://data/techniques/counter.tres" id="tech_counter"]
-[ext_resource type="Resource" path="res://data/techniques/plunge.tres" id="tech_plunge"]
+[ext_resource type="Resource" uid="uid://bd60rgriyt0r5" path="res://data/drops/pot_arrows.tres" id="sandals_drops"]
+[ext_resource type="PackedScene" path="res://src/world/sello_cima.tscn" id="sello_cima"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_templo.tscn" id="shield_skeleton_templo"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_quenoa.tscn" id="skeleton_quenoa"]
+[ext_resource type="PackedScene" path="res://src/entities/guerreros/skeleton_templo.tscn" id="skeleton_templo"]
+[ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
+[ext_resource type="PackedScene" path="res://src/world/stairs.tscn" id="summit_stairs"]
+[ext_resource type="PackedScene" path="res://src/world/stairs_down.tscn" id="summit_stairs_down"]
 [ext_resource type="Resource" path="res://data/techniques/beam.tres" id="tech_beam"]
-[ext_resource type="Resource" path="res://data/drops/pot_arrows.tres" id="sandals_drops"]
-[ext_resource type="PackedScene" path="res://src/world/fogon.tscn" id="camp_fogon"]
-[ext_resource type="PackedScene" path="res://src/world/estandarte.tscn" id="camp_estandarte"]
-[ext_resource type="PackedScene" path="res://src/entities/devoto/devoto.tscn" id="camp_devoto"]
-[ext_resource type="Script" uid="uid://bib6qaeg6jby3" path="res://src/world/active_zones.gd" id="active_zones"]
+[ext_resource type="Resource" path="res://data/techniques/counter.tres" id="tech_counter"]
+[ext_resource type="PackedScene" path="res://src/world/practice_dummy.tscn" id="tech_dummy"]
+[ext_resource type="Resource" path="res://data/techniques/plunge.tres" id="tech_plunge"]
+[ext_resource type="PackedScene" path="res://src/world/technique_stone.tscn" id="tech_stone"]
+[ext_resource type="Script" uid="uid://bn7tmn35xdtk3" path="res://src/world/terrain_style_area.gd" id="terrain_style_area"]
+[ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_e.tscn" id="terr_escalinata_e"]
+[ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_medio.tscn" id="terr_escalinata_medio"]
+[ext_resource type="PackedScene" path="res://src/world/terrazas/escalinata_o.tscn" id="terr_escalinata_o"]
+[ext_resource type="PackedScene" path="res://src/world/terrazas/salto_e.tscn" id="terr_salto_e"]
+[ext_resource type="PackedScene" path="res://src/world/terrazas/salto_medio.tscn" id="terr_salto_medio"]
+[ext_resource type="PackedScene" path="res://src/world/terrazas/salto_o.tscn" id="terr_salto_o"]
+[ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
+[ext_resource type="ArrayMesh" uid="uid://d2m2rd5seqmyb" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretCactusWall.res" id="wall_SecretCactusWall"]
+[ext_resource type="ArrayMesh" uid="uid://cdwosyllgav43" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretHillsWall.res" id="wall_SecretHillsWall"]
+[ext_resource type="ArrayMesh" uid="uid://c7lvusadu8l35" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretLookoutWall.res" id="wall_SecretLookoutWall"]
+[ext_resource type="ArrayMesh" uid="uid://e178snsf1sk0" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretRavineWall.res" id="wall_SecretRavineWall"]
+[ext_resource type="ArrayMesh" uid="uid://xj64yut5ifba" path="res://assets/epiphany/meshes/muros_organicos/muro_SecretSummitWall.res" id="wall_SecretSummitWall"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7se6l"]
 panorama = ExtResource("1_qyxw2")
@@ -179,9 +179,6 @@ size = Vector3(28, 14, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_springportal"]
 size = Vector3(0.8, 2.4, 1.4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_huacaportal"]
-size = Vector3(1.6, 2.4, 1.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jamb"]
 size = Vector3(0.45, 2.6, 2)
@@ -337,6 +334,9 @@ size = Vector3(16, 8, 12)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hammer_pedestal"]
 height = 1.0
 radius = 0.45
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_huacaportal"]
+size = Vector3(1.6, 2.4, 1.2)
 
 [node name="Overworld" type="Node3D" unique_id=295443412]
 
@@ -961,10 +961,10 @@ flag = &"ow_heart_piece_hills"
 hidden_until_revealed = false
 
 [node name="SecretHillsWall" parent="." unique_id=859565622 instance=ExtResource("21_uay0b")]
-terrain_id = &"SecretHillsWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -74, 0, -2)
 flag = &"ow_secret_hills_wall"
 covers = Array[NodePath]([NodePath("Lid")])
+terrain_id = &"SecretHillsWall"
 
 [node name="Model" parent="SecretHillsWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretHillsWall")
@@ -985,10 +985,10 @@ amount = 5
 flag = &"ow_secret_cactus_chest"
 
 [node name="SecretCactusWall" parent="." unique_id=1199083833 instance=ExtResource("21_uay0b")]
-terrain_id = &"SecretCactusWall"
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 90, 0, 24)
 flag = &"ow_secret_cactus_wall"
 covers = Array[NodePath]([NodePath("Lid")])
+terrain_id = &"SecretCactusWall"
 
 [node name="Model" parent="SecretCactusWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretCactusWall")
@@ -1008,10 +1008,10 @@ item = ExtResource("33_yqe63")
 flag = &"ow_secret_lookout_chest"
 
 [node name="SecretLookoutWall" parent="." unique_id=114446066 instance=ExtResource("21_uay0b")]
-terrain_id = &"SecretLookoutWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 8)
 flag = &"ow_secret_lookout_wall"
 covers = Array[NodePath]([NodePath("Lid")])
+terrain_id = &"SecretLookoutWall"
 
 [node name="Model" parent="SecretLookoutWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretLookoutWall")
@@ -1032,10 +1032,10 @@ amount = 10
 flag = &"ow_secret_ravine_chest"
 
 [node name="SecretRavineWall" parent="." unique_id=716008109 instance=ExtResource("21_uay0b")]
-terrain_id = &"SecretRavineWall"
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -18, 0, -28)
 flag = &"ow_secret_ravine_wall"
 covers = Array[NodePath]([NodePath("Lid")])
+terrain_id = &"SecretRavineWall"
 
 [node name="Model" parent="SecretRavineWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretRavineWall")
@@ -1056,10 +1056,10 @@ amount = 5
 flag = &"ow_secret_summit_chest"
 
 [node name="SecretSummitWall" parent="." unique_id=631678416 instance=ExtResource("21_uay0b")]
-terrain_id = &"SecretSummitWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -26)
 flag = &"ow_secret_summit_wall"
 covers = Array[NodePath]([NodePath("Lid")])
+terrain_id = &"SecretSummitWall"
 
 [node name="Model" parent="SecretSummitWall/Wall" index="0"]
 mesh = ExtResource("wall_SecretSummitWall")
@@ -1542,9 +1542,9 @@ target_spawn = &"start"
 shape = SubResource("BoxShape3D_1rjbp")
 
 [node name="ShrineCrackedWall" parent="." unique_id=1931097377 instance=ExtResource("21_uay0b")]
-terrain_id = &"ShrineCrackedWall"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88, 2.6, -22)
 flag = &"ow_shrine_cracked_wall"
+terrain_id = &"ShrineCrackedWall"
 
 [node name="Model" parent="ShrineCrackedWall/Wall" index="0"]
 mesh = ExtResource("97_wall_shrine")
@@ -1572,9 +1572,9 @@ script = ExtResource("32_v1yde")
 shape = SubResource("BoxShape3D_7se6l")
 
 [node name="GrottoCrackedWall" parent="." unique_id=454893272 instance=ExtResource("21_uay0b")]
-terrain_id = &"GrottoCrackedWall"
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -84, 0, 14)
 flag = &"ow_grotto_cracked_wall"
+terrain_id = &"GrottoCrackedWall"
 
 [node name="Model" parent="GrottoCrackedWall/Wall" index="0"]
 mesh = ExtResource("98_wall_grotto")
@@ -1944,48 +1944,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 5.2, -42.4)
 script = ExtResource("4_cr2by")
 id = &"cumbre"
 
-[node name="ReflexSun" type="StaticBody3D" parent="." instance=ExtResource("30_xv8lf")]
+[node name="ReflexSun" parent="." unique_id=1123767436 instance=ExtResource("30_xv8lf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 5.2, -40.5)
 
-[node name="ReflexCrystal" type="StaticBody3D" parent="." instance=ExtResource("31_fe77v")]
+[node name="ReflexCrystal" parent="." unique_id=341593840 instance=ExtResource("31_fe77v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.5, 5.2, -42.5)
 latch = true
 flag = &"ow_reflex_door"
 
-[node name="ReflexMouth" parent="." instance=ExtResource("ent_reflejos")]
+[node name="ReflexMouth" parent="." unique_id=230750006 instance=ExtResource("ent_reflejos")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -44.8)
 
-[node name="ReflexGate" type="StaticBody3D" parent="." instance=ExtResource("26_iip2e")]
+[node name="ReflexGate" parent="." unique_id=1335235112 instance=ExtResource("26_iip2e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -43.9)
 switches = Array[NodePath]([NodePath("../ReflexCrystal")])
 
-[node name="ReflexDoor" type="Area3D" parent="."]
+[node name="ReflexDoor" type="Area3D" parent="." unique_id=1410188001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 6.4, -45.2)
 script = ExtResource("14_5vrew")
 target_scene = "res://levels/reflejos.tscn"
 target_spawn = &"entrada"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ReflexDoor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ReflexDoor" unique_id=477113188]
 shape = SubResource("BoxShape3D_springportal")
 
-[node name="Spawn_reflejos" type="Marker3D" parent="."]
+[node name="Spawn_reflejos" type="Marker3D" parent="." unique_id=2141385013]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -42.4)
 script = ExtResource("4_cr2by")
 id = &"reflejos"
 
-[node name="HuacaMouth" parent="." instance=ExtResource("huaca_mouth")]
+[node name="HuacaMouth" parent="." unique_id=1643975154 instance=ExtResource("huaca_mouth")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 2.6, -6)
 
-[node name="HuacaDoor" type="Area3D" parent="."]
+[node name="HuacaDoor" type="Area3D" parent="." unique_id=1121247736]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 3.8, -6.3)
 script = ExtResource("14_5vrew")
 target_scene = "res://levels/huaca.tscn"
 target_spawn = &"entrada"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HuacaDoor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HuacaDoor" unique_id=1744149984]
 shape = SubResource("BoxShape3D_huacaportal")
 
-[node name="Spawn_huaca" type="Marker3D" parent="."]
+[node name="Spawn_huaca" type="Marker3D" parent="." unique_id=1576260213]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 2.6, -2.5)
 script = ExtResource("4_cr2by")
 id = &"huaca"
@@ -1996,7 +1996,7 @@ script = ExtResource("101_place")
 display_name = "PLACE_CUMBRE"
 kind = 0
 
-[node name="PlaceReflex" type="Marker3D" parent="."]
+[node name="PlaceReflex" type="Marker3D" parent="." unique_id=1823660088]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 5.2, -43)
 script = ExtResource("101_place")
 display_name = "PLACE_REFLEX"
@@ -2137,84 +2137,84 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 2.6, 11)
 [node name="Salto_e_23" parent="Terrazas" unique_id=718177091 instance=ExtResource("terr_salto_e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82, 2.6, 11)
 
-[node name="MiradorStrikePlate" parent="." instance=ExtResource("22_gvf0k")]
+[node name="MiradorStrikePlate" parent="." unique_id=437845530 instance=ExtResource("22_gvf0k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 2.6, 6)
 mode = 4
 flag = &"ow_mirador_strike"
 
-[node name="MiradorGate" parent="." instance=ExtResource("26_iip2e")]
+[node name="MiradorGate" parent="." unique_id=1695411543 instance=ExtResource("26_iip2e")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 89, 2.6, 2)
 switches = Array[NodePath]([NodePath("../MiradorStrikePlate")])
 depth = 2.0
 
-[node name="HeartPieceMirador" parent="." instance=ExtResource("6_piece")]
+[node name="HeartPieceMirador" parent="." unique_id=604711555 instance=ExtResource("6_piece")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92, 2.6, 2)
 flag = &"ow_heart_piece_mirador"
 hidden_until_revealed = false
 
-[node name="TechniqueStones" type="Node" parent="."]
+[node name="TechniqueStones" type="Node" parent="." unique_id=70969986]
 
-[node name="MeadowStone" parent="TechniqueStones" instance=ExtResource("tech_stone")]
+[node name="MeadowStone" parent="TechniqueStones" unique_id=1553955731 instance=ExtResource("tech_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -12)
 technique = ExtResource("tech_counter")
 
-[node name="MeadowDummy" parent="TechniqueStones" instance=ExtResource("tech_dummy")]
+[node name="MeadowDummy" parent="TechniqueStones" unique_id=655560731 instance=ExtResource("tech_dummy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -8.5)
 
-[node name="GroveStone" parent="TechniqueStones" instance=ExtResource("tech_stone")]
+[node name="GroveStone" parent="TechniqueStones" unique_id=193480488 instance=ExtResource("tech_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2.6, 24.5)
 technique = ExtResource("tech_plunge")
 
-[node name="GroveDummy" parent="TechniqueStones" instance=ExtResource("tech_dummy")]
+[node name="GroveDummy" parent="TechniqueStones" unique_id=1123536601 instance=ExtResource("tech_dummy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 2.6, 24.5)
 
-[node name="SummitStone" parent="TechniqueStones" instance=ExtResource("tech_stone")]
+[node name="SummitStone" parent="TechniqueStones" unique_id=1912815831 instance=ExtResource("tech_stone")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 5.2, -40.5)
 technique = ExtResource("tech_beam")
 
-[node name="SummitDummy" parent="TechniqueStones" instance=ExtResource("tech_dummy")]
+[node name="SummitDummy" parent="TechniqueStones" unique_id=104257432 instance=ExtResource("tech_dummy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 5.2, -41)
 
-[node name="SandalsPractice" type="Node" parent="."]
+[node name="SandalsPractice" type="Node" parent="." unique_id=1574828839]
 
-[node name="SandalsTree" parent="SandalsPractice" instance=ExtResource("ow_secret_tree")]
+[node name="SandalsTree" parent="SandalsPractice" unique_id=28888972 instance=ExtResource("ow_secret_tree")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 2.6, -8)
 drops = ExtResource("sandals_drops")
 
-[node name="LongJumpGap" type="Marker3D" parent="."]
+[node name="LongJumpGap" type="Marker3D" parent="." unique_id=1721227392]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.6, 0, 4.4)
 
-[node name="LongJumpChest" parent="." instance=ExtResource("15_3hrjb")]
+[node name="LongJumpChest" parent="." unique_id=1166524315 instance=ExtResource("15_3hrjb")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 35.8, 2.6, 12.2)
 item = ExtResource("ow_arrow")
 amount = 10
 flag = &"ow_long_jump_chest"
 
-[node name="FogonCardonal" parent="." instance=ExtResource("camp_fogon")]
+[node name="FogonCardonal" parent="." unique_id=1982350213 instance=ExtResource("camp_fogon")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 27)
 
-[node name="EstandarteCardonal" parent="." instance=ExtResource("camp_estandarte")]
+[node name="EstandarteCardonal" parent="." unique_id=461075489 instance=ExtResource("camp_estandarte")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 24.5)
 
-[node name="DevotoCardonal1" parent="." instance=ExtResource("camp_devoto")]
+[node name="DevotoCardonal1" parent="." unique_id=566457136 instance=ExtResource("camp_devoto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 0, 28)
 
-[node name="DevotoCardonal2" parent="." instance=ExtResource("camp_devoto")]
+[node name="DevotoCardonal2" parent="." unique_id=564125256 instance=ExtResource("camp_devoto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, 26.5)
 
-[node name="FogonBanado" parent="." instance=ExtResource("camp_fogon")]
+[node name="FogonBanado" parent="." unique_id=49147647 instance=ExtResource("camp_fogon")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84, 0, 38)
 
-[node name="EstandarteBanado" parent="." instance=ExtResource("camp_estandarte")]
+[node name="EstandarteBanado" parent="." unique_id=1567207082 instance=ExtResource("camp_estandarte")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84, 0, 35.5)
 
-[node name="DevotoBanado1" parent="." instance=ExtResource("camp_devoto")]
+[node name="DevotoBanado1" parent="." unique_id=1151548654 instance=ExtResource("camp_devoto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.5, 0, 37.5)
 
-[node name="DevotoBanado2" parent="." instance=ExtResource("camp_devoto")]
+[node name="DevotoBanado2" parent="." unique_id=1829395977 instance=ExtResource("camp_devoto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.5, 0, 40.5)
 
-[node name="ActiveZones" type="Node" parent="." node_paths=PackedStringArray("scenery")]
+[node name="ActiveZones" type="Node" parent="." unique_id=178836805 node_paths=PackedStringArray("scenery")]
 script = ExtResource("active_zones")
 scenery = NodePath("../Decor")
 

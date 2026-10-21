@@ -1,6 +1,6 @@
 [gd_resource type="MeshLibrary" format=4 uid="uid://cfi66uh35j0ld"]
 
-[ext_resource type="Material" path="res://data/kits/materials/epiphany_outdoor.tres" id="1_o5gqa"]
+[ext_resource type="Material" uid="uid://bwaal6scqgbbc" path="res://data/kits/materials/epiphany_outdoor.tres" id="1_o5gqa"]
 [ext_resource type="Material" path="res://data/kits/materials/wall.tres" id="2_l5vh1"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3ub7b"]

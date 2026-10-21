@@ -45,21 +45,21 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="55_h1m6d"]
 [ext_resource type="Shader" uid="uid://crwycv8bukd6m" path="res://src/world/look/llama_la.gdshader" id="56_0sq8t"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="58_gtsey"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="60_km5gt"]
 [ext_resource type="PackedScene" path="res://src/world/look/caida_la.tscn" id="69_oqocf"]
 [ext_resource type="Script" uid="uid://c238aeb6gn6ka" path="res://src/world/look/enfoque_la.gd" id="76_056xl"]
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_quenoa.tscn" id="77_vrfs0"]
 [ext_resource type="Script" uid="uid://dlf8bqdycw2kg" path="res://src/world/look/brillo_la.gd" id="84_4rcne"]
 [ext_resource type="Resource" uid="uid://bd60rgriyt0r5" path="res://data/drops/pot_arrows.tres" id="arrows_pot"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/totora_navmesh.tres" id="nav_totora"]
 
 [sub_resource type="Environment" id="Environment_dmyaj"]
-ssao_enabled = true
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.6, 0.72, 0.74, 1)
 ambient_light_energy = 1.2
+ssao_enabled = true
 glow_enabled = true
 glow_intensity = 0.2
 glow_blend_mode = 0
@@ -555,10 +555,10 @@ environment = SubResource("Environment_dmyaj")
 compositor = SubResource("Compositor_w5jcx")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=285997108]
-shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.7660444, 0.6427875, 0, -0.6427875, 0.7660444, 0, 0, 0)
 light_color = Color(0.78, 0.9, 0.94, 1)
 light_energy = 0.7
+shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_max_distance = 32.0
 

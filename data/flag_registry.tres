@@ -633,15 +633,15 @@ script = ExtResource("1_ox7fe")
 id = &"ow_secret_rock_chest"
 description = "Cofre detrás de la roca de los Cerros abierto (flechas)"
 
-[sub_resource type="Resource" id="R_ow_long_jump_chest"]
-script = ExtResource("1_ox7fe")
-id = &"ow_long_jump_chest"
-description = "Cofre del pilar del salto largo en la Necrópolis abierto (flechas)"
-
 [sub_resource type="Resource" id="R_ow_secret_ledge_chest"]
 script = ExtResource("1_ox7fe")
 id = &"ow_secret_ledge_chest"
 description = "Cofre de la repisa de la Quebrada abierto (flechas)"
+
+[sub_resource type="Resource" id="R_ow_long_jump_chest"]
+script = ExtResource("1_ox7fe")
+id = &"ow_long_jump_chest"
+description = "Cofre del pilar del salto largo en la Necrópolis abierto (flechas)"
 
 [sub_resource type="Resource" id="R_ow_secret_bush_chest"]
 script = ExtResource("1_ox7fe")

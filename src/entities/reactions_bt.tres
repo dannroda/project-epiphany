@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://b7aisqsn6f7ku"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_react"]
 
@@ -60,7 +60,7 @@ resource_name = "is_hit"
 [sub_resource type="BTCallMethod" id="BTSetVar_fbro2"]
 node = SubResource("BBNode_oilbr")
 method = &"clear_reaction"
-args = [SubResource("BBVariant_viror")]
+args = Array[BBVariant]([SubResource("BBVariant_viror")])
 
 [sub_resource type="BTSequence" id="BTSequence_ea1ff"]
 custom_name = "Golpeado"
@@ -95,7 +95,7 @@ resource_name = "stunned"
 [sub_resource type="BTCallMethod" id="BTSetVar_66j55"]
 node = SubResource("BBNode_oilbr")
 method = &"clear_reaction"
-args = [SubResource("BBVariant_fqfvd")]
+args = Array[BBVariant]([SubResource("BBVariant_fqfvd")])
 
 [sub_resource type="BTSequence" id="BTSequence_m2m87"]
 custom_name = "Aturdido"

@@ -28,7 +28,6 @@
 [ext_resource type="PackedScene" uid="uid://mgijcgun2p06" path="res://player/player.tscn" id="33_iuiyr"]
 [ext_resource type="Script" uid="uid://dnrqxstfwf2ei" path="res://src/world/spawn_point.gd" id="36_3iwqa"]
 [ext_resource type="Script" uid="uid://dmtokpr1p02tj" path="res://src/world/portal.gd" id="37_q5kf3"]
-[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="PackedScene" path="res://src/ui/hud/hud.tscn" id="39_iq7xx"]
 [ext_resource type="Script" uid="uid://bccprbredple8" path="res://src/world/arena_fight.gd" id="40_fight"]
 [ext_resource type="Script" uid="uid://dcy0hg6ygxqg1" path="res://src/components/persistent_flag.gd" id="41_pflag"]
@@ -53,17 +52,18 @@
 [ext_resource type="PackedScene" path="res://src/world/look/polvo_chullpa.tscn" id="80_308dp"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/archer_skeleton_chullpa.tscn" id="80_archer"]
 [ext_resource type="PackedScene" path="res://src/entities/guerreros/shield_skeleton_chullpa.tscn" id="81_shield"]
+[ext_resource type="PackedScene" path="res://src/tools/top_down_camera.tscn" id="cam_scene"]
 [ext_resource type="NavigationMesh" path="res://levels/nav/chullpa_navmesh.tres" id="nav_chullpa"]
 [ext_resource type="Script" uid="uid://c3gjwha8na3yi" path="res://src/world/look/sombra_la.gd" id="sombra_la"]
 [ext_resource type="Script" uid="uid://bw0kh7whsb1qf" path="res://src/world/look/tono_la.gd" id="tono_la"]
 [ext_resource type="PackedScene" path="res://src/world/floor_switch_weight.tscn" id="weight_switch"]
 
 [sub_resource type="Environment" id="Environment_5ecsj"]
-ssao_enabled = true
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(0.76, 0.7, 0.66, 1)
 ambient_light_energy = 1.25
+ssao_enabled = true
 glow_enabled = true
 glow_intensity = 0.2
 glow_blend_mode = 0
@@ -525,10 +525,10 @@ environment = SubResource("Environment_5ecsj")
 compositor = SubResource("Compositor_la")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=647760322]
-shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 0, 0)
 light_color = Color(0.85, 0.8, 0.74, 1)
 light_energy = 0.65
+shadow_enabled = true
 directional_shadow_mode = 1
 directional_shadow_max_distance = 32.0
 
@@ -709,7 +709,6 @@ script = ExtResource("41_pflag")
 
 [node name="Mallqui" parent="Sotano/BossFight" unique_id=873195260 instance=ExtResource("42_mallqui")]
 transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 4, 0, -2)
-config = ExtResource("74_guardcfg")
 hops = 3
 hop_distance = 4.0
 leap_height = 3.0
@@ -722,6 +721,7 @@ wave_damage = 4
 stuck_time = 2.2
 aim_size = 1.7
 rage_leaps = 2
+config = ExtResource("74_guardcfg")
 
 [node name="HeartContainer" parent="Sotano/BossFight" unique_id=1991647320 instance=ExtResource("70_pickup")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)

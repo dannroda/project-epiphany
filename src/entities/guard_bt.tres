@@ -1,20 +1,23 @@
-[gd_resource type="BehaviorTree" format=3]
+[gd_resource type="BehaviorTree" format=3 uid="uid://c4ddn5k3im3so"]
 
-[ext_resource type="BehaviorTree" path="res://src/entities/reactions_bt.tres" id="r_react"]
 [ext_resource type="Script" uid="uid://bw6i0a7bddx8n" path="res://ai/tasks/bt_find_player.gd" id="1_caso1"]
 [ext_resource type="Script" uid="uid://dp1f7fgg0yk1l" path="res://ai/tasks/bt_in_attack_range.gd" id="2_0sm1c"]
 [ext_resource type="Resource" path="res://data/attacks/skeleton_slash.tres" id="3_2suu5"]
 [ext_resource type="Script" uid="uid://clwyjhi8fl4h0" path="res://ai/tasks/bt_attack.gd" id="4_sr5dr"]
 [ext_resource type="Script" uid="uid://dgotna37ipe2c" path="res://ai/tasks/bt_move_to_target.gd" id="5_orssr"]
 [ext_resource type="Script" uid="uid://cigrik1hqv1ag" path="res://ai/tasks/bt_wander.gd" id="6_wander"]
-[ext_resource type="Script" path="res://ai/tasks/bt_alert.gd" id="7_alert"]
-[ext_resource type="Script" path="res://ai/tasks/bt_search.gd" id="8_search"]
+[ext_resource type="Script" uid="uid://buasiujbkxbqv" path="res://ai/tasks/bt_alert.gd" id="7_alert"]
+[ext_resource type="Script" uid="uid://dfh51j7migl0c" path="res://ai/tasks/bt_search.gd" id="8_search"]
+[ext_resource type="BehaviorTree" uid="uid://b7aisqsn6f7ku" path="res://src/entities/reactions_bt.tres" id="r_react"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_jgf0a"]
 
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_5g5vw"]
+
 [sub_resource type="BTSubtree" id="BTSubtree_react"]
-custom_name = "Reacciones"
 subtree = ExtResource("r_react")
+blackboard_plan = SubResource("BlackboardPlan_5g5vw")
+custom_name = "Reacciones"
 
 [sub_resource type="BTCondition" id="BTCondition_alert_find"]
 script = ExtResource("1_caso1")
@@ -62,15 +65,15 @@ script = ExtResource("5_orssr")
 custom_name = "Perseguir"
 children = [SubResource("BTCondition_1uf30"), SubResource("BTAction_gfns8")]
 
-[sub_resource type="BTAction" id="BTAction_wander"]
-script = ExtResource("6_wander")
-
 [sub_resource type="BTAction" id="BTAction_search"]
 script = ExtResource("8_search")
 
 [sub_resource type="BTSequence" id="BTSequence_search"]
 custom_name = "Buscar"
 children = [SubResource("BTAction_search")]
+
+[sub_resource type="BTAction" id="BTAction_wander"]
+script = ExtResource("6_wander")
 
 [sub_resource type="BTSequence" id="BTSequence_wc2m8"]
 custom_name = "Deambular"

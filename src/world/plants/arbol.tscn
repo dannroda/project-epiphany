@@ -1,50 +1,49 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://ddus8poxow2jq"]
 
-[ext_resource type="Script" path="res://src/world/breakable.gd" id="1_breakable"]
-[ext_resource type="Script" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
-[ext_resource type="Resource" path="res://data/drops/grass.tres" id="3_drops"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/quenoa_grande.res" id="4_mesh"]
+[ext_resource type="Script" uid="uid://ukpcr815ja3d" path="res://src/world/breakable.gd" id="1_breakable"]
+[ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="2_hurtbox"]
+[ext_resource type="Resource" uid="uid://l17tbpx80uhw" path="res://data/drops/grass.tres" id="3_drops"]
+[ext_resource type="ArrayMesh" uid="uid://bqengt04yt7wx" path="res://assets/epiphany/meshes/naturaleza/quenoa_grande.res" id="4_mesh"]
 [ext_resource type="PackedScene" path="res://src/world/falling_leaves.tscn" id="5_leaves"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/naturaleza/tocon.res" id="9_stump"]
+[ext_resource type="ArrayMesh" uid="uid://tadpcbmrmfih" path="res://assets/epiphany/meshes/naturaleza/tocon.res" id="9_stump"]
+
+[sub_resource type="BoxShape3D" id="Body"]
+size = Vector3(1.6, 2.6, 1.6)
 
 [sub_resource type="CylinderShape3D" id="Hurt"]
 height = 2.6
 radius = 0.9
 
-[sub_resource type="BoxShape3D" id="Body"]
-size = Vector3(1.6, 2.6, 1.6)
-
-[node name="Arbol" type="Node3D"]
+[node name="Arbol" type="Node3D" unique_id=400052859]
 script = ExtResource("1_breakable")
 drops = ExtResource("3_drops")
 burst = &"leaves"
 sound = &"cut"
 break_style = 2
 
-[node name="Model" type="MeshInstance3D" parent="."]
+[node name="Model" type="MeshInstance3D" parent="." unique_id=962945368]
 mesh = ExtResource("4_mesh")
 
-[node name="Body" type="StaticBody3D" parent="."]
+[node name="Body" type="StaticBody3D" parent="." unique_id=1606143187]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body" unique_id=1225294989]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 shape = SubResource("Body")
 
-[node name="Hurtbox" type="Area3D" parent="."]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=1343113361]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
 script = ExtResource("2_hurtbox")
 surface = "none"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=808398691]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 shape = SubResource("Hurt")
 
-[node name="Leaves" parent="." instance=ExtResource("5_leaves")]
+[node name="Leaves" parent="." unique_id=944258370 instance=ExtResource("5_leaves")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 
-[node name="Stump" type="MeshInstance3D" parent="."]
+[node name="Stump" type="MeshInstance3D" parent="." unique_id=1575068011]
 visible = false
-transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 0, 0, 0)
 mesh = ExtResource("9_stump")

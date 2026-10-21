@@ -1,52 +1,52 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bywhg25m0pbr7"]
 
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_cuerpo.res" id="1_cuerpo"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_cabeza.res" id="2_cabeza"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_mandibula.res" id="3_mandibula"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_pata_del.res" id="4_pata_del"]
-[ext_resource type="ArrayMesh" path="res://assets/epiphany/meshes/atoq/atoq_pata_tras.res" id="5_pata_tras"]
+[ext_resource type="ArrayMesh" uid="uid://sqf3qe1wjye4" path="res://assets/epiphany/meshes/atoq/atoq_cuerpo.res" id="1_cuerpo"]
+[ext_resource type="ArrayMesh" uid="uid://c5q2o01teq5d8" path="res://assets/epiphany/meshes/atoq/atoq_cabeza.res" id="2_cabeza"]
+[ext_resource type="ArrayMesh" uid="uid://bt2htgibepmcl" path="res://assets/epiphany/meshes/atoq/atoq_mandibula.res" id="3_mandibula"]
+[ext_resource type="ArrayMesh" uid="uid://dxgshrhdn23av" path="res://assets/epiphany/meshes/atoq/atoq_pata_del.res" id="4_pata_del"]
+[ext_resource type="ArrayMesh" uid="uid://c3jmxn6m6aq5p" path="res://assets/epiphany/meshes/atoq/atoq_pata_tras.res" id="5_pata_tras"]
 [ext_resource type="PackedScene" path="res://src/entities/atoq/atoq_cola.tscn" id="6_cola"]
 [ext_resource type="PackedScene" path="res://src/entities/atoq/atoq_pelo_cuerpo.tscn" id="7_pelo_cuerpo"]
 [ext_resource type="PackedScene" path="res://src/entities/atoq/atoq_pelo_cabeza.tscn" id="8_pelo_cabeza"]
 
-[node name="Model" type="Node3D"]
+[node name="Model" type="Node3D" unique_id=355718247]
 
-[node name="Body" type="MeshInstance3D" parent="."]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1597411083]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 mesh = ExtResource("1_cuerpo")
 
-[node name="Head" type="MeshInstance3D" parent="Body"]
+[node name="Head" type="MeshInstance3D" parent="Body" unique_id=1247149999]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.36)
 mesh = ExtResource("2_cabeza")
 
-[node name="Jaw" type="MeshInstance3D" parent="Body/Head"]
+[node name="Jaw" type="MeshInstance3D" parent="Body/Head" unique_id=1434195524]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0.14)
 mesh = ExtResource("3_mandibula")
 
-[node name="Pelo" parent="Body/Head" instance=ExtResource("8_pelo_cabeza")]
+[node name="Pelo" parent="Body/Head" unique_id=1462123733 instance=ExtResource("8_pelo_cabeza")]
 
-[node name="Mouth" type="Marker3D" parent="Body/Head"]
+[node name="Mouth" type="Marker3D" parent="Body/Head" unique_id=168766963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.38)
 
-[node name="LegFL" type="MeshInstance3D" parent="Body"]
+[node name="LegFL" type="MeshInstance3D" parent="Body" unique_id=1484482715]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.05, 0.24)
 mesh = ExtResource("4_pata_del")
 
-[node name="LegFR" type="MeshInstance3D" parent="Body"]
+[node name="LegFR" type="MeshInstance3D" parent="Body" unique_id=1380675737]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.05, 0.24)
 mesh = ExtResource("4_pata_del")
 
-[node name="LegBL" type="MeshInstance3D" parent="Body"]
+[node name="LegBL" type="MeshInstance3D" parent="Body" unique_id=1245022447]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, -0.05, -0.26)
 mesh = ExtResource("5_pata_tras")
 
-[node name="LegBR" type="MeshInstance3D" parent="Body"]
+[node name="LegBR" type="MeshInstance3D" parent="Body" unique_id=213068601]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, -0.05, -0.26)
 mesh = ExtResource("5_pata_tras")
 
-[node name="Tail" type="Node3D" parent="Body"]
+[node name="Tail" type="Node3D" parent="Body" unique_id=945691792]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, -0.36)
 
-[node name="Pelo" parent="Body/Tail" instance=ExtResource("6_cola")]
+[node name="Pelo" parent="Body/Tail" unique_id=653482704 instance=ExtResource("6_cola")]
 
-[node name="Pelo" parent="Body" instance=ExtResource("7_pelo_cuerpo")]
+[node name="Pelo" parent="Body" unique_id=689046547 instance=ExtResource("7_pelo_cuerpo")]

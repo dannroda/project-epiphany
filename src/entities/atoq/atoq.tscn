@@ -1,31 +1,30 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c30o1815lq82x"]
 
 [ext_resource type="Script" uid="uid://c48gjyuwv6u3x" path="res://src/entities/enemy.gd" id="1_enemy"]
 [ext_resource type="Resource" path="res://data/entities/atoq.tres" id="2_config"]
-[ext_resource type="PackedScene" path="res://src/entities/atoq/atoq_model.tscn" id="3_model"]
-[ext_resource type="AnimationLibrary" path="res://src/entities/atoq/atoq_anims.tres" id="4_anims"]
-[ext_resource type="BehaviorTree" path="res://src/entities/atoq/atoq_bt.tres" id="5_bt"]
+[ext_resource type="PackedScene" uid="uid://bywhg25m0pbr7" path="res://src/entities/atoq/atoq_model.tscn" id="3_model"]
+[ext_resource type="AnimationLibrary" uid="uid://c1tm83ki6skd7" path="res://src/entities/atoq/atoq_anims.tres" id="4_anims"]
+[ext_resource type="BehaviorTree" uid="uid://buk5xlpkoies4" path="res://src/entities/atoq/atoq_bt.tres" id="5_bt"]
 [ext_resource type="Script" uid="uid://cllj70kv76q68" path="res://src/components/hitbox.gd" id="6_hitbox"]
 [ext_resource type="Script" uid="uid://bqdwet47uk4xm" path="res://src/components/health.gd" id="7_health"]
 [ext_resource type="Script" uid="uid://rcd8a41l0m7" path="res://src/components/hurtbox.gd" id="8_hurtbox"]
 [ext_resource type="Script" uid="uid://bcd4b7083of6t" path="res://src/components/attack_runner.gd" id="9_runner"]
-[ext_resource type="Script" path="res://src/feel/hit_flash.gd" id="10_flash"]
+[ext_resource type="Script" uid="uid://hl8cxvwsmtao" path="res://src/feel/hit_flash.gd" id="10_flash"]
+
+[sub_resource type="BoxShape3D" id="Bite"]
+size = Vector3(0.8, 0.6, 0.8)
 
 [sub_resource type="CapsuleShape3D" id="Body"]
 radius = 0.35
 height = 0.8
 
+[sub_resource type="BlackboardPlan" id="Plan"]
+
 [sub_resource type="BoxShape3D" id="Hurt"]
 size = Vector3(0.6, 0.7, 1.1)
 
-[sub_resource type="BoxShape3D" id="Bite"]
-size = Vector3(0.8, 0.6, 0.8)
-
-[sub_resource type="BlackboardPlan" id="Plan"]
-
 [sub_resource type="Animation" id="SinkClip"]
 resource_name = "sink"
-length = 1.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -33,7 +32,7 @@ tracks/0/path = NodePath(".:sunk")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.0),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [0.0, 1.0]
@@ -45,9 +44,12 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1.0),
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
-"values": [{"args": [], "method": &"queue_free"}]
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="SinkLib"]
@@ -55,74 +57,69 @@ _data = {
 &"sink": SubResource("SinkClip")
 }
 
-[node name="Atoq" type="CharacterBody3D" groups=["room_sleepers"]]
+[node name="Atoq" type="CharacterBody3D" unique_id=1284470515 groups=["room_sleepers"]]
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_enemy")
 config = ExtResource("2_config")
 
-[node name="ModelController" type="Node3D" parent="."]
+[node name="ModelController" type="Node3D" parent="." unique_id=1743290630]
 
-[node name="Visuals" parent="ModelController" instance=ExtResource("3_model")]
+[node name="Visuals" parent="ModelController" unique_id=191139788 instance=ExtResource("3_model")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ModelController"]
-deterministic = false
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ModelController" unique_id=2006078128]
 root_node = NodePath("../Visuals")
 libraries/Atoq = ExtResource("4_anims")
 autoplay = &"Atoq/idle"
 
-[node name="Hitboxes" type="Node3D" parent="ModelController"]
+[node name="Hitboxes" type="Node3D" parent="ModelController" unique_id=332634970]
 
-[node name="Front" type="Area3D" parent="ModelController/Hitboxes"]
+[node name="Front" type="Area3D" parent="ModelController/Hitboxes" unique_id=1767452041]
 collision_layer = 0
 collision_mask = 24
 monitoring = false
 monitorable = false
 script = ExtResource("6_hitbox")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ModelController/Hitboxes/Front"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ModelController/Hitboxes/Front" unique_id=1053403695]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.75)
 shape = SubResource("Bite")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1665314716]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("Body")
 
-[node name="BTPlayer" type="BTPlayer" parent="."]
+[node name="BTPlayer" type="BTPlayer" parent="." unique_id=508544303]
 behavior_tree = ExtResource("5_bt")
 blackboard_plan = SubResource("Plan")
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=2144544039]
 script = ExtResource("7_health")
 
-[node name="Hurtbox" type="Area3D" parent="."]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=98999508]
 collision_layer = 16
 collision_mask = 0
 monitoring = false
 script = ExtResource("8_hurtbox")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=1831405932]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
 shape = SubResource("Hurt")
 
-[node name="AttackRunner" type="Node" parent="." node_paths=PackedStringArray("hitbox_root")]
+[node name="AttackRunner" type="Node" parent="." unique_id=2079436443 node_paths=PackedStringArray("hitbox_root")]
 script = ExtResource("9_runner")
 hitbox_root = NodePath("../ModelController/Hitboxes")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=905075608]
 path_desired_distance = 0.25
-target_desired_distance = 1.0
 radius = 0.4
 
-[node name="HitFlash" type="Node" parent="." node_paths=PackedStringArray("health", "visuals")]
+[node name="HitFlash" type="Node" parent="." unique_id=315313067 node_paths=PackedStringArray("health", "visuals")]
 unique_name_in_owner = true
 script = ExtResource("10_flash")
 health = NodePath("../Health")
 visuals = NodePath("../ModelController/Visuals")
 
-[node name="Sink" type="AnimationPlayer" parent="."]
-deterministic = false
+[node name="Sink" type="AnimationPlayer" parent="." unique_id=1684662866]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("SinkLib")
-}
+libraries/ = SubResource("SinkLib")

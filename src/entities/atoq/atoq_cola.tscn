@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://datm8dygt6exi"]
 
 [ext_resource type="ArrayMesh" path="res://src/entities/atoq/meshes/atoq_cola.res" id="1_qk5wc"]
 [ext_resource type="Skin" path="res://src/entities/atoq/meshes/atoq_cola_skin.tres" id="2_iwj0s"]
@@ -53,9 +53,10 @@ skeleton = NodePath("..")
 [node name="Springs" type="SpringBoneSimulator3D" parent="." unique_id=393457265]
 setting_count = 1
 settings/0/root_bone_name = "cola_0_0"
-settings/0/root_bone = -1
+settings/0/root_bone = 1
 settings/0/end_bone_name = "cola_0_3"
-settings/0/end_bone = -1
+settings/0/end_bone = 4
+settings/0/extend_end_bone = false
 settings/0/center_from = 0
 settings/0/individual_config = false
 settings/0/rotation_axis = 3
@@ -68,5 +69,13 @@ settings/0/drag/damping_curve = null
 settings/0/gravity/value = 0.3
 settings/0/gravity/damping_curve = null
 settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/joints/0/bone_name = "cola_0_0"
+settings/0/joints/0/bone = 1
+settings/0/joints/1/bone_name = "cola_0_1"
+settings/0/joints/1/bone = 2
+settings/0/joints/2/bone_name = "cola_0_2"
+settings/0/joints/2/bone = 3
+settings/0/joints/3/bone_name = "cola_0_3"
+settings/0/joints/3/bone = 4
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
