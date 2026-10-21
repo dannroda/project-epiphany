@@ -60,6 +60,7 @@
     {
       "alternatives": "BT de enemigos en carpetas por entidad (archer_skeleton no tiene carpeta propia y tres BT son compartidos).",
       "at": "2026-10-21T06:21:06.139Z",
+      "review": "ok",
       "text": "Mapa de carpetas: cámara a src/camera/, BT del jefe junto al jefe y los de enemigos en data/ai/, Log y DebugOverlay a src/debug/, escenas de prueba a levels/test/; new_animation_node_state_machine.tres borrado en vez de renombrado",
       "why": "Plan de -25 aprobado por -ae; el .tres de la máquina de estados no lo usaba nada desde el primer commit. Partir src/world queda para cuando -88 y -8f no tengan cambios ahí."
     }
@@ -88,5 +89,5 @@
   ],
   "test": "--import y suite completa en main: 773/773 (8de3d784). test_export (exclusiones nuevas), test_save_codec (escenarios re-firmados). grep de rutas viejas en todo el árbol: solo historia en compass/docs.",
   "title": "Orden de carpetas y lo que entra en la build release",
-  "updated_at": "2026-10-21T06:21:19.973Z"
+  "updated_at": "2026-10-21T06:21:43.450Z"
 }

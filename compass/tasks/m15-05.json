@@ -22,6 +22,7 @@
       "alternatives": "Dejarlos sin comprimir.",
       "asked": true,
       "at": "2026-10-21T06:21:03.669Z",
+      "reply": "Comprimir",
       "session": "288582ff-f0fb-4cb5-a598-45cacf4a334e",
       "text": "¿Comprimimos también las mallas de los kits de paredes LA (≈200 MB de .tres)?",
       "why": "Bajaría VRAM y peso del repo como pasó con meshes/ (637 → 449 MB), pero reescribe los niveles en el próximo refresh de la_walls."
@@ -41,5 +42,5 @@
   "status": "review",
   "test": "Peso de assets/epiphany/meshes antes y después; VRAM y carga del overworld a 1080p en la RX 580; capturas antes/después en inicio, chullpa, quenoa, templo, cumbre y totora sin rendijas ni cambios de sombreado. Suite completa.",
   "title": "Comprimir mallas al importar",
-  "updated_at": "2026-10-21T06:21:03.669Z"
+  "updated_at": "2026-10-21T06:22:19.452Z"
 }

@@ -8,23 +8,30 @@
       "alternatives": "Seguir con el runner propio (tests/run_tests.gd), que ya anda igual de rápido.",
       "asked": true,
       "at": "2026-10-21T06:21:01.772Z",
+      "reply": "si GUT trae beneficios por sobre lo que ya tenemos, si.",
       "session": "288582ff-f0fb-4cb5-a598-45cacf4a334e",
       "text": "¿Pasamos los tests a GUT 9.7.1 (prueba de -25 en wt/gut-trial, eb15796d)?",
       "why": "773/0 con GUT; mismo API de asserts; en paralelo como hoy (--jobs=2: 252 s contra 264 s del runner propio; 4 jobs 145 s). Suma addons/gut (plugin sin activar) y un aviso de versión inofensivo."
+    },
+    {
+      "alternatives": "Adoptarlo ya para tener dobles y el panel del editor; adoptarlo cuando haya CI que lea JUnit.",
+      "at": "2026-10-21T06:24:56.644Z",
+      "text": "No adoptar GUT por ahora; la prueba queda en la rama wt/gut-trial (eb15796d) por si más adelante hace falta",
+      "why": "Con la condición de Daniel (\"si trae beneficios\"), no los trae hoy: la velocidad es la misma (252 contra 264 s con 2 procesos, dentro del ruido), nuestro runner sigue haciendo el trabajo pesado arriba (procesos, user:// por worker, --fixed-fps, timeout de colgados) y lo único nuevo sería lo que no usamos (dobles/spies, tests parametrizados, el panel de GUT en el editor, JUnit para CI). A cambio suma un addon de terceros que no lista 4.8 y una capa más que mantener."
     }
   ],
   "description": "Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).",
   "milestone": "m16",
-  "notes": "Point 3 done (9d94ec88): run_tests.gd kills a worker that goes 300 s without finishing a test and counts it as a failure, naming the last test. GUT (points 1–2) still waits for 'another day', per Daniel.",
+  "notes": "Point 3 done (9d94ec88): run_tests.gd kills a worker that goes 300 s without finishing a test and counts it as a failure, naming the last test.\nPuntos 1–2 (-25, rama wt/gut-trial eb15796d): GUT 9.7.1 en addons/gut (plugin sin activar), misma API de asserts; run_tests.gd sigue repartiendo archivos en procesos, un gut_cmdln por worker con --fixed-fps 60; saves/settings/tmp por worker vía variables EPI_TEST_* (GUT rechaza argumentos desconocidos); resultados leídos del JUnit XML; test_case.gd sigue fallando un test con error de script o sin asserts. 773/0; --jobs=2 252 s contra 264 s del runner propio; 4 jobs 145 s. Sin llamadas de red; el aviso \"GUT 0.0.0 is now available\" es ruido (versions.json no lista 4.8).\nArreglo aparte mergeado (541b7c10): test_boss_juice arranca con escena vacía (fallaba según el orden).\nDaniel: \"si GUT trae beneficios por sobre lo que ya tenemos, si\" → -ae: no los trae hoy, no se adopta (decisión 2, para revisar). La rama queda para cuando hagan falta dobles o CI con JUnit.",
   "order": 63,
   "priority": "low",
   "refs": [],
   "size": "m",
-  "status": "doing",
+  "status": "review",
   "tags": [
     "tests"
   ],
-  "test": "",
+  "test": "Suite con GUT en wt/gut-trial: 773/0. Main sigue con el runner propio.",
   "title": "Probar GUT para los tests (con nuestro runner por procesos arriba)",
-  "updated_at": "2026-10-21T06:21:01.772Z"
+  "updated_at": "2026-10-21T06:25:03.900Z"
 }

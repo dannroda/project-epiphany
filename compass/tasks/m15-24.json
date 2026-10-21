@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-88",
+  "checklist": [],
+  "code": "15.24",
+  "created_at": "2026-10-21T06:24:45.505Z",
+  "description": "Seguimiento de 15.5, Daniel (2026-10-21): \"Comprimir\". Los *_la_kit.tres traen sus propias mallas sin comprimir (≈200 MB de .tres de texto) porque la_walls las arma con SurfaceTool.commit() sin flags. Pasar Mesh.ARRAY_FLAG_COMPRESS_ATTRIBUTES (sin tangentes, como en 15.5) al commit de las piezas, tapas (15.16) y LODs, y regenerar los kits. Si se puede, regenerar solo los kits sin refresh de niveles; si hace falta refresh: rebasear sobre main justo antes, respetar los guardados del editor de Daniel (memorias refresh-editor-saved-levels, refresh-drops-instance-overrides, level-rim-and-editor-navmesh) y avisar. Medir peso de los .tres, VRAM y carga de chullpa/templo a 1080p (antes VRAM 1133 MB, chullpa ≈2,4 s) y capturas antes/después en Forward+ y Mobile sin rendijas ni cambios de sombreado.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 200,
+  "priority": "medium",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "Comprimir las mallas de los kits de paredes LA",
+  "updated_at": "2026-10-21T06:24:45.505Z"
+}

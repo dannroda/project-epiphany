@@ -22,6 +22,7 @@
     {
       "alternatives": "Renombrar también Room.ambiente.",
       "at": "2026-10-21T06:21:06.729Z",
+      "review": "ok",
       "text": "Renombres: AmbientePreset/AmbienteZoom → AmbiencePreset/AmbienceZoom, data/ambientes → data/ambiences, los dos anillo_fuego → fire_ring (llamas) y explosion_ring (anillo de la bomba), sello_cima → summit_gate; la propiedad `ambiente` de Room queda igual",
       "why": "Regla del GDD §11.1 (código en inglés). Renombrar la propiedad de Room obligaba a reescribirla en todos los niveles."
     }
@@ -39,5 +40,5 @@
   ],
   "test": "Suite completa en main 773/773 (8de3d784).",
   "title": "Nombres: una regla de idioma y archivos huérfanos",
-  "updated_at": "2026-10-21T06:21:22.369Z"
+  "updated_at": "2026-10-21T06:21:32.961Z"
 }

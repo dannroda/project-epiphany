@@ -7,6 +7,7 @@
     {
       "alternatives": "Seguir en 15.16 con cutaway, niebla de pozos y luces.",
       "at": "2026-10-21T06:21:04.865Z",
+      "review": "ok",
       "text": "15.16 se cierra con tapas, LODs y piso Mobile; el costo por píxel de las mazmorras sigue en otra tarjeta (15.23) después del cuelgue del G23",
       "why": "El cuelgue del teléfono base era más urgente; las mazmorras en el G23 siguen a 3–6 fps en Alta y el perfil Bajo (50 %) las divide por ~2."
     }
@@ -24,5 +25,5 @@
   ],
   "test": "",
   "title": "Mazmorras: costo de GPU en mobile",
-  "updated_at": "2026-10-21T06:21:04.865Z"
+  "updated_at": "2026-10-21T06:21:58.929Z"
 }

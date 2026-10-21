@@ -7,6 +7,7 @@
     {
       "alternatives": "No mergearlo hasta mostrar ≥ 1 ms.",
       "at": "2026-10-21T06:21:05.597Z",
+      "review": "ok",
       "text": "Se mergeó la copia de color compartida de los efectos LA aunque en el G23 no se midió ganancia",
       "why": "Son 4 pasadas de pantalla completa menos por cuadro con el look idéntico; en el G23 el ruido (±10–15 ms) tapa la diferencia."
     }
@@ -24,5 +25,5 @@
   ],
   "test": "Capturas Mobile y Forward+ iguales a la versión anterior (0,01–0,02 % de píxeles, animación). Contador temporal: 1 copia de entrada (sombra) + 1 de salida (tono) por cuadro. test_player_hole, test_overworld_run y suite completa en main.",
   "title": "Efectos LA en Mobile: menos pasadas de pantalla",
-  "updated_at": "2026-10-21T06:21:05.597Z"
+  "updated_at": "2026-10-21T06:21:48.786Z"
 }

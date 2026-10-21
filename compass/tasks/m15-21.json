@@ -7,6 +7,7 @@
     {
       "alternatives": "Repartir la simulación inicial en varios cuadros (más complejo); menos emisores de hojas.",
       "at": "2026-10-21T06:21:03.806Z",
+      "review": "ok",
       "text": "En celulares las partículas de ambiente (hojas, polvo, polvo de los pozos) arrancan vacías y se llenan en los primeros segundos",
       "why": "Simular varios segundos de golpe en el primer cuadro colgaba la GPU del G23 (device lost); en PC siguen arrancando llenas."
     }
@@ -24,5 +25,5 @@
   ],
   "test": "G23: tools/bench.sh android ZY22HH6Q99 --build con solo Alta desde OverworldInicio; logcat sin \"Couldn't wait for Vulkan fence (VkResult error -4)\". PC Mobile: GPU del primer cuadro tras la carga sin pico. Suite 773/773 en main.",
   "title": "G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost)",
-  "updated_at": "2026-10-21T06:21:03.806Z"
+  "updated_at": "2026-10-21T06:22:02.452Z"
 }

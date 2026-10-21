@@ -6492,7 +6492,7 @@ Daniel (2026-10-15): es hora de que los enemigos normales de las mazmorras vayan
 
 **Relacionadas:** 16.17 Configs de enemigos clonadas por mazmorra
 
-## M16 — Salud del código  (55/56, 55 en revisión)
+## M16 — Salud del código  (56/56, 56 en revisión)
 
 Arreglar los bugs y la deuda técnica que salieron del análisis del 2026-10-16 (cinco revisiones con las skills: arquitectura, code review, comunicación, patrones y datos), antes de seguir sumando sub-jefes, mazmorras y el co-op. Lo de rendimiento va a M15; las suposiciones de un solo player, a M13.
 
@@ -6908,7 +6908,7 @@ Se mezclan español e inglés en identificadores y archivos: AmbientePreset/Ambi
 - [x] Borrar player/player.tres
 
 **Decisiones:**
-- ! Renombres: AmbientePreset/AmbienteZoom → AmbiencePreset/AmbienceZoom, data/ambientes → data/ambiences, los dos anillo_fuego → fire_ring (llamas) y explosion_ring (anillo de la bomba), sello_cima → summit_gate; la propiedad `ambiente` de Room queda igual · sin revisar
+- ✓ Renombres: AmbientePreset/AmbienteZoom → AmbiencePreset/AmbienceZoom, data/ambientes → data/ambiences, los dos anillo_fuego → fire_ring (llamas) y explosion_ring (anillo de la bomba), sello_cima → summit_gate; la propiedad `ambiente` de Room queda igual
   Por qué: Regla del GDD §11.1 (código en inglés). Renombrar la propiedad de Room obligaba a reescribirla en todos los niveles.
   Descartado: Renombrar también Room.ambiente.
 
@@ -6917,18 +6917,27 @@ Se mezclan español e inglés en identificadores y archivos: AmbientePreset/Ambi
 **Notas:** 40e4d76d: la regla está en gdd.md §11.1 y player/player.tres se borró.
 Renombres (-25, en el mismo commit que 16.26, main 8de3d784): AmbiencePreset/AmbienceZoom y test_ambience_preset, data/ambiences, src/world/look/fire_ring.gdshader (llamas del FireRing), src/world/vfx/explosion_ring.gdshader (anillo de la bomba), summit_gate.tscn (en el overworld la instancia ya se llamaba SummitGate). El autoload Items pasa a ruta como los otros 13. La propiedad `ambiente` de Room queda igual (renombrarla reescribía todos los niveles).
 
-### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · En curso
+### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `tests`
 
 Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8-dev con un par de archivos. 2) Si anda, migrar la clase base (assert_eq/assert_true, misma API) y dejar run_tests.gd repartiendo procesos sobre GUT, para no perder las corridas en paralelo, el user:// por proceso y el ritmo de --fixed-fps 60. 3) Aparte de GUT: un timeout por archivo en run_tests.gd que mate un worker colgado y lo marque como falla (se encontraron workers de test_chullpa/test_templo colgados 4 horas).
 
 **Decisiones:**
-- ? ¿Pasamos los tests a GUT 9.7.1 (prueba de -25 en wt/gut-trial, eb15796d)? · pregunta abierta
+- ✓ ¿Pasamos los tests a GUT 9.7.1 (prueba de -25 en wt/gut-trial, eb15796d)?
   Por qué: 773/0 con GUT; mismo API de asserts; en paralelo como hoy (--jobs=2: 252 s contra 264 s del runner propio; 4 jobs 145 s). Suma addons/gut (plugin sin activar) y un aviso de versión inofensivo.
   Descartado: Seguir con el runner propio (tests/run_tests.gd), que ya anda igual de rápido.
+  Respuesta: si GUT trae beneficios por sobre lo que ya tenemos, si.
+- ! No adoptar GUT por ahora; la prueba queda en la rama wt/gut-trial (eb15796d) por si más adelante hace falta · sin revisar
+  Por qué: Con la condición de Daniel ("si trae beneficios"), no los trae hoy: la velocidad es la misma (252 contra 264 s con 2 procesos, dentro del ruido), nuestro runner sigue haciendo el trabajo pesado arriba (procesos, user:// por worker, --fixed-fps, timeout de colgados) y lo único nuevo sería lo que no usamos (dobles/spies, tests parametrizados, el panel de GUT en el editor, JUnit para CI). A cambio suma un addon de terceros que no lista 4.8 y una capa más que mantener.
+  Descartado: Adoptarlo ya para tener dobles y el panel del editor; adoptarlo cuando haya CI que lea JUnit.
 
-**Notas:** Point 3 done (9d94ec88): run_tests.gd kills a worker that goes 300 s without finishing a test and counts it as a failure, naming the last test. GUT (points 1–2) still waits for 'another day', per Daniel.
+**Prueba:** Suite con GUT en wt/gut-trial: 773/0. Main sigue con el runner propio.
+
+**Notas:** Point 3 done (9d94ec88): run_tests.gd kills a worker that goes 300 s without finishing a test and counts it as a failure, naming the last test.
+Puntos 1–2 (-25, rama wt/gut-trial eb15796d): GUT 9.7.1 en addons/gut (plugin sin activar), misma API de asserts; run_tests.gd sigue repartiendo archivos en procesos, un gut_cmdln por worker con --fixed-fps 60; saves/settings/tmp por worker vía variables EPI_TEST_* (GUT rechaza argumentos desconocidos); resultados leídos del JUnit XML; test_case.gd sigue fallando un test con error de script o sin asserts. 773/0; --jobs=2 252 s contra 264 s del runner propio; 4 jobs 145 s. Sin llamadas de red; el aviso "GUT 0.0.0 is now available" es ruido (versions.json no lista 4.8).
+Arreglo aparte mergeado (541b7c10): test_boss_juice arranca con escena vacía (fallaba según el orden).
+Daniel: "si GUT trae beneficios por sobre lo que ya tenemos, si" → -ae: no los trae hoy, no se adopta (decisión 2, para revisar). La rama queda para cuando hagan falta dobles o CI con JUnit.
 
 ### 16.26 Orden de carpetas y lo que entra en la build release · Revisión
 
@@ -6957,7 +6966,7 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
   114 archivos sueltos; mover desde el editor.
 
 **Decisiones:**
-- ! Mapa de carpetas: cámara a src/camera/, BT del jefe junto al jefe y los de enemigos en data/ai/, Log y DebugOverlay a src/debug/, escenas de prueba a levels/test/; new_animation_node_state_machine.tres borrado en vez de renombrado · sin revisar
+- ✓ Mapa de carpetas: cámara a src/camera/, BT del jefe junto al jefe y los de enemigos en data/ai/, Log y DebugOverlay a src/debug/, escenas de prueba a levels/test/; new_animation_node_state_machine.tres borrado en vez de renombrado
   Por qué: Plan de -25 aprobado por -ae; el .tres de la máquina de estados no lo usaba nada desde el primer commit. Partir src/world queda para cuando -88 y -8f no tengan cambios ahí.
   Descartado: BT de enemigos en carpetas por entidad (archer_skeleton no tiene carpeta propia y tres BT son compartidos).
 
@@ -7812,7 +7821,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (18/25, 18 en revisión)
+## M15 — Optimización  (18/26, 18 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -7890,9 +7899,10 @@ Los terreno_organico pesan 15-72 MB cada uno. Comprimir atributos de vértice ac
 - [ ] Volver a medir
 
 **Decisiones:**
-- ? ¿Comprimimos también las mallas de los kits de paredes LA (≈200 MB de .tres)? · pregunta abierta
+- ✓ ¿Comprimimos también las mallas de los kits de paredes LA (≈200 MB de .tres)?
   Por qué: Bajaría VRAM y peso del repo como pasó con meshes/ (637 → 449 MB), pero reescribe los niveles en el próximo refresh de la_walls.
   Descartado: Dejarlos sin comprimir.
+  Respuesta: Comprimir
 
 **Prueba:** Peso de assets/epiphany/meshes antes y después; VRAM y carga del overworld a 1080p en la RX 580; capturas antes/después en inicio, chullpa, quenoa, templo, cumbre y totora sin rendijas ni cambios de sombreado. Suite completa.
 
@@ -8062,7 +8072,7 @@ En Android (renderer Mobile) los CompositorEffect de src/world/look (tono_la, nu
 Benchmark 15.14 en el Moto Edge 30 Fusion (debug/tmp/bench/motorola_edge_30_fusion_20261020_2300.json, en wt/bugs): las mazmorras cuestan más GPU que el overworld. Templo hub 7 fps (GPU 135 ms), Chullpa 13 fps (GPU 74 ms, 2.44 M tris), Antesala 14 fps (GPU 69 ms); el overworld va a 20–30 fps. Con materiales planos (variante Plana) las mazmorras empeoran (6–9 fps), así que no son los shaders de material: sospechosos son las luces (antorchas/omni por sala), los efectos LA de pantalla (TonoLA, SombraLA, NubesLA, viñeta borrosa) o que las salas ocultas sigan llegando a la GPU (2.4 M tris con una sola sala a la vista). Medir qué es (PC con el benchmark y Godot profiler/RenderDoc, luego tools/bench.sh android ZY22GLQFZW) y bajar el costo sin cambiar el look en Forward+.
 
 **Decisiones:**
-- ! 15.16 se cierra con tapas, LODs y piso Mobile; el costo por píxel de las mazmorras sigue en otra tarjeta (15.23) después del cuelgue del G23 · sin revisar
+- ✓ 15.16 se cierra con tapas, LODs y piso Mobile; el costo por píxel de las mazmorras sigue en otra tarjeta (15.23) después del cuelgue del G23
   Por qué: El cuelgue del teléfono base era más urgente; las mazmorras en el G23 siguen a 3–6 fps en Alta y el perfil Bajo (50 %) las divide por ~2.
   Descartado: Seguir en 15.16 con cutaway, niebla de pozos y luces.
 
@@ -8098,7 +8108,7 @@ Mergeado en main por -ae.
 Medido por -88 en el Edge 30 Fusion (15.17, variante SinLook): en el overworld los efectos LA cuestan ~14 ms de GPU por cuadro (26,4 ms sin ellos contra ~40 con ellos), más que cualquier material. En Mobile cada efecto (TonoLA, NubesLA, SombraLA) copia el color a una textura rgba16f y lo vuelve a escribir (look_color.gd, 15.15): 6 pasadas de pantalla completa extra más las del AO, nubes y tono. Compartir una sola copia entre los tres (entra una vez, sale una vez) y, si se puede, juntar tono y nubes en una pasada. Forward+ sin cambios. Medir con tools/bench.sh android ZY22GLQFZW --build intercalando Alta entre variantes (el Edge se calienta en corridas largas).
 
 **Decisiones:**
-- ! Se mergeó la copia de color compartida de los efectos LA aunque en el G23 no se midió ganancia · sin revisar
+- ✓ Se mergeó la copia de color compartida de los efectos LA aunque en el G23 no se midió ganancia
   Por qué: Son 4 pasadas de pantalla completa menos por cuadro con el look idéntico; en el G23 el ruido (±10–15 ms) tapa la diferencia.
   Descartado: No mergearlo hasta mostrar ≥ 1 ms.
 
@@ -8119,9 +8129,10 @@ Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equ
 - El agua en mobile queda como está (decisión de Daniel).
 
 **Decisiones:**
-- ? ¿Agregamos la fila Perfil (Bajo / Medio / Alto / Personalizado) al canvas de mockups, en Options_Tabs_Video? · pregunta abierta
+- ✓ ¿Agregamos la fila Perfil (Bajo / Medio / Alto / Personalizado) al canvas de mockups, en Options_Tabs_Video?
   Por qué: El juego ya la tiene arriba de "Tope de cuadros", con el mismo estilo etiqueta + select; el canvas no la muestra y la regla es construir la UI desde el canvas.
   Descartado: Dejar el canvas como está y aceptar la diferencia.
+  Respuesta: no veo por qué no
 
 **Prueba:** tests/test_options.gd (perfiles, Personalizado, calibración por decide()). Suite 773/773 en main (4bc8849a). En ventana: Forward+ → Alto (6,7 ms), Mobile → Medio (2,6 ms); al reabrir no vuelve a calibrar. Benchmark en el G23 con las perillas de 28464b4f.
 
@@ -8130,7 +8141,7 @@ Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equ
 - Bajo: 50 %, sin sol, sin sombras de plantas, sin SSAO, efectos LA, 30 fps. Medio: 70 %, sol bajo, sin sombras de plantas, sin SSAO, 60 fps. Alto: los defaults de PC de hoy.
 - Primera vez: perfil de la plataforma (Mobile → Medio, PC → Alto); detrás de la pantalla de carga el título mide 2 s la GPU del flyover a tamaño completo con la escala del perfil; si pasa 1,2× el cuadro de 30 fps (Mobile) o 60 fps (PC) baja un escalón. Se decide una vez y queda en settings.cfg. Un settings.cfg viejo no se calibra: conserva sus valores y queda en el perfil que coincide o en Personalizado.
 - Opciones: Video > Gráficos empieza con Perfil; elegir uno mueve todas las filas gráficas; tocar una fila suelta muestra Personalizado (en la lista pero no elegible).
-- Pendiente para Daniel: el canvas de mockups (Options_Tabs_Video) no tiene la fila Perfil; se hizo con el patrón etiqueta + select arriba de "Tope de cuadros".
+- Canvas de mockups: Daniel aprobó sumar la fila (decisión 1). Options_Tabs_Video (versión 43 del canvas) tiene Perfil arriba de "Tope de cuadros" (Bajo / Medio / Alto / Personalizado deshabilitado) y Resolución 3D suma 50 %, como el juego.
 - G23 (inicio/cardonal/bañado): Bajo ~33 ms de GPU pero ~22 fps, porque el process de CPU tarda 35–53 ms → 15.20. Escala 70 → ~42 ms de GPU; 100 → ~59 ms. Cualquier sombra del sol a 50 % (incluso ortogonal de 20 m, atlas 1024, sin plantas) cuesta 46–58 ms: Bajo va sin sol. El AO LA cuesta ~1 ms y queda en Bajo.
 - La calibración mide solo GPU; en el G23 el límite es la CPU.
 
@@ -8147,7 +8158,7 @@ Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms p
 Hallado por -8f bisecando 15.16 en el Moto G23 (Mali-G52): el VK_ERROR_DEVICE_LOST no es del templo, es de la primera carga del overworld. Unos segundos después de cargar start.cfg (OverworldInicio) una entrega a la GPU pasa el timeout de 3 s del fence del driver Mali y el driver resetea la GPU ("Fence: waitForever ... fence didn't signal in 3000 ms", QUEUE_BUFFER_TIMEOUT, luego "Couldn't wait for Vulkan fence (VkResult error -4)" cada ~0,5 s). La app sigue y termina el benchmark, pero todo lo medido después corre en un contexto perdido, y en un jugador real es un cuelgue. Sospechas sin probar: la primera actualización de las ReflectionProbe (6 caras × escena entera) o el primer cuadro del overworld con todo visible (~2 M triángulos). Bisecar arrancando la corrida en un caso de mazmorra y con las sondas en update_mode always/apagadas en Mobile; arreglar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids; el Edge no se usa).
 
 **Decisiones:**
-- ! En celulares las partículas de ambiente (hojas, polvo, polvo de los pozos) arrancan vacías y se llenan en los primeros segundos · sin revisar
+- ✓ En celulares las partículas de ambiente (hojas, polvo, polvo de los pozos) arrancan vacías y se llenan en los primeros segundos
   Por qué: Simular varios segundos de golpe en el primer cuadro colgaba la GPU del G23 (device lost); en PC siguen arrancando llenas.
   Descartado: Repartir la simulación inicial en varios cuadros (más complejo); menos emisores de hojas.
 
@@ -8165,11 +8176,17 @@ Queda (→ 15.22): durante la primera carga del overworld una entrega sigue pasa
 
 Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mobile ya no se pierde el device, pero durante la primera carga del overworld (antes de "Partida cargada start.cfg") el logcat del G23 sigue mostrando "Fence: waitForever: waiting for GPU completion ... didn't signal in 3000 ms" en el timeline de mali, de nuestro proceso y de surfaceflinger. Esta vez el driver no reseteó, pero está al borde. En PC el costo que queda del primer cuadro es 6 ms, así que es algo propio de Mali o de la carga. Sospechas: subida de texturas/VRAM (588 MB en el overworld), el bake de radiancia del cielo, o el cuadro de la pantalla de carga mientras se instancia la escena. Además la primera carga tarda 36,5 s. Bisecar en el G23 y bajar esa entrega por debajo de ~1 s sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids y con -88 en 15.20; el Edge no se usa).
 
-### 15.23 G23: templo hub y chullpa a 3 fps (costo por píxel por sala) · Pendiente
+### 15.23 G23: templo hub y chullpa a 3 fps (costo por píxel por sala) · En curso
 
-**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `optimizacion`
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `optimizacion`
 
 Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 315 ms de GPU (3,1 fps) y chullpa 327 ms (2,9 fps) contra antesala 146 ms (6,4 fps), con triángulos ya bajos (tapas bakeadas y LODs). La diferencia entre salas apunta a algo propio de esas salas: luces puntuales por sala, cutaway de paredes, niebla de pozos, sondas, efectos LA. Medir por sala con los toggles del benchmark (lights, probes, effects, gridmaps, flat_shaders) y bajar el costo por píxel en Mobile sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build.
+
+### 15.24 Comprimir las mallas de los kits de paredes LA · En curso
+
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen sus propias mallas sin comprimir (≈200 MB de .tres de texto) porque la_walls las arma con SurfaceTool.commit() sin flags. Pasar Mesh.ARRAY_FLAG_COMPRESS_ATTRIBUTES (sin tangentes, como en 15.5) al commit de las piezas, tapas (15.16) y LODs, y regenerar los kits. Si se puede, regenerar solo los kits sin refresh de niveles; si hace falta refresh: rebasear sobre main justo antes, respetar los guardados del editor de Daniel (memorias refresh-editor-saved-levels, refresh-drops-instance-overrides, level-rim-and-editor-navmesh) y avisar. Medir peso de los .tres, VRAM y carga de chullpa/templo a 1080p (antes VRAM 1133 MB, chullpa ≈2,4 s) y capturas antes/después en Forward+ y Mobile sin rendijas ni cambios de sombreado.
 
 ## M17 — Después de la demo  (0/2)
 
