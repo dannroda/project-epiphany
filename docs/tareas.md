@@ -6895,9 +6895,9 @@ El player se registra en `_enter_tree` (player.gd:53) y `joined` se emite ahí, 
 
 **Notas:** 9f51bd9c: el player se registra al entrar al árbol pero joined espera su ready. test_coop_state cubre un invitado que se une.
 
-### 16.25 Nombres: una regla de idioma y archivos huérfanos · Pendiente
+### 16.25 Nombres: una regla de idioma y archivos huérfanos · En curso
 
-**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`
+**Prioridad:** baja · **Tamaño:** S · **Responsable:** project-epiphany-25 · **Etiquetas:** `refactor`
 
 Se mezclan español e inglés en identificadores y archivos: AmbientePreset/AmbienteZoom, anillo_fuego.gdshader, sello_cima.tscn junto a temple_seal.tscn, data/ambientes junto a data/materials. `player/player.tres` es un VisualShader que nadie usa y se confunde con data/entities/player.tres. El autoload Items va por uid y los otros 13 por ruta.
 
@@ -6908,6 +6908,7 @@ Se mezclan español e inglés en identificadores y archivos: AmbientePreset/Ambi
 - [x] Borrar player/player.tres
 
 **Notas:** 40e4d76d: la regla está en gdd.md §11.1 y player/player.tres se borró. Falta renombrar desde el editor (con el puente) para que sigan uids y rutas; el autoload Items sigue por uid.
+2026-10-21: el editor no tiene API para mover archivos; los renombres van en disco con el editor cerrado, junto con 16.26 (Daniel). Encargado a -25.
 
 ### 16.27 Probar GUT para los tests (con nuestro runner por procesos arriba) · En curso
 
@@ -6917,9 +6918,9 @@ Daniel (2026-10-14): se puede probar, pero otro día. 1) Ver si GUT corre en 4.8
 
 **Notas:** Point 3 done (9d94ec88): run_tests.gd kills a worker that goes 300 s without finishing a test and counts it as a failure, naming the last test. GUT (points 1–2) still waits for 'another day', per Daniel.
 
-### 16.26 Orden de carpetas y lo que entra en la build release · Pendiente
+### 16.26 Orden de carpetas y lo que entra en la build release · En curso
 
-**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-e0 · **Etiquetas:** `refactor`, `build`
+**Prioridad:** media · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `refactor`, `build`
 
 La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto a scripts de build; un EditorScript en src/debug/; Log y DebugOverlay (autoloads de runtime) en un addon, y DebugOverlay arma su Label por código; los BT entre src/entities/ y data/boss/; las escenas de prueba (test*, prueba_mc_godot, pruebas_terreno, sandbox_items, test_shinobi) en levels/ se exportan porque el filtro solo excluye tests/*; `player/animation/new_animation_node_state_machine.tres` con nombre por defecto; Feel cargado antes que MenuStack (por eso lo busca diferido).
 
@@ -6946,6 +6947,7 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
 **Prueba:** El export no incluye escenas de prueba; tests verdes tras mover.
 
 **Notas:** ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel. Lo que es mover archivos (levels/test/, cámara, BT, debug runtime, src/world, el .tres por defecto) queda para hacerlo desde el editor.
+2026-10-21: el editor no tiene API para mover archivos (el puente no puede). Daniel eligió hacer ahora los movimientos chicos en disco con el editor cerrado (script headless que reescribe rutas; uids y .uid/.import viajan con su archivo): escenas de prueba a levels/test/, cámara a src/camera/, scripts de build a tools/, BT junto a su entidad o en data/ai/, debug runtime a src/debug/, el .tres con nombre por defecto. Partir src/world queda para cuando -88 y -8f no tengan cambios pendientes ahí. Encargado a -25.
 
 **Archivos:** `export_presets.cfg`, `project.godot`
 

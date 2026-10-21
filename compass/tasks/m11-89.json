@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-e0",
+  "assignee": "project-epiphany-25",
   "checklist": [
     {
       "detail": "Y excluir la carpeta en export_presets.cfg.",
@@ -68,17 +68,17 @@
     }
   ],
   "milestone": "m16",
-  "notes": "ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel. Lo que es mover archivos (levels/test/, cámara, BT, debug runtime, src/world, el .tres por defecto) queda para hacerlo desde el editor.",
+  "notes": "ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel. Lo que es mover archivos (levels/test/, cámara, BT, debug runtime, src/world, el .tres por defecto) queda para hacerlo desde el editor.\n2026-10-21: el editor no tiene API para mover archivos (el puente no puede). Daniel eligió hacer ahora los movimientos chicos en disco con el editor cerrado (script headless que reescribe rutas; uids y .uid/.import viajan con su archivo): escenas de prueba a levels/test/, cámara a src/camera/, scripts de build a tools/, BT junto a su entidad o en data/ai/, debug runtime a src/debug/, el .tres con nombre por defecto. Partir src/world queda para cuando -88 y -8f no tengan cambios pendientes ahí. Encargado a -25.",
   "order": 86,
   "priority": "medium",
   "refs": [],
   "size": "m",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "refactor",
     "build"
   ],
   "test": "El export no incluye escenas de prueba; tests verdes tras mover.",
   "title": "Orden de carpetas y lo que entra en la build release",
-  "updated_at": "2026-10-20T02:53:55.089Z"
+  "updated_at": "2026-10-21T06:06:14.164Z"
 }

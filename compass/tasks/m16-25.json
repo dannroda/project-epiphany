@@ -1,5 +1,5 @@
 {
-  "assignee": "project-epiphany-e0",
+  "assignee": "project-epiphany-25",
   "checklist": [
     {
       "detail": "Anotarla en el GDD.",
@@ -20,16 +20,16 @@
   "created_at": "2026-10-16T19:48:06.123Z",
   "description": "Se mezclan español e inglés en identificadores y archivos: AmbientePreset/AmbienteZoom, anillo_fuego.gdshader, sello_cima.tscn junto a temple_seal.tscn, data/ambientes junto a data/materials. `player/player.tres` es un VisualShader que nadie usa y se confunde con data/entities/player.tres. El autoload Items va por uid y los otros 13 por ruta.",
   "milestone": "m16",
-  "notes": "40e4d76d: la regla está en gdd.md §11.1 y player/player.tres se borró. Falta renombrar desde el editor (con el puente) para que sigan uids y rutas; el autoload Items sigue por uid.",
+  "notes": "40e4d76d: la regla está en gdd.md §11.1 y player/player.tres se borró. Falta renombrar desde el editor (con el puente) para que sigan uids y rutas; el autoload Items sigue por uid.\n2026-10-21: el editor no tiene API para mover archivos; los renombres van en disco con el editor cerrado, junto con 16.26 (Daniel). Encargado a -25.",
   "order": 25,
   "priority": "low",
   "refs": [],
   "size": "s",
-  "status": "todo",
+  "status": "doing",
   "tags": [
     "refactor"
   ],
   "test": "",
   "title": "Nombres: una regla de idioma y archivos huérfanos",
-  "updated_at": "2026-10-20T02:53:54.680Z"
+  "updated_at": "2026-10-21T06:06:14.914Z"
 }
