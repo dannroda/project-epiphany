@@ -21,4 +21,4 @@ extends Node
 @export var parameters_shader: Shader
 @export var parameters := {}
 ## Solo estos casos (vacío: todos).
-@export var cases: PackedStringArray = []
+@export var cases: Array[StringName] = []

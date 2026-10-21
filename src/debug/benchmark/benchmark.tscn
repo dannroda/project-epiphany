@@ -31,7 +31,7 @@ parameters_shader = ExtResource("4_outdoor")
 parameters = {
 "detail": 0.0
 }
-cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+cases = Array[StringName]([&"OverworldInicio", &"OverworldArboleda", &"OverworldCardonal", &"OverworldBanado", &"OverworldCumbre"])
 
 [node name="SinViento" type="Node" parent="Variants"]
 script = ExtResource("2_variant")
@@ -39,30 +39,30 @@ parameters_shader = ExtResource("4_outdoor")
 parameters = {
 "wind_strength": 0.0
 }
-cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+cases = Array[StringName]([&"OverworldInicio", &"OverworldArboleda", &"OverworldCardonal", &"OverworldBanado", &"OverworldCumbre"])
 
 [node name="PlanaOutdoor" type="Node" parent="Variants"]
 script = ExtResource("2_variant")
 flat_materials = true
 flat_shaders = Array[Shader]([ExtResource("4_outdoor")])
-cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+cases = Array[StringName]([&"OverworldInicio", &"OverworldArboleda", &"OverworldCardonal", &"OverworldBanado", &"OverworldCumbre"])
 
 [node name="PlanaAgua" type="Node" parent="Variants"]
 script = ExtResource("2_variant")
 flat_materials = true
 flat_shaders = Array[Shader]([ExtResource("5_water")])
-cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+cases = Array[StringName]([&"OverworldInicio", &"OverworldArboleda", &"OverworldCardonal", &"OverworldBanado", &"OverworldCumbre"])
 
 [node name="PlanaRiscos" type="Node" parent="Variants"]
 script = ExtResource("2_variant")
 flat_materials = true
 flat_shaders = Array[Shader]([ExtResource("6_wall")])
-cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+cases = Array[StringName]([&"OverworldInicio", &"OverworldArboleda", &"OverworldCardonal", &"OverworldBanado", &"OverworldCumbre"])
 
 [node name="SinLook" type="Node" parent="Variants"]
 script = ExtResource("2_variant")
 effects = false
-cases = PackedStringArray("OverworldInicio", "OverworldArboleda", "OverworldCardonal", "OverworldBanado", "OverworldCumbre")
+cases = Array[StringName]([&"OverworldInicio", &"OverworldArboleda", &"OverworldCardonal", &"OverworldBanado", &"OverworldCumbre"])
 
 [node name="Cases" type="Node" parent="."]
 
