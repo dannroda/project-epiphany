@@ -8203,6 +8203,12 @@ Queda (→ 15.22): durante la primera carga del overworld una entrega sigue pasa
 
 Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mobile ya no se pierde el device, pero durante la primera carga del overworld (antes de "Partida cargada start.cfg") el logcat del G23 sigue mostrando "Fence: waitForever: waiting for GPU completion ... didn't signal in 3000 ms" en el timeline de mali, de nuestro proceso y de surfaceflinger. Esta vez el driver no reseteó, pero está al borde. En PC el costo que queda del primer cuadro es 6 ms, así que es algo propio de Mali o de la carga. Sospechas: subida de texturas/VRAM (588 MB en el overworld), el bake de radiancia del cielo, o el cuadro de la pantalla de carga mientras se instancia la escena. Además la primera carga tarda 36,5 s. Bisecar en el G23 y bajar esa entrega por debajo de ~1 s sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids y con -88 en 15.20; el Edge no se usa).
 
+**Decisiones:**
+- ✓ ¿La foto del mapa sale sin los efectos de pantalla (viñeta, marco, AO de pantalla) y con las nubes quietas, en PC y en el teléfono por igual?
+  Por qué: En Mobile la foto sale en 16 mosaicos para no trabar la GPU más de 3 s; los efectos de pantalla salían en cada mosaico como manchas oscuras en las esquinas. Sacarlos en los dos renderers deja el mismo mapa en PC y teléfono; en PC el mapa queda más claro en los bordes que antes. Antes y después en debug/tmp/ow2/draw/photo_before_after.png.
+  Descartado: Sacar los efectos solo en Mobile (PC queda como antes, mapas distintos); dejar los efectos y teselar solo en Mobile con las manchas.
+  Respuesta: Sin efectos en los dos (Daniel a -8f, viendo photo_before_after.png): mismo mapa en PC y teléfono.
+
 ### 15.23 G23: templo hub y chullpa a 3 fps (costo por píxel por sala) · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `optimizacion`
