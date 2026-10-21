@@ -275,7 +275,10 @@ func test_overworld_photo_is_taken_from_the_current_level() -> void:
 	var tree: SceneTree = setup[0]
 	var page: Control = setup[3]
 	var map: OverworldMap = tree.current_scene.get_node(^"OverworldMap")
-	assert_true(page.overworld_image.texture is ViewportTexture, "la imagen es la foto en vivo")
+	assert_true(page.overworld_image.texture == map.texture, "la imagen es la foto del nivel")
+	map._keep_photo()
+	assert_eq(map.get_node(^"Snapshot").size, OverworldMap.PARKED_SIZE, "entre foto y foto la SubViewport no ocupa memoria")
+	assert_eq(Vector2(map.texture.get_size()), map.world_rect.size * OverworldMap.PIXELS_PER_METER, "la foto no se achica con ella")
 	assert_eq(Vector2(map.texture.get_size()), map.world_rect.size * OverworldMap.PIXELS_PER_METER)
 	assert_true(map._grid_copy())
 	var copy: Node3D = map.get_node(^"%GridCopy")

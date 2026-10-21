@@ -917,6 +917,7 @@ rendering_device/driver.windows="d3d12"
 textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/contact_shadow/enabled=true
 lights_and_shadows/multi_bounce_occlusion/enabled=true
+reflections/reflection_atlas/reflection_count.mobile=16
 
 [shader_globals]
 

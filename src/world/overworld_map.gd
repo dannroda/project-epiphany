@@ -18,6 +18,7 @@ const REVEAL_RADIUS := 11.0
 const REVEAL_FADE := 5.0
 ## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
 const REVEAL_STEP := 1.0
+const PARKED_SIZE := Vector2i(2, 2)
 
 ## Clave de lo descubierto en las partidas; vacía, la escena del nivel.
 @export var id: StringName = &""
@@ -29,7 +30,10 @@ const REVEAL_STEP := 1.0
 ## Lo que sale en la foto del mapa (además de `grid`), con sus hijos.
 @export var scenery: Array[Node3D] = []
 
-var texture: Texture2D
+## La foto: una copia de la SubViewport, que entre foto y foto queda en PARKED_SIZE. A tamaño de foto sus búferes 3D
+## ocupaban ~200 MB de memoria de video todo el tiempo (15.27).
+var texture: ImageTexture
+var _photo_size: Vector2i
 var _retake_pending := false
 var _layout_flags: Dictionary[StringName, bool] = {}
 var _layout_flags_known := false
@@ -48,13 +52,15 @@ func _ready() -> void:
 		use_edge_walls(grid)
 	for node in scenery:
 		_add_to_map_layer(node)
-	_viewport.size = Vector2i((world_rect.size * PIXELS_PER_METER).round())
+	_photo_size = Vector2i((world_rect.size * PIXELS_PER_METER).round())
+	_viewport.size = PARKED_SIZE
 	var center := world_rect.get_center()
 	_camera.position = Vector3(center.x, CAMERA_HEIGHT, center.y)
 	_camera.rotation = Vector3(-PI / 2.0, 0.0, 0.0)
 	_camera.size = world_rect.size.y
 	_camera.far = CAMERA_HEIGHT * 2.0
-	texture = _viewport.get_texture()
+	texture = ImageTexture.create_from_image(Image.create_empty(1, 1, false, Image.FORMAT_RGBA8))
+	texture.set_size_override(_photo_size)
 	GameState.flag_changed.connect(_on_flag_changed)
 	GameState.loaded.connect(func() -> void: _painted_at.clear())
 
@@ -112,12 +118,24 @@ func snapshot() -> void:
 	var hole: Vector4 = camera.player_hole if camera is TopDownCamera else Vector4.ZERO
 	RenderingServer.global_shader_parameter_set(&"player_hole", Vector4.ZERO)
 	var copied := _grid_copy()
+	_viewport.size = _photo_size
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 	await RenderingServer.frame_post_draw
 	RenderingServer.global_shader_parameter_set(&"player_hole", hole)
 	if copied:
 		for piece in _grid_copy_root.get_children():
 			piece.queue_free()
+	_keep_photo()
+
+
+## Si dos fotos esperaron el mismo cuadro, la primera ya copió y estacionó la SubViewport.
+func _keep_photo() -> void:
+	if _viewport.size != _photo_size:
+		return
+	var image := _viewport.get_texture().get_image()
+	if image and not image.is_empty():
+		texture.set_image(image)
+	_viewport.size = PARKED_SIZE
 
 
 func _on_flag_changed(flag_id: StringName, _value: Variant) -> void:

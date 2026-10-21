@@ -13,6 +13,18 @@ func test_the_sun_shadows_only_what_the_camera_sees() -> void:
 		scene.free()
 
 
+## En Mobile el atlas de reflejos tiene lugar para pocas sondas (15.27: el de 64 ocupaba ~110 MB desde la primera mazmorra);
+## con más sondas que lugares, las que sobran no reflejan.
+func test_no_level_has_more_reflection_probes_than_the_mobile_atlas() -> void:
+	var slots: int = ProjectSettings.get_setting("rendering/reflections/reflection_atlas/reflection_count.mobile")
+	for file in DirAccess.get_files_at("res://levels"):
+		if file.ends_with(".tscn"):
+			var scene: Node = (load("res://levels/" + file) as PackedScene).instantiate()
+			var probes := scene.find_children("*", "ReflectionProbe", true, false).size()
+			assert_true(probes <= slots, "%s: %d sondas" % [file, probes])
+			scene.free()
+
+
 func test_walls_carry_no_faces_nobody_sees() -> void:
 	var walls := {
 		"res://data/kits/overworld_kit.tres": {"Acantilado": 960, "Andén borde": 960},
