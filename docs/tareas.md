@@ -6968,7 +6968,7 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
 - [x] Sacar el autoload ToonToggle
   El toon está rechazado y precarga epiphany_toon.tres en release; test_shinobi lo agrega solo si lo necesita.
 - [x] test_export mira las exclusiones
-- [ ] Partir src/world en puzzles/, dungeon/, props/ y overworld/
+- [x] Partir src/world en puzzles/, dungeon/, props/ y overworld/
   114 archivos sueltos; mover desde el editor.
 
 **Decisiones:**
@@ -6979,7 +6979,7 @@ La cámara de juego (505 líneas) y target_indicator están en src/tools/ junto 
   Por qué: Plan de -8f con el uso contado en levels/; -ae lo aprobó. Casos dudosos: arena_fight a dungeon/ (5 mazmorras contra 1 uso en el overworld; arena_area, la de afuera, a overworld/); temple_seal, summit_gate y eye_follow a overworld/ porque son hitos únicos, no piezas de puzzle; spike_trap a dungeon/ (peligro, solo chullpa y templo); mobile_particles, dust_motes y falling_leaves a vfx/; secret_tree a plants/. Cinco escenas sin uso (brazier, gate_templo, cracked_wall_risco, cracked_wall_templo, zone_veil.tscn) se mueven igual; borrarlas es de 11.59.
   Descartado: Una carpeta src/world/common/ para lo compartido; arena_fight en una carpeta propia de combate; los hitos del overworld en puzzles/ por heredar de Gate; vfx sueltos en props/.
 
-**Prueba:** --import y suite completa en main: 773/773 (8de3d784). test_export (exclusiones nuevas), test_save_codec (escenarios re-firmados). grep de rutas viejas en todo el árbol: solo historia en compass/docs.
+**Prueba:** --import y suite completa en main: 773/773 (8de3d784). test_export (exclusiones nuevas), test_save_codec (escenarios re-firmados). grep de rutas viejas en todo el árbol: solo historia en compass/docs. Partir src/world: --import dos veces (el primero loguea UIDs de la caché vieja, el segundo limpio) y suite 775/775 en main (d7a3c236), con test_export y test_save_codec.
 
 **Notas:** ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel.
 Movimientos (-25, bfe4a974 → main 8de3d784, con 16.25), en disco con el editor cerrado porque el editor no tiene API para mover: los .uid viajan con su archivo, las líneas uid= quedan, todas las rutas res:// reescritas (escenas, recursos, scripts, shaders, project.godot, export_presets, tests, tools, debug/scenarios, gdd.md).
@@ -6990,8 +6990,8 @@ Movimientos (-25, bfe4a974 → main 8de3d784, con 16.25), en disco con el editor
 - src/debug/: Log, log_sink, debug_overlay (lo del editor queda en el addon).
 - new_animation_node_state_machine.tres y su _playback borrados (sin uso).
 - 5 escenarios re-firmados (dungeon_test, full_inventory, gancho, test_flags, test_rooms).
-- Partir src/world: pendiente, cuando -88 y -8f no tengan cambios ahí.
 - El primer arranque después del merge loguea errores de la caché de uids de .godot; -ae corrió --import dos veces en main y el segundo sale limpio.
+Partir src/world (-8f, wt/overworld d7a3c236 → main d7a3c236, fast-forward sobre 1a73a9b1), en disco con el editor cerrado: 115 archivos con su .uid a dungeon/, puzzles/, props/ y overworld/ (más mobile_particles, dust_motes y falling_leaves a vfx/ y secret_tree a plants/) según la decisión 2; 7 quedan en la raíz (portal, warp_portal, spawn_point(.tscn), spawns, physics_layers, box_bounds). Rutas reescritas en 124 archivos (niveles, escenas, data/regions, tests, tools/decorate_levels, gdd.md). git diff -M: 114 R100 + 52 renombres con rutas editadas, sin D ni A. Ningún escenario de debug/scenarios tenía rutas movidas. Escenas sin uso movidas igual, para 11.59: props/brazier, puzzles/gate_templo, puzzles/cracked_wall_risco, puzzles/cracked_wall_templo, overworld/zone_veil.
 
 **Archivos:** `export_presets.cfg`, `project.godot`
 

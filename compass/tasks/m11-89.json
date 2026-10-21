@@ -50,7 +50,7 @@
     },
     {
       "detail": "114 archivos sueltos; mover desde el editor.",
-      "done": false,
+      "done": true,
       "text": "Partir src/world en puzzles/, dungeon/, props/ y overworld/"
     }
   ],
@@ -83,7 +83,7 @@
     }
   ],
   "milestone": "m16",
-  "notes": "ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel.\nMovimientos (-25, bfe4a974 → main 8de3d784, con 16.25), en disco con el editor cerrado porque el editor no tiene API para mover: los .uid viajan con su archivo, las líneas uid= quedan, todas las rutas res:// reescritas (escenas, recursos, scripts, shaders, project.godot, export_presets, tests, tools, debug/scenarios, gdd.md).\n- levels/test/: test*, test_rooms, test_shinobi, test_targeting, prueba_mc_godot, pruebas_terreno, ejemplo_ambiente, sandbox_items, dungeon_test. Exclusión release: tests/*, *.md, debug/*, tools/*, levels/test/*.\n- src/camera/: top_down_camera, camera_reveal, camera_occlusion, room_mask, target_indicator.\n- tools/: build_gray_kit, profile_scenes, render_feel_sfx, render_music y resource_converter (EditorScript).\n- BT: boss_phase1-3_bt a src/entities/boss/; enemy, reactions, guard y archer a data/ai/.\n- src/debug/: Log, log_sink, debug_overlay (lo del editor queda en el addon).\n- new_animation_node_state_machine.tres y su _playback borrados (sin uso).\n- 5 escenarios re-firmados (dungeon_test, full_inventory, gancho, test_flags, test_rooms).\n- Partir src/world: pendiente, cuando -88 y -8f no tengan cambios ahí.\n- El primer arranque después del merge loguea errores de la caché de uids de .godot; -ae corrió --import dos veces en main y el segundo sale limpio.",
+  "notes": "ce108f6c: los presets release (Linux, Windows, macOS, Web) excluyen debug/, tools/, src/tools/build_*, profile_scenes, render_music y los niveles de prueba por nombre; test_export lo mira y chequea que título, overworld y SceneFlow no dependan de nada excluido. ToonToggle ya no es autoload (nodo en test_shinobi). MenuStack carga antes que Feel.\nMovimientos (-25, bfe4a974 → main 8de3d784, con 16.25), en disco con el editor cerrado porque el editor no tiene API para mover: los .uid viajan con su archivo, las líneas uid= quedan, todas las rutas res:// reescritas (escenas, recursos, scripts, shaders, project.godot, export_presets, tests, tools, debug/scenarios, gdd.md).\n- levels/test/: test*, test_rooms, test_shinobi, test_targeting, prueba_mc_godot, pruebas_terreno, ejemplo_ambiente, sandbox_items, dungeon_test. Exclusión release: tests/*, *.md, debug/*, tools/*, levels/test/*.\n- src/camera/: top_down_camera, camera_reveal, camera_occlusion, room_mask, target_indicator.\n- tools/: build_gray_kit, profile_scenes, render_feel_sfx, render_music y resource_converter (EditorScript).\n- BT: boss_phase1-3_bt a src/entities/boss/; enemy, reactions, guard y archer a data/ai/.\n- src/debug/: Log, log_sink, debug_overlay (lo del editor queda en el addon).\n- new_animation_node_state_machine.tres y su _playback borrados (sin uso).\n- 5 escenarios re-firmados (dungeon_test, full_inventory, gancho, test_flags, test_rooms).\n- El primer arranque después del merge loguea errores de la caché de uids de .godot; -ae corrió --import dos veces en main y el segundo sale limpio.\nPartir src/world (-8f, wt/overworld d7a3c236 → main d7a3c236, fast-forward sobre 1a73a9b1), en disco con el editor cerrado: 115 archivos con su .uid a dungeon/, puzzles/, props/ y overworld/ (más mobile_particles, dust_motes y falling_leaves a vfx/ y secret_tree a plants/) según la decisión 2; 7 quedan en la raíz (portal, warp_portal, spawn_point(.tscn), spawns, physics_layers, box_bounds). Rutas reescritas en 124 archivos (niveles, escenas, data/regions, tests, tools/decorate_levels, gdd.md). git diff -M: 114 R100 + 52 renombres con rutas editadas, sin D ni A. Ningún escenario de debug/scenarios tenía rutas movidas. Escenas sin uso movidas igual, para 11.59: props/brazier, puzzles/gate_templo, puzzles/cracked_wall_risco, puzzles/cracked_wall_templo, overworld/zone_veil.",
   "order": 86,
   "priority": "medium",
   "refs": [],
@@ -93,7 +93,7 @@
     "refactor",
     "build"
   ],
-  "test": "--import y suite completa en main: 773/773 (8de3d784). test_export (exclusiones nuevas), test_save_codec (escenarios re-firmados). grep de rutas viejas en todo el árbol: solo historia en compass/docs.",
+  "test": "--import y suite completa en main: 773/773 (8de3d784). test_export (exclusiones nuevas), test_save_codec (escenarios re-firmados). grep de rutas viejas en todo el árbol: solo historia en compass/docs. Partir src/world: --import dos veces (el primero loguea UIDs de la caché vieja, el segundo limpio) y suite 775/775 en main (d7a3c236), con test_export y test_save_codec.",
   "title": "Orden de carpetas y lo que entra en la build release",
-  "updated_at": "2026-10-21T21:21:33.739Z"
+  "updated_at": "2026-10-21T21:29:16.588Z"
 }
