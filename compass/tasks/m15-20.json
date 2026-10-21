@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-88",
+  "checklist": [],
+  "code": "15.20",
+  "created_at": "2026-10-21T05:22:31.256Z",
+  "description": "Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms pero el juego va a ~22 fps porque el proceso de CPU tarda 35–53 ms por cuadro. En el teléfono base los 30 fps no se alcanzan solo con calidad gráfica: el límite es la CPU. Perfilar qué se lleva el process en el overworld (scripts por cuadro, IA de los enemigos despiertos, partículas por CPU, física, animación, UI/HUD, señales) con el profiler de Godot o mediciones en el benchmark, y bajarlo sin cambiar el comportamiento. Medir en el G23 con tools/bench.sh android ZY22HH6Q99 (compartido con Asteroids; el Edge no se usa).",
+  "milestone": "m15",
+  "notes": "",
+  "order": 196,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "CPU por cuadro del overworld en el G23",
+  "updated_at": "2026-10-21T05:22:31.256Z"
+}

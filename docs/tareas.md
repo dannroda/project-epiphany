@@ -7784,7 +7784,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (14/21, 14 en revisión)
+## M15 — Optimización  (16/22, 16 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -7908,21 +7908,22 @@ Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir rele
 
 **Relacionadas:** 10.8 Pasada de rendimiento
 
-### 17.2 LOD de decor y plantas, y terreno en bloques más chicos · En curso
+### 17.2 LOD de decor y plantas, y terreno en bloques más chicos · Revisión
 
 **Responsable:** project-epiphany-25
 
 Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los assets: con el arreglo del shader el overworld va a 6–7,7 ms de GPU y esto ganaría como mucho 1 ms (resto: iluminación/sombras del suelo 1–3,4 ms, decor ~1,1, riscos <1, plantas ~0,1).
 
-- [ ] Rangos de visibilidad/LOD en decor y plantas
+- [x] Rangos de visibilidad/LOD en decor y plantas
 - [x] Terreno en bloques más chicos que se descarten fuera de cámara
 
-**Notas:** 2026-10-20: pasa a M15 por lo medido en teléfonos (17.3). En el Moto G23 (Mali-G52) el overworld dibuja 2,2 M de triángulos y 599 draw calls con sombras, 158 ms de GPU por cuadro, 7,5 FPS, y Vulkan llega a perder el device (fence error -4). En el Edge 30 Fusion, 0,8 M de triángulos sin sombras y 18 ms de GPU al 50 %. Los bloques de terreno_organico son enormes y sin LOD. Encargado a -25; medir con el benchmark (15.14).
+**Prueba:** Suite 768/768 en main después de cada paso. Capturas antes/después en debug/tmp/lod/opciones/ (antes_despues_Arboleda.png, antes_despues_Banado.png; agua_nubes.png muestra que las manchas del agua del bañado son lenteja de agua tapada por la sombra de una nube). Triángulos Mobile por caso del benchmark.
 
-2026-10-21, paso 2 (f304ebee, en main): cada franja X del terreno son 8 bloques de ~19×14 m (riscos_k_j / suelo_k_j, cada uno con su colisión); los cortes también parten las astillas de 112 m del fondo de los abismos y van a floor(...) + 0,37 m en X y Z (SEAM_OFFSET en build_terreno_organico.py) para que nada colocado en coordenadas redondas caiga sobre una costura. Mismos 12 glb (máx. 72 MB). Triángulos por cuadro (PC, Mobile 1600×720): inicio 2,14 → 0,62 M, arboleda 1,97 → 0,75, cardonal 1,55 → 0,28, bañado 1,21 → 0,54, cumbre 1,62 → 0,65; +10 draw calls. G23 (Alta, solo overworld, moto_g23_20261021_0119.json): GPU 96/110/82/101/120 ms, 7,6–11,6 fps (antes 158 ms). El G23 ya está limitado por relleno, no por triángulos: el cardonal con 0,29 M sigue en 82 ms (→ 15.19). Suite 768/768 en main.
-Primer intento (214708cc) devuelto por -ae: PortalNecropolis (32, 2.6, -2) caía justo en la costura z = -2 entre suelo_7_3 y suelo_7_4 y un rayo vertical sobre la arista compartida atravesaba las dos tapas (test_map › test_travel_portals_light_up_and_the_map_travels).
-Paso 1 (decor/plantas): con la cámara cenital todo está a 15–35 m y los LOD automáticos casi no actúan (lod_bias 0,1 ahorra 1–8 %; el LOD automático de la queñoa, 1040 triángulos, pierde los troncos); los rangos de visibilidad no ayudan con cámara fija. Opciones simuladas (Mobile, miles de triángulos inicio/arboleda/cardonal/bañado/cumbre; hoja en debug/tmp/lod/opciones/opciones_plantas.png): actual 618/749/276/515/646; pasto sin sombra (los altos la conservan) 579/720/232/489/602; queñoa media 1782 tri 463/506/276/515/636; queñoa liviana 1120 tri 426/449/276/515/633.
-Daniel (2026-10-21) eligió queñoa media + pasto sin sombra. -25 reconstruye de verdad (también las queñoas horneadas en las montañas).
+**Notas:** 2026-10-20: pasa a M15 por lo medido en teléfonos (17.3). En el Moto G23 (Mali-G52) el overworld dibujaba 2,2 M de triángulos y 599 draw calls con sombras, 158 ms de GPU por cuadro, 7,5 FPS. Encargado a -25.
+
+Paso 2, terreno en bloques (f304ebee): cada franja X son 8 bloques de ~19×14 m (riscos_k_j / suelo_k_j, cada uno con su colisión); los cortes van a floor(...) + 0,37 m en X y Z (SEAM_OFFSET en build_terreno_organico.py) para que nada colocado en coordenadas redondas caiga sobre una costura (el primer intento, 214708cc, dejaba PortalNecropolis sobre la costura z = -2 y test_map fallaba). Triángulos (PC, Mobile 1600×720): inicio 2,14 → 0,62 M, arboleda 1,97 → 0,75, cardonal 1,55 → 0,28, bañado 1,21 → 0,54, cumbre 1,62 → 0,65. G23: GPU 96/110/82/101/120 ms (antes 158).
+
+Paso 1, plantas (06a3ac12): Daniel eligió queñoa media + pasto sin sombra entre las opciones simuladas (hoja en debug/tmp/lod/opciones/opciones_plantas.png). quenoa_grande 4584 → 1782 triángulos, quenoa_chica 3456 → 1308, en el decor y en las montañas. Las plantas horneadas del terreno se separan en arboles_* (con sombra) y plantas_* (sin sombra; epi_scene_import respeta el extra "shadow"); pasto, flores, tola, yareta, hongos e ichu_cortado sin sombra. naturaleza.glb reconstruido (no se rehacía desde el 10-13): las demás mallas pasan a la triangulación determinista de 16.51, mismas formas. 78 mallas de chunks viejos borradas; el glb de terreno más grande baja de 72 a 32 MB. Triángulos Mobile (miles): inicio 618 → 422, arboleda 749 → 475, cardonal 276 → 224, bañado 515 → 305, cumbre 646 → 451; ~20 % menos draw calls. La quenoa_grande.res sin commitear de Daniel (re-guardado del editor de la malla vieja) quedó en un stash de main. LOD automático y rangos de visibilidad descartados: con la cámara cenital no actúan, y el LOD automático de la queñoa pierde los troncos.
 
 ### 15.9 Overworld: optimizar el dibujado (después de los assets) · Revisión
 
@@ -8062,7 +8063,7 @@ Medido por -88 en el Edge 30 Fusion (15.17, variante SinLook): en el overworld l
 **Notas:** look_color.gd (a56e3151, -88): los tres efectos LA comparten una sola copia del color en Mobile por cuadro: el color entra una vez (sombra) y sale una vez (tono), 2 pasadas de pantalla completa en vez de 6 en el overworld y 2 en vez de 4 en mazmorras. Un efecto deja el color en la textura compartida solo si en el cuadro anterior otro efecto lo siguió en el mismo punto y capa; si llega otra capa mientras hay una retenida, la vuelca primero. Lo peor que puede pasar es un cuadro sin efectos al cambiar el compositor; nunca pasa un color viejo.
 Moto G23, intercalado (inicio/cardonal/bañado), GPU ms: copias compartidas 123,7 / 120,8 contra vecinos 129,4 / 126,5 / 115,5 / 124,2: sin diferencia medible en el G23 (ruido ±10–15 ms, limitado por otra cosa). Se mergea igual: son 4 pasadas de pantalla menos y el look es idéntico. Juntar tono y nubes en una pasada: no, ahorraría otra pasada y eso no se nota en el G23. El Edge no se usa más (teléfono de Daniel).
 
-### 15.19 Perfiles de calidad (automático la primera vez, elegible en Opciones) · Pendiente
+### 15.19 Perfiles de calidad (automático la primera vez, elegible en Opciones) · Revisión
 
 **Prioridad:** alta · **Tamaño:** L · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
@@ -8072,6 +8073,23 @@ Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equ
 - Opciones: fila "Perfil" (Bajo / Medio / Alto) en la pantalla de opciones existente, según el canvas de mockups. Si el jugador toca una opción gráfica suelta, el perfil pasa a "Personalizado" y respeta lo suyo.
 - Qué lleva Bajo sale de medir en el Moto G23 (Mali-G52), que quedó limitado por relleno (cardonal 0,29 M triángulos y 82 ms de GPU; overworld 7,6–11,6 fps en Alta): la combinación más barata que llegue a ~30 fps (render_scale 50–70 %, sombras más baratas o sin sombras de plantas, sin SSAO, efectos LA reducidos). Los defaults actuales de PC pasan a ser Alto.
 - El agua en mobile queda como está (decisión de Daniel).
+
+**Prueba:** tests/test_options.gd (perfiles, Personalizado, calibración por decide()). Suite 773/773 en main (4bc8849a). En ventana: Forward+ → Alto (6,7 ms), Mobile → Medio (2,6 ms); al reabrir no vuelve a calibrar. Benchmark en el G23 con las perillas de 28464b4f.
+
+**Notas:** Mergeado en main por -ae (28464b4f perillas del benchmark, 697b9912 perfiles + calibración, b69d0225 fila Perfil en Opciones, 4bc8849a las sombras de plantas también apagan los arboles_* horneados de 17.2).
+- Datos: data/quality/{bajo,medio,alto}.tres (QualityProfile): render_scale, sombras del sol, sombras de plantas (escenas de plantas, Decor y los 94 arboles_* del terreno), SSAO, efectos LA (2 todos / 1 sin nubes / 0 tampoco AO), tope de fps.
+- Bajo: 50 %, sin sol, sin sombras de plantas, sin SSAO, efectos LA, 30 fps. Medio: 70 %, sol bajo, sin sombras de plantas, sin SSAO, 60 fps. Alto: los defaults de PC de hoy.
+- Primera vez: perfil de la plataforma (Mobile → Medio, PC → Alto); detrás de la pantalla de carga el título mide 2 s la GPU del flyover a tamaño completo con la escala del perfil; si pasa 1,2× el cuadro de 30 fps (Mobile) o 60 fps (PC) baja un escalón. Se decide una vez y queda en settings.cfg. Un settings.cfg viejo no se calibra: conserva sus valores y queda en el perfil que coincide o en Personalizado.
+- Opciones: Video > Gráficos empieza con Perfil; elegir uno mueve todas las filas gráficas; tocar una fila suelta muestra Personalizado (en la lista pero no elegible).
+- Pendiente para Daniel: el canvas de mockups (Options_Tabs_Video) no tiene la fila Perfil; se hizo con el patrón etiqueta + select arriba de "Tope de cuadros".
+- G23 (inicio/cardonal/bañado): Bajo ~33 ms de GPU pero ~22 fps, porque el process de CPU tarda 35–53 ms → 15.20. Escala 70 → ~42 ms de GPU; 100 → ~59 ms. Cualquier sombra del sol a 50 % (incluso ortogonal de 20 m, atlas 1024, sin plantas) cuesta 46–58 ms: Bajo va sin sol. El AO LA cuesta ~1 ms y queda en Bajo.
+- La calibración mide solo GPU; en el G23 el límite es la CPU.
+
+### 15.20 CPU por cuadro del overworld en el G23 · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+
+Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms pero el juego va a ~22 fps porque el proceso de CPU tarda 35–53 ms por cuadro. En el teléfono base los 30 fps no se alcanzan solo con calidad gráfica: el límite es la CPU. Perfilar qué se lleva el process en el overworld (scripts por cuadro, IA de los enemigos despiertos, partículas por CPU, física, animación, UI/HUD, señales) con el profiler de Godot o mediciones en el benchmark, y bajarlo sin cambiar el comportamiento. Medir en el G23 con tools/bench.sh android ZY22HH6Q99 (compartido con Asteroids; el Edge no se usa).
 
 ## M17 — Después de la demo  (0/2)
 
