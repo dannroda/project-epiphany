@@ -8062,11 +8062,16 @@ Medido por -88 en el Edge 30 Fusion (15.17, variante SinLook): en el overworld l
 **Notas:** look_color.gd (a56e3151, -88): los tres efectos LA comparten una sola copia del color en Mobile por cuadro: el color entra una vez (sombra) y sale una vez (tono), 2 pasadas de pantalla completa en vez de 6 en el overworld y 2 en vez de 4 en mazmorras. Un efecto deja el color en la textura compartida solo si en el cuadro anterior otro efecto lo siguió en el mismo punto y capa; si llega otra capa mientras hay una retenida, la vuelca primero. Lo peor que puede pasar es un cuadro sin efectos al cambiar el compositor; nunca pasa un color viejo.
 Moto G23, intercalado (inicio/cardonal/bañado), GPU ms: copias compartidas 123,7 / 120,8 contra vecinos 129,4 / 126,5 / 115,5 / 124,2: sin diferencia medible en el G23 (ruido ±10–15 ms, limitado por otra cosa). Se mergea igual: son 4 pasadas de pantalla menos y el look es idéntico. Juntar tono y nubes en una pasada: no, ahorraría otra pasada y eso no se nota en el G23. El Edge no se usa más (teléfono de Daniel).
 
-### 15.19 Calidad por defecto en mobile · Pendiente
+### 15.19 Perfiles de calidad (automático la primera vez, elegible en Opciones) · Pendiente
 
-**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
+**Prioridad:** alta · **Tamaño:** L · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
-El Moto G23 (Mali-G52) quedó limitado por relleno: con el terreno en bloques (17.2) el cardonal dibuja 0,29 M triángulos y sigue en 82 ms de GPU; el overworld va a 7,6–11,6 fps en Alta. Los ajustes actuales (resolución, sombras, SSAO, efectos LA, agua con screen/depth texture) son los de PC. Medir en el G23 con variantes del benchmark qué combinación llega a ~30 fps (render_scale 50–70 %, sombras direccionales más baratas o sin sombras de plantas, sin SSAO, efectos LA reducidos) y dejarla como default cuando el renderer es Mobile (en Settings, sin tocar los defaults de PC; el jugador puede subirla). La variante de agua sin screen_texture/depth_texture cambia el look (sin fundido en la orilla ni refracción): queda para que decida Daniel, no entra acá.
+Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equipos modestos, y que se pueda cambiar en Opciones si alguien con mejor equipo quiere uno más alto.
+- Perfiles Bajo / Medio / Alto como datos (un Resource por perfil en data/quality/): render_scale, sombras (incluidas las de plantas), SSAO, intensidad de los efectos LA, tope de fps. Se ajustan sin tocar código.
+- Automático la primera vez que arranca: renderer Mobile → Bajo o Medio; PC → Alto. Calibración breve (~2 s con una escena fija, reusando el benchmark de 15.14): si el cuadro tarda demasiado baja un escalón. Decide una sola vez y lo guarda en settings.cfg; nunca vuelve a cambiar solo lo que eligió el jugador.
+- Opciones: fila "Perfil" (Bajo / Medio / Alto) en la pantalla de opciones existente, según el canvas de mockups. Si el jugador toca una opción gráfica suelta, el perfil pasa a "Personalizado" y respeta lo suyo.
+- Qué lleva Bajo sale de medir en el Moto G23 (Mali-G52), que quedó limitado por relleno (cardonal 0,29 M triángulos y 82 ms de GPU; overworld 7,6–11,6 fps en Alta): la combinación más barata que llegue a ~30 fps (render_scale 50–70 %, sombras más baratas o sin sombras de plantas, sin SSAO, efectos LA reducidos). Los defaults actuales de PC pasan a ser Alto.
+- El agua en mobile queda como está (decisión de Daniel).
 
 ## M17 — Después de la demo  (0/2)
 

@@ -3,18 +3,18 @@
   "checklist": [],
   "code": "15.19",
   "created_at": "2026-10-21T04:36:38.878Z",
-  "description": "El Moto G23 (Mali-G52) quedó limitado por relleno: con el terreno en bloques (17.2) el cardonal dibuja 0,29 M triángulos y sigue en 82 ms de GPU; el overworld va a 7,6–11,6 fps en Alta. Los ajustes actuales (resolución, sombras, SSAO, efectos LA, agua con screen/depth texture) son los de PC. Medir en el G23 con variantes del benchmark qué combinación llega a ~30 fps (render_scale 50–70 %, sombras direccionales más baratas o sin sombras de plantas, sin SSAO, efectos LA reducidos) y dejarla como default cuando el renderer es Mobile (en Settings, sin tocar los defaults de PC; el jugador puede subirla). La variante de agua sin screen_texture/depth_texture cambia el look (sin fundido en la orilla ni refracción): queda para que decida Daniel, no entra acá.",
+  "description": "Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equipos modestos, y que se pueda cambiar en Opciones si alguien con mejor equipo quiere uno más alto.\n- Perfiles Bajo / Medio / Alto como datos (un Resource por perfil en data/quality/): render_scale, sombras (incluidas las de plantas), SSAO, intensidad de los efectos LA, tope de fps. Se ajustan sin tocar código.\n- Automático la primera vez que arranca: renderer Mobile → Bajo o Medio; PC → Alto. Calibración breve (~2 s con una escena fija, reusando el benchmark de 15.14): si el cuadro tarda demasiado baja un escalón. Decide una sola vez y lo guarda en settings.cfg; nunca vuelve a cambiar solo lo que eligió el jugador.\n- Opciones: fila \"Perfil\" (Bajo / Medio / Alto) en la pantalla de opciones existente, según el canvas de mockups. Si el jugador toca una opción gráfica suelta, el perfil pasa a \"Personalizado\" y respeta lo suyo.\n- Qué lleva Bajo sale de medir en el Moto G23 (Mali-G52), que quedó limitado por relleno (cardonal 0,29 M triángulos y 82 ms de GPU; overworld 7,6–11,6 fps en Alta): la combinación más barata que llegue a ~30 fps (render_scale 50–70 %, sombras más baratas o sin sombras de plantas, sin SSAO, efectos LA reducidos). Los defaults actuales de PC pasan a ser Alto.\n- El agua en mobile queda como está (decisión de Daniel).",
   "milestone": "m15",
   "notes": "",
   "order": 195,
   "priority": "high",
   "refs": [],
-  "size": "m",
+  "size": "l",
   "status": "todo",
   "tags": [
     "optimizacion"
   ],
   "test": "",
-  "title": "Calidad por defecto en mobile",
-  "updated_at": "2026-10-21T04:36:38.878Z"
+  "title": "Perfiles de calidad (automático la primera vez, elegible en Opciones)",
+  "updated_at": "2026-10-21T05:07:40.682Z"
 }
