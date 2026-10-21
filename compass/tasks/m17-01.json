@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-25",
   "checklist": [
     {
       "done": false,
@@ -12,12 +13,12 @@
   "code": "17.2",
   "created_at": "2026-10-20T05:13:32.418Z",
   "description": "Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los assets: con el arreglo del shader el overworld va a 6–7,7 ms de GPU y esto ganaría como mucho 1 ms (resto: iluminación/sombras del suelo 1–3,4 ms, decor ~1,1, riscos <1, plantas ~0,1).",
-  "milestone": "m17",
-  "notes": "",
+  "milestone": "m15",
+  "notes": "2026-10-20: pasa a M15 por lo medido en teléfonos (17.3). En el Moto G23 (Mali-G52) el overworld dibuja 2,2 M de triángulos y 599 draw calls con sombras, 158 ms de GPU por cuadro, 7,5 FPS, y Vulkan llega a perder el device (fence error -4). En el Edge 30 Fusion, 0,8 M de triángulos sin sombras y 18 ms de GPU al 50 %. Los bloques de terreno_organico son enormes y sin LOD. Encargado a -25; medir con el benchmark (15.14).",
   "order": 33,
   "refs": [],
-  "status": "todo",
+  "status": "doing",
   "test": "",
   "title": "LOD de decor y plantas, y terreno en bloques más chicos",
-  "updated_at": "2026-10-20T05:13:44.160Z"
+  "updated_at": "2026-10-21T01:27:44.518Z"
 }

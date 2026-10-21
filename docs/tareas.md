@@ -7784,7 +7784,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (9/13, 9 en revisión)
+## M15 — Optimización  (10/17, 10 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -7908,6 +7908,17 @@ Pendiente de 10.8: hasta ahora todo se midió en debug con la RX 580. Medir rele
 
 **Relacionadas:** 10.8 Pasada de rendimiento
 
+### 17.2 LOD de decor y plantas, y terreno en bloques más chicos · En curso
+
+**Responsable:** project-epiphany-25
+
+Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los assets: con el arreglo del shader el overworld va a 6–7,7 ms de GPU y esto ganaría como mucho 1 ms (resto: iluminación/sombras del suelo 1–3,4 ms, decor ~1,1, riscos <1, plantas ~0,1).
+
+- [ ] Rangos de visibilidad/LOD en decor y plantas
+- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
+
+**Notas:** 2026-10-20: pasa a M15 por lo medido en teléfonos (17.3). En el Moto G23 (Mali-G52) el overworld dibuja 2,2 M de triángulos y 599 draw calls con sombras, 158 ms de GPU por cuadro, 7,5 FPS, y Vulkan llega a perder el device (fence error -4). En el Edge 30 Fusion, 0,8 M de triángulos sin sombras y 18 ms de GPU al 50 %. Los bloques de terreno_organico son enormes y sin LOD. Encargado a -25; medir con el benchmark (15.14).
+
 ### 15.9 Overworld: optimizar el dibujado (después de los assets) · Revisión
 
 **Prioridad:** baja · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`, `overworld`
@@ -7971,7 +7982,29 @@ Revisión de arquitectura del overworld (-3e, 2026-10-19): overworld_map.gd:106 
 
 **Notas:** Hecho por -3e (4869886c): la foto del mapa se rehace solo con flags del trazado (scenery y sus interruptores, como el ojo del puente), no con cofres ni corazones.
 
-## M17 — Después de la demo  (0/3)
+### 15.13 Overworld activo por zona · En curso
+
+**Prioridad:** alta · **Tamaño:** L · **Responsable:** project-epiphany-3e
+
+Medido en el Moto Edge 30 Fusion (17.3, 2026-10-20): el overworld entero corre siempre: 9040 nodos, 1406 Area3D con monitoring (573 hurtboxes de pasto, 239 de flores, 127 de árboles, 94 tolas, 63 queñoas, 60 cardones…), 456 StaticBody3D, 199 partículas emitiendo (127 árboles, 63 queñoas) y 22 enemigos con BT y física estén donde estén. Physics ≈15 ms y process 12–25 ms por cuadro en el teléfono. Daniel: debería ir por chunks. Que solo la zona del player y sus vecinas tengan física, IA, animación y partículas activas (usar las Zone_* que ya existen o VisibleOnScreenEnabler3D), y que las hurtboxes de vegetación no monitoreen. Medir con el benchmark (15.14). Encargado a -3e.
+
+### 15.14 Escena benchmark automática (PC y Android) · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-e0
+
+Daniel (2026-10-20): una escena benchmark que mida sola, sin input. Recorre casos fijos (overworld en varias zonas, una mazmorra, el jefe) moviendo al player por un camino, en variantes de calidad (100 % con sombras, 50 % sin sombras, materiales planos para ver cuánto cuestan los shaders) y anota por cuadro frame, process, physics, render CPU y GPU, draw calls, triángulos, objetos y memoria de video: promedio, p50, p95, peor. Sale como JSON y líneas BENCH en el log. Un script lo exporta, instala y corre en un teléfono por adb (o en PC en ventana) y junta el resultado. Encargado a -e0.
+
+### 15.15 Efectos LA en el renderer Mobile · Revisión
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** design
+
+En Android (renderer Mobile) los CompositorEffect de src/world/look (tono_la, nubes_la, sombra_la y los que escriben el color) fallan todos los cuadros: el color buffer de Mobile no tiene TEXTURE_USAGE_STORAGE_BIT, así que uniform_set_create falla y loguean ≈15 errores con backtrace por cuadro, carísimo en el teléfono. Hacer que funcionen en Mobile (copiar a una textura de storage y volver, o pasar a un pase de raster/shader de pantalla) o, si alguno no se puede, apagarlo ahí con un reemplazo que mantenga el look (tono y viñeta sobre todo). SSAO tampoco existe en Mobile. Encargado a -88.
+
+**Prueba:** Con --rendering-method mobile en overworld y chullpa: 0 errores STORAGE_BIT (antes 369 y 244 por corrida). Forward+ antes/después: 0,01–0,02 % de píxeles distintos (animación). Mobile después contra Forward+: 0,2–0,5 %. Capturas en epiphany-wt/design/debug/tmp/design/mobile_look_overworld.png y mobile_look_chullpa.png. test_player_hole, test_overworld_run.
+
+**Notas:** -88 (wt/design-fix a0b333df, main a95d293f): en Mobile la capa de color es RGB10A2 con usage 515 (sampling, color e input attachment): sin STORAGE ni CAN_COPY, así que texture_copy tampoco sirve; en Forward+ es 523 (con STORAGE). Helper nuevo src/world/look/look_color.gd: cada efecto pide look.begin(buffers, view) y llama look.end(). Con STORAGE devuelve la capa misma (camino de siempre); sin STORAGE un compute la samplea ×2 (el luminance multiplier de Mobile) a una rgba16f propia, el efecto corre ahí y un triángulo fullscreen la devuelve ÷2. Decide por el bit de STORAGE, no por el nombre del renderer. brillo, caida y enfoque no son CompositorEffect. Sin MSAA en el proyecto; con MSAA no está probado. En el teléfono suma una copia de entrada y una de salida por efecto (tres en el overworld): medir en el G23 con el benchmark (15.14).
+
+## M17 — Después de la demo  (0/2)
 
 Lo que sale de M11 para después de la demo: rejugabilidad y extras.
 
@@ -7987,14 +8020,7 @@ Un modo extra que se desbloquea al terminar el juego, difícil (más daño, meno
 
 **Prueba:** Tras los créditos aparece la opción; una partida en ese modo cambia lo prometido.
 
-### 17.2 LOD de decor y plantas, y terreno en bloques más chicos · Pendiente
-
-Pasos 2 y 3 de 15.9, estacionados por Daniel (2026-10-20) hasta después de los assets: con el arreglo del shader el overworld va a 6–7,7 ms de GPU y esto ganaría como mucho 1 ms (resto: iluminación/sombras del suelo 1–3,4 ms, decor ~1,1, riscos <1, plantas ~0,1).
-
-- [ ] Rangos de visibilidad/LOD en decor y plantas
-- [ ] Terreno en bloques más chicos que se descarten fuera de cámara
-
-### 17.3 Probar en mobile · Pendiente
+### 17.3 Probar en mobile · En curso
 
 **Prioridad:** baja · **Etiquetas:** `build`
 

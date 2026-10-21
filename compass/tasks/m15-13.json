@@ -1,0 +1,17 @@
+{
+  "assignee": "project-epiphany-3e",
+  "checklist": [],
+  "code": "15.13",
+  "created_at": "2026-10-21T01:27:43.526Z",
+  "description": "Medido en el Moto Edge 30 Fusion (17.3, 2026-10-20): el overworld entero corre siempre: 9040 nodos, 1406 Area3D con monitoring (573 hurtboxes de pasto, 239 de flores, 127 de árboles, 94 tolas, 63 queñoas, 60 cardones…), 456 StaticBody3D, 199 partículas emitiendo (127 árboles, 63 queñoas) y 22 enemigos con BT y física estén donde estén. Physics ≈15 ms y process 12–25 ms por cuadro en el teléfono. Daniel: debería ir por chunks. Que solo la zona del player y sus vecinas tengan física, IA, animación y partículas activas (usar las Zone_* que ya existen o VisibleOnScreenEnabler3D), y que las hurtboxes de vegetación no monitoreen. Medir con el benchmark (15.14). Encargado a -3e.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 189,
+  "priority": "high",
+  "refs": [],
+  "size": "l",
+  "status": "doing",
+  "test": "",
+  "title": "Overworld activo por zona",
+  "updated_at": "2026-10-21T01:27:43.526Z"
+}

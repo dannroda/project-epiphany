@@ -1,0 +1,17 @@
+{
+  "assignee": "design",
+  "checklist": [],
+  "code": "15.15",
+  "created_at": "2026-10-21T01:27:44.043Z",
+  "description": "En Android (renderer Mobile) los CompositorEffect de src/world/look (tono_la, nubes_la, sombra_la y los que escriben el color) fallan todos los cuadros: el color buffer de Mobile no tiene TEXTURE_USAGE_STORAGE_BIT, así que uniform_set_create falla y loguean ≈15 errores con backtrace por cuadro, carísimo en el teléfono. Hacer que funcionen en Mobile (copiar a una textura de storage y volver, o pasar a un pase de raster/shader de pantalla) o, si alguno no se puede, apagarlo ahí con un reemplazo que mantenga el look (tono y viñeta sobre todo). SSAO tampoco existe en Mobile. Encargado a -88.",
+  "milestone": "m15",
+  "notes": "-88 (wt/design-fix a0b333df, main a95d293f): en Mobile la capa de color es RGB10A2 con usage 515 (sampling, color e input attachment): sin STORAGE ni CAN_COPY, así que texture_copy tampoco sirve; en Forward+ es 523 (con STORAGE). Helper nuevo src/world/look/look_color.gd: cada efecto pide look.begin(buffers, view) y llama look.end(). Con STORAGE devuelve la capa misma (camino de siempre); sin STORAGE un compute la samplea ×2 (el luminance multiplier de Mobile) a una rgba16f propia, el efecto corre ahí y un triángulo fullscreen la devuelve ÷2. Decide por el bit de STORAGE, no por el nombre del renderer. brillo, caida y enfoque no son CompositorEffect. Sin MSAA en el proyecto; con MSAA no está probado. En el teléfono suma una copia de entrada y una de salida por efecto (tres en el overworld): medir en el G23 con el benchmark (15.14).",
+  "order": 191,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "review",
+  "test": "Con --rendering-method mobile en overworld y chullpa: 0 errores STORAGE_BIT (antes 369 y 244 por corrida). Forward+ antes/después: 0,01–0,02 % de píxeles distintos (animación). Mobile después contra Forward+: 0,2–0,5 %. Capturas en epiphany-wt/design/debug/tmp/design/mobile_look_overworld.png y mobile_look_chullpa.png. test_player_hole, test_overworld_run.",
+  "title": "Efectos LA en el renderer Mobile",
+  "updated_at": "2026-10-21T01:35:30.159Z"
+}

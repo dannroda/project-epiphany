@@ -1,0 +1,17 @@
+{
+  "assignee": "project-epiphany-e0",
+  "checklist": [],
+  "code": "15.14",
+  "created_at": "2026-10-21T01:27:43.613Z",
+  "description": "Daniel (2026-10-20): una escena benchmark que mida sola, sin input. Recorre casos fijos (overworld en varias zonas, una mazmorra, el jefe) moviendo al player por un camino, en variantes de calidad (100 % con sombras, 50 % sin sombras, materiales planos para ver cuánto cuestan los shaders) y anota por cuadro frame, process, physics, render CPU y GPU, draw calls, triángulos, objetos y memoria de video: promedio, p50, p95, peor. Sale como JSON y líneas BENCH en el log. Un script lo exporta, instala y corre en un teléfono por adb (o en PC en ventana) y junta el resultado. Encargado a -e0.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 190,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "test": "",
+  "title": "Escena benchmark automática (PC y Android)",
+  "updated_at": "2026-10-21T01:27:43.613Z"
+}
