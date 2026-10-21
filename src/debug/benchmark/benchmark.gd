@@ -112,7 +112,8 @@ func _strip(scene: Node, variant: BenchVariant) -> void:
 		if not light is DirectionalLight3D and not variant.lights:
 			light.visible = false
 	for probe: ReflectionProbe in scene.find_children("*", "ReflectionProbe", true, false):
-		probe.visible = variant.probes
+		if not variant.probes:
+			probe.visible = false
 	if not variant.effects:
 		for world: WorldEnvironment in scene.find_children("*", "WorldEnvironment", true, false):
 			world.compositor = null
@@ -120,7 +121,8 @@ func _strip(scene: Node, variant: BenchVariant) -> void:
 		if camera:
 			camera.compositor = null
 	for grid: GridMap in scene.find_children("*", "GridMap", true, false):
-		grid.visible = variant.gridmaps
+		if not variant.gridmaps:
+			grid.visible = false
 
 
 func _flatten(node: Node) -> void:
