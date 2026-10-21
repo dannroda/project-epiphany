@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-8f",
+  "checklist": [],
+  "code": "15.21",
+  "created_at": "2026-10-21T05:49:46.615Z",
+  "description": "Hallado por -8f bisecando 15.16 en el Moto G23 (Mali-G52): el VK_ERROR_DEVICE_LOST no es del templo, es de la primera carga del overworld. Unos segundos después de cargar start.cfg (OverworldInicio) una entrega a la GPU pasa el timeout de 3 s del fence del driver Mali y el driver resetea la GPU (\"Fence: waitForever ... fence didn't signal in 3000 ms\", QUEUE_BUFFER_TIMEOUT, luego \"Couldn't wait for Vulkan fence (VkResult error -4)\" cada ~0,5 s). La app sigue y termina el benchmark, pero todo lo medido después corre en un contexto perdido, y en un jugador real es un cuelgue. Sospechas sin probar: la primera actualización de las ReflectionProbe (6 caras × escena entera) o el primer cuadro del overworld con todo visible (~2 M triángulos). Bisecar arrancando la corrida en un caso de mazmorra y con las sondas en update_mode always/apagadas en Mobile; arreglar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids; el Edge no se usa).",
+  "milestone": "m15",
+  "notes": "",
+  "order": 197,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost)",
+  "updated_at": "2026-10-21T05:49:46.615Z"
+}

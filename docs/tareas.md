@@ -7784,7 +7784,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (16/22, 16 en revisión)
+## M15 — Optimización  (17/23, 17 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8022,7 +8022,7 @@ En Android (renderer Mobile) los CompositorEffect de src/world/look (tono_la, nu
 
 **Notas:** -88 (wt/design-fix a0b333df, main a95d293f): en Mobile la capa de color es RGB10A2 con usage 515 (sampling, color e input attachment): sin STORAGE ni CAN_COPY, así que texture_copy tampoco sirve; en Forward+ es 523 (con STORAGE). Helper nuevo src/world/look/look_color.gd: cada efecto pide look.begin(buffers, view) y llama look.end(). Con STORAGE devuelve la capa misma (camino de siempre); sin STORAGE un compute la samplea ×2 (el luminance multiplier de Mobile) a una rgba16f propia, el efecto corre ahí y un triángulo fullscreen la devuelve ÷2. Decide por el bit de STORAGE, no por el nombre del renderer. brillo, caida y enfoque no son CompositorEffect. Sin MSAA en el proyecto; con MSAA no está probado. En el teléfono suma una copia de entrada y una de salida por efecto (tres en el overworld): medir en el G23 con el benchmark (15.14).
 
-### 15.16 Mazmorras: costo de GPU en mobile · En curso
+### 15.16 Mazmorras: costo de GPU en mobile · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-3e · **Etiquetas:** `optimizacion`
 
@@ -8032,7 +8032,8 @@ Benchmark 15.14 en el Moto Edge 30 Fusion (debug/tmp/bench/motorola_edge_30_fusi
 - Tapas bakeadas a textura (37af5104): la tapa de cada pieza de pared (mosaico plano de 40×40 a y=3) pasa a un quad de 2 triángulos con textura nearest (tools/la_caps.gd, la_walls caps). Triángulos en el Edge: templo 1,33 M → 0,71 M, chullpa 2,68 M → 1,13 M, antesala 1,47 M → 0,75 M. GPU contra la corrida de las 23:00: Baja 59→33 / 42→30 / 36→26 ms, Plana 92→48 / 106→47 / 104→53 ms. Capturas Forward+ iguales (solo píxeles sueltos en bordes del mosaico del rim). Las caras traseras de la pared n quedan: el cutaway las dibuja como tapa en el corte.
 - LODs de paredes (3bea4d28, tools/la_lods.gd): templo 0,72 M → 0,15 M triángulos, pero 0–3 ms de GPU: las mazmorras ya no están limitadas por triángulos. Toggle lods en BenchVariant (7db2e6c5).
 - Piso en Mobile en una sola pasada de Voronoi (75364c10): piso_la.gdshader llama una vez a cells() con la normal del bisel analítica y un segundo paso 3×3; Forward+ compila el código de antes byte a byte y los parámetros siguen vivos (snow/ice). G23: antesala 223–229 → 143–147 ms (−35 %); chullpa demasiado ruidosa para leer (265–400 ms, ~3 fps).
-- Templo hub en el G23: sigue perdiendo el device aun con tapas, LODs y piso nuevo (~0,15 M triángulos). Logcat: BLASTBufferQueue "already acquired max frames", luego "Couldn't wait for Vulkan fence (VK_ERROR_DEVICE_LOST)" y timeouts de fence del hwcomposer mali: parece un cuelgue/watchdog del GPU Mali por algo propio del templo, no carga (chullpa y antesala sobreviven a 3–7 fps). Sigue: bisecar en el G23 con los toggles del benchmark solo en TemploHub (luces/clustered, sondas, niebla del pozo, ventana_caida) y proponer un fallback Mobile.
+- Corrección (-8f, 2026-10-21): el device lost del G23 no era del templo sino de la primera carga del overworld (OverworldInicio, antes de cualquier caso de mazmorra) → 15.21. Con luces, sondas o efectos apagados (uno por corrida) los 8 casos terminan, TemploHub incluido: 2,8–3,2 fps (GPU 304–344 ms, 0,15 M triángulos); antesala ~8 fps. Ojo: los tiempos absolutos del G23 de esas corridas son de un contexto que ya había perdido el device; las diferencias A/B intercaladas (piso −80 ms en antesala) sí fueron consistentes.
+- Queda en el G23: mazmorras a 3–8 fps a 720p nativo, costo por píxel; el perfil Bajo (50 %, 15.19) lo divide por ~2. Seguir con costo por píxel (cutaway, niebla de pozos, luces) iría en otra tarjeta después de 15.21.
 - Esconder los pisos de abajo: descartado por ahora, por los huecos se ve la sala de abajo; volver con occluders.
 - Las kits regeneradas mantienen los parámetros snow/ice de Daniel en templo_la_kit.
 
@@ -8090,6 +8091,12 @@ Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equ
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-88 · **Etiquetas:** `optimizacion`
 
 Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms pero el juego va a ~22 fps porque el proceso de CPU tarda 35–53 ms por cuadro. En el teléfono base los 30 fps no se alcanzan solo con calidad gráfica: el límite es la CPU. Perfilar qué se lleva el process en el overworld (scripts por cuadro, IA de los enemigos despiertos, partículas por CPU, física, animación, UI/HUD, señales) con el profiler de Godot o mediciones en el benchmark, y bajarlo sin cambiar el comportamiento. Medir en el G23 con tools/bench.sh android ZY22HH6Q99 (compartido con Asteroids; el Edge no se usa).
+
+### 15.21 G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost) · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
+
+Hallado por -8f bisecando 15.16 en el Moto G23 (Mali-G52): el VK_ERROR_DEVICE_LOST no es del templo, es de la primera carga del overworld. Unos segundos después de cargar start.cfg (OverworldInicio) una entrega a la GPU pasa el timeout de 3 s del fence del driver Mali y el driver resetea la GPU ("Fence: waitForever ... fence didn't signal in 3000 ms", QUEUE_BUFFER_TIMEOUT, luego "Couldn't wait for Vulkan fence (VkResult error -4)" cada ~0,5 s). La app sigue y termina el benchmark, pero todo lo medido después corre en un contexto perdido, y en un jugador real es un cuelgue. Sospechas sin probar: la primera actualización de las ReflectionProbe (6 caras × escena entera) o el primer cuadro del overworld con todo visible (~2 M triángulos). Bisecar arrancando la corrida en un caso de mazmorra y con las sondas en update_mode always/apagadas en Mobile; arreglar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids; el Edge no se usa).
 
 ## M17 — Después de la demo  (0/2)
 
