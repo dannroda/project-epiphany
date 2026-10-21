@@ -52,6 +52,8 @@ const CUSTOM := "custom"
 const GRAPHICS: Array[StringName] = [&"render_scale", &"shadows", &"plant_shadows", &"ssao", &"look_effects", &"max_fps"]
 const PLANTS := "res://src/world/plants/"
 const DECOR := "res://levels/decor/"
+## Los árboles horneados en el terreno del overworld (17.2): las plantas bajas ya vienen sin sombra.
+const BAKED_TREES := "arboles_"
 const AO := preload("res://src/world/look/sombra_la.gd")
 const CLOUDS := preload("res://src/world/look/nubes_la.gd")
 ## Idiomas con traducción en translations/<código>.po. Vacío en `language` = todavía no se eligió.
@@ -226,8 +228,10 @@ func _scene_look(node: Node) -> void:
 		geometry.cast_shadow = geometry.get_meta(&"level_cast_shadow") if get_value(&"plant_shadows") else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 
-## Una malla de una planta o de la decoración del overworld (dentro de una escena instanciada de esas carpetas).
+## Una malla de una planta, de la decoración del overworld o de los árboles del terreno.
 func _is_plant(node: Node) -> bool:
+	if node.name.begins_with(BAKED_TREES):
+		return true
 	var scene := node.owner
 	while scene:
 		if scene.scene_file_path.begins_with(PLANTS) or scene.scene_file_path.begins_with(DECOR):
