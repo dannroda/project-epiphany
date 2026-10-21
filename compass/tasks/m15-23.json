@@ -1,0 +1,19 @@
+{
+  "checklist": [],
+  "code": "15.23",
+  "created_at": "2026-10-21T06:10:26.438Z",
+  "description": "Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 315 ms de GPU (3,1 fps) y chullpa 327 ms (2,9 fps) contra antesala 146 ms (6,4 fps), con triángulos ya bajos (tapas bakeadas y LODs). La diferencia entre salas apunta a algo propio de esas salas: luces puntuales por sala, cutaway de paredes, niebla de pozos, sondas, efectos LA. Medir por sala con los toggles del benchmark (lights, probes, effects, gridmaps, flat_shaders) y bajar el costo por píxel en Mobile sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 199,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "todo",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "G23: templo hub y chullpa a 3 fps (costo por píxel por sala)",
+  "updated_at": "2026-10-21T06:10:26.438Z"
+}

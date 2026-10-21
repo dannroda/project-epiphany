@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-8f",
+  "checklist": [],
+  "code": "15.22",
+  "created_at": "2026-10-21T06:10:26.258Z",
+  "description": "Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mobile ya no se pierde el device, pero durante la primera carga del overworld (antes de \"Partida cargada start.cfg\") el logcat del G23 sigue mostrando \"Fence: waitForever: waiting for GPU completion ... didn't signal in 3000 ms\" en el timeline de mali, de nuestro proceso y de surfaceflinger. Esta vez el driver no reseteó, pero está al borde. En PC el costo que queda del primer cuadro es 6 ms, así que es algo propio de Mali o de la carga. Sospechas: subida de texturas/VRAM (588 MB en el overworld), el bake de radiancia del cielo, o el cuadro de la pantalla de carga mientras se instancia la escena. Además la primera carga tarda 36,5 s. Bisecar en el G23 y bajar esa entrega por debajo de ~1 s sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids y con -88 en 15.20; el Edge no se usa).",
+  "milestone": "m15",
+  "notes": "",
+  "order": 198,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "G23: la primera carga del overworld todavía traba la GPU más de 3 s",
+  "updated_at": "2026-10-21T06:10:26.258Z"
+}

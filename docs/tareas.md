@@ -7786,7 +7786,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (17/23, 17 en revisión)
+## M15 — Optimización  (18/25, 18 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8094,11 +8094,31 @@ Daniel (2026-10-21): perfiles según el rendimiento del equipo, con uno para equ
 
 Medido por -88 en el Moto G23 con el perfil Bajo (15.19): la GPU baja a ~33 ms pero el juego va a ~22 fps porque el proceso de CPU tarda 35–53 ms por cuadro. En el teléfono base los 30 fps no se alcanzan solo con calidad gráfica: el límite es la CPU. Perfilar qué se lleva el process en el overworld (scripts por cuadro, IA de los enemigos despiertos, partículas por CPU, física, animación, UI/HUD, señales) con el profiler de Godot o mediciones en el benchmark, y bajarlo sin cambiar el comportamiento. Medir en el G23 con tools/bench.sh android ZY22HH6Q99 (compartido con Asteroids; el Edge no se usa).
 
-### 15.21 G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost) · En curso
+### 15.21 G23: trabajo de GPU de más de 3 s al cargar el overworld (device lost) · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
 
 Hallado por -8f bisecando 15.16 en el Moto G23 (Mali-G52): el VK_ERROR_DEVICE_LOST no es del templo, es de la primera carga del overworld. Unos segundos después de cargar start.cfg (OverworldInicio) una entrega a la GPU pasa el timeout de 3 s del fence del driver Mali y el driver resetea la GPU ("Fence: waitForever ... fence didn't signal in 3000 ms", QUEUE_BUFFER_TIMEOUT, luego "Couldn't wait for Vulkan fence (VkResult error -4)" cada ~0,5 s). La app sigue y termina el benchmark, pero todo lo medido después corre en un contexto perdido, y en un jugador real es un cuelgue. Sospechas sin probar: la primera actualización de las ReflectionProbe (6 caras × escena entera) o el primer cuadro del overworld con todo visible (~2 M triángulos). Bisecar arrancando la corrida en un caso de mazmorra y con las sondas en update_mode always/apagadas en Mobile; arreglar sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids; el Edge no se usa).
+
+**Prueba:** G23: tools/bench.sh android ZY22HH6Q99 --build con solo Alta desde OverworldInicio; logcat sin "Couldn't wait for Vulkan fence (VkResult error -4)". PC Mobile: GPU del primer cuadro tras la carga sin pico. Suite 773/773 en main.
+
+**Notas:** Causa (-8f): el preprocess de los GPUParticles3D en el primer cuadro después de una carga. El overworld tiene ~200 emisores falling_leaves en los árboles con preprocess de 3 s (sin fixed_fps son 90 pasos de cómputo cada uno), más dust_motes (7 s) y el polvo de los pozos de caida_la (9 s): miles de dispatches en una sola entrega.
+Arreglo (6bf8a8da, mergeado por -ae): src/world/mobile_particles.gd pone preprocess = 0 en _enter_tree solo en el renderer Mobile; va en falling_leaves.tscn, dust_motes.tscn y el Polvo de caida_la.tscn. En el teléfono las hojas y el polvo se llenan en los primeros segundos. Forward+ conserva el preprocess y se ve igual.
+PC, renderer Mobile, 1600×720, GPU del primer cuadro tras la carga: overworld 26,6 → 6,1 ms (mediana 1,9), chullpa 28,9 → sin pico, templo 23,1 → sin pico.
+G23 (main + 6bf8a8da, solo Alta, 8 casos desde OverworldInicio; debug/tmp/ow2/draw/g23_verify_15-21_3e.json): 0 VkResult -4 (antes cada ~0,5 s después de la primera carga). Primeros números del G23 con el contexto vivo, GPU: inicio 75 ms (11,5 fps), arboleda 86, cardonal 75, bañado 90, cumbre 105 (8,2 fps), templo hub 315 (3,1 fps), chullpa 327 (2,9 fps), antesala 146 (6,4 fps). Primera carga del overworld 36,5 s.
+Queda (→ 15.22): durante la primera carga del overworld una entrega sigue pasando los 3 s del fence de Mali; esta vez el driver no reseteó.
+
+### 15.22 G23: la primera carga del overworld todavía traba la GPU más de 3 s · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
+
+Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mobile ya no se pierde el device, pero durante la primera carga del overworld (antes de "Partida cargada start.cfg") el logcat del G23 sigue mostrando "Fence: waitForever: waiting for GPU completion ... didn't signal in 3000 ms" en el timeline de mali, de nuestro proceso y de surfaceflinger. Esta vez el driver no reseteó, pero está al borde. En PC el costo que queda del primer cuadro es 6 ms, así que es algo propio de Mali o de la carga. Sospechas: subida de texturas/VRAM (588 MB en el overworld), el bake de radiancia del cielo, o el cuadro de la pantalla de carga mientras se instancia la escena. Además la primera carga tarda 36,5 s. Bisecar en el G23 y bajar esa entrega por debajo de ~1 s sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids y con -88 en 15.20; el Edge no se usa).
+
+### 15.23 G23: templo hub y chullpa a 3 fps (costo por píxel por sala) · Pendiente
+
+**Prioridad:** alta · **Tamaño:** M · **Etiquetas:** `optimizacion`
+
+Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 315 ms de GPU (3,1 fps) y chullpa 327 ms (2,9 fps) contra antesala 146 ms (6,4 fps), con triángulos ya bajos (tapas bakeadas y LODs). La diferencia entre salas apunta a algo propio de esas salas: luces puntuales por sala, cutaway de paredes, niebla de pozos, sondas, efectos LA. Medir por sala con los toggles del benchmark (lights, probes, effects, gridmaps, flat_shaders) y bajar el costo por píxel en Mobile sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build.
 
 ## M17 — Después de la demo  (0/2)
 
