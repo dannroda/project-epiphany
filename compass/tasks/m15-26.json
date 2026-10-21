@@ -1,0 +1,20 @@
+{
+  "assignee": "project-epiphany-25",
+  "checklist": [],
+  "code": "15.26",
+  "created_at": "2026-10-21T16:34:12.730Z",
+  "description": "Sigue de 15.23, que midió en Alta (templo hub ~103 ms, antesala ~109, chullpa ~145 ms de GPU en el G23 después de cutaway sin discard, cull_back y DOF solo cuando se ve). El jugador del G23 va a estar en Bajo (15.19: 50 %, sin sol, sin SSAO, 30 fps). Medir las tres mazmorras de referencia y el resto de los casos de mazmorra en Bajo, ver cuánto falta para 30 fps y qué domina (GridMap: paredes y piso LA ≈ 75 ms en Alta; luces puntuales; efectos LA) y bajarlo sin cambiar el look en Forward+. Lo que cambie el look (por ejemplo las luces puntuales, pregunta abierta en 15.23) va como pregunta a Daniel. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con -88 y -8f; el Edge no se usa).",
+  "milestone": "m15",
+  "notes": "",
+  "order": 202,
+  "priority": "high",
+  "refs": [],
+  "size": "m",
+  "status": "doing",
+  "tags": [
+    "optimizacion"
+  ],
+  "test": "",
+  "title": "G23: las mazmorras en el perfil Bajo",
+  "updated_at": "2026-10-21T16:34:12.730Z"
+}

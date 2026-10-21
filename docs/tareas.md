@@ -7827,7 +7827,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (20/27, 20 en revisión)
+## M15 — Optimización  (21/28, 21 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8203,7 +8203,7 @@ Queda (→ 15.22): durante la primera carga del overworld una entrega sigue pasa
 
 Resto de 15.21 (-8f, 2026-10-21): con el preprocess de partículas apagado en Mobile ya no se pierde el device, pero durante la primera carga del overworld (antes de "Partida cargada start.cfg") el logcat del G23 sigue mostrando "Fence: waitForever: waiting for GPU completion ... didn't signal in 3000 ms" en el timeline de mali, de nuestro proceso y de surfaceflinger. Esta vez el driver no reseteó, pero está al borde. En PC el costo que queda del primer cuadro es 6 ms, así que es algo propio de Mali o de la carga. Sospechas: subida de texturas/VRAM (588 MB en el overworld), el bake de radiancia del cielo, o el cuadro de la pantalla de carga mientras se instancia la escena. Además la primera carga tarda 36,5 s. Bisecar en el G23 y bajar esa entrega por debajo de ~1 s sin cambiar el look en Forward+. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con Asteroids y con -88 en 15.20; el Edge no se usa).
 
-### 15.23 G23: templo hub y chullpa a 3 fps (costo por píxel por sala) · En curso
+### 15.23 G23: templo hub y chullpa a 3 fps (costo por píxel por sala) · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `optimizacion`
 
@@ -8217,14 +8217,15 @@ Sigue de 15.16. Con el contexto vivo (15.21), Alta en el G23 a 720p: templo hub 
   Por qué: En las salas normales no cambia nada en pantalla (el desenfoque lejano está apagado en los niveles LA y el cercano cae a ~29 m de la cámara, donde no hay nada), pero la pasada corre cada cuadro: 8–16 ms de GPU en el G23. Mismo look que hoy, el costo solo en esos momentos.
   Descartado: Apagarla en Mobile o en el perfil Bajo (cambia los primeros planos y los jefes altos); la versión barata (bokeh calidad 0, forma caja) recupera solo la mitad.
 
-**Prueba:** Capturas Forward+ con el shader intercambiado en la misma corrida (paso 1) y sala por sala en pausa A-B-A (paso 2): sin cambios de pared. Suite 773/773 en main después de --import (105bc19c).
+**Prueba:** Pasos 1 y 2: capturas Forward+ sin cambios de pared. Paso 3: las 61 salas en Forward+ en pausa con el desenfoque prendido contra apagado al nivel del ruido (hub 93 contra 91 px, antesala 76 contra 87, Pluma 76 contra 83); revelación cuadro a cuadro: prende en el cuadro 1, sigue en la ida y la vuelta, apaga con revealing=false; capturas a mitad de revelación código viejo contra nuevo 1,1–3 k px contra 0,9–1,4 k entre dos corridas del nuevo (polvo, corazón del HUD, una llama). Suite 773/773 en main después de --import (473791ef).
 
 **Notas:** Paso 1 (-25, wt/art-hsm 07c90f8a → main 0a99ef0f): los seis kits LA usan cutaway_la.gdshader, el cutaway sin sus dos discard (el código común pasa a cutaway.gdshaderinc). En los niveles LA los discard nunca corrían: el corte de la pared sur de la cámara apunta a wall/column/epiphany_stone.tres y el kit tiene copias la_walls._glossy (cut_area queda en cero), y el agujero del player está cerrado desde 11.134. Pero en Mali un shader que PUEDE descartar pierde early-Z y forward pixel kill. la_walls._glossy asigna cutaway_la, así que un refresh lo mantiene; el kit gris y los materiales viejos conservan el corte. BenchVariant.swap_shader nuevo para A/B de un shader en la misma corrida.
 - G23, Alta, tres pares A/B intercalados en una corrida (se descarta la primera pasada de cada shader, que incluye compilar el pipeline), GPU p50: templo hub 136–142 → 116 ms (−17 %), chullpa 223–260 → 143–147 ms (−40 %, 3,4 → 5,1 fps), antesala 138–139 → 120–121 ms (−13 %).
 - Sin el valor atípico de la primera pasada, templo hub ≈ antesala: los 315 ms del hub eran el primer caso después de arrancar la app.
 - Lo que queda en las tres salas sigue siendo el GridMap: sin él ~46 ms; piso y resto de las paredes ≈ 75 ms.
-Paso 2 (-25, wt/art 4547624f → main 105bc19c): las paredes LA cullean las caras traseras (cutaway_la, cull_disabled → cull_back) en los dos renderers; la cámara fija nunca las ve. G23 antesala 124–136 → 116 ms. Capturas sala por sala de templo, chullpa, queñoa, totora y cumbre con el juego en pausa, A-B-A: las diferencias A-B son del tamaño de A-A (animación), ninguna de pared.
-Opciones medidas en la antesala del G23 que SÍ cambian el look (no aplicadas, para Daniel): sin sombras 106 ms, sin luces puntuales 107 ms, sombras bajas 120 ms, sin sondas ~130 ms (no gana). MSAA ya está apagado. El perfil Bajo ya va sin sombra del sol; la que queda abierta es apagar las luces puntuales (antorchas) en Mobile o en Bajo.
+Paso 2 (-25, wt/art 4547624f → main 105bc19c): las paredes LA cullean las caras traseras (cutaway_la, cull_disabled → cull_back) en los dos renderers; la cámara fija nunca las ve. G23 antesala 124–136 → 116 ms. Capturas sala por sala con el juego en pausa, A-B-A: las diferencias A-B son del tamaño de A-A (animación), ninguna de pared.
+Paso 3 (-25, wt/art 52aa3eac → main 473791ef): la profundidad de campo cuesta 8–16 ms en el G23 y en las salas normales no se ve (el desenfoque lejano está apagado en los niveles LA y el cercano cae a ~29 m de la cámara). enfoque_la prende dof_blur_near_enabled solo durante una revelación (cam.revealing) o con un jefe enfoque_alto en cuadro (3 m de margen en la línea pies-cabeza) y en la sala de la cámara; el chequeo de sala hace falta porque el Mallqui de la chullpa está en el Sótano, debajo de otras salas, y con cámara cenital caía en cuadro desde salas que no lo muestran. Durante un cambio de sala no se mira la sala. Queda prendida en 15 de 61 salas (intros de jefes, ojos) y en templo_Pluma por el Mallqui; aun ahí prendida contra apagada no cambia la imagen. Perillas de benchmark dof, dof_quality, dof_shape. G23: templo hub 117,6 → 102,6–104,2 ms, antesala 122,4 → ~109 ms (igual que sin DOF).
+Abierto para Daniel (decisión 1): apagar las luces puntuales en Bajo (−10 ms en la antesala). Siguiente: las mazmorras en el perfil Bajo (15.26).
 
 ### 15.24 Comprimir las mallas de los kits de paredes LA · Revisión
 
@@ -8258,6 +8259,12 @@ Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps
 - Sigue: qué domina la geometría (terreno, terrazas y agua ocultos) y la variante Mobile del agua de 15.17 (sin mipmaps de la copia de pantalla, una lectura de profundidad, capturas iguales) medida por pasada.
 - Perillas nuevas del benchmark (sin commitear todavía): glow, fsr, hidden, camera_cull, max_physics_steps, sky_process_mode, sky_radiance y la columna slow (fracción de cuadros de más de 40 ms).
 - La cola del G23 se trabó dos veces porque el servidor adb heredaba el fd del lock de bench.sh; arreglado en main 41050f83 (-88). El lock actual lo tiene el daemon adb 1746874: liberarlo pide reiniciar el servidor adb compartido (decisión de Daniel).
+
+### 15.26 G23: las mazmorras en el perfil Bajo · En curso
+
+**Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `optimizacion`
+
+Sigue de 15.23, que midió en Alta (templo hub ~103 ms, antesala ~109, chullpa ~145 ms de GPU en el G23 después de cutaway sin discard, cull_back y DOF solo cuando se ve). El jugador del G23 va a estar en Bajo (15.19: 50 %, sin sol, sin SSAO, 30 fps). Medir las tres mazmorras de referencia y el resto de los casos de mazmorra en Bajo, ver cuánto falta para 30 fps y qué domina (GridMap: paredes y piso LA ≈ 75 ms en Alta; luces puntuales; efectos LA) y bajarlo sin cambiar el look en Forward+. Lo que cambie el look (por ejemplo las luces puntuales, pregunta abierta en 15.23) va como pregunta a Daniel. Medir con tools/bench.sh android ZY22HH6Q99 --build (compartido con -88 y -8f; el Edge no se usa).
 
 ## M17 — Después de la demo  (0/2)
 
