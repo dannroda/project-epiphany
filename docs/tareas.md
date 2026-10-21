@@ -8290,6 +8290,17 @@ Siguiente (en escritorio, headless/xvfb): ver si las mallas del kit tienen LODs 
 
 2026-10-21 a la tarde el G23 corre ~1,8× más lento que a la mañana en todas las pasadas (Base en Bajo GPU 36–44 contra 22–24 ms; canvas 4,3 contra 2,3; tonemap 2,7 contra 1,4) sin calor (thermal 0, GPU 45–53 °C). El teléfono está sin memoria: 55–113 MB libres de 3,8 GB, kswapd0 al 97 % de CPU, load average ~17. El mayor consumidor es el juego: com.example.projectepiphany 1,62 GB PSS, VmRSS 1,12 GB + 378 MB de swap durante una corrida de benchmark (Chullpa y Cumbre). Medir la memoria del juego en Mobile por caso (overworld, cada mazmorra, después de cambiar de nivel): Performance MEMORY_STATIC, RENDERING_INFO_VIDEO_MEM_USED/TEXTURE_MEM_USED/BUFFER_MEM_USED, y el PSS del proceso; ver si crece entre casos (algo que no se libera al cambiar de nivel) y qué domina (kits LA embebidos, texturas, mallas, audio). Bajarla para que el G23 no swapee sin cambiar el look en Forward+; lo que cambie el look va como pregunta a Daniel. Sumar la memoria como columna del benchmark. Las corridas con el teléfono degradado valen solo en relativo dentro de la misma corrida.
 
+**Prueba:** Suite 774/774 en main después de --import (05d26a63). A/B de dos APK en el G23 (memoria de video arriba); foto del mapa igual salvo animación.
+
+**Notas:** Paso 1 (-88, wt/design-fix → main 8c243d4e, ba06b251, 05d26a63; medido en escritorio con el renderer Mobile y confirmado en el G23 con A/B limpia de dos APK, antes del reinicio):
+- La SubViewport de la foto del mapa quedaba a 4000×1920 todo el tiempo (~200 MB de video con sus búferes 3D): ahora renderiza a ese tamaño solo para la foto, la copia a una ImageTexture que persiste y queda estacionada en 2×2. La foto queda igual salvo la animación.
+- reflection_count.mobile = 16: el atlas de reflejos de 64 lugares quedaba reservado toda la sesión desde la primera mazmorra con sondas (~110 MB). El máximo por nivel es 14 (templo); test_render_budget falla si un nivel pasa los lugares del atlas.
+- Memoria de video en el G23: overworld 502 → 342 MB; overworld después de mazmorras 628 → 388; mazmorras 237 → 177.
+- Benchmark: columnas texture_mb, buffer_mb y pss_mb (Debug.getPss en Android, smaps_rollup en Linux); bench_report imprime pss. Entraron también las perillas de 15.25 (glow, fsr, hidden, camera_cull, max_physics_steps, cielo, columna slow).
+- PSS de ~1,5–2,0 GB (dumpsys meminfo, teléfono ya presionado): Native Heap ~170–300 MB (coincide con MEMORY_STATIC); Code ~60; Graphics (GL mtrack del Mali) 530–1300, lo que domina y bastante más de lo que Godot cuenta como video; System ~450, casi todo SwapPss. GL mtrack oscila ~500 MB entre muestras de 16 s del mismo caso: posible pool de páginas del driver kbase que el shrinker libera bajo presión; si es así el uso real es el piso, ~530–800 MB.
+- 15.22 (-8f) agrega encima el teselado 4×4 de la foto en Mobile (el pico >3 s) y saca de snapshot() el cero del global player_hole.
+Siguiente: corrida base con el teléfono recién reiniciado (main + estos arreglos, columna pss y muestreo de meminfo solo con el lock propio).
+
 ## M17 — Después de la demo  (0/2)
 
 Lo que sale de M11 para después de la demo: rejugabilidad y extras.
