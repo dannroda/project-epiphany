@@ -41,6 +41,10 @@ android)
 	adb() { command adb "$@" 9>&-; }
 	exec 9> "${XDG_RUNTIME_DIR:-/tmp}/epiphany_bench_$serial.lock"
 	flock -n 9 || { echo "otra corrida usa $serial, espero mi turno"; flock 9; }
+	if adb -s "$serial" shell dumpsys user | grep -q RUNNING_LOCKED; then
+		echo "$serial se reinició y nadie lo desbloqueó: sin eso el juego no tiene dónde escribir"
+		exit 1
+	fi
 	adb -s "$serial" install -r "$APK" > /dev/null
 	adb -s "$serial" shell am force-stop "$PACKAGE"
 	adb -s "$serial" shell run-as "$PACKAGE" rm -f files/benchmark/latest.json
