@@ -7,7 +7,7 @@ extends SceneTree
 ## refresh: en el nivel ya hecho, vuelve a elegir la pieza de cada celda de pared (después de editar el nivel).
 ## spread: duplica las paredes entre salas de un nivel ya hecho sin duplicar (y lo guarda; después export y refresh).
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
-## caps: pasa a quads las tapas de las paredes en los kits ya hechos (tools/la_caps.gd), sin tocar los niveles.
+## caps: pasa a quads las tapas de las paredes en los kits ya hechos (tools/la_caps.gd) y les agrega LODs (tools/la_lods.gd), sin tocar los niveles.
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel> | spread <nivel>
 ## godot --path . --script res://tools/la_walls.gd -- caps
 
@@ -59,6 +59,7 @@ const PIT_FOG := preload("res://src/world/look/niebla_foso.gdshader")
 const PIT_FOG_INSET := 0.03
 const DROP_LOOK := preload("res://src/world/look/caida_la.tscn")
 const CAPS := preload("res://tools/la_caps.gd")
+const LODS := preload("res://tools/la_lods.gd")
 const CELL := 2.0
 ## Un haz cada tantos metros de hueco.
 const SHAFT_SPACING := 6.0
@@ -198,6 +199,7 @@ func _initialize() -> void:
 		for kit_path: String in kits:
 			var kit: MeshLibrary = load(kit_path)
 			CAPS.apply(kit, _wall_prefixes(), _caps_path(kit_path))
+			LODS.apply(kit, _wall_prefixes())
 			_save_kit(kit, kit_path)
 		quit()
 		return
@@ -993,6 +995,7 @@ func _kit() -> MeshLibrary:
 		kit.set_item_shapes(id, kit.get_item_shapes(item))
 		kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(item))
 	CAPS.apply(kit, _wall_prefixes(), _caps_path(_out_kit))
+	LODS.apply(kit, _wall_prefixes())
 	_save_kit(kit, _out_kit)
 	return ResourceLoader.load(_out_kit, "", ResourceLoader.CACHE_MODE_REPLACE)
 
