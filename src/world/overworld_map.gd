@@ -19,6 +19,11 @@ const REVEAL_FADE := 5.0
 ## Cuánto tiene que moverse un player para volver a pintar lo descubierto (m).
 const REVEAL_STEP := 1.0
 const PARKED_SIZE := Vector2i(2, 2)
+## Lo que cada mosaico saca de más por lado (px) y se descarta, para que lo que lee la pantalla (el agua) no se corte en las juntas.
+const TILE_MARGIN := 16
+const TONO_LA := preload("res://src/world/look/tono_la.gd")
+const NUBES_LA := preload("res://src/world/look/nubes_la.gd")
+const SOMBRA_LA := preload("res://src/world/look/sombra_la.gd")
 
 ## Clave de lo descubierto en las partidas; vacía, la escena del nivel.
 @export var id: StringName = &""
@@ -29,11 +34,19 @@ const PARKED_SIZE := Vector2i(2, 2)
 @export var grid: GridMap
 ## Lo que sale en la foto del mapa (además de `grid`), con sus hijos.
 @export var scenery: Array[Node3D] = []
+## En Mobile la foto sale en mosaicos, uno por cuadro: entera era una sola entrega de más de 3 s en el Mali del G23 (15.22).
+@export var mobile_tiles := Vector2i(4, 4)
 
 ## La foto: una copia de la SubViewport, que entre foto y foto queda en PARKED_SIZE. A tamaño de foto sus búferes 3D
 ## ocupaban ~200 MB de memoria de video todo el tiempo (15.27).
 var texture: ImageTexture
 var _photo_size: Vector2i
+var _tiles := Vector2i.ONE
+var _tile_size := Vector2i.ZERO
+var _taking := false
+var _retake := false
+## Las copias de los efectos de pantalla del nivel para la foto (cada copia compila su shader al crearse).
+var _photo_effects: Dictionary[CompositorEffect, CompositorEffect] = {}
 var _retake_pending := false
 var _layout_flags: Dictionary[StringName, bool] = {}
 var _layout_flags_known := false
@@ -53,11 +66,11 @@ func _ready() -> void:
 	for node in scenery:
 		_add_to_map_layer(node)
 	_photo_size = Vector2i((world_rect.size * PIXELS_PER_METER).round())
+	if RenderingServer.get_current_rendering_method() == "mobile":
+		_tiles = mobile_tiles
+	_tile_size = Vector2i((Vector2(_photo_size) / Vector2(_tiles)).ceil())
 	_viewport.size = PARKED_SIZE
-	var center := world_rect.get_center()
-	_camera.position = Vector3(center.x, CAMERA_HEIGHT, center.y)
 	_camera.rotation = Vector3(-PI / 2.0, 0.0, 0.0)
-	_camera.size = world_rect.size.y
 	_camera.far = CAMERA_HEIGHT * 2.0
 	texture = ImageTexture.create_from_image(Image.create_empty(1, 1, false, Image.FORMAT_RGBA8))
 	texture.set_size_override(_photo_size)
@@ -111,31 +124,83 @@ static func _paint_reveal(image: Image, here: Vector2, origin: Vector2, veils: A
 				image.set_pixel(x, y, Color(value, value, value))
 
 
-## Saca la foto en el próximo frame, sin el agujero del player (la cámara del juego está en pausa con el mapa abierto).
+## Saca la foto en el próximo frame (en Mobile, un mosaico por frame). Las paredes no le recortan el agujero del player:
+## la cámara está más alta que HOLE_MAX_CAMERA_HEIGHT (player_hole.gdshaderinc).
 func snapshot() -> void:
 	photo_requested.emit()
-	var camera := get_viewport().get_camera_3d()
-	var hole: Vector4 = camera.player_hole if camera is TopDownCamera else Vector4.ZERO
-	RenderingServer.global_shader_parameter_set(&"player_hole", Vector4.ZERO)
+	if _taking:
+		_retake = true
+		return
+	_taking = true
 	var copied := _grid_copy()
-	_viewport.size = _photo_size
-	_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
-	await RenderingServer.frame_post_draw
-	RenderingServer.global_shader_parameter_set(&"player_hole", hole)
+	_camera.compositor = _photo_compositor()
+	var photo := Image.create_empty(_photo_size.x, _photo_size.y, false, Image.FORMAT_RGBA8) if _tiles != Vector2i.ONE else null
+	for y in _tiles.y:
+		for x in _tiles.x:
+			var image := await _shoot(Vector2i(x, y))
+			if not is_inside_tree():
+				return
+			if photo == null:
+				photo = image
+			elif image:
+				image.convert(photo.get_format())
+				var rect := Rect2i(Vector2i(x, y) * _tile_size, _tile_size).intersection(Rect2i(Vector2i.ZERO, _photo_size))
+				photo.blit_rect(image, Rect2i(Vector2i.ONE * TILE_MARGIN, rect.size), rect.position)
+	_viewport.size = PARKED_SIZE
+	if photo and not photo.is_empty():
+		texture.set_image(photo)
 	if copied:
 		for piece in _grid_copy_root.get_children():
 			piece.queue_free()
-	_keep_photo()
+	_taking = false
+	if _retake:
+		_retake = false
+		snapshot()
 
 
-## Si dos fotos esperaron el mismo cuadro, la primera ya copió y estacionó la SubViewport.
-func _keep_photo() -> void:
-	if _viewport.size != _photo_size:
-		return
+## Los efectos de pantalla del nivel para la foto: sin viñeta ni marco (en Mobile saldrían en cada mosaico) ni el AO de
+## pantalla (su radio depende del tamaño de la foto), y las nubes quietas mientras se saca, para que empalmen en las juntas.
+func _photo_compositor() -> Compositor:
+	var compositor := Compositor.new()
+	var level := owner if owner else get_parent()
+	var environments := level.find_children("*", "WorldEnvironment", true, false) if level else []
+	if environments.is_empty() or (environments[0] as WorldEnvironment).compositor == null:
+		return compositor
+	var effects: Array[CompositorEffect] = []
+	for effect in (environments[0] as WorldEnvironment).compositor.compositor_effects:
+		if effect == null or effect.get_script() == SOMBRA_LA:
+			continue
+		if not _photo_effects.has(effect):
+			_photo_effects[effect] = effect.duplicate() as CompositorEffect
+		var copy := _photo_effects[effect]
+		for property in effect.get_property_list():
+			if property.usage & PROPERTY_USAGE_STORAGE and property.name != &"script":
+				copy.set(property.name, effect.get(property.name))
+		if copy.get_script() == TONO_LA:
+			copy.set(&"vignette", 0.0)
+			copy.set(&"frame", 0.0)
+		elif copy.get_script() == NUBES_LA:
+			var frozen: float = effect.get(&"time_override")
+			copy.set(&"time_override", frozen if frozen >= 0.0 else Time.get_ticks_msec() / 1000.0)
+		effects.append(copy)
+	compositor.compositor_effects = effects
+	return compositor
+
+
+## Un cuadro de la SubViewport: el mosaico `tile` con su margen, o con un solo mosaico la foto entera.
+func _shoot(tile: Vector2i) -> Image:
+	var center := world_rect.get_center()
+	if _tiles == Vector2i.ONE:
+		_viewport.size = _photo_size
+	else:
+		_viewport.size = _tile_size + Vector2i.ONE * TILE_MARGIN * 2
+		center = world_rect.position + (Vector2(tile * _tile_size) + Vector2(_tile_size) / 2.0) / PIXELS_PER_METER
+	_camera.position = Vector3(center.x, CAMERA_HEIGHT, center.y)
+	_camera.size = _viewport.size.y / PIXELS_PER_METER
+	_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
+	await RenderingServer.frame_post_draw
 	var image := _viewport.get_texture().get_image()
-	if image and not image.is_empty():
-		texture.set_image(image)
-	_viewport.size = PARKED_SIZE
+	return image if image and not image.is_empty() else null
 
 
 func _on_flag_changed(flag_id: StringName, _value: Variant) -> void:

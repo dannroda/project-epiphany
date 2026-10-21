@@ -57,7 +57,7 @@ void fragment() {
 	if (in_cut && (world_pos.y > cut_height || world_pos.z > cut_lip)) {
 		discard;
 	}
-	if (in_player_hole(world_pos, VERTEX, VIEW_MATRIX, FRAGCOORD.xy)) {
+	if (in_player_hole(world_pos, VERTEX, VIEW_MATRIX, CAMERA_POSITION_WORLD, FRAGCOORD.xy)) {
 		discard;
 	}
 #endif

@@ -45,7 +45,7 @@ void vertex() {
 }
 
 void fragment() {
-	if (cut_hole && in_player_hole(world_pos, VERTEX, VIEW_MATRIX, FRAGCOORD.xy)) {
+	if (cut_hole && in_player_hole(world_pos, VERTEX, VIEW_MATRIX, CAMERA_POSITION_WORLD, FRAGCOORD.xy)) {
 		discard;
 	}
 	float shift = (COLOR.r - 0.5) * 2.0 * vary;

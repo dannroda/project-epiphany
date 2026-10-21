@@ -276,7 +276,9 @@ func test_overworld_photo_is_taken_from_the_current_level() -> void:
 	var page: Control = setup[3]
 	var map: OverworldMap = tree.current_scene.get_node(^"OverworldMap")
 	assert_true(page.overworld_image.texture == map.texture, "la imagen es la foto del nivel")
-	map._keep_photo()
+	while map._taking:
+		RenderingServer.frame_post_draw.emit()
+		await tree.process_frame
 	assert_eq(map.get_node(^"Snapshot").size, OverworldMap.PARKED_SIZE, "entre foto y foto la SubViewport no ocupa memoria")
 	assert_eq(Vector2(map.texture.get_size()), map.world_rect.size * OverworldMap.PIXELS_PER_METER, "la foto no se achica con ella")
 	assert_eq(Vector2(map.texture.get_size()), map.world_rect.size * OverworldMap.PIXELS_PER_METER)
@@ -290,6 +292,23 @@ func test_overworld_photo_is_taken_from_the_current_level() -> void:
 	for child in copy.get_children():
 		child.free()
 	_close(setup[2])
+
+
+## 15.22: en Mobile la foto tarda un cuadro por mosaico; si el nivel se va en el medio, la foto se corta sin tocar nada.
+func test_a_tiled_photo_stops_when_the_level_leaves() -> void:
+	var tree := Engine.get_main_loop() as SceneTree
+	var map: OverworldMap = (load("res://levels/overworld.tscn") as PackedScene).instantiate().get_node(^"OverworldMap")
+	var level := map.owner
+	tree.root.add_child(level)
+	map._tiles = Vector2i(2, 2)
+	map._tile_size = Vector2i((Vector2(map._photo_size) / 2.0).ceil())
+	map.snapshot()
+	RenderingServer.frame_post_draw.emit()
+	assert_true(map._taking, "va por el segundo mosaico")
+	tree.root.remove_child(level)
+	RenderingServer.frame_post_draw.emit()
+	assert_eq(map.get_node(^"%GridCopy").get_child_count() > 0, true, "cortada: no siguió")
+	level.free()
 
 
 ## Cada entrada de mazmorra (y las tumbas de la Necrópolis) sale en la foto del mapa, y cada mazmorra tiene su lugar.

@@ -17,7 +17,7 @@ void vertex() {
 }
 
 void fragment() {
-	if (in_player_hole(world_pos, VERTEX, VIEW_MATRIX, FRAGCOORD.xy)) {
+	if (in_player_hole(world_pos, VERTEX, VIEW_MATRIX, CAMERA_POSITION_WORLD, FRAGCOORD.xy)) {
 		discard;
 	}
 	ALBEDO = albedo_color.rgb * texture(albedo_texture, UV).rgb;
