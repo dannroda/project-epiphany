@@ -81,7 +81,7 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		get_viewport().mesh_lod_threshold = 0.0
 	player.health.make_invulnerable(3600.0)
 	var origin := player.global_position if bench.use_spawn else bench.center
-	var columns := {"frame": [], "process": [], "physics": [], "scripts": [], "physics_scripts": [], "physics_steps": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
+	var columns := {"frame": [], "process": [], "physics": [], "scripts": [], "physics_scripts": [], "physics_steps": [], "physics_engine": [], "navigation": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
 	var elapsed := -warmup
 	var last := Time.get_ticks_usec()
 	while elapsed < bench.seconds:
@@ -97,6 +97,9 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		columns.scripts.append(scripts[0])
 		columns.physics_scripts.append(scripts[1])
 		columns.physics_steps.append(scripts[2])
+		if scripts[4] > 0:
+			columns.physics_engine.append(scripts[3] / scripts[4])
+		columns.navigation.append(Performance.get_monitor(Performance.TIME_NAVIGATION_PROCESS) * 1000.0)
 		columns.frame.append(delta * 1000.0)
 		columns.process.append(Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0)
 		columns.physics.append(Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0)
@@ -231,6 +234,12 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 			sun.directional_shadow_max_distance = variant.sun_distance
 	if variant.shadow_atlas > 0:
 		RenderingServer.directional_shadow_atlas_set_size(variant.shadow_atlas, ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/16_bits"))
+	if variant.monitoring_off:
+		for area: Area3D in scene.find_children("*", "Area3D", true, false):
+			area.set_deferred(&"monitoring", false)
+	if variant.enemies_off:
+		for enemy in get_tree().get_nodes_in_group(Enemy.GROUP):
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
 	if not variant.plant_shadows:
 		for node in scene.find_children("*", "", true, false):
 			if node.scene_file_path.begins_with("res://src/world/plants/") or node.name == &"Decor":

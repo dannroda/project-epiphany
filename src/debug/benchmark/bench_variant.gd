@@ -33,3 +33,6 @@ extends Node
 @export var effects_off: Array[Script] = []
 ## Solo estos casos (vacío: todos).
 @export var cases: Array[StringName] = []
+## Diagnóstico (15.20): ningún Area3D monitorea, o todos los enemigos quietos. El juego no anda igual; solo para medir.
+@export var monitoring_off := false
+@export var enemies_off := false
