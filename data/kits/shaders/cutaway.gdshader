@@ -9,6 +9,9 @@ uniform float uv_scale = 0.5;
 uniform float uv_offset = 0.5;
 // true: las UV del modelo (piezas de KayKit con su atlas); false: triplanar de mundo (kit gris).
 uniform bool use_uv = false;
+// Las tapas de las paredes LA (tools/la_caps.gd): un mosaico horneado que se lee sin filtrar, como los triángulos que reemplaza.
+uniform bool use_mosaic = false;
+uniform sampler2D mosaic_texture : source_color, filter_nearest, repeat_disable;
 // Rectángulo XZ (x0, x1, z0, z1) que se recorta por encima de cut_height; lo actualiza la cámara.
 uniform vec4 cut_area = vec4(0.0);
 uniform float cut_height = 0.0;
@@ -64,7 +67,7 @@ void fragment() {
 	vec3 p = world_pos * uv_scale + uv_offset;
 	vec3 tex;
 	if (use_uv) {
-		tex = texture(albedo_texture, UV).rgb;
+		tex = use_mosaic ? texture(mosaic_texture, UV).rgb : texture(albedo_texture, UV).rgb;
 	} else {
 		vec3 w = world_normal / (world_normal.x + world_normal.y + world_normal.z);
 		tex = texture(albedo_texture, p.zy * vec2(1.0, -1.0)).rgb * w.x

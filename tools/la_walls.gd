@@ -7,7 +7,9 @@ extends SceneTree
 ## refresh: en el nivel ya hecho, vuelve a elegir la pieza de cada celda de pared (después de editar el nivel).
 ## spread: duplica las paredes entre salas de un nivel ya hecho sin duplicar (y lo guarda; después export y refresh).
 ## Las paredes finitas sueltas (piso a los dos lados) son paredes bajas (muro). Las celdas Puerta llevan un corte (paso) o, si tienen escalera, un corte ciego con escalones (sube, baja).
+## caps: pasa a quads las tapas de las paredes en los kits ya hechos (tools/la_caps.gd), sin tocar los niveles.
 ## godot --headless --path . --script res://tools/la_walls.gd -- export | bake <nivel> | refresh <nivel> | spread <nivel>
+## godot --path . --script res://tools/la_walls.gd -- caps
 
 const LEVELS := {"chullpa": "res://levels/chullpa.tscn", "quenoa": "res://levels/quenoa.tscn", "templo": "res://levels/templo.tscn", "totora": "res://levels/totora.tscn", "cumbre": "res://levels/cumbre.tscn",
 	"bomb_cave": "res://levels/bomb_cave.tscn", "bush_cave": "res://levels/bush_cave.tscn", "grotto_cave": "res://levels/grotto_cave.tscn",
@@ -56,6 +58,7 @@ const PIT_FOG := preload("res://src/world/look/niebla_foso.gdshader")
 ## La niebla va sobre una copia de las paredes del foso, corrida hacia adentro.
 const PIT_FOG_INSET := 0.03
 const DROP_LOOK := preload("res://src/world/look/caida_la.tscn")
+const CAPS := preload("res://tools/la_caps.gd")
 const CELL := 2.0
 ## Un haz cada tantos metros de hueco.
 const SHAFT_SPACING := 6.0
@@ -182,6 +185,20 @@ func _initialize() -> void:
 			out[kind].sort()
 		FileAccess.open(SHAPES, FileAccess.WRITE).store_string(JSON.stringify(out, "\t") + "\n")
 		print(SHAPES, ": ", out)
+		quit()
+		return
+	if mode == "caps":
+		if DisplayServer.get_name() == "headless":
+			push_error("caps necesita el renderer (sin --headless): headless los shaders embebidos se guardan sin parámetros")
+			quit(1)
+			return
+		var kits := {}
+		for look: Dictionary in LOOKS.values():
+			kits[look.kit] = true
+		for kit_path: String in kits:
+			var kit: MeshLibrary = load(kit_path)
+			CAPS.apply(kit, _wall_prefixes(), _caps_path(kit_path))
+			_save_kit(kit, kit_path)
 		quit()
 		return
 	var path: String = LEVELS.get(args[1] if args.size() > 1 else "", "")
@@ -975,11 +992,24 @@ func _kit() -> MeshLibrary:
 		kit.set_item_mesh(id, _with_window(pit, window, dark_fog))
 		kit.set_item_shapes(id, kit.get_item_shapes(item))
 		kit.set_item_navigation_mesh(id, kit.get_item_navigation_mesh(item))
-	var uid := ResourceLoader.get_resource_uid(_out_kit) if ResourceLoader.exists(_out_kit) else ResourceUID.INVALID_ID
-	ResourceSaver.save(kit, _out_kit)
-	ResourceSaver.set_uid(_out_kit, uid if uid != ResourceUID.INVALID_ID else ResourceUID.create_id())
-	_pin_ext_uids(_out_kit)
+	CAPS.apply(kit, _wall_prefixes(), _caps_path(_out_kit))
+	_save_kit(kit, _out_kit)
 	return ResourceLoader.load(_out_kit, "", ResourceLoader.CACHE_MODE_REPLACE)
+
+
+func _save_kit(kit: MeshLibrary, path: String) -> void:
+	var uid := ResourceLoader.get_resource_uid(path) if ResourceLoader.exists(path) else ResourceUID.INVALID_ID
+	ResourceSaver.save(kit, path)
+	ResourceSaver.set_uid(path, uid if uid != ResourceUID.INVALID_ID else ResourceUID.create_id())
+	_pin_ext_uids(path)
+
+
+func _wall_prefixes() -> Array:
+	return KINDS.values().map(func(kind: Array) -> String: return kind[0])
+
+
+func _caps_path(kit_path: String) -> String:
+	return kit_path.get_basename() + "_tapas.res"
 
 
 ## Sin el editor, el saver deja los ext_resource sin uid y el editor después reescribe el archivo.
