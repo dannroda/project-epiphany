@@ -10,6 +10,7 @@ PACKAGE=com.example.projectepiphany
 # debug/tmp es compartido entre worktrees: un APK por worktree para que una corrida no instale el build de otra.
 APK=debug/tmp/android/epiphany_bench_$(basename "$PWD").apk
 OUT=debug/tmp/bench
+PIPELINE_CACHE_MAX_MB=${PIPELINE_CACHE_MAX_MB:-40}
 mkdir -p "$OUT"
 stamp=$(date +%Y%m%d_%H%M)
 
@@ -50,6 +51,12 @@ android)
 	fi
 	adb -s "$serial" install -r "$APK" > /dev/null
 	adb -s "$serial" shell am force-stop "$PACKAGE"
+	# La caché de pipelines junta los de todos los builds instalados y el juego la tiene entera en memoria (15.27).
+	cache_kb=$(adb -s "$serial" shell run-as "$PACKAGE" du -k files/vulkan 2> /dev/null | tail -1 | cut -f1 | tr -dc 0-9)
+	if [ "${cache_kb:-0}" -gt $((PIPELINE_CACHE_MAX_MB * 1024)) ]; then
+		adb -s "$serial" shell run-as "$PACKAGE" sh -c "'rm -f files/vulkan/pipelines.*.cache'"
+		echo "borré la caché de pipelines ($((cache_kb / 1024)) MB): la primera carga de cada nivel en esta corrida es en frío"
+	fi
 	adb -s "$serial" shell run-as "$PACKAGE" rm -f files/benchmark/latest.json
 	adb -s "$serial" logcat -c
 	adb -s "$serial" shell am start -n "$PACKAGE/com.godot.game.GodotAppLauncher" > /dev/null
