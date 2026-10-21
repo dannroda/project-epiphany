@@ -1,6 +1,7 @@
 extends "res://tests/test_case.gd"
 ## 16.40: los AnimationPlayer no son deterministas, así al cambiar de clip lo que el clip nuevo no anima queda como
 ## estaba en vez de volver al valor inicial. Los que alimentan un AnimationTree (anim_player) los mezcla el árbol.
+## Desde 4.8 false es el valor por defecto y el editor no lo escribe.
 
 const FOLDERS := ["res://src", "res://levels", "res://player"]
 
@@ -14,7 +15,7 @@ func test_animation_players_are_not_deterministic() -> void:
 		for block in text.split("\n["):
 			if block.begins_with("node ") and block.contains('type="AnimationPlayer"'):
 				checked += 1
-				assert_true(block.contains("deterministic = false"), "%s: %s" % [path, block.get_slice("\n", 0)])
+				assert_true(not block.contains("deterministic = true"), "%s: %s" % [path, block.get_slice("\n", 0)])
 	assert_true(checked > 20, "revisó los AnimationPlayer (%d)" % checked)
 
 
