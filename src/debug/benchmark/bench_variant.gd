@@ -20,6 +20,8 @@ extends Node
 ## Parámetros que pone en los materiales de parameters_shader mientras corre, y después los devuelve.
 @export var parameters_shader: Shader
 @export var parameters := {}
+## Con parameters_shader, lo cambia por este shader en esos materiales mientras corre (A/B de una versión del shader).
+@export var swap_shader: Shader
 ## Con false, las plantas (escenas de src/world/plants y lo que cuelga de Decor) no proyectan sombra.
 @export var plant_shadows := true
 ## Sombra del sol más barata: ortogonal (un solo split) en vez de PSSM, otra distancia máxima y otro tamaño de atlas

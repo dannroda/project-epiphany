@@ -26,6 +26,8 @@ const BAKED := "BrilloLA"
 const SHAPES := "res://tools/paredes_la.json"
 const MESHES := "res://assets/epiphany/meshes/paredes_la/%s_la_%s.res"
 const STONE := preload("res://data/kits/materials/epiphany_stone.tres")
+## Las paredes LA no se recortan: el cutaway sin discard (15.23).
+const CUTAWAY_LA := preload("res://data/kits/shaders/cutaway_la.gdshader")
 const WALLS := ["Pared", "Pared nicho", "Pared ojo"]
 const DOOR := "Puerta"
 ## kind de la pieza → [nombre del ítem, ítem del kit de donde copia colisión y navmesh].
@@ -403,6 +405,7 @@ func _glossy(material: Material) -> Material:
 		return material
 	if not _glossy_cache.has(material):
 		var copy := material.duplicate() as ShaderMaterial
+		copy.shader = CUTAWAY_LA
 		copy.set_shader_parameter("roughness", GLOSS_ROUGHNESS)
 		copy.set_shader_parameter("specular", GLOSS_SPECULAR)
 		_glossy_cache[material] = copy

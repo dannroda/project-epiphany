@@ -200,7 +200,7 @@ func _mesh_materials(mesh: Mesh) -> Array:
 ## compartidos como estaban.
 func _apply(variant: BenchVariant, scene: Node) -> Callable:
 	var undo := []
-	if variant.parameters_shader and not variant.parameters.is_empty():
+	if variant.parameters_shader and (not variant.parameters.is_empty() or variant.swap_shader):
 		var seen := {}
 		var found := []
 		for geometry: GeometryInstance3D in scene.find_children("*", "GeometryInstance3D", true, false):
@@ -212,6 +212,9 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 		for m: Material in found:
 			if m is ShaderMaterial and m.shader == variant.parameters_shader and not seen.has(m):
 				seen[m] = true
+				if variant.swap_shader:
+					undo.append([m, &"shader", m.shader])
+					m.shader = variant.swap_shader
 				for key: String in variant.parameters:
 					undo.append([m, key, m.get_shader_parameter(key)])
 					m.set_shader_parameter(key, variant.parameters[key])
@@ -237,7 +240,10 @@ func _apply(variant: BenchVariant, scene: Node) -> Callable:
 		for effect: CompositorEffect in effects:
 			effect.enabled = true
 		for entry: Array in undo:
-			entry[0].set_shader_parameter(entry[1], entry[2])
+			if entry[1] == &"shader":
+				entry[0].shader = entry[2]
+			else:
+				entry[0].set_shader_parameter(entry[1], entry[2])
 
 
 func _summary(values: Array) -> Dictionary:
