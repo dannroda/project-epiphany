@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bs6ggwyw5mp2m"
 path.s3tc="res://.godot/imported/skybox-morning.png-065a7a9cfb910329acb662103ad48813.s3tc.ctex"
+path.etc2="res://.godot/imported/skybox-morning.png-065a7a9cfb910329acb662103ad48813.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/kenney_skyboxes/Skyboxes/skybox-morning.png"
-dest_files=["res://.godot/imported/skybox-morning.png-065a7a9cfb910329acb662103ad48813.s3tc.ctex"]
+dest_files=["res://.godot/imported/skybox-morning.png-065a7a9cfb910329acb662103ad48813.s3tc.ctex", "res://.godot/imported/skybox-morning.png-065a7a9cfb910329acb662103ad48813.etc2.ctex"]
 
 [params]
 

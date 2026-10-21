@@ -1,0 +1,126 @@
+extends Node
+## Benchmark automático (15.14). Quieto salvo que el juego arranque con `--benchmark` o el feature "benchmark": entonces
+## corre cada BenchCase (hijos de Cases) en cada BenchVariant (hijos de Variants) sin input, anota cuadro a cuadro, deja
+## una línea BENCH por corrida y todo junto en user://benchmark/latest.json, y cierra el juego.
+## PC: tools/bench.sh desktop · Android: tools/bench.sh android <serial>.
+
+const ARG := "--benchmark"
+const OUT := "user://benchmark/latest.json"
+
+## Segundos caminando antes de empezar a anotar, para que asienten la carga y los shaders.
+@export var warmup := 2.0
+
+var _flat := StandardMaterial3D.new()
+
+
+func _ready() -> void:
+	if ARG in OS.get_cmdline_args() or ARG in OS.get_cmdline_user_args() or OS.has_feature("benchmark"):
+		_run.call_deferred()
+
+
+func _run() -> void:
+	await get_tree().process_frame
+	var viewport := get_viewport().get_viewport_rid()
+	RenderingServer.viewport_set_measure_render_time(viewport, true)
+	Settings.set_value(&"max_fps", 0, false)
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	var info := {
+		"device": OS.get_model_name(), "os": OS.get_name(), "gpu": RenderingServer.get_video_adapter_name(),
+		"renderer": RenderingServer.get_current_rendering_method(), "screen": get_viewport().get_visible_rect().size,
+		"debug": OS.is_debug_build(), "date": Time.get_datetime_string_from_system(),
+		"vsync": DisplayServer.window_get_vsync_mode(),
+	}
+	print("BENCH_INFO ", JSON.stringify(info))
+	var runs := []
+	for variant: BenchVariant in $Variants.get_children():
+		for bench: BenchCase in $Cases.get_children():
+			var run := await _measure(bench, variant, viewport)
+			print("BENCH ", JSON.stringify(run))
+			runs.append(run)
+	DirAccess.make_dir_recursive_absolute(OUT.get_base_dir())
+	var file := FileAccess.open(OUT, FileAccess.WRITE)
+	file.store_string(JSON.stringify({"info": info, "runs": runs}, "\t"))
+	file.close()
+	print("BENCH_DONE ", ProjectSettings.globalize_path(OUT))
+	get_tree().quit()
+
+
+func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Dictionary:
+	var run := {"case": bench.name, "variant": variant.name}
+	Settings.set_value(&"render_scale", variant.render_scale, false)
+	Settings.set_value(&"shadows", variant.shadows, false)
+	Settings.set_value(&"ssao", variant.ssao, false)
+	var loaded_at := Time.get_ticks_msec()
+	var err: Error = await SaveManager.load_scenario(bench.scenario)
+	while SceneFlow.is_busy():
+		await get_tree().process_frame
+	run["load_ms"] = Time.get_ticks_msec() - loaded_at
+	var player := Players.lead()
+	if err != OK or player == null:
+		run["error"] = error_string(err) if err != OK else "no player"
+		return run
+	if variant.flat_materials:
+		_flatten(get_tree().current_scene)
+		get_tree().node_added.connect(_flatten)
+	player.health.make_invulnerable(3600.0)
+	var origin := player.global_position if bench.use_spawn else bench.center
+	var columns := {"frame": [], "process": [], "physics": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
+	var elapsed := -warmup
+	var last := Time.get_ticks_usec()
+	while elapsed < bench.seconds:
+		await get_tree().process_frame
+		var now := Time.get_ticks_usec()
+		var delta := (now - last) / 1000000.0
+		last = now
+		elapsed += delta
+		_walk(player, origin, bench, elapsed)
+		if elapsed < 0.0:
+			continue
+		columns.frame.append(delta * 1000.0)
+		columns.process.append(Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0)
+		columns.physics.append(Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0)
+		columns.render_cpu.append(RenderingServer.viewport_get_measured_render_time_cpu(viewport) + RenderingServer.get_frame_setup_time_cpu())
+		columns.render_gpu.append(RenderingServer.viewport_get_measured_render_time_gpu(viewport))
+		columns.draws.append(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME))
+		columns.triangles.append(Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
+		columns.objects.append(Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
+	if get_tree().node_added.is_connected(_flatten):
+		get_tree().node_added.disconnect(_flatten)
+	var frames: Array = columns.frame
+	run["fps"] = 1000.0 * frames.size() / maxf(_sum(frames), 0.001)
+	for key: String in columns:
+		run[key] = _summary(columns[key])
+	run["nodes"] = Performance.get_monitor(Performance.OBJECT_NODE_COUNT)
+	run["video_mb"] = Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576.0
+	run["static_mb"] = Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0
+	return run
+
+
+## En círculo alrededor de `origin`, apoyado en el piso que haya debajo.
+func _walk(player: PlayerCharacter, origin: Vector3, bench: BenchCase, elapsed: float) -> void:
+	var angle := maxf(elapsed, 0.0) * bench.speed / maxf(bench.radius, 0.1)
+	var spot := origin + Vector3(cos(angle), 0.0, sin(angle)) * bench.radius
+	var query := PhysicsRayQueryParameters3D.create(spot + Vector3.UP * 20.0, spot + Vector3.DOWN * 20.0, player.collision_mask, [player.get_rid()])
+	var hit := player.get_world_3d().direct_space_state.intersect_ray(query)
+	player.global_position = hit.position if hit else spot
+	player.velocity = Vector3.ZERO
+
+
+func _flatten(node: Node) -> void:
+	for geometry: GeometryInstance3D in node.find_children("*", "GeometryInstance3D", true, false) + ([node] if node is GeometryInstance3D else []):
+		geometry.material_override = _flat
+
+
+func _summary(values: Array) -> Dictionary:
+	if values.is_empty():
+		return {}
+	var sorted := values.duplicate()
+	sorted.sort()
+	return {"avg": _sum(values) / values.size(), "p50": sorted[sorted.size() / 2], "p95": sorted[int(sorted.size() * 0.95)], "max": sorted.back()}
+
+
+func _sum(values: Array) -> float:
+	var total := 0.0
+	for value: float in values:
+		total += value
+	return total

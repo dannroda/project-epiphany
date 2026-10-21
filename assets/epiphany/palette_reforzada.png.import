@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bq10ca3eh8gg6"
 path.s3tc="res://.godot/imported/palette_reforzada.png-fac5d6870c5c4060c0ddfe192d6ebdf0.s3tc.ctex"
+path.etc2="res://.godot/imported/palette_reforzada.png-fac5d6870c5c4060c0ddfe192d6ebdf0.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/epiphany/palette_reforzada.png"
-dest_files=["res://.godot/imported/palette_reforzada.png-fac5d6870c5c4060c0ddfe192d6ebdf0.s3tc.ctex"]
+dest_files=["res://.godot/imported/palette_reforzada.png-fac5d6870c5c4060c0ddfe192d6ebdf0.s3tc.ctex", "res://.godot/imported/palette_reforzada.png-fac5d6870c5c4060c0ddfe192d6ebdf0.etc2.ctex"]
 
 [params]
 

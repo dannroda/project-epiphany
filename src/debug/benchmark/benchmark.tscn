@@ -1,0 +1,69 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/debug/benchmark/benchmark.gd" id="1_bench"]
+[ext_resource type="Script" path="res://src/debug/benchmark/bench_variant.gd" id="2_variant"]
+[ext_resource type="Script" path="res://src/debug/benchmark/bench_case.gd" id="3_case"]
+
+[node name="Benchmark" type="Node"]
+script = ExtResource("1_bench")
+
+[node name="Variants" type="Node" parent="."]
+
+[node name="Alta" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+
+[node name="Baja" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+render_scale = 50
+shadows = 0
+ssao = false
+
+[node name="Plana" type="Node" parent="Variants"]
+script = ExtResource("2_variant")
+flat_materials = true
+
+[node name="Cases" type="Node" parent="."]
+
+[node name="OverworldInicio" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+
+[node name="OverworldArboleda" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+use_spawn = false
+center = Vector3(-37, 2.6, 24.5)
+radius = 3.0
+
+[node name="OverworldCardonal" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+use_spawn = false
+center = Vector3(28, 0, 25)
+
+[node name="OverworldBanado" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+use_spawn = false
+center = Vector3(84, 0, 37)
+
+[node name="OverworldCumbre" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+use_spawn = false
+center = Vector3(11, 5.2, -40.5)
+radius = 3.0
+
+[node name="TemploHub" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+scenario = "templo"
+use_spawn = false
+center = Vector3(44, 0, 36)
+radius = 3.0
+
+[node name="Chullpa" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+scenario = "chullpa"
+radius = 1.5
+speed = 2.0
+
+[node name="Antesala" type="Node" parent="Cases"]
+script = ExtResource("3_case")
+scenario = "pre_boss"
+radius = 1.5
+speed = 2.0

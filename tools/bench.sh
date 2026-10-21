@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Benchmark automático (15.14): corre src/debug/benchmark/benchmark.tscn sin input y guarda el JSON en debug/tmp/bench/.
+# En Android usa el preset "Android (benchmark)" (feature benchmark), que reemplaza al juego instalado.
+#   tools/bench.sh desktop              en ventana, en la pantalla 1 sin robar el foco
+#   tools/bench.sh android <serial>     instala el APK de debug (lo exporta con --build o si falta) y lo corre en el teléfono
+set -euo pipefail
+cd "$(dirname "$0")/.."
+GODOT=${GODOT:-/opt/godot/versions/4.8-beta1/godot}
+PACKAGE=com.example.projectepiphany
+APK=debug/tmp/android/epiphany_bench.apk
+OUT=debug/tmp/bench
+mkdir -p "$OUT"
+stamp=$(date +%Y%m%d_%H%M)
+
+case "${1:-}" in
+desktop)
+	printf '[display]\nwindow/size/no_focus=true\n' > override.cfg
+	trap 'rm -f override.cfg' EXIT
+	log="$OUT/desktop_$stamp.log"
+	bwrap --dev-bind / / --tmpfs /dev/input "$GODOT" --path . --display-driver x11 --screen 1 -- --benchmark > "$log" 2>&1 || true
+	json=$(sed -n 's/^BENCH_DONE //p' "$log" | tail -1)
+	[ -n "$json" ] || { echo "no terminó, mirá $log"; exit 1; }
+	dest="$OUT/desktop_$(uname -n)_$stamp.json"
+	cp "$json" "$dest"
+	;;
+android)
+	serial=${2:?falta el serial de adb}
+	for busy in ${BUSY_PACKAGES:-dev.asteroids.game}; do
+		if adb -s "$serial" shell pidof "$busy" > /dev/null 2>&1; then
+			echo "$busy está corriendo en $serial (el teléfono es compartido), no lo interrumpo"
+			exit 1
+		fi
+	done
+	if [ "${3:-}" = "--build" ] || [ ! -f "$APK" ]; then
+		mkdir -p "$(dirname "$APK")"
+		"$GODOT" --headless --path . --import > /dev/null 2>&1 || true
+		"$GODOT" --headless --path . --export-debug "Android (benchmark)" "$APK" > "$OUT/export_$stamp.log" 2>&1
+	fi
+	adb -s "$serial" install -r "$APK" > /dev/null
+	adb -s "$serial" shell am force-stop "$PACKAGE"
+	adb -s "$serial" logcat -c
+	adb -s "$serial" shell am start -n "$PACKAGE/com.godot.game.GodotAppLauncher" > /dev/null
+	model=$(adb -s "$serial" shell getprop ro.product.model | tr -d '\r' | tr ' ' '_')
+	log="$OUT/${model}_$stamp.log"
+	: > "$log"
+	for _ in $(seq 1 180); do
+		sleep 5
+		adb -s "$serial" logcat -d -s godot:V > "$log.new" 2>/dev/null && [ -s "$log.new" ] && mv "$log.new" "$log"
+		grep -q "BENCH_DONE" "$log" && break
+		if ! adb -s "$serial" shell pidof "$PACKAGE" > /dev/null 2>&1 && { sleep 5; ! adb -s "$serial" shell pidof "$PACKAGE" > /dev/null 2>&1; }; then
+			echo "el juego se cerró antes de terminar, mirá $log"
+			exit 1
+		fi
+	done
+	grep -q "BENCH_DONE" "$log" || { echo "no terminó en 15 min, mirá $log"; exit 1; }
+	dest="$OUT/${model}_$stamp.json"
+	adb -s "$serial" exec-out run-as "$PACKAGE" cat files/benchmark/latest.json > "$dest"
+	;;
+*)
+	sed -n '2,4p' "$0"
+	exit 1
+	;;
+esac
+python3 -I tools/bench_report.py "$dest"
+echo "$dest"

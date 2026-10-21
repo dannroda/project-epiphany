@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ddhjwybdg1ah2"
 path.s3tc="res://.godot/imported/lock.svg-9526cc3719449e4e0ee61ef762e40393.s3tc.ctex"
+path.etc2="res://.godot/imported/lock.svg-9526cc3719449e4e0ee61ef762e40393.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/ui/lock.svg"
-dest_files=["res://.godot/imported/lock.svg-9526cc3719449e4e0ee61ef762e40393.s3tc.ctex"]
+dest_files=["res://.godot/imported/lock.svg-9526cc3719449e4e0ee61ef762e40393.s3tc.ctex", "res://.godot/imported/lock.svg-9526cc3719449e4e0ee61ef762e40393.etc2.ctex"]
 
 [params]
 

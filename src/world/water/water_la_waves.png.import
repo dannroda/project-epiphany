@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://boqkwaq7fmfgg"
 path.s3tc="res://.godot/imported/water_la_waves.png-bbf6f728a607abb059d2d42d0914d2a1.s3tc.ctex"
+path.etc2="res://.godot/imported/water_la_waves.png-bbf6f728a607abb059d2d42d0914d2a1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://src/world/water/water_la_waves.png"
-dest_files=["res://.godot/imported/water_la_waves.png-bbf6f728a607abb059d2d42d0914d2a1.s3tc.ctex"]
+dest_files=["res://.godot/imported/water_la_waves.png-bbf6f728a607abb059d2d42d0914d2a1.s3tc.ctex", "res://.godot/imported/water_la_waves.png-bbf6f728a607abb059d2d42d0914d2a1.etc2.ctex"]
 
 [params]
 

@@ -34,6 +34,7 @@ InputDevice="*res://src/input/input_device.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 Settings="*res://src/settings/settings.gd"
 Music="*res://src/audio/music.tscn"
+Benchmark="*res://src/debug/benchmark/benchmark.tscn"
 
 [dialogue_manager]
 
@@ -913,6 +914,7 @@ locale/fallback="es"
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/contact_shadow/enabled=true
 lights_and_shadows/multi_bounce_occlusion/enabled=true
 
