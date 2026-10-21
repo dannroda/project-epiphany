@@ -5853,7 +5853,7 @@ Fijar la guía de estilo de los assets propios antes de modelar: una textura de 
 
 ### 12.2 Terreno del overworld · En curso
 
-**Prioridad:** alta · **Etiquetas:** `arte`
+**Prioridad:** alta · **Responsable:** project-epiphany-25 · **Etiquetas:** `arte`
 
 Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acantilados con sus aberturas, escalones, abismo, cercos y borde del mundo) y armar con eso el kit del GridMap, para reemplazar el kit gris sin perder colisiones ni navegación.
 
@@ -5894,6 +5894,8 @@ Modelar en Blender el terreno del overworld (pasto, caminos, piso de plaza, acan
   Hecho: dust_motes.tscn (GPUParticles3D, 40 motas aditivas que flotan) colgado de TopDownCamera en overworld.tscn, delante de la cámara a la altura del player.
 
 **Prueba:** El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.
+
+**Notas:** 2026-10-21: Daniel pide retomar el pendiente del playtest (sacar las mallas que el player nunca ve, como el piso del terreno apilado donde no se puede llegar). Encargado a -25 (hizo los bloques del terreno en 17.2), en paralelo con 15.23 mientras espera el G23.
 
 **Referencias:** `gdd.md#overworld-layout`
 

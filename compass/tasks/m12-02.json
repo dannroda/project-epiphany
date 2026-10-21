@@ -1,4 +1,5 @@
 {
+  "assignee": "project-epiphany-25",
   "checklist": [
     {
       "detail": "Florcitas, piedritas, manchas de tierra.",
@@ -108,7 +109,7 @@
     }
   ],
   "milestone": "m12",
-  "notes": "",
+  "notes": "2026-10-21: Daniel pide retomar el pendiente del playtest (sacar las mallas que el player nunca ve, como el piso del terreno apilado donde no se puede llegar). Encargado a -25 (hizo los bloques del terreno en 17.2), en paralelo con 15.23 mientras espera el G23.",
   "order": 2,
   "playtest": {
     "note": "Anda, pero hay meshes que el player no ve. Por lo que no deberían estar. Un ejemplo es en el terreno apilado, tienen piso cuando es innacesible. El diseño y layout del overworld está bien, solo falta eliminar esas partes que no se ven nunca",
@@ -127,5 +128,5 @@
   ],
   "test": "El GridMap del overworld usa solo estas piezas y la navmesh y las colisiones siguen andando.",
   "title": "Terreno del overworld",
-  "updated_at": "2026-10-17T06:35:41.956Z"
+  "updated_at": "2026-10-21T07:37:35.497Z"
 }
