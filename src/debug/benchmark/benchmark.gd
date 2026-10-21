@@ -68,6 +68,9 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 		_flatten(get_tree().current_scene)
 		get_tree().node_added.connect(_flatten)
 	var restore := _apply(variant, get_tree().current_scene)
+	var lod_threshold := get_viewport().mesh_lod_threshold
+	if not variant.lods:
+		get_viewport().mesh_lod_threshold = 0.0
 	player.health.make_invulnerable(3600.0)
 	var origin := player.global_position if bench.use_spawn else bench.center
 	var columns := {"frame": [], "process": [], "physics": [], "render_cpu": [], "render_gpu": [], "draws": [], "triangles": [], "objects": []}
@@ -93,6 +96,7 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 	if get_tree().node_added.is_connected(_flatten):
 		get_tree().node_added.disconnect(_flatten)
 	restore.call()
+	get_viewport().mesh_lod_threshold = lod_threshold
 	var frames: Array = columns.frame
 	run["fps"] = 1000.0 * frames.size() / maxf(_sum(frames), 0.001)
 	for key: String in columns:

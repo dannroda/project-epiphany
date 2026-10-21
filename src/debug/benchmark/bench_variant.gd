@@ -2,7 +2,8 @@ class_name BenchVariant
 extends Node
 ## Una calidad del benchmark (15.14): las opciones de Settings que pone antes de cada caso. `flat_materials` cambia todos los
 ## materiales por uno estándar liso, para ver cuánto cuestan los shaders propios. Las demás apagan una parte para medir
-## cuánto cuesta: las luces (no direccionales), las sondas de reflejo, los efectos del compositor (LA) y los GridMap.
+## cuánto cuesta: las luces (no direccionales), las sondas de reflejo, los efectos del compositor (LA), los GridMap y los
+## LODs de las mallas (siempre el detalle completo).
 
 @export var render_scale := 100
 @export var shadows := 2
@@ -12,6 +13,7 @@ extends Node
 @export var probes := true
 @export var effects := true
 @export var gridmaps := true
+@export var lods := true
 ## Con flat_materials, solo la geometría con algún material de estos shaders (con flat_except, toda menos esa).
 @export var flat_shaders: Array[Shader] = []
 @export var flat_except := false
