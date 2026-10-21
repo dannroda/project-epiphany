@@ -32,7 +32,7 @@ var _load_slot := -1
 func _ready() -> void:
 	save_item.pressed.connect(_show_section.bind(Section.SAVE))
 	load_item.pressed.connect(_show_section.bind(Section.LOAD))
-	%Options.pressed.connect(OptionsScreen.open)
+	%Options.pressed.connect(OptionsScreen.open.bind(true))
 	%ToTitle.pressed.connect(_to_title)
 	%SaveConfirm.pressed.connect(_save)
 	%SaveCancel.pressed.connect(cancel)

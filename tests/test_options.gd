@@ -120,6 +120,8 @@ func test_options_from_title_and_pause() -> void:
 	(page.find_child("Options", true, false) as Button).pressed.emit()
 	await tree.process_frame
 	assert_true(stack.top() is OptionsScreen, "Opciones abre la pantalla de opciones")
+	assert_eq(stack.top().scene_file_path, OptionsScreen.PAUSE_SCENE_PATH, "dentro del marco de la pausa")
+	assert_true(menu.visible, "con la pausa visible detrás")
 	while stack.is_open():
 		stack.pop()
 	_restore(settings)
