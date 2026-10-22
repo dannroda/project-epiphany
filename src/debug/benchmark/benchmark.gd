@@ -57,6 +57,9 @@ func _run() -> void:
 ## Los hitos en ms desde que arrancó el motor, con los pipelines creados hasta cada uno. Sin tocar ajustes: es el arranque real.
 func _startup() -> void:
 	var marks := {"autoloads_ms": _autoloads_ms}
+	# Como un jugador que ya eligió idioma: si no, su pantalla tapa el título y el fondo no se dibuja hasta Continuar.
+	if not Settings.has_language():
+		Settings.set_value(&"language", Settings.language())
 	var mark := func(key: String) -> void:
 		marks[key + "_ms"] = Time.get_ticks_msec()
 		marks[key + "_pipelines"] = _pipelines_compiled()
