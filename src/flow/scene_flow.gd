@@ -138,9 +138,10 @@ func _teleport_players(leaving: bool) -> void:
 
 
 ## Carga `scene_path` en un hilo (pedido antes o acá) y cambia de escena. Si tarda más de `show_loading_after`,
-## aparece la pantalla de carga (el ojo y "Cargando…" en la esquina).
+## aparece la pantalla de carga (el ojo y "Cargando…" en la esquina). Con la escena retenida (keep_loaded) no hay lectura
+## que esperar, pero instanciarla y calentar sus pipelines tarda segundos en el G23: el ojo aparece enseguida.
 func _change_scene(scene_path: String) -> bool:
-	var _cached := _kept if _kept and _kept.resource_path == scene_path else null
+	var cached := _kept if _kept and _kept.resource_path == scene_path else null
 	_kept = null
 	if ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 		ResourceLoader.load_threaded_request(scene_path)
@@ -151,14 +152,15 @@ func _change_scene(scene_path: String) -> bool:
 			shown_at = Time.get_ticks_msec()
 			show_loading()
 		await get_tree().process_frame
-	if shown_at < 0 and show_loading_after <= 0.0:
+	if shown_at < 0 and (show_loading_after <= 0.0 or cached):
 		shown_at = Time.get_ticks_msec()
 		show_loading()
+		# Que se dibuje antes de instanciar, que traba el cuadro.
+		await get_tree().process_frame
 	var packed := ResourceLoader.load_threaded_get(scene_path) as PackedScene
 	var loaded_at := Time.get_ticks_msec()
-	if shown_at >= 0:
-		while Time.get_ticks_msec() - shown_at < loading_min_time * 1000.0:
-			await get_tree().process_frame
+	if shown_at >= 0 and not cached:
+		await _hold_loading(shown_at)
 	if packed == null:
 		hide_loading()
 		Log.error(&"flow", "No se pudo cargar", scene_path)
@@ -169,11 +171,19 @@ func _change_scene(scene_path: String) -> bool:
 	var changed_at := Time.get_ticks_msec()
 	_sync_dungeon()
 	await _warm_up_pipelines()
+	var ready_at := Time.get_ticks_msec()
+	if cached:
+		await _hold_loading(shown_at)
 	hide_loading()
-	last_load = {"scene": scene_path, "read_ms": loaded_at - started, "instance_ms": changed_at - instancing_at,
-		"warmup_ms": Time.get_ticks_msec() - changed_at, "total_ms": Time.get_ticks_msec() - started}
+	last_load = {"scene": scene_path, "started_ms": started, "read_ms": loaded_at - started, "instance_ms": changed_at - instancing_at,
+		"warmup_ms": ready_at - changed_at, "total_ms": Time.get_ticks_msec() - started}
 	Log.info(&"flow", "Carga", last_load)
 	return true
+
+
+func _hold_loading(shown_at: int) -> void:
+	while Time.get_ticks_msec() - shown_at < loading_min_time * 1000.0:
+		await get_tree().process_frame
 
 
 ## Una vez por cambio de escena: Dungeon no lo limpia al salir mientras se viaja (no avisa "" y enseguida el id).

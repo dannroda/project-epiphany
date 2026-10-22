@@ -123,10 +123,14 @@ func test_a_kept_scene_is_reused_once_and_then_released() -> void:
 	var same_ref: WeakRef = weakref(same)
 	same = null
 	assert_true(same_ref.get_ref() != null, "retenida hasta el cambio")
+	var eye := [false]
+	var on_changed := func() -> void: eye[0] = flow.loading_screen.visible
+	tree.scene_changed.connect(on_changed, CONNECT_ONE_SHOT)
 	flow.travel_to("res://levels/test/test.tscn", &"start")
 	while flow.traveling:
 		await tree.process_frame
-	assert_eq(flow.last_load.read_ms, 0, "sin leerla de nuevo")
+	assert_true(flow.last_load.read_ms < 50, "sin leerla de nuevo (%s ms)" % flow.last_load.read_ms)
+	assert_true(eye[0], "el ojo ya está mientras se instancia")
 	var other: PackedScene = load("res://levels/test/sandbox_items.tscn")
 	flow.keep_loaded(other)
 	var other_ref: WeakRef = weakref(other)

@@ -71,10 +71,15 @@ func _startup() -> void:
 	await get_tree().create_timer(1.0).timeout
 	mark.call("continue")
 	title.call(&"_go", SaveManager.load_scenario.bind(startup_scenario))
-	while not SceneFlow.is_busy():
-		await get_tree().process_frame
+	var hitches := []
+	var frame_at := Time.get_ticks_msec()
 	while SceneFlow.is_busy() or Players.lead() == null:
 		await get_tree().process_frame
+		var now := Time.get_ticks_msec()
+		if now - frame_at > 100:
+			hitches.append([frame_at - marks.continue_ms, now - frame_at])
+		frame_at = now
+	marks["hitches"] = hitches
 	await RenderingServer.frame_post_draw
 	mark.call("playable")
 	marks["load"] = SceneFlow.last_load
