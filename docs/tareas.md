@@ -8278,7 +8278,8 @@ Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps
   Por qué: En el G23 ahorra ~1,2 ms de GPU por cuadro, parte del margen que falta para que el overworld no caiga al estado lento (cuadro 45 ms). Cambia el look solo en Bajo; Medio, Alto y Forward+ quedan igual.
   Descartado: Dejar el glow en todos los perfiles y buscar el margen en el agua y la geometría.
 
-**Notas:** Hallazgos parciales (-88, G23, perfil Bajo, corridas intercalando Base):
+**Notas:** División del terreno, G23 22/10 (-8f, teléfono recién reiniciado, A 12×8 vs B 24×16 intercalado, 9 muestras Bajo por APK y caso), GPU p50 mediana A → B: Inicio 22,3 → 22,7; Arboleda 27,2 → 26,0 (único que gana en los tres pares, ~1,2 ms); Cardonal 23,0 → 21,8 (pares mezclados); Bañado 22,4 → 23,3 (peor en los tres); Cumbre 23,0 → 23,7. Los triángulos bajan 7–20 % pero la GPU no acompaña: en el Mali los triángulos fuera de cuadro son baratos y el costo del terreno está en los fragmentos. GL mtrack igual, PSS +20–40 MB en B. Descartada, nada integrado (B en debug/tmp/ow2/geo/B_tree).
+Hallazgos parciales (-88, G23, perfil Bajo, corridas intercalando Base):
 - No es calor: el G23 tiene dos estados estables, bueno (cuadro 33 ms, GPU 22–24 ms) y malo (cuadro 45 ms, GPU 27–30 ms, también suben los scripts por paso). Después de 20 min la última Base estaba igual de bien que la primera. Puede que esos dos estados sean presión de memoria (ver 15.27).
 - No es la física: con tope de 2 pasos por cuadro no cambia (29,1 contra 29,2 fps en 7 pares) y una corrida con tope cayó igual al estado malo. Lo dispara la GPU (el governor baja relojes cuando cae la tasa): hay que ganar margen de GPU.
 - Por pasada (--gpu-profile, Base, por cuadro): geometría opaca ~12–14 ms (Mali reparte mal los timestamps entre "Setup Sky" y "Render Opaque"); transparentes + efectos LA 4,5–6; canvas 2,3; glow 1,5; tonemap 1,4; partículas 0,4.
