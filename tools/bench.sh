@@ -47,8 +47,10 @@ android)
 		echo "$serial se reinició y nadie lo desbloqueó: sin eso el juego no tiene dónde escribir"
 		exit 1
 	fi
+	# Con el .idsig del export al lado, adb instala incremental: el juego arranca mientras el APK sigue llegando por USB y
+	# el arranque tarda 2–3 s más (15.29).
 	# Con el teléfono apretado de memoria la instalación a veces falla sin motivo; un segundo intento suele andar.
-	adb -s "$serial" install -r "$APK" > /dev/null || { sleep 10; adb -s "$serial" install -r "$APK" > /dev/null; }
+	adb -s "$serial" install --no-incremental -r "$APK" > /dev/null || { sleep 10; adb -s "$serial" install --no-incremental -r "$APK" > /dev/null; }
 	adb -s "$serial" shell am force-stop "$PACKAGE"
 	# La caché de pipelines junta los de todos los builds instalados y el juego la tiene entera en memoria (15.27).
 	cache_kb=$(adb -s "$serial" shell run-as "$PACKAGE" du -k files/vulkan 2> /dev/null | tail -1 | cut -f1 | tr -dc 0-9)
