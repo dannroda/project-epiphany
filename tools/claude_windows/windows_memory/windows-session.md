@@ -18,6 +18,6 @@ Daniel dual-boots. When Claude runs on Windows it is a single session, and the L
 **Windows equivalents of Linux-only rules in other memories:**
 - **Godot:** the path is in [[windows-machine]] (written by setup.ps1). Use it wherever a memory says `/opt/godot/versions/4.8-beta1/godot`.
 - **Tests:** there is no bwrap, which [[tests-bwrap-gamepad]] relies on, so ask Daniel to unplug or turn off the gamepad before a headless run. Command: `& $godot --headless --path . --script res://tests/run_tests.gd -- --jobs=4`.
-- **Windowed runs** ([[game-windows-secondary-screen]]): the same `override.cfg` with `[display]` / `window/size/no_focus=true`, plus `--screen N`. On Windows the HP monitor (N223) is `--screen 1`; 0 is the main ViewSonic (checked 2026-10-16).
+- **Windowed runs** ([[windowed-godot-second-monitor]]): on Linux they go through gamescope headless, which doesn't exist here. Use an `override.cfg` with `[display]` / `window/size/no_focus=true`, plus `--screen N`. On Windows the HP monitor (N223) is `--screen 1`; 0 is the main ViewSonic (checked 2026-10-16).
 - **Things that don't exist here:** paths under `/home/...`, `/opt/...` and `/home/ssd_disk/...`, the Blender MCP setup, and `/home/ssd_disk/LA_export`. Ask Daniel if one is needed.
 - **Memory:** the memory files here are a snapshot from Linux, copied by the kit. New memories written on Windows also go in HANDOFF.md, so the Linux side can add them to its own memory.
