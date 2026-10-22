@@ -8409,6 +8409,10 @@ Lo más grande está en otro lado: entre apretar Continuar y el comienzo de _cha
 
 En 15.28 (-88, v2 y v3) una de las exportaciones de un mismo código arranca siempre más lenta en el G23: Displayed 2,2–4,2 s contra 1,0–1,2 y autoloads 7,5–11 s contra 4,3–6,2, en todos los pares. No depende del orden de corrida ni del código. Comparar el zip (orden, alineación, compresión) del APK lento contra uno rápido; el N de v3 está guardado en /home/ssd_disk/epiphany-wt/design-bench. Importa porque la build que se entregue puede salir de cualquiera de las dos.
 
+**Prueba:** 26/26 corridas de v2+v3: el mensaje de instalación incremental aparece exactamente en las lentas. Falta corrida de confirmación con --no-incremental.
+
+**Notas:** Causa (-25): instalación incremental de adb. El export de Godot deja <apk>.idsig al lado del APK y, si coincide, adb install instala incremental: el juego arranca mientras el APK sigue llegando por USB. En phone_ab2/ab3 los APK se copiaban sobre el mismo path y el .idsig quedaba del último export (v2: B, v3: N), así que solo ese instalaba incremental. El mensaje 'All files should be loaded. Notifying the device.' aparece en las 10 corridas lentas y en ninguna de las 16 rápidas (primer cuadro 8–11 s contra 4,5–4,9). Los zip de N y W solo difieren en benchmark.scn y el índice del sparsepck. Consecuencia: todo bench.sh --build anterior instalaba incremental, así que los tiempos de arranque y de la primera carga de corridas viejas salen inflados (el tiempo de cuadro y la GPU de los casos siguientes, poco). Arreglo en main e1124186: bench.sh instala con --no-incremental.
+
 ## M17 — Después de la demo  (1/3, 1 en revisión)
 
 Lo que sale de M11 para después de la demo: rejugabilidad y extras.
