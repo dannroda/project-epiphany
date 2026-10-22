@@ -7843,7 +7843,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (23/30, 23 en revisión)
+## M15 — Optimización  (24/30, 24 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8297,7 +8297,7 @@ Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps
 - Dato para 15.27: en tres de las seis corridas el primer caso (Calentar Inicio, recién abierta la app) dio GPU 27 ms y cuadro 33 ms, y el mismo caso en las pasadas siguientes 40–44 ms. El estado bueno aparece al empezar cada corrida y se pierde enseguida. No es la memoria del juego creciendo por cambio de nivel (-88: en el G23 la PSS no crece, Cumbre 1520/1521/1523 MB en tres vueltas); puede ser lo mismo que los picos de GL mtrack del Mali (~520 → 1300 MB) que mandan el teléfono a swap. -88 lo cruza con una corrida que muestrea GL mtrack.
 - Queda: glow en Bajo (pregunta para Daniel, no aplicado). Medir de nuevo lo de arriba en absoluto cuando entre 15.27.
 
-### 15.26 G23: las mazmorras en el perfil Bajo · En curso
+### 15.26 G23: las mazmorras en el perfil Bajo · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-25 · **Etiquetas:** `optimizacion`
 
@@ -8312,14 +8312,14 @@ Sigue de 15.23, que midió en Alta (templo hub ~103 ms, antesala ~109, chullpa ~
   Descartado: No usar occlusion culling (sin el ahorro); prenderlo solo en Mobile (en PC no ahorra GPU, pero tendría el mismo cuadro tarde solo en el teléfono); tapar el primer cuadro de la transición con un fundido.
 
 **Prueba:** Paso 2: 60 salas en Forward+ y Mobile con prioridad 0 contra 1: 38 salas quietas ≤214 px, las 22 animadas (agua, jefes, enemigos) en su propio ruido A-A. Suite 773/773 en main después de --import (b4efa43f). Paso 3: 60 salas en Forward+ y Mobile sin diferencias; transiciones cuadro a cuadro; test_totora mira el tamaño del oclusor; suite 775/775 en main después de --import (0d1794f7).
+Paso 4: suite 776/776 en el worktree y en main; el octante no cambia mallas ni materiales, solo cómo se agrupan.
 
-**Notas:** Octantes, G23 22/10 (moto_g23_20261022_003303.json, intercalado, GPU p50 A/B): Cumbre base 8 52,7/50,8, octante 4 41,2/47,5, octante 2 38,9/40,9 (fps 16 → 19, p95 156 → 80-91, tris 0,59 → 0,44 M); Quenoa 38,4/38,0 → 37,8/37,8 → 37,0/36,6 (CPU de render +1,1 ms, 332 draws vs 215, fps 20,4-20,9 → 21,2-21,3). La base absoluta de Cumbre salió más alta que ayer (teléfono en otro estado): vale lo relativo, −10 a −12 ms en Cumbre con octante 2. Siguiente (-25): cell_octant_size = 2 en los GridMap de Cumbre y Quenoa, que sobreviva al refresh de la_walls.
-Resumen (G23, perfil Bajo, GPU p50, meta ~33 ms):
+**Notas:** Resumen (G23, perfil Bajo, GPU p50, meta ~33 ms):
 - Entró: (1) paredes LA con render_priority 1 en los 6 kits (WALL_PRIORITY en la_walls.gd, main b4efa43f): Mobile no tiene prepaso de profundidad y dibujar las paredes al final ahorra 7–20 ms. (2) Occlusion culling con un BoxOccluder3D en cada caja de la RoomMask (main 0d1794f7): las paredes de las salas vecinas tapadas por la máscara ya no se dibujan, −1,5 a −14 ms y −30 a −55 % de triángulos; +0,9–1,5 ms de CPU de render. Ninguno cambia la imagen; el único efecto visible es que, al cambiar de sala, lo destapado aparece un cuadro tarde (decisión 2, para Daniel). Herramienta: tools/offscreen.sh y bench.sh desktop por ahí (main c5d3b550).
 - Medido y descartado: posición/normal de mundo en el fragmento de cutaway_la (paso 1, sin ganancia propia, revertido); paredes primero (−1, +5 ms); piso al principio o al final (sin cambio); dibujo completo del piso 0–6 ms (sacarlo cambia el look, no se propone); efectos LA y sondas ~0; LOD más agresivo (sin ganancia; cumbre y queñoa no generan LODs); sacar caras traseras de las paredes (solo 5–11 % de triángulos, build_paredes_la ya las saca); swap de shader (el "ahorro" era solo el orden de dibujo).
 - Cambia el look, pregunta a Daniel (decisión 1): apagar las luces puntuales en Bajo, −3 a −9 ms.
-- Dónde queda cada mazmorra (antes → ahora): templo hub 43 → ~37; chullpa 62 → ~42; antesala 43 → ~40; queñoa 54 → ~42,5; totora 52 → ~40; cumbre 70 → ~42. Ninguna llega a 33. Hub está a ~4 ms y el resto a 7–10 ms. Con las luces apagadas quedarían en ~33–39. Lo que sigue pesando son las paredes (0,25–0,7 M triángulos en cuadro) y la base sin GridMap (24–39 ms). Medido con el teléfono degradado por memoria (15.27): vale en relativo, no en absoluto.
-- Pendiente: octantes del GridMap 4/2 solo en cumbre y queñoa. En escritorio (Mobile) los triángulos bajan: cumbre 646 → 497 → 386 k, queñoa 366 → 324 → 306 k. En chullpa, totora, hub y antesala suben, por eso no se tocan. Falta el A/B en el G23.
+- Dónde queda cada mazmorra (antes → ahora): templo hub 43 → ~37; chullpa 62 → ~42; antesala 43 → ~40; queñoa 54 → ~41,5; totora 52 → ~40; cumbre 70 → ~32–35 (estimado por el relativo del paso 4). Hub y cumbre quedan cerca de 33; el resto a 7–10 ms. Con las luces apagadas quedarían en ~33–39. Lo que sigue pesando son las paredes (0,25–0,7 M triángulos en cuadro) y la base sin GridMap (24–39 ms). Medido con el teléfono degradado por memoria (15.27): vale en relativo, no en absoluto.
+- Paso 4 (-25, main b9305d88): GridMaps de cumbre y queñoa con cell_octant_size 2 (con la oclusión, octantes chicos descartan más piedra; esas paredes no tienen LOD). G23 Bajo intercalado, GPU p50 octante 8 / 4 / 2: cumbre 52,7·50,8 / 41,2·47,5 / 38,9·40,9 (fps 16 → 19, p95 156 → 80–91, triángulos 0,59 → 0,44 M); queñoa 38,4·38,0 / 37,8·37,8 / 37,0·36,6, con CPU de render +1,1 ms (332 draws en vez de 215) y fps 20,6 → 21,2. Chullpa, totora, hub y antesala quedan en 8: ahí suben los triángulos. Ese día la base de cumbre dio 52 (otro estado del teléfono): vale el relativo, ~−10 ms; cumbre quedaría ~32–35 contra los ~42 de antes.
 
 Punto de partida en Bajo (G23, GPU p50, moto_g23_20261021_1336/1347, orden viejo de las paredes): hub ~43, chullpa ~62, antesala ~43, queñoa ~54, totora ~52, cumbre ~70 ms. Sin GridMap 24–39 ms; efectos LA y sondas ~0; LOD más agresivo (2–4 px) y octantes más chicos (2/4) no ganan nada.
 Paso 1 (-25, main 6a8bfac0, CUTAWAY_LA: posición y normal de mundo desde el fragmento, sin varyings): sin ganancia propia, revertido en el paso 2. Su "ganancia" medida con swap_shader era el efecto de orden de abajo.
