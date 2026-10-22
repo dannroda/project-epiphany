@@ -8423,6 +8423,10 @@ Daniel (2026-10-20): algo para testear después. Ver qué pide que el juego corr
 
 Daniel ve la barra de estado y la de navegación encima del juego en el G23 (dumpsys: statusBars y navigationBars visibles con el juego en foco). screen/immersive_mode está en true en los dos presets de Android y el juego dibuja a 1600×720, así que las barras vuelven a aparecer y nadie las esconde de nuevo; probablemente al despertar o desbloquear el teléfono con el juego abierto. Que el juego quede en pantalla completa siempre.
 
+**Prueba:** En el G23, con el juego en foco, dumpsys window muestra statusBars y navigationBars visible=false, también después de apagar y prender la pantalla.
+
+**Notas:** Causa (-25): Settings._apply aplicaba la opción fullscreen (falsa por defecto) al arrancar con window_set_mode(WINDOWED), y en Android window_get_mode nunca devuelve WINDOWED, así que la llamada salía siempre y apagaba el modo inmersivo; al volver al juego, GodotApp reaplica isInImmersiveMode(), que ya estaba apagado. Arreglo en main adcdf095: ese bloque no corre en mobile. Suite 776/776. Falta: probarlo en el G23 (dumpsys statusBars/navigationBars visible=false, también tras apagar y prender la pantalla). Suelto: la opción Pantalla completa sigue en Opciones > Video en el teléfono y no hace nada.
+
 ## Listas
 
 ### Assets de audio  (3/6)
