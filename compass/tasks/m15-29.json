@@ -1,0 +1,18 @@
+{
+  "checklist": [],
+  "code": "15.29",
+  "created_at": "2026-10-22T04:35:17.868Z",
+  "description": "En 15.28 (-88, v2 y v3) una de las exportaciones de un mismo código arranca siempre más lenta en el G23: Displayed 2,2–4,2 s contra 1,0–1,2 y autoloads 7,5–11 s contra 4,3–6,2, en todos los pares. No depende del orden de corrida ni del código. Comparar el zip (orden, alineación, compresión) del APK lento contra uno rápido; el N de v3 está guardado en /home/ssd_disk/epiphany-wt/design-bench. Importa porque la build que se entregue puede salir de cualquiera de las dos.",
+  "milestone": "m15",
+  "notes": "",
+  "order": 205,
+  "priority": "low",
+  "refs": [],
+  "status": "todo",
+  "tags": [
+    "mobile"
+  ],
+  "test": "",
+  "title": "G23: el mismo código exportado dos veces arranca 2–3 s más lento",
+  "updated_at": "2026-10-22T04:35:18.271Z"
+}

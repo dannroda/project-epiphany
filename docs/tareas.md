@@ -7843,7 +7843,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (25/30, 25 en revisión)
+## M15 — Optimización  (25/31, 25 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8402,6 +8402,12 @@ Paso 1 (-88, wt/design-fix ac8f0c61, sin integrar hasta tener los números del G
 G23 (A sin keep_loaded, B = ac8f0c61; 2 pares completos antes de que el teléfono quedara offline): Continuar → jugable tibio A 8,38 / 8,54 s → B 6,48 / 6,50 (≈ −1,9 s); la carga del overworld adentro A 3,95 / 3,92 (lectura 1,7–1,8, instanciado 1,35–1,4, warm-up 0,8) → B 1,94 / 1,70 (lectura 0). Frío A2 27,9 s → B 24,1 / 23,7 (≈ −4 s). PSS al quedar jugable igual (1235–1267 MB). Hasta el título (A tibio): primer cuadro ~5,0 s, título ~8,7; frío ~16,5.
 Con B la pantalla queda negra sin el ojo 1,8 s tibio y 4,3 s en frío: se muestra el ojo enseguida cuando la escena viene de la caché (mismo comportamiento que hoy, no hace falta preguntar). ac8f0c61 se integra junto con eso.
 Lo más grande está en otro lado: entre apretar Continuar y el comienzo de _change_scene pasan 18,7 s en frío y 3,6 s tibio en el G23 (en las dos variantes; en escritorio ese hueco no existe). Siguiente: instrumentar esa ventana (cuadros de más de 100 ms y las partes de enter_save / read_from / liberar el overworld del título). El APK B arrancó ~3 s más lento hasta el título en las 4 corridas con los dos APK iguales salvo el .gdc del sobrevuelo: se repite con el orden invertido.
+
+### 15.29 G23: el mismo código exportado dos veces arranca 2–3 s más lento · Pendiente
+
+**Prioridad:** baja · **Etiquetas:** `mobile`
+
+En 15.28 (-88, v2 y v3) una de las exportaciones de un mismo código arranca siempre más lenta en el G23: Displayed 2,2–4,2 s contra 1,0–1,2 y autoloads 7,5–11 s contra 4,3–6,2, en todos los pares. No depende del orden de corrida ni del código. Comparar el zip (orden, alineación, compresión) del APK lento contra uno rápido; el N de v3 está guardado en /home/ssd_disk/epiphany-wt/design-bench. Importa porque la build que se entregue puede salir de cualquiera de las dos.
 
 ## M17 — Después de la demo  (1/3, 1 en revisión)
 
