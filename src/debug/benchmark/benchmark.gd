@@ -71,6 +71,7 @@ func _startup() -> void:
 	while SceneFlow.loading_screen.visible:
 		await get_tree().process_frame
 	mark.call("title")
+	marks["title_pipelines_by_kind"] = _pipelines_by_kind()
 	marks["title_pss_mb"] = process_pss_mb()
 	marks["title_hitches"] = await _hitches(func() -> bool: return Time.get_ticks_msec() - marks.title_ms < startup_wait * 1000.0, marks.title_ms)
 	mark.call("continue")
@@ -113,7 +114,7 @@ func _hitches(going: Callable, since: int) -> Array:
 		await get_tree().process_frame
 		var now := Time.get_ticks_msec()
 		if now - frame_at > 100:
-			hitches.append([frame_at - since, now - frame_at])
+			hitches.append([frame_at - since, now - frame_at, _pipelines_by_kind()])
 		frame_at = now
 	return hitches
 
@@ -223,10 +224,18 @@ func _measure(bench: BenchCase, variant: BenchVariant, viewport: RID) -> Diction
 ## Los pipelines que creó el renderer hasta ahora, los saque de la caché de pipelines o no.
 static func _pipelines_compiled() -> int:
 	var total := 0
+	for count: int in _pipelines_by_kind():
+		total += count
+	return total
+
+
+## Por tipo: canvas, mesh, surface, draw (los que se compilan al dibujar, trabando el cuadro) y specialization.
+static func _pipelines_by_kind() -> Array[int]:
+	var counts: Array[int] = []
 	for monitor in [Performance.PIPELINE_COMPILATIONS_CANVAS, Performance.PIPELINE_COMPILATIONS_MESH, Performance.PIPELINE_COMPILATIONS_SURFACE,
 			Performance.PIPELINE_COMPILATIONS_DRAW, Performance.PIPELINE_COMPILATIONS_SPECIALIZATION]:
-		total += int(Performance.get_monitor(monitor))
-	return total
+		counts.append(int(Performance.get_monitor(monitor)))
+	return counts
 
 
 func _keep_materials(node: Node) -> void:
