@@ -41,7 +41,6 @@ func _start() -> void:
 		await flyover.ready_to_show
 		# Que el overworld del fondo se dibuje tapado: su primer cuadro compila sus pipelines (13 s en frío en el G23).
 		await RenderingServer.frame_post_draw
-		await RenderingServer.frame_post_draw
 		if Settings.needs_calibration() and DisplayServer.get_name() != "headless":
 			await QualityCalibration.run($Flyover)
 		SceneFlow.hide_loading()
