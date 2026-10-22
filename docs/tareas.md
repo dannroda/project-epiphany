@@ -7843,7 +7843,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (24/30, 24 en revisión)
+## M15 — Optimización  (25/30, 25 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8267,7 +8267,7 @@ Seguimiento de 15.5, Daniel (2026-10-21): "Comprimir". Los *_la_kit.tres traen s
 - *_la_kit.tres: 134,6 → 84,7 MB.
 - 1080p escritorio, carga en caliente / VRAM, antes → después: chullpa Forward+ 3,27 s / 1174 MB → 3,21 s / 1168 MB; templo Forward+ 4,67 s / 1171 MB → 3,99 s / 1164 MB; chullpa Mobile 3,20 s / 609 MB → 2,74 s / 603 MB; templo Mobile 4,27 s / 619 MB → 3,99 s / 611 MB. Las mallas ocupan 6–8 MB menos de buffers; el resto de la VRAM son texturas.
 
-### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · En curso
+### 15.25 G23: GPU del overworld en Bajo para sostener 30 fps con el teléfono caliente · Revisión
 
 **Prioridad:** alta · **Tamaño:** M · **Responsable:** project-epiphany-8f · **Etiquetas:** `optimizacion`
 
@@ -8277,8 +8277,16 @@ Sigue de 15.20 (-88, 2026-10-21): con la CPU arreglada el overworld va a ~30 fps
 - ? ¿El perfil Bajo puede apagar el glow (brillo alrededor de luces y zonas claras)? · pregunta abierta
   Por qué: En el G23 ahorra ~1,2 ms de GPU por cuadro, parte del margen que falta para que el overworld no caiga al estado lento (cuadro 45 ms). Cambia el look solo en Bajo; Medio, Alto y Forward+ quedan igual.
   Descartado: Dejar el glow en todos los perfiles y buscar el margen en el agua y la geometría.
+- ? ¿Simplificar los shaders de terreno y agua en Bajo/Mobile para sostener 30 fps en Arboleda? · pregunta abierta
+  Por qué: terreno −5 a −8 ms y agua −3 a −4,5 ms de GPU, pero cambian el aspecto; el resto del overworld ya cumple 33 ms
+  Descartado: dejarlos como están (Arboleda queda en 36–42 ms)
 
-**Notas:** División del terreno, G23 22/10 (-8f, teléfono recién reiniciado, A 12×8 vs B 24×16 intercalado, 9 muestras Bajo por APK y caso), GPU p50 mediana A → B: Inicio 22,3 → 22,7; Arboleda 27,2 → 26,0 (único que gana en los tres pares, ~1,2 ms); Cardonal 23,0 → 21,8 (pares mezclados); Bañado 22,4 → 23,3 (peor en los tres); Cumbre 23,0 → 23,7. Los triángulos bajan 7–20 % pero la GPU no acompaña: en el Mali los triángulos fuera de cuadro son baratos y el costo del terreno está en los fragmentos. GL mtrack igual, PSS +20–40 MB en B. Descartada, nada integrado (B en debug/tmp/ow2/geo/B_tree).
+**Notas:** Resumen (-8f, 22/10), para revisión:
+- Integrado: la perilla priorities del benchmark (render_priority por material, se restaura después de la variante), main bf560ec6. Nada más cambia el juego: cada pista medida no rindió o cambia el aspecto.
+- Dónde queda el overworld en Bajo, G23 en buen estado (recién reiniciado): GPU p50 22–27 ms, cuadro p50 31–42 ms. Inicio, Cardonal, Bañado y Cumbre a ~33 ms (30 fps); Arboleda, la más densa, a 36–42. GPU por debajo de 33 en todos los casos; 0,10–0,21 M triángulos por cuadro. El estado lento (GPU 40+) solo apareció con el teléfono degradado (horas prendido, swap): eso es de 15.27/15.28.
+- Medido y descartado (G23, A/B intercalado): orden de opacos, sin efecto; agua Mobile (15.17), sin ganancia; geometría del agua, ya 2 triángulos por pieza; umbral de LOD, −2 a −9 % de prims con popping; bloques de terreno 24×16, −11 a −24 % de prims sin ganancia de GPU.
+- Quedan solo decisiones de Daniel (son lo único que baja GPU): 1) glow apagado en Bajo, ~1,2 ms, ya preguntado en la tarjeta; 2) shader de terreno más simple en Bajo/Mobile, −5 a −8 ms, cambia el aspecto del suelo; 3) shader de agua más simple en Bajo/Mobile, −3 a −4,5 ms, cambia el aspecto (menos lecturas de pantalla/profundidad, sin refracción). 2 y 3 solo valen si el objetivo incluye sostener 30 fps en Arboleda.
+División del terreno, G23 22/10 (-8f, teléfono recién reiniciado, A 12×8 vs B 24×16 intercalado, 9 muestras Bajo por APK y caso), GPU p50 mediana A → B: Inicio 22,3 → 22,7; Arboleda 27,2 → 26,0 (único que gana en los tres pares, ~1,2 ms); Cardonal 23,0 → 21,8 (pares mezclados); Bañado 22,4 → 23,3 (peor en los tres); Cumbre 23,0 → 23,7. Los triángulos bajan 7–20 % pero la GPU no acompaña: en el Mali los triángulos fuera de cuadro son baratos y el costo del terreno está en los fragmentos. GL mtrack igual, PSS +20–40 MB en B. Descartada, nada integrado (B en debug/tmp/ow2/geo/B_tree).
 Hallazgos parciales (-88, G23, perfil Bajo, corridas intercalando Base):
 - No es calor: el G23 tiene dos estados estables, bueno (cuadro 33 ms, GPU 22–24 ms) y malo (cuadro 45 ms, GPU 27–30 ms, también suben los scripts por paso). Después de 20 min la última Base estaba igual de bien que la primera. Puede que esos dos estados sean presión de memoria (ver 15.27).
 - No es la física: con tope de 2 pasos por cuadro no cambia (29,1 contra 29,2 fps en 7 pares) y una corrida con tope cayó igual al estado malo. Lo dispara la GPU (el governor baja relojes cuando cae la tasa): hay que ganar margen de GPU.
