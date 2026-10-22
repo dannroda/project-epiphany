@@ -8403,9 +8403,9 @@ G23 (A sin keep_loaded, B = ac8f0c61; 2 pares completos antes de que el teléfon
 Con B la pantalla queda negra sin el ojo 1,8 s tibio y 4,3 s en frío: se muestra el ojo enseguida cuando la escena viene de la caché (mismo comportamiento que hoy, no hace falta preguntar). ac8f0c61 se integra junto con eso.
 Lo más grande está en otro lado: entre apretar Continuar y el comienzo de _change_scene pasan 18,7 s en frío y 3,6 s tibio en el G23 (en las dos variantes; en escritorio ese hueco no existe). Siguiente: instrumentar esa ventana (cuadros de más de 100 ms y las partes de enter_save / read_from / liberar el overworld del título). El APK B arrancó ~3 s más lento hasta el título en las 4 corridas con los dos APK iguales salvo el .gdc del sobrevuelo: se repite con el orden invertido.
 
-### 15.29 G23: el mismo código exportado dos veces arranca 2–3 s más lento · Pendiente
+### 15.29 G23: el mismo código exportado dos veces arranca 2–3 s más lento · En curso
 
-**Prioridad:** baja · **Etiquetas:** `mobile`
+**Prioridad:** baja · **Responsable:** project-epiphany-25 · **Etiquetas:** `mobile`
 
 En 15.28 (-88, v2 y v3) una de las exportaciones de un mismo código arranca siempre más lenta en el G23: Displayed 2,2–4,2 s contra 1,0–1,2 y autoloads 7,5–11 s contra 4,3–6,2, en todos los pares. No depende del orden de corrida ni del código. Comparar el zip (orden, alineación, compresión) del APK lento contra uno rápido; el N de v3 está guardado en /home/ssd_disk/epiphany-wt/design-bench. Importa porque la build que se entregue puede salir de cualquiera de las dos.
 
