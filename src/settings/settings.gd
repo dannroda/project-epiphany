@@ -196,7 +196,8 @@ func _apply(key := &"") -> void:
 		RenderingServer.directional_shadow_atlas_set_size(ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/size") if high else 2048,
 			ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/16_bits"))
 		RenderingServer.directional_soft_shadow_filter_set_quality(ProjectSettings.get_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality") if high else RenderingServer.SHADOW_QUALITY_SOFT_VERY_LOW)
-	if all or key == &"fullscreen":
+	# En Android ventana = salir del modo inmersivo: volvían las barras del sistema (17.4).
+	if (all or key == &"fullscreen") and not OS.has_feature("mobile"):
 		var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if get_value(&"fullscreen") else DisplayServer.WINDOW_MODE_WINDOWED
 		if DisplayServer.window_get_mode() != mode:
 			DisplayServer.window_set_mode(mode)
