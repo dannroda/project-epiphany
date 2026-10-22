@@ -8392,7 +8392,7 @@ G23 (A sin keep_loaded, B = ac8f0c61; 2 pares completos antes de que el teléfon
 Con B la pantalla queda negra sin el ojo 1,8 s tibio y 4,3 s en frío: se muestra el ojo enseguida cuando la escena viene de la caché (mismo comportamiento que hoy, no hace falta preguntar). ac8f0c61 se integra junto con eso.
 Lo más grande está en otro lado: entre apretar Continuar y el comienzo de _change_scene pasan 18,7 s en frío y 3,6 s tibio en el G23 (en las dos variantes; en escritorio ese hueco no existe). Siguiente: instrumentar esa ventana (cuadros de más de 100 ms y las partes de enter_save / read_from / liberar el overworld del título). El APK B arrancó ~3 s más lento hasta el título en las 4 corridas con los dos APK iguales salvo el .gdc del sobrevuelo: se repite con el orden invertido.
 
-## M17 — Después de la demo  (0/2)
+## M17 — Después de la demo  (0/3)
 
 Lo que sale de M11 para después de la demo: rejugabilidad y extras.
 
@@ -8415,6 +8415,12 @@ Un modo extra que se desbloquea al terminar el juego, difícil (más daño, meno
 Daniel (2026-10-20): algo para testear después. Ver qué pide que el juego corra en un teléfono: preset de export Android (y iOS si hace falta), si alcanza el renderer Mobile o hay que bajar a Compatibility (shaders propios, viento, SSAO, sombras), rendimiento y memoria en un equipo medio, y controles táctiles (stick virtual, botones de ataque, ítems y Z-target) o un gamepad por Bluetooth. También la UI chica en pantalla de teléfono y las zonas seguras.
 
 **Notas:** Daniel (2026-10-20): equipos para probar. Baseline: Moto G23 (MediaTek Helio G85, GPU Mali-G52, pantalla 720p): el objetivo de rendimiento se mide en este. También el Moto Edge 30 Fusion de Daniel (Snapdragon 888+, Adreno 660, 1080p), como gama alta. Por ahora el G23 lo usa otro proyecto: arrancar con el Edge 30 y pasar al G23 cuando se libere.
+
+### 17.4 Android: las barras del sistema aparecen sobre el juego · En curso
+
+**Responsable:** project-epiphany-25 · **Etiquetas:** `mobile`, `bug`
+
+Daniel ve la barra de estado y la de navegación encima del juego en el G23 (dumpsys: statusBars y navigationBars visibles con el juego en foco). screen/immersive_mode está en true en los dos presets de Android y el juego dibuja a 1600×720, así que las barras vuelven a aparecer y nadie las esconde de nuevo; probablemente al despertar o desbloquear el teléfono con el juego abierto. Que el juego quede en pantalla completa siempre.
 
 ## Listas
 

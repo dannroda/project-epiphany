@@ -1,0 +1,19 @@
+{
+  "assignee": "project-epiphany-25",
+  "checklist": [],
+  "code": "17.4",
+  "created_at": "2026-10-22T03:45:20.535Z",
+  "description": "Daniel ve la barra de estado y la de navegación encima del juego en el G23 (dumpsys: statusBars y navigationBars visibles con el juego en foco). screen/immersive_mode está en true en los dos presets de Android y el juego dibuja a 1600×720, así que las barras vuelven a aparecer y nadie las esconde de nuevo; probablemente al despertar o desbloquear el teléfono con el juego abierto. Que el juego quede en pantalla completa siempre.",
+  "milestone": "m17",
+  "notes": "",
+  "order": 35,
+  "refs": [],
+  "status": "doing",
+  "tags": [
+    "mobile",
+    "bug"
+  ],
+  "test": "",
+  "title": "Android: las barras del sistema aparecen sobre el juego",
+  "updated_at": "2026-10-22T03:45:21.841Z"
+}
