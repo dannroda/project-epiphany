@@ -25,6 +25,9 @@ desktop)
 	;;
 android)
 	serial=${2:?falta el serial de adb}
+	# Sin el fd del lock (aunque sea el de quien llama, con BENCH_LOCK_HELD): si un adb de acá arranca el servidor, el
+	# servidor lo hereda y el teléfono queda trabado para todos.
+	adb() { command adb "$@" 9>&-; }
 	for busy in ${BUSY_PACKAGES:-dev.asteroids.game}; do
 		if adb -s "$serial" shell pidof "$busy" > /dev/null 2>&1; then
 			echo "$busy está corriendo en $serial (el teléfono es compartido), no lo interrumpo"
@@ -36,8 +39,6 @@ android)
 		"$GODOT" --headless --path . --import > /dev/null 2>&1 || true
 		"$GODOT" --headless --path . --export-debug "Android (benchmark)" "$APK" > "$OUT/export_$stamp.log" 2>&1
 	fi
-	# Sin el fd del lock: si un adb de acá arranca el servidor, el servidor lo heredaba y dejaba el teléfono trabado.
-	adb() { command adb "$@" 9>&-; }
 	# BENCH_LOCK_HELD: quien llama ya tiene el lock en el fd 9 (varias corridas seguidas sin soltar el teléfono).
 	if [ -z "${BENCH_LOCK_HELD:-}" ]; then
 		exec 9> "${XDG_RUNTIME_DIR:-/tmp}/epiphany_bench_$serial.lock"
