@@ -3,17 +3,25 @@
   "checklist": [],
   "code": "17.4",
   "created_at": "2026-10-22T03:45:20.535Z",
+  "decisions": [
+    {
+      "asked": true,
+      "at": "2026-10-22T04:34:59.452Z",
+      "session": "288582ff-f0fb-4cb5-a598-45cacf4a334e",
+      "text": "¿Esconder la opción Pantalla completa en mobile? Hoy aparece en Opciones > Video y no hace nada; es el primer foco de la página"
+    }
+  ],
   "description": "Daniel ve la barra de estado y la de navegación encima del juego en el G23 (dumpsys: statusBars y navigationBars visibles con el juego en foco). screen/immersive_mode está en true en los dos presets de Android y el juego dibuja a 1600×720, así que las barras vuelven a aparecer y nadie las esconde de nuevo; probablemente al despertar o desbloquear el teléfono con el juego abierto. Que el juego quede en pantalla completa siempre.",
   "milestone": "m17",
   "notes": "Causa (-25): Settings._apply aplicaba la opción fullscreen (falsa por defecto) al arrancar con window_set_mode(WINDOWED), y en Android window_get_mode nunca devuelve WINDOWED, así que la llamada salía siempre y apagaba el modo inmersivo; al volver al juego, GodotApp reaplica isInImmersiveMode(), que ya estaba apagado. Arreglo en main adcdf095: ese bloque no corre en mobile. Suite 776/776. Falta: probarlo en el G23 (dumpsys statusBars/navigationBars visible=false, también tras apagar y prender la pantalla). Suelto: la opción Pantalla completa sigue en Opciones > Video en el teléfono y no hace nada.",
   "order": 35,
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "mobile",
     "bug"
   ],
-  "test": "En el G23, con el juego en foco, dumpsys window muestra statusBars y navigationBars visible=false, también después de apagar y prender la pantalla.",
+  "test": "G23, preset Android desde main: al arrancar y al volver de Inicio statusBars/navigationBars visible=false con el juego en foco (antes true/true). Apagar/prender pantalla deja el lockscreen (PIN): no se pudo ver después de desbloquear; cubre el mismo camino de resume de Godot.",
   "title": "Android: las barras del sistema aparecen sobre el juego",
-  "updated_at": "2026-10-22T03:56:59.625Z"
+  "updated_at": "2026-10-22T04:34:59.762Z"
 }
