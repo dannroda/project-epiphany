@@ -13,6 +13,10 @@ const SLOW_MS := 40.0
 @export var warmup := 2.0
 ## Si tiene un escenario, en vez de los casos mide el arranque (15.28): hasta el título y de ahí "Continuar" a ese escenario.
 @export var startup_scenario := ""
+## Segundos en el título antes de Continuar (se anotan sus cuadros de más de 100 ms).
+@export var startup_wait := 1.0
+## Sin el fundido de Continuar, para ver si el cuadro largo del G23 es suyo (15.28).
+@export var startup_fade := true
 
 var _flat := StandardMaterial3D.new()
 var _variant: BenchVariant
@@ -68,18 +72,15 @@ func _startup() -> void:
 		await get_tree().process_frame
 	mark.call("title")
 	marks["title_pss_mb"] = process_pss_mb()
-	await get_tree().create_timer(1.0).timeout
+	marks["title_hitches"] = await _hitches(func() -> bool: return Time.get_ticks_msec() - marks.title_ms < startup_wait * 1000.0, marks.title_ms)
 	mark.call("continue")
-	title.call(&"_go", SaveManager.load_scenario.bind(startup_scenario))
-	var hitches := []
-	var frame_at := Time.get_ticks_msec()
-	while SceneFlow.is_busy() or Players.lead() == null:
-		await get_tree().process_frame
-		var now := Time.get_ticks_msec()
-		if now - frame_at > 100:
-			hitches.append([frame_at - marks.continue_ms, now - frame_at])
-		frame_at = now
-	marks["hitches"] = hitches
+	if startup_fade:
+		title.call(&"_go", SaveManager.load_scenario.bind(startup_scenario))
+	else:
+		MenuStack.clear()
+		title.process_mode = PROCESS_MODE_DISABLED
+		SaveManager.load_scenario(startup_scenario)
+	marks["hitches"] = await _hitches(func() -> bool: return SceneFlow.is_busy() or Players.lead() == null, marks.continue_ms)
 	await RenderingServer.frame_post_draw
 	mark.call("playable")
 	marks["load"] = SceneFlow.last_load
@@ -102,6 +103,19 @@ func _startup() -> void:
 	_save(_info(), [], marks)
 	print("BENCH_DONE ", ProjectSettings.globalize_path(OUT))
 	get_tree().quit()
+
+
+## Los cuadros de más de 100 ms mientras `going` sea cierto, como [ms desde `since`, duración].
+func _hitches(going: Callable, since: int) -> Array:
+	var hitches := []
+	var frame_at := Time.get_ticks_msec()
+	while going.call():
+		await get_tree().process_frame
+		var now := Time.get_ticks_msec()
+		if now - frame_at > 100:
+			hitches.append([frame_at - since, now - frame_at])
+		frame_at = now
+	return hitches
 
 
 func _info() -> Dictionary:
