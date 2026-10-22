@@ -9,11 +9,11 @@
   "order": 205,
   "priority": "low",
   "refs": [],
-  "status": "doing",
+  "status": "review",
   "tags": [
     "mobile"
   ],
-  "test": "26/26 corridas de v2+v3: el mensaje de instalación incremental aparece exactamente en las lentas. Falta corrida de confirmación con --no-incremental.",
+  "test": "26/26 corridas de v2+v3: el mensaje de instalación incremental aparece exactamente en las lentas. Confirmación G23: apk_N con su .idsig, instalado con --no-incremental: sin mensaje incremental, primer cuadro 5,0/5,0 s, Displayed 1,3 s (antes 8–11 s / 2–3 s).",
   "title": "G23: el mismo código exportado dos veces arranca 2–3 s más lento",
-  "updated_at": "2026-10-22T04:38:24.687Z"
+  "updated_at": "2026-10-22T04:55:44.751Z"
 }

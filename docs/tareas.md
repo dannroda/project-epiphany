@@ -7843,7 +7843,7 @@ Unas acciones se leen por polling, otras por eventos (`_unhandled_input` del blo
 
 **Relacionadas:** 14.1 Arquitectura de red
 
-## M15 — Optimización  (25/31, 25 en revisión)
+## M15 — Optimización  (26/31, 26 en revisión)
 
 Que el juego arranque rápido y corra estable a 60 FPS en la máquina más floja de los playtesters, en Linux y Windows, sin tirones al aparecer efectos.
 
@@ -8403,13 +8403,13 @@ G23 (A sin keep_loaded, B = ac8f0c61; 2 pares completos antes de que el teléfon
 Con B la pantalla queda negra sin el ojo 1,8 s tibio y 4,3 s en frío: se muestra el ojo enseguida cuando la escena viene de la caché (mismo comportamiento que hoy, no hace falta preguntar). ac8f0c61 se integra junto con eso.
 Lo más grande está en otro lado: entre apretar Continuar y el comienzo de _change_scene pasan 18,7 s en frío y 3,6 s tibio en el G23 (en las dos variantes; en escritorio ese hueco no existe). Siguiente: instrumentar esa ventana (cuadros de más de 100 ms y las partes de enter_save / read_from / liberar el overworld del título). El APK B arrancó ~3 s más lento hasta el título en las 4 corridas con los dos APK iguales salvo el .gdc del sobrevuelo: se repite con el orden invertido.
 
-### 15.29 G23: el mismo código exportado dos veces arranca 2–3 s más lento · En curso
+### 15.29 G23: el mismo código exportado dos veces arranca 2–3 s más lento · Revisión
 
 **Prioridad:** baja · **Responsable:** project-epiphany-25 · **Etiquetas:** `mobile`
 
 En 15.28 (-88, v2 y v3) una de las exportaciones de un mismo código arranca siempre más lenta en el G23: Displayed 2,2–4,2 s contra 1,0–1,2 y autoloads 7,5–11 s contra 4,3–6,2, en todos los pares. No depende del orden de corrida ni del código. Comparar el zip (orden, alineación, compresión) del APK lento contra uno rápido; el N de v3 está guardado en /home/ssd_disk/epiphany-wt/design-bench. Importa porque la build que se entregue puede salir de cualquiera de las dos.
 
-**Prueba:** 26/26 corridas de v2+v3: el mensaje de instalación incremental aparece exactamente en las lentas. Falta corrida de confirmación con --no-incremental.
+**Prueba:** 26/26 corridas de v2+v3: el mensaje de instalación incremental aparece exactamente en las lentas. Confirmación G23: apk_N con su .idsig, instalado con --no-incremental: sin mensaje incremental, primer cuadro 5,0/5,0 s, Displayed 1,3 s (antes 8–11 s / 2–3 s).
 
 **Notas:** Causa (-25): instalación incremental de adb. El export de Godot deja <apk>.idsig al lado del APK y, si coincide, adb install instala incremental: el juego arranca mientras el APK sigue llegando por USB. En phone_ab2/ab3 los APK se copiaban sobre el mismo path y el .idsig quedaba del último export (v2: B, v3: N), así que solo ese instalaba incremental. El mensaje 'All files should be loaded. Notifying the device.' aparece en las 10 corridas lentas y en ninguna de las 16 rápidas (primer cuadro 8–11 s contra 4,5–4,9). Los zip de N y W solo difieren en benchmark.scn y el índice del sparsepck. Consecuencia: todo bench.sh --build anterior instalaba incremental, así que los tiempos de arranque y de la primera carga de corridas viejas salen inflados (el tiempo de cuadro y la GPU de los casos siguientes, poco). Arreglo en main e1124186: bench.sh instala con --no-incremental.
 
