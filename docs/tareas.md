@@ -1,7 +1,7 @@
 # Tareas — Project Epiphany
 
 > Export de `compass/`, que es la fuente de verdad. No editar: los cambios se hacen en `compass/` o con `scompass`, y este archivo se regenera.
-> Generado: 2026-10-21
+> Generado: 2026-10-22
 
 ## M0 — Refactor del player + base de datos  (13/13)
 
@@ -8313,7 +8313,8 @@ Sigue de 15.23, que midió en Alta (templo hub ~103 ms, antesala ~109, chullpa ~
 
 **Prueba:** Paso 2: 60 salas en Forward+ y Mobile con prioridad 0 contra 1: 38 salas quietas ≤214 px, las 22 animadas (agua, jefes, enemigos) en su propio ruido A-A. Suite 773/773 en main después de --import (b4efa43f). Paso 3: 60 salas en Forward+ y Mobile sin diferencias; transiciones cuadro a cuadro; test_totora mira el tamaño del oclusor; suite 775/775 en main después de --import (0d1794f7).
 
-**Notas:** Resumen (G23, perfil Bajo, GPU p50, meta ~33 ms):
+**Notas:** Octantes, G23 22/10 (moto_g23_20261022_003303.json, intercalado, GPU p50 A/B): Cumbre base 8 52,7/50,8, octante 4 41,2/47,5, octante 2 38,9/40,9 (fps 16 → 19, p95 156 → 80-91, tris 0,59 → 0,44 M); Quenoa 38,4/38,0 → 37,8/37,8 → 37,0/36,6 (CPU de render +1,1 ms, 332 draws vs 215, fps 20,4-20,9 → 21,2-21,3). La base absoluta de Cumbre salió más alta que ayer (teléfono en otro estado): vale lo relativo, −10 a −12 ms en Cumbre con octante 2. Siguiente (-25): cell_octant_size = 2 en los GridMap de Cumbre y Quenoa, que sobreviva al refresh de la_walls.
+Resumen (G23, perfil Bajo, GPU p50, meta ~33 ms):
 - Entró: (1) paredes LA con render_priority 1 en los 6 kits (WALL_PRIORITY en la_walls.gd, main b4efa43f): Mobile no tiene prepaso de profundidad y dibujar las paredes al final ahorra 7–20 ms. (2) Occlusion culling con un BoxOccluder3D en cada caja de la RoomMask (main 0d1794f7): las paredes de las salas vecinas tapadas por la máscara ya no se dibujan, −1,5 a −14 ms y −30 a −55 % de triángulos; +0,9–1,5 ms de CPU de render. Ninguno cambia la imagen; el único efecto visible es que, al cambiar de sala, lo destapado aparece un cuadro tarde (decisión 2, para Daniel). Herramienta: tools/offscreen.sh y bench.sh desktop por ahí (main c5d3b550).
 - Medido y descartado: posición/normal de mundo en el fragmento de cutaway_la (paso 1, sin ganancia propia, revertido); paredes primero (−1, +5 ms); piso al principio o al final (sin cambio); dibujo completo del piso 0–6 ms (sacarlo cambia el look, no se propone); efectos LA y sondas ~0; LOD más agresivo (sin ganancia; cumbre y queñoa no generan LODs); sacar caras traseras de las paredes (solo 5–11 % de triángulos, build_paredes_la ya las saca); swap de shader (el "ahorro" era solo el orden de dibujo).
 - Cambia el look, pregunta a Daniel (decisión 1): apagar las luces puntuales en Bajo, −3 a −9 ms.
